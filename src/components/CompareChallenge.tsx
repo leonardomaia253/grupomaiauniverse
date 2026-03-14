@@ -33,7 +33,7 @@ export default function CompareChallenge({ login, accent, shadow }: Props) {
       <button
         type="submit"
         disabled={!rival.trim()}
-        className="btn-press shrink-0 border-[3px] border-border px-5 py-2.5 text-[10px] text-cream transition-colors hover:border-border-light disabled:opaUniverse-40"
+        className="btn-press shrink-0 border-[3px] border-border px-5 py-2.5 text-[10px] text-cream transition-colors hover:border-border-light disabled:opacity-40"
       >
         Compare
       </button>

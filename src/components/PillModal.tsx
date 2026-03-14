@@ -22,15 +22,15 @@ export default function PillModal({ rabbitCompleted, onRedPill, onBluePill, onCl
 
   useEffect(() => {
     requestAnimationFrame(() => {
-      if (overlayRef.current) overlayRef.current.style.opaUniverse = "1";
+      if (overlayRef.current) overlayRef.current.style.opacity = "1";
     });
   }, []);
 
   return (
     <div
       ref={overlayRef}
-      className="fixed inset-0 z-50 flex items-center justify-center transition-opaUniverse duration-500"
-      style={{ opaUniverse: 0 }}
+      className="fixed inset-0 z-50 flex items-center justify-center transition-opacity duration-500"
+      style={{ opacity: 0 }}
       onClick={(e) => {
         if (e.target === e.currentTarget) onClose();
       }}
@@ -39,7 +39,7 @@ export default function PillModal({ rabbitCompleted, onRedPill, onBluePill, onCl
       <div className="absolute inset-0 bg-black/85" />
 
       {/* Matrix rain effect */}
-      <div className="pointer-events-none absolute inset-0 overflow-hidden opaUniverse-10">
+      <div className="pointer-events-none absolute inset-0 overflow-hidden opacity-10">
         {Array.from({ length: 20 }).map((_, i) => (
           <div
             key={i}
@@ -99,7 +99,7 @@ export default function PillModal({ rabbitCompleted, onRedPill, onBluePill, onCl
           {/* Divider */}
           <span
             className="font-pixel text-[12px] sm:text-[14px]"
-            style={{ color: "#00ff41", opaUniverse: 0.4 }}
+            style={{ color: "#00ff41", opacity: 0.4 }}
           >
             OR
           </span>
@@ -119,7 +119,7 @@ export default function PillModal({ rabbitCompleted, onRedPill, onBluePill, onCl
                 boxShadow: rabbitCompleted
                   ? "4px 4px 0px #0a1520, inset -3px -3px 0px #1a2a3a, inset 3px 3px 0px #2a3a4a"
                   : "4px 4px 0px #0a2244, 0 0 24px rgba(68, 136, 255, 0.25), inset -3px -3px 0px #114488, inset 3px 3px 0px #3377dd",
-                opaUniverse: rabbitCompleted ? 0.5 : 1,
+                opacity: rabbitCompleted ? 0.5 : 1,
               }}
             >
               {/* Pixel highlight blocks */}
@@ -165,8 +165,8 @@ export default function PillModal({ rabbitCompleted, onRedPill, onBluePill, onCl
           100% { transform: translateY(100vh); }
         }
         @keyframes pillFadeIn {
-          0% { opaUniverse: 0; transform: scale(0.95); }
-          100% { opaUniverse: 1; transform: scale(1); }
+          0% { opacity: 0; transform: scale(0.95); }
+          100% { opacity: 1; transform: scale(1); }
         }
       `}</style>
     </div>

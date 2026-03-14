@@ -30,7 +30,7 @@ export const NeonOutline = memo(function NeonOutline({
     frameCount.current++;
     if (frameCount.current % 3 !== 0) return;
     const mat = lineRef.current.material as THREE.LineBasicMaterial;
-    mat.opaUniverse = 0.6 + Math.sin(state.clock.elapsedTime * 3) * 0.2;
+    mat.opacity = 0.6 + Math.sin(state.clock.elapsedTime * 3) * 0.2;
   });
 
   const geometry = useMemo(() => {
@@ -46,7 +46,7 @@ export const NeonOutline = memo(function NeonOutline({
 
   return (
     <lineSegments ref={lineRef} geometry={geometry} position={[0, height / 2, 0]}>
-      <lineBasicMaterial color={color} transparent opaUniverse={0.8} linewidth={2} />
+      <lineBasicMaterial color={color} transparent opacity={0.8} linewidth={2} />
     </lineSegments>
   );
 });
@@ -117,7 +117,7 @@ export const ParticleAura = memo(function ParticleAura({
         color={color}
         size={2.5}
         transparent
-        opaUniverse={0.7}
+        opacity={0.7}
         depthWrite={false}
         sizeAttenuation
       />
@@ -165,7 +165,7 @@ export const SpotlightEffect = memo(function SpotlightEffect({
     <meshBasicMaterial
       color={color}
       transparent
-      opaUniverse={0.1}
+      opacity={0.1}
       blending={THREE.AdditiveBlending}
       depthWrite={false}
       side={THREE.DoubleSide}
@@ -176,7 +176,7 @@ export const SpotlightEffect = memo(function SpotlightEffect({
     <meshBasicMaterial
       color={color}
       transparent
-      opaUniverse={0.04}
+      opacity={0.04}
       blending={THREE.AdditiveBlending}
       depthWrite={false}
       side={THREE.DoubleSide}
@@ -679,7 +679,7 @@ function BillboardSingle({
             emissive={color}
             emissiveIntensity={imageUrl === undefined ? 0.4 : 1.5}
             toneMapped={false}
-            opaUniverse={imageUrl === undefined ? 0.6 : 1}
+            opacity={imageUrl === undefined ? 0.6 : 1}
             transparent={imageUrl === undefined}
           />
         )}
@@ -910,8 +910,8 @@ export const NeonTrim = memo(function NeonTrim({
         const eg = g as THREE.Group;
         const solid = (eg.children[0] as THREE.Mesh).material as THREE.MeshBasicMaterial;
         const glow = (eg.children[1] as THREE.Mesh).material as THREE.MeshBasicMaterial;
-        solid.opaUniverse = pulse;
-        glow.opaUniverse = pulse * 0.15;
+        solid.opacity = pulse;
+        glow.opacity = pulse * 0.15;
       });
     }
 
@@ -921,9 +921,9 @@ export const NeonTrim = memo(function NeonTrim({
       const intensity = 0.7 - Math.abs(phase - 0.5) * 0.4;
       const ch = scanRef.current.children;
       for (let i = 0; i < 4; i++) {
-        ((ch[i] as THREE.Mesh).material as THREE.MeshBasicMaterial).opaUniverse = intensity;
+        ((ch[i] as THREE.Mesh).material as THREE.MeshBasicMaterial).opacity = intensity;
       }
-      ((ch[4] as THREE.Mesh).material as THREE.MeshBasicMaterial).opaUniverse = intensity * 0.12;
+      ((ch[4] as THREE.Mesh).material as THREE.MeshBasicMaterial).opacity = intensity * 0.12;
     }
   });
 
@@ -934,10 +934,10 @@ export const NeonTrim = memo(function NeonTrim({
         {edges.map((edge, i) => (
           <group key={i}>
             <mesh position={edge.pos} geometry={_box} scale={edge.size}>
-              <meshBasicMaterial color={color} transparent opaUniverse={0.45} blending={THREE.AdditiveBlending} depthWrite={false} />
+              <meshBasicMaterial color={color} transparent opacity={0.45} blending={THREE.AdditiveBlending} depthWrite={false} />
             </mesh>
             <mesh position={edge.pos} geometry={_box} scale={[edge.size[0] + 1.2, edge.size[1] + 0.3, edge.size[2] + 1.2]}>
-              <meshBasicMaterial color={color} transparent opaUniverse={0.07} blending={THREE.AdditiveBlending} depthWrite={false} side={THREE.DoubleSide} />
+              <meshBasicMaterial color={color} transparent opacity={0.07} blending={THREE.AdditiveBlending} depthWrite={false} side={THREE.DoubleSide} />
             </mesh>
           </group>
         ))}
@@ -946,20 +946,20 @@ export const NeonTrim = memo(function NeonTrim({
       {/* Scanning band that sweeps upward */}
       <group ref={scanRef}>
         <mesh position={[0, 0, d2]} geometry={_box} scale={[width + 1, 0.6, 0.6]}>
-          <meshBasicMaterial color={color} transparent opaUniverse={0.7} blending={THREE.AdditiveBlending} depthWrite={false} />
+          <meshBasicMaterial color={color} transparent opacity={0.7} blending={THREE.AdditiveBlending} depthWrite={false} />
         </mesh>
         <mesh position={[0, 0, -d2]} geometry={_box} scale={[width + 1, 0.6, 0.6]}>
-          <meshBasicMaterial color={color} transparent opaUniverse={0.7} blending={THREE.AdditiveBlending} depthWrite={false} />
+          <meshBasicMaterial color={color} transparent opacity={0.7} blending={THREE.AdditiveBlending} depthWrite={false} />
         </mesh>
         <mesh position={[w2, 0, 0]} geometry={_box} scale={[0.6, 0.6, depth + 1]}>
-          <meshBasicMaterial color={color} transparent opaUniverse={0.7} blending={THREE.AdditiveBlending} depthWrite={false} />
+          <meshBasicMaterial color={color} transparent opacity={0.7} blending={THREE.AdditiveBlending} depthWrite={false} />
         </mesh>
         <mesh position={[-w2, 0, 0]} geometry={_box} scale={[0.6, 0.6, depth + 1]}>
-          <meshBasicMaterial color={color} transparent opaUniverse={0.7} blending={THREE.AdditiveBlending} depthWrite={false} />
+          <meshBasicMaterial color={color} transparent opacity={0.7} blending={THREE.AdditiveBlending} depthWrite={false} />
         </mesh>
         {/* Glow plane */}
         <mesh rotation={[-Math.PI / 2, 0, 0]} geometry={_plane} scale={[width + 3, depth + 3, 1]}>
-          <meshBasicMaterial color={color} transparent opaUniverse={0.08} blending={THREE.AdditiveBlending} depthWrite={false} side={THREE.DoubleSide} />
+          <meshBasicMaterial color={color} transparent opacity={0.08} blending={THREE.AdditiveBlending} depthWrite={false} side={THREE.DoubleSide} />
         </mesh>
       </group>
 
@@ -1124,7 +1124,7 @@ export const PoolParty = memo(function PoolParty({
       </mesh>
       {/* Water */}
       <mesh ref={waterRef} position={[0, 1, 0]} geometry={_box} scale={[poolW, 0.8, poolD]}>
-        <meshStandardMaterial color="#40b0e0" emissive="#2080c0" emissiveIntensity={1.5} toneMapped={false} transparent opaUniverse={0.85} />
+        <meshStandardMaterial color="#40b0e0" emissive="#2080c0" emissiveIntensity={1.5} toneMapped={false} transparent opacity={0.85} />
       </mesh>
       {/* Lounge chairs (pixelated blocks) */}
       {[-1, 1].map((side) => (
@@ -1174,13 +1174,13 @@ export const HologramRing = memo(function HologramRing({
       const pulse = 1 + Math.sin(t * 2) * 0.015;
       shieldRef.current.scale.set(pulse, pulse, pulse);
       const mat = shieldRef.current.material as THREE.MeshBasicMaterial;
-      mat.opaUniverse = 0.12 + Math.sin(t * 3) * 0.04;
+      mat.opacity = 0.12 + Math.sin(t * 3) * 0.04;
     }
     if (dataRing1.current) dataRing1.current.rotation.y = t * 0.7;
     if (dataRing2.current) dataRing2.current.rotation.y = -t * 0.5;
     if (haloRef.current) {
       const mat = haloRef.current.material as THREE.MeshBasicMaterial;
-      mat.opaUniverse = 0.03 + Math.sin(t * 1.5) * 0.015;
+      mat.opacity = 0.03 + Math.sin(t * 1.5) * 0.015;
     }
   });
 
@@ -1193,7 +1193,7 @@ export const HologramRing = memo(function HologramRing({
           color={color}
           wireframe
           transparent
-          opaUniverse={0.14}
+          opacity={0.14}
           blending={THREE.AdditiveBlending}
           depthWrite={false}
         />
@@ -1204,7 +1204,7 @@ export const HologramRing = memo(function HologramRing({
         <meshBasicMaterial
           color={color}
           transparent
-          opaUniverse={0.03}
+          opacity={0.03}
           blending={THREE.AdditiveBlending}
           depthWrite={false}
           side={THREE.BackSide}
@@ -1218,7 +1218,7 @@ export const HologramRing = memo(function HologramRing({
           <meshBasicMaterial
             color={color}
             transparent
-            opaUniverse={0.45}
+            opacity={0.45}
             blending={THREE.AdditiveBlending}
             depthWrite={false}
           />
@@ -1232,7 +1232,7 @@ export const HologramRing = memo(function HologramRing({
           <meshBasicMaterial
             color={color}
             transparent
-            opaUniverse={0.35}
+            opacity={0.35}
             blending={THREE.AdditiveBlending}
             depthWrite={false}
           />
@@ -1395,7 +1395,7 @@ export const LightningAura = memo(function LightningAura({
           m.position.set(seg.x, seg.y, seg.z);
           m.rotation.set(0, 0, seg.rZ);
           m.scale.y = seg.len;
-          (m.material as THREE.MeshBasicMaterial).opaUniverse = striking ? 0.9 : 0;
+          (m.material as THREE.MeshBasicMaterial).opacity = striking ? 0.9 : 0;
         }
       }
     }
@@ -1416,7 +1416,7 @@ export const LightningAura = memo(function LightningAura({
       <group ref={cloudsRef}>
         {clouds.map((c, i) => (
           <mesh key={i} position={[c.x, c.y, c.z]} geometry={_box} scale={[c.w, c.h, c.d]}>
-            <meshStandardMaterial color="#1a1a28" emissive={color} emissiveIntensity={0} transparent opaUniverse={0.85} />
+            <meshStandardMaterial color="#1a1a28" emissive={color} emissiveIntensity={0} transparent opacity={0.85} />
           </mesh>
         ))}
       </group>
@@ -1425,7 +1425,7 @@ export const LightningAura = memo(function LightningAura({
       <group ref={boltsRef}>
         {Array.from({ length: BOLT_SLOTS * BOLT_SEGS }).map((_, i) => (
           <mesh key={i} geometry={_box} scale={[0.5, 3, 0.5]}>
-            <meshBasicMaterial color="#ffffff" transparent opaUniverse={0} blending={THREE.AdditiveBlending} depthWrite={false} />
+            <meshBasicMaterial color="#ffffff" transparent opacity={0} blending={THREE.AdditiveBlending} depthWrite={false} />
           </mesh>
         ))}
       </group>
@@ -1434,7 +1434,7 @@ export const LightningAura = memo(function LightningAura({
       <group ref={rainRef}>
         {drops.map((d, i) => (
           <mesh key={i} position={[d.x, d.y, d.z]} geometry={_box} scale={[0.1, d.len, 0.1]}>
-            <meshBasicMaterial color="#8899bb" transparent opaUniverse={0.3} blending={THREE.AdditiveBlending} depthWrite={false} />
+            <meshBasicMaterial color="#8899bb" transparent opacity={0.3} blending={THREE.AdditiveBlending} depthWrite={false} />
           </mesh>
         ))}
       </group>
@@ -1560,7 +1560,7 @@ export const StreakFlame = memo(function StreakFlame({
     <group>
       {corners.map((c, i) => (
         <mesh key={i} position={[c.x, stripH / 2, c.z]} geometry={_box} scale={[stripW, stripH, stripW]}>
-          <meshStandardMaterial color={color} emissive={color} emissiveIntensity={intensity} toneMapped={false} transparent opaUniverse={0.85} depthWrite={false} />
+          <meshStandardMaterial color={color} emissive={color} emissiveIntensity={intensity} toneMapped={false} transparent opacity={0.85} depthWrite={false} />
         </mesh>
       ))}
     </group>
@@ -1625,7 +1625,7 @@ export const GitHubStar = memo(function GitHubStar({
     if (glowRef.current) {
       glowRef.current.position.y = floatY + Math.sin(t * 0.8) * 2;
       const mat = glowRef.current.material as THREE.MeshBasicMaterial;
-      mat.opaUniverse = 0.12 + Math.sin(t * 2) * 0.05;
+      mat.opacity = 0.12 + Math.sin(t * 2) * 0.05;
       const pulse = 1 + Math.sin(t * 2) * 0.1;
       glowRef.current.scale.setScalar(pulse);
     }
@@ -1635,7 +1635,7 @@ export const GitHubStar = memo(function GitHubStar({
       raysRef.current.rotation.z = t * 0.15;
       raysRef.current.children.forEach((ray, i) => {
         const mat = (ray as THREE.Mesh).material as THREE.MeshBasicMaterial;
-        mat.opaUniverse = 0.06 + Math.sin(t * 3 + i * 1.2) * 0.04;
+        mat.opacity = 0.06 + Math.sin(t * 3 + i * 1.2) * 0.04;
       });
     }
   });
@@ -1672,7 +1672,7 @@ export const GitHubStar = memo(function GitHubStar({
         <meshBasicMaterial
           color={color}
           transparent
-          opaUniverse={0.12}
+          opacity={0.12}
           blending={THREE.AdditiveBlending}
           depthWrite={false}
         />
@@ -1694,7 +1694,7 @@ export const GitHubStar = memo(function GitHubStar({
               <meshBasicMaterial
                 color={color}
                 transparent
-                opaUniverse={0.08}
+                opacity={0.08}
                 blending={THREE.AdditiveBlending}
                 depthWrite={false}
               />
@@ -1731,7 +1731,7 @@ export const TierNeonTrim = memo(function TierNeonTrim({
     const pulse = 0.5 + Math.sin(state.clock.elapsedTime * 1.5) * 0.3;
     groupRef.current.children.forEach((m) => {
       const mat = (m as THREE.Mesh).material as THREE.MeshBasicMaterial;
-      if (mat.opaUniverse !== undefined) mat.opaUniverse = pulse;
+      if (mat.opacity !== undefined) mat.opacity = pulse;
     });
   });
 
@@ -1744,21 +1744,21 @@ export const TierNeonTrim = memo(function TierNeonTrim({
       {/* 4 vertical corner lines */}
       {([[-hw, hd], [hw, hd], [-hw, -hd], [hw, -hd]] as [number, number][]).map(([x, z], i) => (
         <mesh key={i} position={[x, height / 2, z]} geometry={_box} scale={[t, height, t]}>
-          <meshBasicMaterial color={color} transparent opaUniverse={0.6} blending={THREE.AdditiveBlending} depthWrite={false} toneMapped={false} />
+          <meshBasicMaterial color={color} transparent opacity={0.6} blending={THREE.AdditiveBlending} depthWrite={false} toneMapped={false} />
         </mesh>
       ))}
       {/* Top horizontal ring */}
       <mesh position={[0, height, hd]} geometry={_box} scale={[width + t * 2, t, t]}>
-        <meshBasicMaterial color={color} transparent opaUniverse={0.6} blending={THREE.AdditiveBlending} depthWrite={false} toneMapped={false} />
+        <meshBasicMaterial color={color} transparent opacity={0.6} blending={THREE.AdditiveBlending} depthWrite={false} toneMapped={false} />
       </mesh>
       <mesh position={[0, height, -hd]} geometry={_box} scale={[width + t * 2, t, t]}>
-        <meshBasicMaterial color={color} transparent opaUniverse={0.6} blending={THREE.AdditiveBlending} depthWrite={false} toneMapped={false} />
+        <meshBasicMaterial color={color} transparent opacity={0.6} blending={THREE.AdditiveBlending} depthWrite={false} toneMapped={false} />
       </mesh>
       <mesh position={[hw, height, 0]} geometry={_box} scale={[t, t, depth]}>
-        <meshBasicMaterial color={color} transparent opaUniverse={0.6} blending={THREE.AdditiveBlending} depthWrite={false} toneMapped={false} />
+        <meshBasicMaterial color={color} transparent opacity={0.6} blending={THREE.AdditiveBlending} depthWrite={false} toneMapped={false} />
       </mesh>
       <mesh position={[-hw, height, 0]} geometry={_box} scale={[t, t, depth]}>
-        <meshBasicMaterial color={color} transparent opaUniverse={0.6} blending={THREE.AdditiveBlending} depthWrite={false} toneMapped={false} />
+        <meshBasicMaterial color={color} transparent opacity={0.6} blending={THREE.AdditiveBlending} depthWrite={false} toneMapped={false} />
       </mesh>
     </group>
   );
@@ -1782,12 +1782,12 @@ export const TierBaseGlow = memo(function TierBaseGlow({
     frameCount.current++;
     if (frameCount.current % 3 !== 0) return;
     const mat = meshRef.current.material as THREE.MeshBasicMaterial;
-    mat.opaUniverse = 0.15 + Math.sin(state.clock.elapsedTime * 2) * 0.1;
+    mat.opacity = 0.15 + Math.sin(state.clock.elapsedTime * 2) * 0.1;
   });
 
   return (
     <mesh ref={meshRef} position={[0, 0.2, 0]} rotation={[-Math.PI / 2, 0, 0]} geometry={_plane} scale={[width + 12, depth + 12, 1]}>
-      <meshBasicMaterial color={color} transparent opaUniverse={0.2} blending={THREE.AdditiveBlending} depthWrite={false} toneMapped={false} />
+      <meshBasicMaterial color={color} transparent opacity={0.2} blending={THREE.AdditiveBlending} depthWrite={false} toneMapped={false} />
     </mesh>
   );
 });
@@ -1811,7 +1811,7 @@ export const TierSkyBeam = memo(function TierSkyBeam({
     if (frameCount.current % 2 !== 0) return;
     const t = state.clock.elapsedTime;
     const mat = meshRef.current.material as THREE.MeshBasicMaterial;
-    mat.opaUniverse = 0.04 + Math.sin(t * 0.8) * 0.02;
+    mat.opacity = 0.04 + Math.sin(t * 0.8) * 0.02;
     if (prismatic) {
       const hue = (t * 0.05) % 1;
       mat.color.setHSL(hue, 0.8, 0.7);
@@ -1822,7 +1822,7 @@ export const TierSkyBeam = memo(function TierSkyBeam({
 
   return (
     <mesh ref={meshRef} position={[0, height + beamH / 2, 0]} geometry={_box} scale={[3, beamH, 3]}>
-      <meshBasicMaterial color={color} transparent opaUniverse={0.05} blending={THREE.AdditiveBlending} depthWrite={false} toneMapped={false} />
+      <meshBasicMaterial color={color} transparent opacity={0.05} blending={THREE.AdditiveBlending} depthWrite={false} toneMapped={false} />
     </mesh>
   );
 });

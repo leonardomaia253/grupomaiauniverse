@@ -74,7 +74,7 @@ export default function InstancedPlanets({ planets }: { planets: CompanyPlanet[]
       <instancedMesh ref={ringMeshRef} args={[ringGeo, undefined, count]}>
         <meshBasicMaterial 
           transparent 
-          opaUniverse={0.4} 
+          opacity={0.4} 
           side={THREE.DoubleSide} 
           color="#ffffff" 
         />

@@ -417,7 +417,7 @@ function ColorPickerPanel({
             <button
               onClick={handleRemove}
               disabled={saving}
-              className="border-2 border-border px-2 py-1 text-[10px] text-muted hover:text-cream disabled:opaUniverse-40"
+              className="border-2 border-border px-2 py-1 text-[10px] text-muted hover:text-cream disabled:opacity-40"
             >
               {feedback === "removed" ? "Removed!" : "Remove"}
             </button>
@@ -425,7 +425,7 @@ function ColorPickerPanel({
           <button
             onClick={handleSave}
             disabled={saving}
-            className="btn-press px-3 py-1 text-[10px] text-bg disabled:opaUniverse-40"
+            className="btn-press px-3 py-1 text-[10px] text-bg disabled:opacity-40"
             style={{
               backgroundColor: feedback === "saved" ? "#39d353" : ACCENT,
               boxShadow: `2px 2px 0 0 ${SHADOW}`,
@@ -563,7 +563,7 @@ function BillboardUploadPanel({
                   <button
                     onClick={() => handleUpload(i)}
                     disabled={isUploading}
-                    className="btn-press w-full px-2 py-0.5 text-[9px] text-bg disabled:opaUniverse-40"
+                    className="btn-press w-full px-2 py-0.5 text-[9px] text-bg disabled:opacity-40"
                     style={{
                       backgroundColor: isSaved ? "#39d353" : ACCENT,
                       boxShadow: `1px 1px 0 0 ${SHADOW}`,
@@ -1075,7 +1075,7 @@ export default function ShopClient({
     <button
       onClick={handleSaveLoadout}
       disabled={!hasChanges || saving}
-      className="btn-press w-full py-2.5 text-xs text-bg disabled:opaUniverse-40"
+      className="btn-press w-full py-2.5 text-xs text-bg disabled:opacity-40"
       style={{
         backgroundColor: saved ? "#39d353" : ACCENT,
         boxShadow: `2px 2px 0 0 ${SHADOW}`,
@@ -1324,7 +1324,7 @@ export default function ShopClient({
                             isEquipped ? "border-[3px]" : "border-2",
                             isEquipped ? "border-[#39d353]" : isConfirming ? "border-(--color-border-light)" : "border-border",
                             isEquipped ? "bg-[rgba(57,211,83,0.1)]" : "bg-bg-card",
-                            !isOwned && !isEquipped ? "opaUniverse-60" : "",
+                            !isOwned && !isEquipped ? "opacity-60" : "",
                             "hover:border-border-light",
                           ].join(" ")}
                         >
@@ -1368,7 +1368,7 @@ export default function ShopClient({
                                 <button
                                   onClick={(e) => { e.stopPropagation(); setConfirmBuyItem(null); checkout(itemId); }}
                                   disabled={isBuying}
-                                  className="btn-press flex-1 py-1 text-[9px] text-bg disabled:opaUniverse-40"
+                                  className="btn-press flex-1 py-1 text-[9px] text-bg disabled:opacity-40"
                                   style={{ backgroundColor: ACCENT, boxShadow: `1px 1px 0 0 ${SHADOW}` }}
                                 >
                                   {isBuying ? "..." : "Buy"}
@@ -1377,7 +1377,7 @@ export default function ShopClient({
                               <button
                                 onClick={(e) => { e.stopPropagation(); setConfirmBuyItem(null); checkout(itemId, "nowpayments"); }}
                                 disabled={isBuying}
-                                className="btn-press w-full py-1 text-[9px] text-bg disabled:opaUniverse-40"
+                                className="btn-press w-full py-1 text-[9px] text-bg disabled:opacity-40"
                                 style={{ backgroundColor: "#f7931a", boxShadow: "1px 1px 0 0 #b36a00" }}
                               >
                                 {isBuying ? "..." : "Pay with Crypto"}
@@ -1386,7 +1386,7 @@ export default function ShopClient({
                                 <button
                                   onClick={(e) => { e.stopPropagation(); setConfirmBuyItem(null); checkout(itemId, "abacatepay"); }}
                                   disabled={isBuying}
-                                  className="btn-press w-full py-1 text-[9px] text-bg disabled:opaUniverse-40"
+                                  className="btn-press w-full py-1 text-[9px] text-bg disabled:opacity-40"
                                   style={{ backgroundColor: "#32bcad", boxShadow: "1px 1px 0 0 #1a7a6e" }}
                                 >
                                   {isBuying ? "..." : "Pay with PIX"}
@@ -1483,7 +1483,7 @@ export default function ShopClient({
                       onMouseLeave={() => setHighlightItem(null)}
                       className={[
                         "flex flex-col items-center justify-center p-2 transition-all w-full aspect-square",
-                        isFacesOwned ? "border-[3px] border-[#39d353] bg-[rgba(57,211,83,0.1)]" : "border-2 border-border bg-bg-card opaUniverse-60",
+                        isFacesOwned ? "border-[3px] border-[#39d353] bg-[rgba(57,211,83,0.1)]" : "border-2 border-border bg-bg-card opacity-60",
                         isConfirming ? "border-(--color-border-light)" : "",
                         "hover:border-border-light",
                       ].join(" ")}
@@ -1526,7 +1526,7 @@ export default function ShopClient({
                             <button
                               onClick={(e) => { e.stopPropagation(); setConfirmBuyItem(null); checkout(itemId); }}
                               disabled={isBuying}
-                              className="btn-press flex-1 py-1 text-[9px] text-bg disabled:opaUniverse-40"
+                              className="btn-press flex-1 py-1 text-[9px] text-bg disabled:opacity-40"
                               style={{ backgroundColor: ACCENT, boxShadow: `1px 1px 0 0 ${SHADOW}` }}
                             >
                               {isBuying ? "..." : "Buy"}
@@ -1535,7 +1535,7 @@ export default function ShopClient({
                           <button
                             onClick={(e) => { e.stopPropagation(); setConfirmBuyItem(null); checkout(itemId, "nowpayments"); }}
                             disabled={isBuying}
-                            className="btn-press w-full py-1 text-[9px] text-bg disabled:opaUniverse-40"
+                            className="btn-press w-full py-1 text-[9px] text-bg disabled:opacity-40"
                             style={{ backgroundColor: "#f7931a", boxShadow: "1px 1px 0 0 #b36a00" }}
                           >
                             {isBuying ? "..." : "Pay with Crypto"}
@@ -1544,7 +1544,7 @@ export default function ShopClient({
                             <button
                               onClick={(e) => { e.stopPropagation(); setConfirmBuyItem(null); checkout(itemId, "abacatepay"); }}
                               disabled={isBuying}
-                              className="btn-press w-full py-1 text-[9px] text-bg disabled:opaUniverse-40"
+                              className="btn-press w-full py-1 text-[9px] text-bg disabled:opacity-40"
                               style={{ backgroundColor: "#32bcad", boxShadow: "1px 1px 0 0 #1a7a6e" }}
                             >
                               {isBuying ? "..." : "Pay with PIX"}
@@ -1641,7 +1641,7 @@ export default function ShopClient({
                         "border-2",
                         isConfirming ? "border-(--color-border-light)" : "border-border",
                         "bg-bg-card",
-                        atMax ? "opaUniverse-40" : "",
+                        atMax ? "opacity-40" : "",
                         "hover:border-border-light",
                       ].join(" ")}
                     >
@@ -1676,7 +1676,7 @@ export default function ShopClient({
                             <button
                               onClick={(e) => { e.stopPropagation(); setConfirmBuyItem(null); checkout("streak_freeze"); }}
                               disabled={isBuying}
-                              className="btn-press flex-1 py-1 text-[9px] text-bg disabled:opaUniverse-40"
+                              className="btn-press flex-1 py-1 text-[9px] text-bg disabled:opacity-40"
                               style={{ backgroundColor: ACCENT, boxShadow: `1px 1px 0 0 ${SHADOW}` }}
                             >
                               {isBuying ? "..." : "Buy"}
@@ -1685,7 +1685,7 @@ export default function ShopClient({
                           <button
                             onClick={(e) => { e.stopPropagation(); setConfirmBuyItem(null); checkout("streak_freeze", "nowpayments"); }}
                             disabled={isBuying}
-                            className="btn-press w-full py-1 text-[9px] text-bg disabled:opaUniverse-40"
+                            className="btn-press w-full py-1 text-[9px] text-bg disabled:opacity-40"
                             style={{ backgroundColor: "#f7931a", boxShadow: "1px 1px 0 0 #b36a00" }}
                           >
                             {isBuying ? "..." : "Pay with Crypto"}
@@ -1694,7 +1694,7 @@ export default function ShopClient({
                             <button
                               onClick={(e) => { e.stopPropagation(); setConfirmBuyItem(null); checkout("streak_freeze", "abacatepay"); }}
                               disabled={isBuying}
-                              className="btn-press w-full py-1 text-[9px] text-bg disabled:opaUniverse-40"
+                              className="btn-press w-full py-1 text-[9px] text-bg disabled:opacity-40"
                               style={{ backgroundColor: "#32bcad", boxShadow: "1px 1px 0 0 #1a7a6e" }}
                             >
                               {isBuying ? "..." : "Pay with PIX"}
@@ -1821,10 +1821,10 @@ export default function ShopClient({
                         <div className="flex flex-col gap-1">
                           <div className="flex gap-1">
                             <button onClick={(e) => { e.stopPropagation(); setConfirmBuyItem(null); }} className="flex-1 border-2 border-border py-1 text-[9px] text-muted hover:text-cream">Cancel</button>
-                            <button onClick={(e) => { e.stopPropagation(); setConfirmBuyItem(null); checkout(itemId); }} disabled={isBuying} className="btn-press flex-1 py-1 text-[9px] text-bg disabled:opaUniverse-40" style={{ backgroundColor: "#ff5555", boxShadow: "1px 1px 0 0 #aa2222" }}>{isBuying ? "..." : "Buy"}</button>
+                            <button onClick={(e) => { e.stopPropagation(); setConfirmBuyItem(null); checkout(itemId); }} disabled={isBuying} className="btn-press flex-1 py-1 text-[9px] text-bg disabled:opacity-40" style={{ backgroundColor: "#ff5555", boxShadow: "1px 1px 0 0 #aa2222" }}>{isBuying ? "..." : "Buy"}</button>
                           </div>
-                          <button onClick={(e) => { e.stopPropagation(); setConfirmBuyItem(null); checkout(itemId, "nowpayments"); }} disabled={isBuying} className="btn-press w-full py-1 text-[9px] text-bg disabled:opaUniverse-40" style={{ backgroundColor: "#f7931a", boxShadow: "1px 1px 0 0 #b36a00" }}>{isBuying ? "..." : "Pay with Crypto"}</button>
-                          <button onClick={(e) => { e.stopPropagation(); setConfirmBuyItem(null); checkout(itemId, "abacatepay"); }} disabled={isBuying} className="btn-press w-full py-1 text-[9px] text-bg disabled:opaUniverse-40" style={{ backgroundColor: "#32bcad", boxShadow: "1px 1px 0 0 #1a7a6e" }}>{isBuying ? "..." : "Pay with PIX"}</button>
+                          <button onClick={(e) => { e.stopPropagation(); setConfirmBuyItem(null); checkout(itemId, "nowpayments"); }} disabled={isBuying} className="btn-press w-full py-1 text-[9px] text-bg disabled:opacity-40" style={{ backgroundColor: "#f7931a", boxShadow: "1px 1px 0 0 #b36a00" }}>{isBuying ? "..." : "Pay with Crypto"}</button>
+                          <button onClick={(e) => { e.stopPropagation(); setConfirmBuyItem(null); checkout(itemId, "abacatepay"); }} disabled={isBuying} className="btn-press w-full py-1 text-[9px] text-bg disabled:opacity-40" style={{ backgroundColor: "#32bcad", boxShadow: "1px 1px 0 0 #1a7a6e" }}>{isBuying ? "..." : "Pay with PIX"}</button>
                         </div>
                       </div>
                     )}
@@ -1889,10 +1889,10 @@ export default function ShopClient({
                             <div className="flex flex-col gap-1">
                               <div className="flex gap-1">
                                 <button onClick={(e) => { e.stopPropagation(); setConfirmBuyItem(null); }} className="flex-1 border-2 border-border py-1 text-[9px] text-muted hover:text-cream">Cancel</button>
-                                <button onClick={(e) => { e.stopPropagation(); setConfirmBuyItem(null); checkout(itemId); }} disabled={isBuying} className="btn-press flex-1 py-1 text-[9px] text-bg disabled:opaUniverse-40" style={{ backgroundColor: "#ff5555", boxShadow: "1px 1px 0 0 #aa2222" }}>{isBuying ? "..." : "Buy"}</button>
+                                <button onClick={(e) => { e.stopPropagation(); setConfirmBuyItem(null); checkout(itemId); }} disabled={isBuying} className="btn-press flex-1 py-1 text-[9px] text-bg disabled:opacity-40" style={{ backgroundColor: "#ff5555", boxShadow: "1px 1px 0 0 #aa2222" }}>{isBuying ? "..." : "Buy"}</button>
                               </div>
-                              <button onClick={(e) => { e.stopPropagation(); setConfirmBuyItem(null); checkout(itemId, "nowpayments"); }} disabled={isBuying} className="btn-press w-full py-1 text-[9px] text-bg disabled:opaUniverse-40" style={{ backgroundColor: "#f7931a", boxShadow: "1px 1px 0 0 #b36a00" }}>{isBuying ? "..." : "Pay with Crypto"}</button>
-                              {isBrazil && <button onClick={(e) => { e.stopPropagation(); setConfirmBuyItem(null); checkout(itemId, "abacatepay"); }} disabled={isBuying} className="btn-press w-full py-1 text-[9px] text-bg disabled:opaUniverse-40" style={{ backgroundColor: "#32bcad", boxShadow: "1px 1px 0 0 #1a7a6e" }}>{isBuying ? "..." : "Pay with PIX"}</button>}
+                              <button onClick={(e) => { e.stopPropagation(); setConfirmBuyItem(null); checkout(itemId, "nowpayments"); }} disabled={isBuying} className="btn-press w-full py-1 text-[9px] text-bg disabled:opacity-40" style={{ backgroundColor: "#f7931a", boxShadow: "1px 1px 0 0 #b36a00" }}>{isBuying ? "..." : "Pay with Crypto"}</button>
+                              {isBrazil && <button onClick={(e) => { e.stopPropagation(); setConfirmBuyItem(null); checkout(itemId, "abacatepay"); }} disabled={isBuying} className="btn-press w-full py-1 text-[9px] text-bg disabled:opacity-40" style={{ backgroundColor: "#32bcad", boxShadow: "1px 1px 0 0 #1a7a6e" }}>{isBuying ? "..." : "Pay with PIX"}</button>}
                             </div>
                           </div>
                         )}
@@ -1951,10 +1951,10 @@ export default function ShopClient({
                             <div className="flex flex-col gap-1">
                               <div className="flex gap-1">
                                 <button onClick={(e) => { e.stopPropagation(); setConfirmBuyItem(null); }} className="flex-1 border-2 border-border py-1 text-[9px] text-muted hover:text-cream">Cancel</button>
-                                <button onClick={(e) => { e.stopPropagation(); setConfirmBuyItem(null); checkout(itemId); }} disabled={isBuying} className="btn-press flex-1 py-1 text-[9px] text-bg disabled:opaUniverse-40" style={{ backgroundColor: "#ff5555", boxShadow: "1px 1px 0 0 #aa2222" }}>{isBuying ? "..." : "Buy"}</button>
+                                <button onClick={(e) => { e.stopPropagation(); setConfirmBuyItem(null); checkout(itemId); }} disabled={isBuying} className="btn-press flex-1 py-1 text-[9px] text-bg disabled:opacity-40" style={{ backgroundColor: "#ff5555", boxShadow: "1px 1px 0 0 #aa2222" }}>{isBuying ? "..." : "Buy"}</button>
                               </div>
-                              <button onClick={(e) => { e.stopPropagation(); setConfirmBuyItem(null); checkout(itemId, "nowpayments"); }} disabled={isBuying} className="btn-press w-full py-1 text-[9px] text-bg disabled:opaUniverse-40" style={{ backgroundColor: "#f7931a", boxShadow: "1px 1px 0 0 #b36a00" }}>{isBuying ? "..." : "Pay with Crypto"}</button>
-                              {isBrazil && <button onClick={(e) => { e.stopPropagation(); setConfirmBuyItem(null); checkout(itemId, "abacatepay"); }} disabled={isBuying} className="btn-press w-full py-1 text-[9px] text-bg disabled:opaUniverse-40" style={{ backgroundColor: "#32bcad", boxShadow: "1px 1px 0 0 #1a7a6e" }}>{isBuying ? "..." : "Pay with PIX"}</button>}
+                              <button onClick={(e) => { e.stopPropagation(); setConfirmBuyItem(null); checkout(itemId, "nowpayments"); }} disabled={isBuying} className="btn-press w-full py-1 text-[9px] text-bg disabled:opacity-40" style={{ backgroundColor: "#f7931a", boxShadow: "1px 1px 0 0 #b36a00" }}>{isBuying ? "..." : "Pay with Crypto"}</button>
+                              {isBrazil && <button onClick={(e) => { e.stopPropagation(); setConfirmBuyItem(null); checkout(itemId, "abacatepay"); }} disabled={isBuying} className="btn-press w-full py-1 text-[9px] text-bg disabled:opacity-40" style={{ backgroundColor: "#32bcad", boxShadow: "1px 1px 0 0 #1a7a6e" }}>{isBuying ? "..." : "Pay with PIX"}</button>}
                             </div>
                           </div>
                         )}

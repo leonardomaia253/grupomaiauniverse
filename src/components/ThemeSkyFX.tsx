@@ -512,37 +512,37 @@ export default memo(function ThemeSkyFX({ themeIndex, theme }: Props) {
     // ── Disc material (moon / sun / synth sun / glow orb) ───────
     // discScale is the design-time value; the runtime scale is skyD(discScale)
     // so it keeps its angular size as the far plane changes.
-    const { discTex, discScale, discOpaUniverse, discColor } = useMemo(() => {
+    const { discTex, discScale, discopacity, discColor } = useMemo(() => {
         const cfg = DISC_CFG[themeIndex];
         if (themeIndex === 0) return {
             // Midnight: crisp moon with crater noise and narrow alpha edge
             discTex: makeCrispMoonTexture(512),
-            discScale: cfg.scale, discOpaUniverse: 0.95,
+            discScale: cfg.scale, discopacity: 0.95,
             discColor: new THREE.Color(1, 1, 1),
         };
         if (themeIndex === 1) return {
             // Sunset: warm orange sun
             discTex: makeSunsetDiscTexture(512),
-            discScale: cfg.scale, discOpaUniverse: 0.88,
+            discScale: cfg.scale, discopacity: 0.88,
             discColor: new THREE.Color(1, 1, 1),
         };
         if (themeIndex === 2) return {
             // Neon: synthwave striped moon (upgraded texture + scale from DISC_CFG)
             discTex: makeSynthwaveMoonTexture(256),
-            discScale: cfg.scale, discOpaUniverse: 0.95,
+            discScale: cfg.scale, discopacity: 0.95,
             discColor: new THREE.Color(1.0, 1.0, 1.0),
         };
         // Emerald
         return {
             discTex: makeRadialTexture("rgba(180,255,210,1.0)", "rgba(60,200,120,0.6)", "rgba(0,0,0,0)", 128),
-            discScale: cfg.scale, discOpaUniverse: 0.82,
+            discScale: cfg.scale, discopacity: 0.82,
             discColor: new THREE.Color(1.2, 2.0, 1.4),
         };
     }, [themeIndex]);
 
     const discMat = useMemo(() => {
         const m = new THREE.SpriteMaterial({
-            map: discTex, transparent: true, opaUniverse: discOpaUniverse,
+            map: discTex, transparent: true, opacity: discopacity,
             depthWrite: false, depthTest: true, fog: false, color: discColor,
             blending: themeIndex === 1 || themeIndex === 3 ? THREE.AdditiveBlending : THREE.NormalBlending
         });
@@ -551,9 +551,9 @@ export default memo(function ThemeSkyFX({ themeIndex, theme }: Props) {
         if (themeIndex === 0) m.alphaTest = 0.02;
         if (themeIndex === 1) m.alphaTest = 0.015;
         return m;
-    }, [discTex, discOpaUniverse, discColor, themeIndex]);
+    }, [discTex, discopacity, discColor, themeIndex]);
 
-    // Ref for opaUniverse pulses (safe to hold in ref — SpriteMaterial is mutable)
+    // Ref for opacity pulses (safe to hold in ref — SpriteMaterial is mutable)
     const discMatRef = useRef(discMat);
     discMatRef.current = discMat;
 
@@ -563,7 +563,7 @@ export default memo(function ThemeSkyFX({ themeIndex, theme }: Props) {
         const m = new THREE.SpriteMaterial({
             map: tex,
             transparent: true,
-            opaUniverse: 0.26,              // subtle
+            opacity: 0.26,              // subtle
             depthWrite: false,
             depthTest: true,            // planets can occlude
             fog: false,
@@ -621,7 +621,7 @@ export default memo(function ThemeSkyFX({ themeIndex, theme }: Props) {
             size: themeIndex === 2 ? 2.0 : themeIndex === 3 ? 1.6 : 1.8,
             sizeAttenuation: false, // stable screen-space size — stars don't shrink away
             vertexColors: true, transparent: true,
-            opaUniverse: themeIndex === 2 ? 0.85 : themeIndex === 3 ? 0.55 : 0.75,
+            opacity: themeIndex === 2 ? 0.85 : themeIndex === 3 ? 0.55 : 0.75,
             depthWrite: false,
             depthTest: true, // ground/planets occlude stars ✅
             fog: false,
@@ -669,7 +669,7 @@ export default memo(function ThemeSkyFX({ themeIndex, theme }: Props) {
     const dustMat = useMemo(() => {
         if (!DUST_COUNTS[themeIndex]) return null;
         const m = new THREE.PointsMaterial({
-            size: 2.4, vertexColors: true, transparent: true, opaUniverse: 0.55,
+            size: 2.4, vertexColors: true, transparent: true, opacity: 0.55,
             depthWrite: false, depthTest: true, fog: false,
             blending: THREE.AdditiveBlending,
         });
@@ -716,7 +716,7 @@ export default memo(function ThemeSkyFX({ themeIndex, theme }: Props) {
     const flyMat = useMemo(() => {
         if (!FIREFLY_COUNTS[themeIndex]) return null;
         const m = new THREE.PointsMaterial({
-            size: 3.5, vertexColors: true, transparent: true, opaUniverse: 1.0,
+            size: 3.5, vertexColors: true, transparent: true, opacity: 1.0,
             depthWrite: false,
             depthTest: true, // fixed: was false — fireflies were drawing through ground
             fog: false,
@@ -745,13 +745,13 @@ export default memo(function ThemeSkyFX({ themeIndex, theme }: Props) {
         const t1 = makeAuroraCurtainTexture(7002, texW, texH);
 
         const m0 = new THREE.MeshBasicMaterial({
-            map: t0, transparent: true, opaUniverse: 0.22, // ↓ from 0.26
+            map: t0, transparent: true, opacity: 0.22, // ↓ from 0.26
             depthWrite: false, depthTest: true, fog: false,
             side: THREE.BackSide,   // camera is inside the cylinder
             blending: THREE.AdditiveBlending,
         });
         const m1 = new THREE.MeshBasicMaterial({
-            map: t1, transparent: true, opaUniverse: 0.14, // ↓ from 0.17
+            map: t1, transparent: true, opacity: 0.14, // ↓ from 0.17
             depthWrite: false, depthTest: true, fog: false,
             side: THREE.BackSide,
             blending: THREE.AdditiveBlending,
@@ -779,7 +779,7 @@ export default memo(function ThemeSkyFX({ themeIndex, theme }: Props) {
         if (themeIndex !== 1) return null;
         const tex = makeHorizonBandTexture(256);
         const m = new THREE.MeshBasicMaterial({
-            map: tex, transparent: true, opaUniverse: 0.18,
+            map: tex, transparent: true, opacity: 0.18,
             depthWrite: false, depthTest: true, fog: false,
             side: THREE.BackSide, // camera inside the sphere
             blending: THREE.AdditiveBlending,
@@ -803,7 +803,7 @@ export default memo(function ThemeSkyFX({ themeIndex, theme }: Props) {
         const m = new THREE.MeshBasicMaterial({
             map: tex,
             transparent: true,
-            opaUniverse: 0.09,             // keep LOW (subtle)
+            opacity: 0.09,             // keep LOW (subtle)
             depthWrite: false,
             depthTest: true,
             fog: false,
@@ -837,7 +837,7 @@ export default memo(function ThemeSkyFX({ themeIndex, theme }: Props) {
 
     const streakMat = useMemo(() => {
         const m = new THREE.PointsMaterial({
-            size: 3.0, vertexColors: true, transparent: true, opaUniverse: 0.9,
+            size: 3.0, vertexColors: true, transparent: true, opacity: 0.9,
             depthWrite: false, depthTest: true, fog: false,
             blending: THREE.AdditiveBlending,
         });
@@ -962,12 +962,12 @@ export default memo(function ThemeSkyFX({ themeIndex, theme }: Props) {
                     auroraPulse.current.t += dt;
                     const p01 = Math.min(1, auroraPulse.current.t / auroraPulse.current.dur);
                     const bump = Math.sin(p01 * Math.PI);
-                    auroraRingMat0.opaUniverse = 0.22 + bump * 0.15;
-                    auroraRingMat1.opaUniverse = 0.14 + bump * 0.11;
+                    auroraRingMat0.opacity = 0.22 + bump * 0.15;
+                    auroraRingMat1.opacity = 0.14 + bump * 0.11;
                     if (p01 >= 1) {
                         auroraPulse.current.active = false;
-                        auroraRingMat0.opaUniverse = 0.22;
-                        auroraRingMat1.opaUniverse = 0.14;
+                        auroraRingMat0.opacity = 0.22;
+                        auroraRingMat1.opacity = 0.14;
                     }
                 }
             }
@@ -1076,10 +1076,10 @@ export default memo(function ThemeSkyFX({ themeIndex, theme }: Props) {
             const p01 = Math.min(1, pulse.current.t / pulse.current.dur);
             const bump = Math.sin(p01 * Math.PI); // 0 → 1 → 0 arc
             const mat = discMatRef.current;
-            mat.opaUniverse = discOpaUniverse + bump * (themeIndex === 2 ? 0.40 : 0.12);
+            mat.opacity = discopacity + bump * (themeIndex === 2 ? 0.40 : 0.12);
             if (p01 >= 1) {
                 pulse.current.active = false;
-                discMatRef.current.opaUniverse = discOpaUniverse; // reset to baseline
+                discMatRef.current.opacity = discopacity; // reset to baseline
             }
         }
     });

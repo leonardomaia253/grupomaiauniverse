@@ -60,7 +60,7 @@ const fragmentShader = /* glsl */ `
   uniform float uFogFar;
   uniform float uFocusedId;
   uniform float uFocusedIdB;
-  uniform float uDimOpaUniverse;
+  uniform float uDimopacity;
   uniform float uDimEmissive;
   uniform float uUniverseEnergy;
 
@@ -120,7 +120,7 @@ const fragmentShader = /* glsl */ `
     float diffuse = max(dot(vNormal, lightDir), 0.0) * 0.3 + 0.7;
     color *= diffuse;
 
-    // Focus/dim: keep focused planet at full opaUniverse, dim others
+    // Focus/dim: keep focused planet at full opacity, dim others
     float isFocused = step(abs(vInstanceId - uFocusedId), 0.5)
                     + step(abs(vInstanceId - uFocusedIdB), 0.5);
     isFocused = min(isFocused, 1.0);
@@ -128,7 +128,7 @@ const fragmentShader = /* glsl */ `
     // When uFocusedId < 0, no dimming (no planet focused)
     float hasFocus = step(0.0, uFocusedId);
 
-    float dimFactor = mix(1.0, mix(uDimOpaUniverse, 1.0, isFocused), hasFocus);
+    float dimFactor = mix(1.0, mix(uDimopacity, 1.0, isFocused), hasFocus);
     float emissiveMult = mix(1.0, mix(uDimEmissive, 1.0, isFocused), hasFocus);
     color *= emissiveMult * dimFactor;
 
@@ -149,7 +149,7 @@ const fragmentShader = /* glsl */ `
       else if (idx == 10) bayer = 0.0625; else if (idx == 11) bayer = 0.5625;
       else if (idx == 12) bayer = 0.9375; else if (idx == 13) bayer = 0.4375;
       else if (idx == 14) bayer = 0.8125; else bayer = 0.3125;
-      if (bayer > uDimOpaUniverse) discard;
+      if (bayer > uDimopacity) discard;
     }
 
     // Linear fog (reuse fogDepth from early discard)
@@ -172,11 +172,11 @@ interface InstancedplanetsProps {
   planets: Universeplanet[];
   colors: planetColors;
   atlasTexture: THREE.CanvasTexture;
-  focusedplanet?: string | null;
-  focusedplanetB?: string | null;
+  focusedPlanet?: string | null;
+  focusedPlanetB?: string | null;
   introMode?: boolean;
   onplanetClick?: (planet: Universeplanet) => void;
-  dimOpaUniverse?: number;
+  dimopacity?: number;
   dimEmissive?: number;
   holdRise?: boolean;
   liveByLogin?: Map<string, unknown>;
@@ -200,11 +200,11 @@ export default memo(function Instancedplanets({
   planets,
   colors,
   atlasTexture,
-  focusedplanet,
-  focusedplanetB,
+  focusedPlanet,
+  focusedPlanetB,
   introMode,
   onplanetClick,
-  dimOpaUniverse,
+  dimopacity,
   dimEmissive,
   holdRise,
   liveByLogin,
@@ -237,7 +237,7 @@ export default memo(function Instancedplanets({
         uFogFar: { value: 3500 },
         uFocusedId: { value: -1.0 },
         uFocusedIdB: { value: -1.0 },
-        uDimOpaUniverse: { value: 0.6 },
+        uDimopacity: { value: 0.6 },
         uDimEmissive: { value: 0.5 },
         uUniverseEnergy: { value: 1.0 },
       },
@@ -407,11 +407,11 @@ export default memo(function Instancedplanets({
   // Update focus uniforms
   useEffect(() => {
     if (!material.uniforms) return;
-    const idA = focusedplanet ? loginToIdx.get(focusedplanet.toLowerCase()) : undefined;
-    const idB = focusedplanetB ? loginToIdx.get(focusedplanetB.toLowerCase()) : undefined;
+    const idA = focusedPlanet ? loginToIdx.get(focusedPlanet.toLowerCase()) : undefined;
+    const idB = focusedPlanetB ? loginToIdx.get(focusedPlanetB.toLowerCase()) : undefined;
     material.uniforms.uFocusedId.value = idA !== undefined ? idA : -1.0;
     material.uniforms.uFocusedIdB.value = idB !== undefined ? idB : -1.0;
-  }, [focusedplanet, focusedplanetB, loginToIdx, material]);
+  }, [focusedPlanet, focusedPlanetB, loginToIdx, material]);
 
   // Update live presence glow
   useEffect(() => {

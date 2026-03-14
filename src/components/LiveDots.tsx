@@ -47,7 +47,7 @@ export default function LiveDots({ planets, liveByLogin }: LiveDotsProps) {
       new THREE.MeshBasicMaterial({
         color: "#4ade80",
         transparent: true,
-        opaUniverse: 1,
+        opacity: 1,
         depthTest: false,
         side: THREE.DoubleSide,
       }),
@@ -58,7 +58,7 @@ export default function LiveDots({ planets, liveByLogin }: LiveDotsProps) {
       new THREE.MeshBasicMaterial({
         color: "#fbbf24",
         transparent: true,
-        opaUniverse: 1,
+        opacity: 1,
         depthTest: false,
         side: THREE.DoubleSide,
       }),
@@ -94,8 +94,8 @@ export default function LiveDots({ planets, liveByLogin }: LiveDotsProps) {
   useFrame(({ clock }) => {
     const t = clock.elapsedTime;
     const pulse = 0.6 + 0.4 * Math.sin(t * 2);
-    if (count > 0) mat.opaUniverse = pulse;
-    if (creatorIndex !== null) creatorMat.opaUniverse = pulse;
+    if (count > 0) mat.opacity = pulse;
+    if (creatorIndex !== null) creatorMat.opacity = pulse;
   });
 
   // Cleanup

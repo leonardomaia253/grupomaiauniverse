@@ -103,7 +103,7 @@ export const ShootingStar = memo(function ShootingStar({
     if (glowRef.current) {
       glowRef.current.position.set(x, y, z);
       const mat = glowRef.current.material as THREE.MeshBasicMaterial;
-      mat.opaUniverse = 0.15 + Math.sin(t * 5) * 0.05;
+      mat.opacity = 0.15 + Math.sin(t * 5) * 0.05;
     }
 
     // Update trail (push new position, shift old ones)
@@ -141,7 +141,7 @@ export const ShootingStar = memo(function ShootingStar({
         <meshBasicMaterial
           color={color}
           transparent
-          opaUniverse={0.15}
+          opacity={0.15}
           blending={THREE.AdditiveBlending}
           depthWrite={false}
         />
@@ -159,7 +159,7 @@ export const ShootingStar = memo(function ShootingStar({
           color={color}
           size={2}
           transparent
-          opaUniverse={0.6}
+          opacity={0.6}
           blending={THREE.AdditiveBlending}
           depthWrite={false}
           sizeAttenuation
@@ -215,11 +215,11 @@ export const StarBeam = memo(function StarBeam({
     // Beam pulse
     if (beamRef.current) {
       const mat = beamRef.current.material as THREE.MeshBasicMaterial;
-      mat.opaUniverse = 0.1 + Math.sin(t * 2) * 0.04;
+      mat.opacity = 0.1 + Math.sin(t * 2) * 0.04;
     }
     if (outerRef.current) {
       const mat = outerRef.current.material as THREE.MeshBasicMaterial;
-      mat.opaUniverse = 0.04 + Math.sin(t * 1.5) * 0.02;
+      mat.opacity = 0.04 + Math.sin(t * 1.5) * 0.02;
     }
 
     // Particles float upward
@@ -248,7 +248,7 @@ export const StarBeam = memo(function StarBeam({
         <meshBasicMaterial
           color={color}
           transparent
-          opaUniverse={0.1}
+          opacity={0.1}
           blending={THREE.AdditiveBlending}
           depthWrite={false}
           side={THREE.DoubleSide}
@@ -261,7 +261,7 @@ export const StarBeam = memo(function StarBeam({
         <meshBasicMaterial
           color={color}
           transparent
-          opaUniverse={0.04}
+          opacity={0.04}
           blending={THREE.AdditiveBlending}
           depthWrite={false}
           side={THREE.DoubleSide}
@@ -274,7 +274,7 @@ export const StarBeam = memo(function StarBeam({
         <meshBasicMaterial
           color={color}
           transparent
-          opaUniverse={0.2}
+          opacity={0.2}
           blending={THREE.AdditiveBlending}
           depthWrite={false}
           side={THREE.DoubleSide}
@@ -293,7 +293,7 @@ export const StarBeam = memo(function StarBeam({
           color={color}
           size={2.5}
           transparent
-          opaUniverse={0.8}
+          opacity={0.8}
           blending={THREE.AdditiveBlending}
           depthWrite={false}
           sizeAttenuation
@@ -374,7 +374,7 @@ export const Starfall = memo(function Starfall({
       // Fade near bottom
       const heightPct = (s.y - botY) / (topY - botY);
       const mat = m.material as THREE.MeshStandardMaterial;
-      mat.opaUniverse = Math.min(0.85, heightPct * 1.2);
+      mat.opacity = Math.min(0.85, heightPct * 1.2);
     }
   });
 
@@ -393,7 +393,7 @@ export const Starfall = memo(function Starfall({
             emissiveIntensity={3.5}
             toneMapped={false}
             transparent
-            opaUniverse={0.9}
+            opacity={0.9}
           />
         </mesh>
       ))}
@@ -464,7 +464,7 @@ export const GitHubStar = memo(function GitHubStar({
     if (glowRef.current) {
       glowRef.current.position.y = floatY + Math.sin(t * 0.8) * 2;
       const mat = glowRef.current.material as THREE.MeshBasicMaterial;
-      mat.opaUniverse = 0.12 + Math.sin(t * 2) * 0.05;
+      mat.opacity = 0.12 + Math.sin(t * 2) * 0.05;
       const pulse = 1 + Math.sin(t * 2) * 0.1;
       glowRef.current.scale.setScalar(pulse);
     }
@@ -475,7 +475,7 @@ export const GitHubStar = memo(function GitHubStar({
       raysRef.current.rotation.z = t * 0.15;
       raysRef.current.children.forEach((ray, i) => {
         const mat = (ray as THREE.Mesh).material as THREE.MeshBasicMaterial;
-        mat.opaUniverse = 0.06 + Math.sin(t * 3 + i * 1.2) * 0.04;
+        mat.opacity = 0.06 + Math.sin(t * 3 + i * 1.2) * 0.04;
       });
     }
   });
@@ -513,7 +513,7 @@ export const GitHubStar = memo(function GitHubStar({
         <meshBasicMaterial
           color={color}
           transparent
-          opaUniverse={0.12}
+          opacity={0.12}
           blending={THREE.AdditiveBlending}
           depthWrite={false}
         />
@@ -535,7 +535,7 @@ export const GitHubStar = memo(function GitHubStar({
               <meshBasicMaterial
                 color={color}
                 transparent
-                opaUniverse={0.08}
+                opacity={0.08}
                 blending={THREE.AdditiveBlending}
                 depthWrite={false}
               />
@@ -668,7 +668,7 @@ export const StarOrbit = memo(function StarOrbit({
           color={color}
           size={1.5}
           transparent
-          opaUniverse={0.4}
+          opacity={0.4}
           blending={THREE.AdditiveBlending}
           depthWrite={false}
           sizeAttenuation
@@ -752,7 +752,7 @@ export const CommitStream = memo(function CommitStream({
       const heightPct = (c.y - botY) / (topY - botY);
       const fade = heightPct < 0.1 ? heightPct / 0.1 : heightPct > 0.9 ? (1 - heightPct) / 0.1 : 1;
       const mat = m.material as THREE.MeshStandardMaterial;
-      mat.opaUniverse = fade * 0.9;
+      mat.opacity = fade * 0.9;
     }
   });
 
@@ -771,7 +771,7 @@ export const CommitStream = memo(function CommitStream({
             emissiveIntensity={c.emissiveIntensity}
             toneMapped={false}
             transparent
-            opaUniverse={0.9}
+            opacity={0.9}
           />
         </mesh>
       ))}

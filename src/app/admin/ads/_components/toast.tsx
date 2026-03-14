@@ -24,7 +24,7 @@ export function ToastContainer({ toasts, onDismiss }: ToastContainerProps) {
           <span>{toast.message}</span>
           <button
             onClick={() => onDismiss(toast.id)}
-            className="cursor-pointer text-current opaUniverse-60 hover:opaUniverse-100"
+            className="cursor-pointer text-current opacity-60 hover:opacity-100"
           >
             x
           </button>

@@ -247,7 +247,7 @@ const INTRO_LOOK_TARGETS: [number, number, number][] = [
   [TARGET_X, TARGET_Y, TARGET_Z],  // WP7: Final look target
 ];
 
-// Smootherstep (Perlin): zero veloUniverse AND zero acceleration at both ends
+// Smootherstep (Perlin): zero velocity AND zero acceleration at both ends
 function introEase(t: number): number {
   const s = Math.max(0, Math.min(1, t));
   return s * s * s * (s * (s * 6 - 15) + 10);
@@ -395,13 +395,13 @@ function RabbitFlyover({
 
 function CameraFocus({
   planets,
-  focusedplanet,
-  focusedplanetB,
+  focusedPlanet,
+  focusedPlanetB,
   controlsRef,
 }: {
   planets: Universeplanet[];
-  focusedplanet: string | null;
-  focusedplanetB?: string | null;
+  focusedPlanet: string | null;
+  focusedPlanetB?: string | null;
   controlsRef: React.RefObject<any>;
 }) {
   const { camera } = useThree();
@@ -417,7 +417,7 @@ function CameraFocus({
   planetsRef.current = planets;
 
   useEffect(() => {
-    if (!focusedplanet) {
+    if (!focusedPlanet) {
       // Re-enable auto-rotate when focus is cleared
       if (controlsRef.current) {
         controlsRef.current.autoRotate = true;
@@ -426,7 +426,7 @@ function CameraFocus({
     }
 
     const bA = planetsRef.current.find(
-      (b) => b.login.toLowerCase() === focusedplanet.toLowerCase()
+      (b) => b.login.toLowerCase() === focusedPlanet.toLowerCase()
     );
     if (!bA) return;
 
@@ -437,8 +437,8 @@ function CameraFocus({
     }
 
     // Dual focus: compute midpoint + separation-based backoff
-    const bB = focusedplanetB
-      ? planetsRef.current.find((b) => b.login.toLowerCase() === focusedplanetB.toLowerCase())
+    const bB = focusedPlanetB
+      ? planetsRef.current.find((b) => b.login.toLowerCase() === focusedPlanetB.toLowerCase())
       : null;
 
     if (bB) {
@@ -499,7 +499,7 @@ function CameraFocus({
       controlsRef.current.autoRotate = false;
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [focusedplanet, focusedplanetB, camera, controlsRef]);
+  }, [focusedPlanet, focusedPlanetB, camera, controlsRef]);
 
   useFrame((_, delta) => {
     if (!active.current || progress.current >= 1) return;
@@ -899,7 +899,7 @@ function AirplaneFlight({ onExit, onHud, onPause, pauseSignal = 0, hasOverlay = 
       const fade = 1 - (i / TRAIL_POINTS);
       // Only show trail when boosting (speedRatio > 1) or fast
       const intensity = Math.max(0, Math.min(1.0, (speedRatio - 0.7) * 1.5));
-      trailColors.current[i * 4 + 3] = fade * intensity * 0.5; // max 50% opaUniverse
+      trailColors.current[i * 4 + 3] = fade * intensity * 0.5; // max 50% opacity
     }
 
     if (trailGeomRef.current) {
@@ -1300,7 +1300,7 @@ function Fountain({ position }: { position: [number, number, number] }) {
       </mesh>
       <mesh position={[0, 7.2, 0]}>
         <cylinderGeometry args={[1.8, 2, 1.2, 10]} />
-        <meshStandardMaterial color="#4090d0" emissive="#2060a0" emissiveIntensity={2.0} toneMapped={false} transparent opaUniverse={0.7} />
+        <meshStandardMaterial color="#4090d0" emissive="#2060a0" emissiveIntensity={2.0} toneMapped={false} transparent opacity={0.7} />
       </mesh>
     </group>
   );
@@ -1406,7 +1406,7 @@ function InstancedDecorations({ items, roadMarkingColor, sidewalkColor }: { item
     fountainStone1: new THREE.MeshStandardMaterial({ color: "#707070", emissive: "#707070", emissiveIntensity: 0.25 }),
     fountainStone2: new THREE.MeshStandardMaterial({ color: "#808080", emissive: "#808080", emissiveIntensity: 0.25 }),
     fountainStone3: new THREE.MeshStandardMaterial({ color: "#909090", emissive: "#909090", emissiveIntensity: 0.25 }),
-    fountainWater: new THREE.MeshStandardMaterial({ color: "#4090d0", emissive: "#2060a0", emissiveIntensity: 2.0, toneMapped: false, transparent: true, opaUniverse: 0.7 }),
+    fountainWater: new THREE.MeshStandardMaterial({ color: "#4090d0", emissive: "#2060a0", emissiveIntensity: 2.0, toneMapped: false, transparent: true, opacity: 0.7 }),
     sidewalk: new THREE.MeshStandardMaterial({ color: sidewalkColor, emissive: sidewalkColor, emissiveIntensity: 0.2, roughness: 0.85 }),
   }), [roadMarkingColor, sidewalkColor]);
 
@@ -1677,7 +1677,7 @@ function River({ river, waterColor, waterEmissive }: { river: UniverseRiver; wat
 
   useFrame(({ clock }) => {
     if (matRef.current) {
-      matRef.current.opaUniverse = 0.82 + Math.sin(clock.elapsedTime * 0.5) * 0.05;
+      matRef.current.opacity = 0.82 + Math.sin(clock.elapsedTime * 0.5) * 0.05;
     }
   });
 
@@ -1692,7 +1692,7 @@ function River({ river, waterColor, waterEmissive }: { river: UniverseRiver; wat
         ref={matRef}
         color={waterEmissive}
         transparent
-        opaUniverse={0.82}
+        opacity={0.82}
         depthWrite={false}
       />
     </mesh>
@@ -1890,7 +1890,7 @@ function Waterfront({ river, dockColor }: { river: UniverseRiver; dockColor: str
 
 // ─── Orbit Scene (controls + focus) ──────────────────────────
 
-function OrbitScene({ planets, focusedplanet, focusedplanetB }: { planets: Universeplanet[]; focusedplanet: string | null; focusedplanetB?: string | null }) {
+function OrbitScene({ planets, focusedPlanet, focusedPlanetB }: { planets: Universeplanet[]; focusedPlanet: string | null; focusedPlanetB?: string | null }) {
   const controlsRef = useRef<any>(null);
   const { camera } = useThree();
 
@@ -1902,7 +1902,7 @@ function OrbitScene({ planets, focusedplanet, focusedplanetB }: { planets: Unive
 
   return (
     <>
-      <CameraFocus planets={planets} focusedplanet={focusedplanet} focusedplanetB={focusedplanetB} controlsRef={controlsRef} />
+      <CameraFocus planets={planets} focusedPlanet={focusedPlanet} focusedPlanetB={focusedPlanetB} controlsRef={controlsRef} />
       <OrbitControls
         ref={controlsRef}
         enableDamping
@@ -1965,8 +1965,8 @@ interface Props {
   themeIndex: number;
   onHud?: (speed: number, altitude: number, x: number, z: number, yaw: number) => void;
   onPause?: (paused: boolean) => void;
-  focusedplanet?: string | null;
-  focusedplanetB?: string | null;
+  focusedPlanet?: string | null;
+  focusedPlanetB?: string | null;
   accentColor?: string;
   onClearFocus?: () => void;
   onplanetClick?: (planet: Universeplanet) => void;
@@ -2019,7 +2019,7 @@ function UniverseExposure({ UniverseEnergy }: { UniverseEnergy: number }) {
 // Plaza indices for rabbit sightings (progressively further from center)
 const RABBIT_PLAZA_INDICES = [1, 2, 4, 7, 10]; // plazas[1]=slot3, [2]=slot7, [4]=slot18, [7]=slot42, [10]=slot75
 
-export default function UniverseCanvas({ planets, plazas, decorations, river, bridges, flyMode, flyVehicle, onExitFly, onCollect, themeIndex, onHud, onPause, focusedplanet, focusedplanetB, accentColor, onClearFocus, onplanetClick, onFocusInfo, flyPauseSignal, flyHasOverlay, flyStartPaused, skyAds, onAdClick, onAdViewed, introMode, onIntroEnd, raidPhase, raidData, raidAttacker, raidDefender, onRaidPhaseComplete, onLandmarkClick, rabbitSighting, onRabbitCaught, rabbitCinematic, onRabbitCinematicEnd, rabbitCinematicTarget, ghostPreviewLogin, holdRise, celebrationActive, wallpaperMode, wallpaperSpeed, liveByLogin, UniverseEnergy }: Props) {
+export default function UniverseCanvas({ planets, plazas, decorations, river, bridges, flyMode, flyVehicle, onExitFly, onCollect, themeIndex, onHud, onPause, focusedPlanet, focusedPlanetB, accentColor, onClearFocus, onplanetClick, onFocusInfo, flyPauseSignal, flyHasOverlay, flyStartPaused, skyAds, onAdClick, onAdViewed, introMode, onIntroEnd, raidPhase, raidData, raidAttacker, raidDefender, onRaidPhaseComplete, onLandmarkClick, rabbitSighting, onRabbitCaught, rabbitCinematic, onRabbitCinematicEnd, rabbitCinematicTarget, ghostPreviewLogin, holdRise, celebrationActive, wallpaperMode, wallpaperSpeed, liveByLogin, UniverseEnergy }: Props) {
   const t = THEMES[themeIndex] ?? THEMES[0];
   const showPerf = typeof window !== "undefined" && new URLSearchParams(window.location.search).has("perf");
   const [dpr, setDpr] = useState(1);
@@ -2073,7 +2073,7 @@ export default function UniverseCanvas({ planets, plazas, decorations, river, br
       ) : (
         <>
           {!introMode && !rabbitCinematic && !flyMode && (!raidPhase || raidPhase === "idle" || raidPhase === "preview") && (
-            <OrbitScene planets={planets} focusedplanet={focusedplanet ?? null} focusedplanetB={focusedplanetB} />
+            <OrbitScene planets={planets} focusedPlanet={focusedPlanet ?? null} focusedPlanetB={focusedPlanetB} />
           )}
 
           {raidPhase && raidPhase !== "idle" && raidPhase !== "preview" && (
@@ -2130,8 +2130,8 @@ export default function UniverseCanvas({ planets, plazas, decorations, river, br
       <UniverseScene
         planets={planets}
         colors={t.planet}
-        focusedplanet={raidPhase && raidPhase !== "idle" && raidPhase !== "preview" && raidPhase !== "share" && raidPhase !== "done" ? (raidDefender?.login ?? focusedplanet) : focusedplanet}
-        focusedplanetB={raidPhase && raidPhase !== "idle" && raidPhase !== "preview" && raidPhase !== "share" && raidPhase !== "done" ? (raidAttacker?.login ?? null) : focusedplanetB}
+        focusedPlanet={raidPhase && raidPhase !== "idle" && raidPhase !== "preview" && raidPhase !== "share" && raidPhase !== "done" ? (raidDefender?.login ?? focusedPlanet) : focusedPlanet}
+        focusedPlanetB={raidPhase && raidPhase !== "idle" && raidPhase !== "preview" && raidPhase !== "share" && raidPhase !== "done" ? (raidAttacker?.login ?? null) : focusedPlanetB}
         hideEffectsFor={raidPhase && raidPhase !== "idle" && raidPhase !== "preview" && raidPhase !== "share" && raidPhase !== "done" ? (raidAttacker?.login ?? null) : null}
         accentColor={t.planet.accent}
         onplanetClick={onplanetClick}
@@ -2146,8 +2146,8 @@ export default function UniverseCanvas({ planets, plazas, decorations, river, br
 
       <ComparePath
         planets={planets}
-        focusedplanet={raidPhase && raidPhase !== "idle" && raidPhase !== "preview" && raidPhase !== "share" && raidPhase !== "done" ? (raidDefender?.login ?? focusedplanet ?? null) : (focusedplanet ?? null)}
-        focusedplanetB={raidPhase && raidPhase !== "idle" && raidPhase !== "preview" && raidPhase !== "share" && raidPhase !== "done" ? (raidAttacker?.login ?? null) : (focusedplanetB ?? null)}
+        focusedPlanet={raidPhase && raidPhase !== "idle" && raidPhase !== "preview" && raidPhase !== "share" && raidPhase !== "done" ? (raidDefender?.login ?? focusedPlanet ?? null) : (focusedPlanet ?? null)}
+        focusedPlanetB={raidPhase && raidPhase !== "idle" && raidPhase !== "preview" && raidPhase !== "share" && raidPhase !== "done" ? (raidAttacker?.login ?? null) : (focusedPlanetB ?? null)}
         accentColor={t.planet.accent}
       />
 
@@ -2161,8 +2161,8 @@ export default function UniverseCanvas({ planets, plazas, decorations, river, br
             planets={planets}
             onAdClick={onAdClick}
             onAdViewed={onAdViewed}
-            focusedplanet={raidPhase && raidPhase !== "idle" && raidPhase !== "preview" && raidPhase !== "share" && raidPhase !== "done" ? (raidDefender?.login ?? focusedplanet) : focusedplanet}
-            focusedplanetB={raidPhase && raidPhase !== "idle" && raidPhase !== "preview" && raidPhase !== "share" && raidPhase !== "done" ? (raidAttacker?.login ?? null) : focusedplanetB}
+            focusedPlanet={raidPhase && raidPhase !== "idle" && raidPhase !== "preview" && raidPhase !== "share" && raidPhase !== "done" ? (raidDefender?.login ?? focusedPlanet) : focusedPlanet}
+            focusedPlanetB={raidPhase && raidPhase !== "idle" && raidPhase !== "preview" && raidPhase !== "share" && raidPhase !== "done" ? (raidAttacker?.login ?? null) : focusedPlanetB}
           />
         </>
       )}

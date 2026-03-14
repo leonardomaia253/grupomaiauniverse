@@ -112,7 +112,7 @@ function PlanePreviewScene({ text, color, bgColor }: AdProps) {
     geo.setAttribute("position", new THREE.BufferAttribute(
       new Float32Array([0, -2, 5, 0, -DROP, ROPE_GAP]), 3,
     ));
-    const mat = new THREE.LineBasicMaterial({ color: "#ffffff", transparent: true, opaUniverse: 0.5 });
+    const mat = new THREE.LineBasicMaterial({ color: "#ffffff", transparent: true, opacity: 0.5 });
     return new THREE.Line(geo, mat);
   }, []);
 

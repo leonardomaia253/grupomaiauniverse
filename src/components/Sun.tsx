@@ -37,7 +37,7 @@ export default function Sun({ radius = 60 }) {
         <meshBasicMaterial 
           color="#ffcc00" 
           transparent 
-          opaUniverse={0.3} 
+          opacity={0.3} 
           side={THREE.BackSide}
         />
       </mesh>

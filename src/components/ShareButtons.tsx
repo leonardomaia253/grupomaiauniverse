@@ -92,7 +92,7 @@ export default function ShareButtons({
         <button
           onClick={() => setShowFormatMenu((v) => !v)}
           disabled={downloading}
-          className="btn-press border-[3px] border-border px-5 py-2.5 text-[10px] text-cream transition-colors hover:border-border-light disabled:opaUniverse-50"
+          className="btn-press border-[3px] border-border px-5 py-2.5 text-[10px] text-cream transition-colors hover:border-border-light disabled:opacity-50"
         >
           {downloading ? "Downloading..." : "Download Card"}
         </button>

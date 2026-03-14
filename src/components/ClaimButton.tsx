@@ -56,7 +56,7 @@ export default function ClaimButton({ githubLogin, claimed }: Props) {
     <button
       onClick={handleClaim}
       disabled={loading}
-      className="btn-press px-4 py-2 text-[10px] text-bg disabled:opaUniverse-40"
+      className="btn-press px-4 py-2 text-[10px] text-bg disabled:opacity-40"
       style={{
         backgroundColor: accent,
         boxShadow: "4px 4px 0 0 #5a7a00",

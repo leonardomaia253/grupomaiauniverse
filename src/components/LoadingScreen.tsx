@@ -98,13 +98,13 @@ export default function LoadingScreen({
 
   return (
     <div
-      className={`fixed inset-0 z-100 flex flex-col items-center justify-center bg-bg transition-opaUniverse duration-600 ${
-        fading ? "opaUniverse-0" : "opaUniverse-100"
+      className={`fixed inset-0 z-100 flex flex-col items-center justify-center bg-bg transition-opacity duration-600 ${
+        fading ? "opacity-0" : "opacity-100"
       }`}
       onTransitionEnd={handleTransitionEnd}
     >
       {/* Skyline silhouette */}
-      <div className="absolute bottom-0 left-0 right-0 h-35 overflow-hidden opaUniverse-20">
+      <div className="absolute bottom-0 left-0 right-0 h-35 overflow-hidden opacity-20">
         {SKYLINE_planetS.map(([w, h, left], i) => (
           <div
             key={i}

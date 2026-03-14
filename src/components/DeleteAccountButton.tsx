@@ -63,14 +63,14 @@ export default function DeleteAccountButton() {
               <button
                 onClick={handleDelete}
                 disabled={loading}
-                className="flex-1 border-[2px] border-red-500/60 px-4 py-2 text-[10px] text-red-400 transition-colors hover:bg-red-500/10 disabled:opaUniverse-50"
+                className="flex-1 border-[2px] border-red-500/60 px-4 py-2 text-[10px] text-red-400 transition-colors hover:bg-red-500/10 disabled:opacity-50"
               >
                 {loading ? "Deleting..." : "Yes, Delete"}
               </button>
               <button
                 onClick={() => setOpen(false)}
                 disabled={loading}
-                className="flex-1 border-[2px] border-border px-4 py-2 text-[10px] text-muted transition-colors hover:text-cream disabled:opaUniverse-50"
+                className="flex-1 border-[2px] border-border px-4 py-2 text-[10px] text-muted transition-colors hover:text-cream disabled:opacity-50"
               >
                 Cancel
               </button>

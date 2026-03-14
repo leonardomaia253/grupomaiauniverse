@@ -3,7 +3,7 @@
 import { useRef, useMemo, useEffect } from "react";
 import { useFrame, useThree } from "@react-three/fiber";
 import * as THREE from "three";
-import { isplanetAd, type SkyAd } from "@/lib/skyAds";
+import { isPlanetAd, type SkyAd } from "@/lib/skyAds";
 import type { Universeplanet } from "@/lib/github";
 import { createLedTexture, ViewabilityTracker, SCROLL_SPEED, markAdPointerConsumed, registerAdMesh, unregisterAdMesh } from "./SkyAds";
 
@@ -356,14 +356,14 @@ interface planetAdsProps {
   planets: Universeplanet[];
   onAdClick?: (ad: SkyAd) => void;
   onAdViewed?: (adId: string) => void;
-  focusedplanet?: string | null;
-  focusedplanetB?: string | null;
+  focusedPlanet?: string | null;
+  focusedPlanetB?: string | null;
 }
 
 // Pre-allocated vector for distance culling
 const _adCamPos = new THREE.Vector3();
 
-export default function planetAds({ ads, planets, onAdClick, onAdViewed, focusedplanet, focusedplanetB }: planetAdsProps) {
+export default function planetAds({ ads, planets, onAdClick, onAdViewed, focusedPlanet, focusedPlanetB }: planetAdsProps) {
   const meshRefs = useRef<Map<string, THREE.Mesh>>(new Map());
   const groupRef = useRef<THREE.Group>(null);
   const { camera } = useThree();
@@ -384,7 +384,7 @@ export default function planetAds({ ads, planets, onAdClick, onAdViewed, focused
   );
 
   const { billboardAds, rooftopSignAds, ledWrapAds } = useMemo(() => {
-    const planetAds = ads.filter((a) => isplanetAd(a.vehicle));
+    const planetAds = ads.filter((a) => isPlanetAd(a.vehicle));
     return {
       billboardAds: planetAds.filter((a) => a.vehicle === "billboard"),
       rooftopSignAds: planetAds.filter((a) => a.vehicle === "rooftop_sign"),
@@ -396,8 +396,8 @@ export default function planetAds({ ads, planets, onAdClick, onAdViewed, focused
     return null;
   }
 
-  const focusedLower = focusedplanet?.toLowerCase() ?? null;
-  const focusedBLower = focusedplanetB?.toLowerCase() ?? null;
+  const focusedLower = focusedPlanet?.toLowerCase() ?? null;
+  const focusedBLower = focusedPlanetB?.toLowerCase() ?? null;
 
   return (
     <group ref={groupRef}>

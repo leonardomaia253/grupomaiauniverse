@@ -175,7 +175,7 @@ const Fireworks = memo(function Fireworks({ UniverseRadius }: { UniverseRadius: 
         size={8}
         vertexColors
         transparent
-        opaUniverse={1}
+        opacity={1}
         depthWrite={false}
         depthTest={false}
         sizeAttenuation
@@ -268,7 +268,7 @@ const Confetti = memo(function Confetti() {
         size={5}
         vertexColors
         transparent
-        opaUniverse={0.9}
+        opacity={0.9}
         depthWrite={false}
         depthTest={false}
         sizeAttenuation

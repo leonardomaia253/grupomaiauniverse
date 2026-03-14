@@ -97,10 +97,10 @@ export default function RabbitCompletion({ onComplete }: RabbitCompletionProps) 
 
       {/* Fade to black overlay */}
       <div
-        className="absolute inset-0 bg-black transition-opaUniverse"
+        className="absolute inset-0 bg-black transition-opacity"
         style={{
           transitionDuration: "1s",
-          opaUniverse: phase === "glitch" ? 0 : 1,
+          opacity: phase === "glitch" ? 0 : 1,
         }}
       />
 
@@ -116,7 +116,7 @@ export default function RabbitCompletion({ onComplete }: RabbitCompletionProps) 
             }}
           >
             {line1}
-            {phase === "type1" && <span style={{ opaUniverse: showCursor ? 1 : 0 }}>_</span>}
+            {phase === "type1" && <span style={{ opacity: showCursor ? 1 : 0 }}>_</span>}
           </p>
           {(phase === "type2" || phase === "redirect") && (
             <p
@@ -128,7 +128,7 @@ export default function RabbitCompletion({ onComplete }: RabbitCompletionProps) 
               }}
             >
               {line2}
-              {phase === "type2" && <span style={{ opaUniverse: showCursor ? 1 : 0 }}>_</span>}
+              {phase === "type2" && <span style={{ opacity: showCursor ? 1 : 0 }}>_</span>}
             </p>
           )}
         </div>

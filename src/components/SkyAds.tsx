@@ -183,7 +183,7 @@ function BannerPlane({
     const geo = new THREE.BufferGeometry();
     const ropeVerts = new Float32Array([0, -2, 5, 0, -BANNER_DROP, ROPE_GAP]);
     geo.setAttribute("position", new THREE.BufferAttribute(ropeVerts, 3));
-    const mat = new THREE.LineBasicMaterial({ color: "#ffffff", transparent: true, opaUniverse: 0.5 });
+    const mat = new THREE.LineBasicMaterial({ color: "#ffffff", transparent: true, opacity: 0.5 });
     return new THREE.Line(geo, mat);
   }, []);
 
@@ -268,7 +268,7 @@ function BannerPlane({
         geometry={_box}
         scale={[12, Math.abs(bannerY) + BANNER_HEIGHT + 12, ROPE_GAP + BANNER_LENGTH + 12]}
       >
-        <meshBasicMaterial transparent opaUniverse={0} depthWrite={false} />
+        <meshBasicMaterial transparent opacity={0} depthWrite={false} />
       </mesh>
 
       {/* Paper plane — scale 3.5x (bigger than player's 3x, proportional to banner) */}
@@ -419,7 +419,7 @@ function Blimp({
         geometry={_box}
         scale={[24, 24, 54]}
       >
-        <meshBasicMaterial transparent opaUniverse={0} depthWrite={false} />
+        <meshBasicMaterial transparent opacity={0} depthWrite={false} />
       </mesh>
 
       {/* Body — elongated along local Z (forward), light hull */}

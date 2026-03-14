@@ -60,7 +60,7 @@ export default function FounderMessage({ onClose, session, hasClaimed, onSignIn 
   // Fade in overlay
   useEffect(() => {
     requestAnimationFrame(() => {
-      if (overlayRef.current) overlayRef.current.style.opaUniverse = "1";
+      if (overlayRef.current) overlayRef.current.style.opacity = "1";
     });
   }, []);
 
@@ -168,8 +168,8 @@ export default function FounderMessage({ onClose, session, hasClaimed, onSignIn 
   return (
     <div
       ref={overlayRef}
-      className="fixed inset-0 z-50 flex items-center justify-center transition-opaUniverse duration-700"
-      style={{ opaUniverse: 0 }}
+      className="fixed inset-0 z-50 flex items-center justify-center transition-opacity duration-700"
+      style={{ opacity: 0 }}
       onClick={(e) => {
         if (e.target === e.currentTarget) onClose();
       }}
@@ -286,7 +286,7 @@ export default function FounderMessage({ onClose, session, hasClaimed, onSignIn 
             className="font-pixel text-[9px] sm:text-[10px] mt-8 transition-all duration-700"
             style={{
               color: "#00ff41",
-              opaUniverse: showSignature ? 0.7 : 0,
+              opacity: showSignature ? 0.7 : 0,
               transform: showSignature ? "translateY(0)" : "translateY(8px)",
             }}
           >
@@ -297,7 +297,7 @@ export default function FounderMessage({ onClose, session, hasClaimed, onSignIn 
           <div
             className="mt-6 flex flex-col gap-3 transition-all duration-700"
             style={{
-              opaUniverse: showSupport ? 1 : 0,
+              opacity: showSupport ? 1 : 0,
               transform: showSupport ? "translateY(0)" : "translateY(8px)",
             }}
           >
@@ -389,7 +389,7 @@ export default function FounderMessage({ onClose, session, hasClaimed, onSignIn 
             className="font-pixel text-[8px] sm:text-[9px] mt-8 mb-2 italic transition-all duration-1000"
             style={{
               color: "rgba(0, 255, 65, 0.35)",
-              opaUniverse: showPS ? 1 : 0,
+              opacity: showPS ? 1 : 0,
               transform: showPS ? "translateY(0)" : "translateY(8px)",
             }}
           >

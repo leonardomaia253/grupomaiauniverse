@@ -72,7 +72,7 @@ export function AdTable({
     ads.length > 0 && ads.every((ad) => selectedIds.has(ad.id));
 
   return (
-    <div className={loading ? "opaUniverse-60 transition-opaUniverse" : ""}>
+    <div className={loading ? "opacity-60 transition-opacity" : ""}>
       {/* Table header */}
       {ads.length > 0 && (
         <div className="hidden border border-border bg-bg-raised px-3 py-2 md:grid md:grid-cols-[24px_minmax(0,2fr)_80px_80px_80px_60px_72px_120px] md:items-center md:gap-3">

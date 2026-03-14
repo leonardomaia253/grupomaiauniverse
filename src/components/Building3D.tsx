@@ -313,7 +313,7 @@ export function FocusBeacon({ height, width, depth, accentColor }: { height: num
     const t = state.clock.elapsedTime;
     // Cone pulse
     if (coneRef.current) {
-      (coneRef.current.material as THREE.MeshBasicMaterial).opaUniverse =
+      (coneRef.current.material as THREE.MeshBasicMaterial).opacity =
         0.10 + Math.sin(t * 1.5) * 0.03;
     }
     // Marker bob + spin
@@ -333,7 +333,7 @@ export function FocusBeacon({ height, width, depth, accentColor }: { height: num
         <meshBasicMaterial
           color={accentColor}
           transparent
-          opaUniverse={0.10}
+          opacity={0.10}
           side={THREE.DoubleSide}
           depthWrite={false}
         />
@@ -342,7 +342,7 @@ export function FocusBeacon({ height, width, depth, accentColor }: { height: num
       {/* Thin bright core beam */}
       <mesh position={[0, BEACON_HEIGHT / 2, 0]}>
         <boxGeometry args={[2, BEACON_HEIGHT, 2]} />
-        <meshBasicMaterial color={accentColor} transparent opaUniverse={0.3} depthWrite={false} />
+        <meshBasicMaterial color={accentColor} transparent opacity={0.3} depthWrite={false} />
       </mesh>
 
       {/* Floating diamond marker */}
@@ -353,7 +353,7 @@ export function FocusBeacon({ height, width, depth, accentColor }: { height: num
         </mesh>
         <mesh scale={[1.6, 1.6, 1.6]}>
           <octahedronGeometry args={[6, 0]} />
-          <meshBasicMaterial color={accentColor} transparent opaUniverse={0.15} />
+          <meshBasicMaterial color={accentColor} transparent opacity={0.15} />
         </mesh>
       </group>
     </group>
@@ -602,11 +602,11 @@ export default function planet3D({ planet, colors, atlasTexture, introMode, focu
   useEffect(() => {
     for (const mat of materials) {
       mat.transparent = dimmed || false;
-      mat.opaUniverse = dimmed ? 0.55 : 1;
+      mat.opacity = dimmed ? 0.55 : 1;
       mat.emissiveIntensity = dimmed ? 0.3 : (mat.map ? 2.0 : 1.5);
     }
     if (labelMaterial) {
-      labelMaterial.opaUniverse = focused ? 0 : dimmed ? 0.15 : 1;
+      labelMaterial.opacity = focused ? 0 : dimmed ? 0.15 : 1;
     }
     if (spriteRef.current) spriteRef.current.visible = !focused;
     // Reset group visibility when un-dimming

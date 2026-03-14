@@ -93,7 +93,7 @@ function MatrixRainCanvas() {
     <canvas
       ref={canvasRef}
       className="absolute inset-0 pointer-events-none"
-      style={{ opaUniverse: 0.5 }}
+      style={{ opacity: 0.5 }}
     />
   );
 }
@@ -234,16 +234,16 @@ function FloatingParticlesCSS() {
             background: "#ffffff",
             boxShadow: "0 0 4px rgba(255,255,255,0.5)",
             animation: `particleUp ${p.duration}s ease-out ${p.delay}s infinite`,
-            opaUniverse: 0,
+            opacity: 0,
           }}
         />
       ))}
       <style jsx>{`
         @keyframes particleUp {
-          0% { transform: translateY(0); opaUniverse: 0; }
-          10% { opaUniverse: 0.5; }
-          80% { opaUniverse: 0.2; }
-          100% { transform: translateY(-100vh); opaUniverse: 0; }
+          0% { transform: translateY(0); opacity: 0; }
+          10% { opacity: 0.5; }
+          80% { opacity: 0.2; }
+          100% { transform: translateY(-100vh); opacity: 0; }
         }
       `}</style>
     </div>
@@ -377,7 +377,7 @@ function RabbitContent() {
           </p>
           <p
             className="font-pixel text-[9px] sm:text-[11px] tracking-widest"
-            style={{ color: "#00ff41", opaUniverse: 0.5 }}
+            style={{ color: "#00ff41", opacity: 0.5 }}
           >
             {completers.length} citizen{completers.length !== 1 ? "s" : ""} {completers.length === 1 ? "has" : "have"} found the white rabbit
           </p>
@@ -401,7 +401,7 @@ function RabbitContent() {
               {completedDate && (
                 <p
                   className="font-pixel text-[9px] sm:text-[10px] tracking-widest"
-                  style={{ color: "#00ff41", opaUniverse: 0.4 }}
+                  style={{ color: "#00ff41", opacity: 0.4 }}
                 >
                   {completedDate}
                 </p>
@@ -418,7 +418,7 @@ function RabbitContent() {
               </p>
               <p
                 className="font-pixel text-[9px] sm:text-[11px] tracking-widest text-center"
-                style={{ color: "#00ff41", opaUniverse: 0.4 }}
+                style={{ color: "#00ff41", opacity: 0.4 }}
               >
                 Return to the spire. Make your choice.
               </p>
@@ -449,7 +449,7 @@ function RabbitContent() {
           )}
           <Link
             href="/"
-            className="font-pixel text-[10px] sm:text-[11px] tracking-widest px-4 py-2 hover:opaUniverse-80 transition-opaUniverse"
+            className="font-pixel text-[10px] sm:text-[11px] tracking-widest px-4 py-2 hover:opacity-80 transition-opacity"
             style={{ color: "#00ff41", textShadow: "0 0 8px rgba(0,255,65,0.3)" }}
           >
             {"<"} BACK TO Universe

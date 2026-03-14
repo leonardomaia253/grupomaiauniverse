@@ -285,7 +285,7 @@ function ItemRow({
   return (
     <div
       className="flex items-start gap-3 border-b border-border/30 py-2.5 last:border-b-0"
-      style={{ opaUniverse: isDone ? 0.55 : 1 }}
+      style={{ opacity: isDone ? 0.55 : 1 }}
     >
       {/* Checkbox */}
       <span className="mt-0.5 flex h-4 w-4 shrink-0 items-center justify-center border-2 border-border text-[8px]">
@@ -326,7 +326,7 @@ function ItemRow({
             backgroundColor: optimistic.hasVoted
               ? "rgba(200, 230, 74, 0.08)"
               : "transparent",
-            opaUniverse: isPending ? 0.6 : 1,
+            opacity: isPending ? 0.6 : 1,
             cursor: isPending ? "wait" : "pointer",
           }}
         >

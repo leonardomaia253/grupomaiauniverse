@@ -8,15 +8,15 @@ import type { Universeplanet } from "@/lib/github";
 
 interface ComparePathProps {
     planets: Universeplanet[];
-    focusedplanet: string | null;
-    focusedplanetB: string | null;
+    focusedPlanet: string | null;
+    focusedPlanetB: string | null;
     accentColor: string;
 }
 
 export default function ComparePath({
     planets,
-    focusedplanet,
-    focusedplanetB,
+    focusedPlanet,
+    focusedPlanetB,
     accentColor,
 }: ComparePathProps) {
     const lineMaterialRef = useRef<any>(null);
@@ -30,10 +30,10 @@ export default function ComparePath({
     });
 
     const pathResult = useMemo(() => {
-        if (!focusedplanet || !focusedplanetB) return null;
+        if (!focusedPlanet || !focusedPlanetB) return null;
 
-        const bA = planets.find((b) => b.login.toLowerCase() === focusedplanet.toLowerCase());
-        const bB = planets.find((b) => b.login.toLowerCase() === focusedplanetB.toLowerCase());
+        const bA = planets.find((b) => b.login.toLowerCase() === focusedPlanet.toLowerCase());
+        const bB = planets.find((b) => b.login.toLowerCase() === focusedPlanetB.toLowerCase());
 
         if (!bA || !bB) return null;
 
@@ -65,7 +65,7 @@ export default function ComparePath({
         const points = curve.getPoints(64);
 
         return { points, distance };
-    }, [planets, focusedplanet, focusedplanetB]);
+    }, [planets, focusedPlanet, focusedPlanetB]);
 
     if (!pathResult) return null;
 
@@ -80,7 +80,7 @@ export default function ComparePath({
                 gapSize={5}       // Size of the gaps
                 dashScale={1}
                 transparent={true}
-                opaUniverse={0.8}
+                opacity={0.8}
                 // Expose ref so we can animate dashOffset
                 ref={(mat: any) => {
                     if (mat?.material) {

@@ -25,10 +25,10 @@ body {
 @keyframes blink-dot {
   0%,
   100% {
-    opaUniverse: 1;
+    opacity: 1;
   }
   50% {
-    opaUniverse: 0;
+    opacity: 0;
   }
 }
 .blink-dot {
@@ -36,12 +36,12 @@ body {
 }
 
 @keyframes fade-in {
-  from { opaUniverse: 0; transform: translateY(-4px); }
-  to { opaUniverse: 1; transform: translateY(0); }
+  from { opacity: 0; transform: translateY(-4px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 @keyframes slide-up {
-  from { opaUniverse: 0; transform: translateY(100%); }
-  to { opaUniverse: 1; transform: translateY(0); }
+  from { opacity: 0; transform: translateY(100%); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
 .pixel-shadow {
@@ -95,9 +95,9 @@ body {
 }
 /* ─── Kudos float animation ─── */
 @keyframes kudos-float {
-  0% { opaUniverse: 1; transform: translateY(0) scale(1); }
-  60% { opaUniverse: 1; }
-  100% { opaUniverse: 0; transform: translateY(-60px) scale(1.3); }
+  0% { opacity: 1; transform: translateY(0) scale(1); }
+  60% { opacity: 1; }
+  100% { opacity: 0; transform: translateY(-60px) scale(1.3); }
 }
 .kudos-float {
   animation: kudos-float 1.2s ease-out forwards;
@@ -168,8 +168,8 @@ body {
 
 /* ─── Intro Confetti ─── */
 @keyframes introConfettiFall {
-  0% { opaUniverse: 1; transform: translateY(0) rotate(0deg); }
-  100% { opaUniverse: 0; transform: translateY(100vh) rotate(720deg); }
+  0% { opacity: 1; transform: translateY(0) rotate(0deg); }
+  100% { opacity: 0; transform: translateY(100vh) rotate(720deg); }
 }
 
 @keyframes streak-pulse {
@@ -178,22 +178,22 @@ body {
 }
 
 @keyframes live-pulse {
-  0%, 100% { opaUniverse: 1; box-shadow: 0 0 0 0 rgba(74, 222, 128, 0.6); }
-  50% { opaUniverse: 0.7; box-shadow: 0 0 0 3px rgba(74, 222, 128, 0); }
+  0%, 100% { opacity: 1; box-shadow: 0 0 0 0 rgba(74, 222, 128, 0.6); }
+  50% { opacity: 0.7; box-shadow: 0 0 0 3px rgba(74, 222, 128, 0); }
 }
 .live-dot { animation: live-pulse 2s ease-in-out infinite; }
 
 /* ─── constellation fly-by announcement ─── */
 @keyframes slide-in-right {
-  from { opaUniverse: 0; transform: translateX(100%); }
-  to { opaUniverse: 1; transform: translateX(0); }
+  from { opacity: 0; transform: translateX(100%); }
+  to { opacity: 1; transform: translateX(0); }
 }
 
 @keyframes constellation-in {
-  0%   { opaUniverse: 0; transform: translateX(-20px); }
-  10%  { opaUniverse: 1; transform: translateX(0); }
-  80%  { opaUniverse: 1; transform: translateX(0); }
-  100% { opaUniverse: 0; transform: translateX(0); }
+  0%   { opacity: 0; transform: translateX(-20px); }
+  10%  { opacity: 1; transform: translateX(0); }
+  80%  { opacity: 1; transform: translateX(0); }
+  100% { opacity: 0; transform: translateX(0); }
 }
 .animate-constellation-in {
   animation: constellation-in 3s ease-out forwards;

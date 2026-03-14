@@ -188,7 +188,7 @@ export default function FlyLeaderboard() {
           <button
             onClick={goPrev}
             disabled={!canGoPrev}
-            className="px-2 py-1 text-sm transition-opaUniverse disabled:opaUniverse-20"
+            className="px-2 py-1 text-sm transition-opacity disabled:opacity-20"
             style={{ color: ACCENT }}
             aria-label="Previous day"
           >
@@ -214,7 +214,7 @@ export default function FlyLeaderboard() {
           <button
             onClick={goNext}
             disabled={!canGoNext}
-            className="px-2 py-1 text-sm transition-opaUniverse disabled:opaUniverse-20"
+            className="px-2 py-1 text-sm transition-opacity disabled:opacity-20"
             style={{ color: ACCENT }}
             aria-label="Next day"
           >

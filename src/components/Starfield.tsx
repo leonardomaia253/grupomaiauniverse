@@ -63,7 +63,7 @@ export default function Starfield({ count = 5000 }) {
         size={2} 
         vertexColors 
         transparent 
-        opaUniverse={0.8} 
+        opacity={0.8} 
         sizeAttenuation={false} 
       />
     </points>

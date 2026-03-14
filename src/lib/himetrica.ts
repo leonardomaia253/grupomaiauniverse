@@ -46,7 +46,7 @@ export function trackSignUpCompleted(github_login: string, ref?: string) {
   hm()?.track("sign_up_completed", { github_login, ref });
 }
 
-export function trackplanetClaimed(github_login: string) {
+export function trackPlanetClaimed(github_login: string) {
   hm()?.track("planet_claimed", { github_login });
 }
 
@@ -100,7 +100,7 @@ export function trackAdvertiseCtaClick() {
 
 // ─── Engagement ─────────────────────────────────────────────
 
-export function trackplanetClicked(target_login: string) {
+export function trackPlanetClicked(target_login: string) {
   hm()?.track("planet_clicked", { target_login });
 }
 

@@ -124,8 +124,8 @@ export default function RaidOverlay({ phase, raidData, onSkip, onExit }: Props) 
         <div
           className="fixed inset-0 z-60 bg-white"
           style={{
-            opaUniverse: flashPhase === "peak" ? 0.9 : 0,
-            transition: flashPhase === "fading" ? "opaUniverse 0.6s ease-out" : "none",
+            opacity: flashPhase === "peak" ? 0.9 : 0,
+            transition: flashPhase === "fading" ? "opacity 0.6s ease-out" : "none",
           }}
         />
       )}
@@ -151,9 +151,9 @@ export default function RaidOverlay({ phase, raidData, onSkip, onExit }: Props) 
         <div
           className="absolute left-1/2 top-[14vh] -translate-x-1/2"
           style={{
-            opaUniverse: barsVisible ? 1 : 0,
+            opacity: barsVisible ? 1 : 0,
             transform: `translateX(-50%) translateY(${barsVisible ? "0" : "10px"})`,
-            transition: "opaUniverse 0.5s ease-in-out, transform 0.5s ease-in-out",
+            transition: "opacity 0.5s ease-in-out, transform 0.5s ease-in-out",
           }}
         >
           <p className="font-silkscreen text-center text-sm tracking-wide text-cream drop-shadow-lg md:text-base">
@@ -169,8 +169,8 @@ export default function RaidOverlay({ phase, raidData, onSkip, onExit }: Props) 
           <div
             className="fixed inset-0 bg-black/80"
             style={{
-              opaUniverse: revealStep >= 1 ? 1 : 0,
-              transition: "opaUniverse 0.4s ease-out",
+              opacity: revealStep >= 1 ? 1 : 0,
+              transition: "opacity 0.4s ease-out",
             }}
           />
 
@@ -179,9 +179,9 @@ export default function RaidOverlay({ phase, raidData, onSkip, onExit }: Props) 
             {/* Layer 2: Headline */}
             <div
               style={{
-                opaUniverse: revealStep >= 2 ? 1 : 0,
+                opacity: revealStep >= 2 ? 1 : 0,
                 transform: `scale(${revealStep >= 2 ? 1 : 1.5})`,
-                transition: "opaUniverse 0.4s ease-out, transform 0.4s cubic-bezier(0.16, 1, 0.3, 1)",
+                transition: "opacity 0.4s ease-out, transform 0.4s cubic-bezier(0.16, 1, 0.3, 1)",
               }}
             >
               <h1
@@ -202,9 +202,9 @@ export default function RaidOverlay({ phase, raidData, onSkip, onExit }: Props) 
             <div
               className="mt-8 flex items-center justify-center gap-8 md:gap-12"
               style={{
-                opaUniverse: revealStep >= 3 ? 1 : 0,
+                opacity: revealStep >= 3 ? 1 : 0,
                 transform: `translateY(${revealStep >= 3 ? "0" : "20px"})`,
-                transition: "opaUniverse 0.5s ease-out, transform 0.5s cubic-bezier(0.16, 1, 0.3, 1)",
+                transition: "opacity 0.5s ease-out, transform 0.5s cubic-bezier(0.16, 1, 0.3, 1)",
               }}
             >
               <div className="text-center">
@@ -239,9 +239,9 @@ export default function RaidOverlay({ phase, raidData, onSkip, onExit }: Props) 
             <div
               className="mt-8 flex w-full max-w-xs flex-col items-center gap-3"
               style={{
-                opaUniverse: revealStep >= 4 ? 1 : 0,
+                opacity: revealStep >= 4 ? 1 : 0,
                 transform: `translateY(${revealStep >= 4 ? "0" : "15px"})`,
-                transition: "opaUniverse 0.5s ease-out, transform 0.5s cubic-bezier(0.16, 1, 0.3, 1)",
+                transition: "opacity 0.5s ease-out, transform 0.5s cubic-bezier(0.16, 1, 0.3, 1)",
               }}
             >
               {/* XP earned */}

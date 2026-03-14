@@ -96,7 +96,7 @@ export default function FounderSpire({ onClick }: FounderSpireProps) {
       const cycle = (t * 0.4) % 1;
       pulseRef.current.position.y = cycle * SPIRE_HEIGHT * 0.8;
       pulseRef.current.scale.setScalar(1 + Math.sin(cycle * Math.PI) * 0.5);
-      (pulseRef.current.material as THREE.MeshStandardMaterial).opaUniverse =
+      (pulseRef.current.material as THREE.MeshStandardMaterial).opacity =
         Math.sin(cycle * Math.PI) * 0.8;
     }
 
@@ -133,7 +133,7 @@ export default function FounderSpire({ onClick }: FounderSpireProps) {
           emissive={MATRIX_GREEN}
           emissiveIntensity={1.5}
           transparent
-          opaUniverse={0.7}
+          opacity={0.7}
         />
       </mesh>
 
@@ -177,7 +177,7 @@ export default function FounderSpire({ onClick }: FounderSpireProps) {
             emissive={MATRIX_GREEN}
             emissiveIntensity={1}
             transparent
-            opaUniverse={0.5}
+            opacity={0.5}
           />
         </mesh>
       ))}
@@ -190,7 +190,7 @@ export default function FounderSpire({ onClick }: FounderSpireProps) {
           emissive={MATRIX_GREEN}
           emissiveIntensity={2}
           transparent
-          opaUniverse={0.6}
+          opacity={0.6}
         />
       </mesh>
 
@@ -202,7 +202,7 @@ export default function FounderSpire({ onClick }: FounderSpireProps) {
           emissive={MATRIX_GREEN}
           emissiveIntensity={2}
           transparent
-          opaUniverse={0.5}
+          opacity={0.5}
         />
       </mesh>
 
@@ -214,7 +214,7 @@ export default function FounderSpire({ onClick }: FounderSpireProps) {
           emissive={MATRIX_GREEN}
           emissiveIntensity={2}
           transparent
-          opaUniverse={0.4}
+          opacity={0.4}
         />
       </mesh>
 
@@ -226,7 +226,7 @@ export default function FounderSpire({ onClick }: FounderSpireProps) {
           emissive={MATRIX_GREEN}
           emissiveIntensity={3}
           transparent
-          opaUniverse={0}
+          opacity={0}
         />
       </mesh>
 
@@ -238,7 +238,7 @@ export default function FounderSpire({ onClick }: FounderSpireProps) {
           emissive={MATRIX_GREEN}
           emissiveIntensity={3}
           transparent
-          opaUniverse={0.9}
+          opacity={0.9}
         />
       </mesh>
 

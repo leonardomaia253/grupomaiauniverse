@@ -64,8 +64,8 @@ export default function ReturnModal({ streakData, onClose }: Props) {
       onClick={handleClose}
       style={{
         transform: `translateX(-50%) translateY(${visible ? "0" : "16px"})`,
-        opaUniverse: visible ? 1 : 0,
-        transition: "transform 0.3s ease-out, opaUniverse 0.3s ease-out",
+        opacity: visible ? 1 : 0,
+        transition: "transform 0.3s ease-out, opacity 0.3s ease-out",
       }}
     >
       <div

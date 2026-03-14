@@ -22,7 +22,7 @@ export const MAX_TEXT_LENGTH = 80;
 const ALLOWED_LINK_PATTERN = /^(https:\/\/|mailto:)/;
 const HEX_COLOR_PATTERN = /^#[0-9a-fA-F]{6}$/;
 
-export function isplanetAd(vehicle: string): vehicle is "billboard" | "rooftop_sign" | "led_wrap" {
+export function isPlanetAd(vehicle: string): vehicle is "billboard" | "rooftop_sign" | "led_wrap" {
   return vehicle === "billboard" || vehicle === "rooftop_sign" || vehicle === "led_wrap";
 }
 

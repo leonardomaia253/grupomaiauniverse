@@ -273,7 +273,7 @@ export function AdPurchaseForm() {
               type="button"
               onClick={() => handleSubmit()}
               disabled={!canSubmit}
-              className="btn-press w-full py-3.5 text-sm text-bg transition-opaUniverse disabled:cursor-not-allowed disabled:opaUniverse-40"
+              className="btn-press w-full py-3.5 text-sm text-bg transition-opacity disabled:cursor-not-allowed disabled:opacity-40"
               style={{
                 backgroundColor: ACCENT,
                 boxShadow: "4px 4px 0 0 #5a7a00",

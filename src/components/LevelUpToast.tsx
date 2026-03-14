@@ -25,7 +25,7 @@ export default memo(function LevelUpToast({ level, onDone }: LevelUpToastProps) 
   return (
     <div
       className="fixed left-1/2 top-20 z-70 -translate-x-1/2 transition-all duration-500"
-      style={{ opaUniverse: visible ? 1 : 0, transform: `translateX(-50%) translateY(${visible ? 0 : -20}px)` }}
+      style={{ opacity: visible ? 1 : 0, transform: `translateX(-50%) translateY(${visible ? 0 : -20}px)` }}
     >
       <div
         className="flex flex-col items-center gap-1 border-[3px] px-8 py-4 backdrop-blur-sm"
@@ -42,7 +42,7 @@ export default memo(function LevelUpToast({ level, onDone }: LevelUpToastProps) 
         <span className="text-sm font-bold" style={{ color: tier.color }}>
           {rank.title}
         </span>
-        <span className="mt-0.5 text-[9px] uppercase tracking-wider" style={{ color: tier.color, opaUniverse: 0.7 }}>
+        <span className="mt-0.5 text-[9px] uppercase tracking-wider" style={{ color: tier.color, opacity: 0.7 }}>
           {tier.name}
         </span>
       </div>

@@ -154,7 +154,7 @@ export default function PitchDeck({ stats }: { stats: PitchStats }) {
                   background: i === active ? ACCENT : i < active ? ACCENT + "60" : "#2a2a30",
                 }}
               />
-              <span className="absolute -top-7 left-1/2 -translate-x-1/2 text-[10px] text-muted opaUniverse-0 transition-opaUniverse group-hover:opaUniverse-100">
+              <span className="absolute -top-7 left-1/2 -translate-x-1/2 text-[10px] text-muted opacity-0 transition-opacity group-hover:opacity-100">
                 {label}
               </span>
             </button>
@@ -166,14 +166,14 @@ export default function PitchDeck({ stats }: { stats: PitchStats }) {
           <button
             onClick={prev}
             disabled={active === 0}
-            className="btn-press border-2 border-border px-3 py-1.5 text-sm text-cream transition-colors hover:border-border-light disabled:opaUniverse-30 sm:px-4 sm:py-2 sm:text-base"
+            className="btn-press border-2 border-border px-3 py-1.5 text-sm text-cream transition-colors hover:border-border-light disabled:opacity-30 sm:px-4 sm:py-2 sm:text-base"
           >
             &larr;
           </button>
           <button
             onClick={next}
             disabled={active === TOTAL_SLIDES - 1}
-            className="btn-press border-2 border-border px-3 py-1.5 text-sm text-cream transition-colors hover:border-border-light disabled:opaUniverse-30 sm:px-4 sm:py-2 sm:text-base"
+            className="btn-press border-2 border-border px-3 py-1.5 text-sm text-cream transition-colors hover:border-border-light disabled:opacity-30 sm:px-4 sm:py-2 sm:text-base"
           >
             &rarr;
           </button>
@@ -189,21 +189,21 @@ export default function PitchDeck({ stats }: { stats: PitchStats }) {
       <style jsx global>{`
         @keyframes slideInRight {
           from {
-            opaUniverse: 0;
+            opacity: 0;
             transform: translateX(60px);
           }
           to {
-            opaUniverse: 1;
+            opacity: 1;
             transform: translateX(0);
           }
         }
         @keyframes slideInLeft {
           from {
-            opaUniverse: 0;
+            opacity: 0;
             transform: translateX(-60px);
           }
           to {
-            opaUniverse: 1;
+            opacity: 1;
             transform: translateX(0);
           }
         }

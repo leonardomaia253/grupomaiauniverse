@@ -33,14 +33,14 @@ import XpBar from "@/components/XpBar";
 import { rankFromLevel, tierFromLevel, levelProgress, xpForLevel } from "@/lib/xp";
 import LoadingScreen, { type LoadingStage } from "@/components/LoadingScreen";
 import { getUniverseCache, setUniverseCache, clearUniverseCache } from "@/lib/UniverseCache";
-import { DEFAULT_SKY_ADS, buildAdLink, trackAdEvent, trackAdEvents, isplanetAd } from "@/lib/skyAds";
+import { DEFAULT_SKY_ADS, buildAdLink, trackAdEvent, trackAdEvents, isPlanetAd } from "@/lib/skyAds";
 import { track } from "@vercel/analytics";
 import {
   identifyUser,
   trackSignInClicked,
-  trackplanetClaimed,
+  trackPlanetClaimed,
   trackFreeItemClaimed,
-  trackplanetClicked,
+  trackPlanetClicked,
   trackKudosSent,
   trackSearchUsed,
   trackSkyAdImpression,
@@ -382,7 +382,7 @@ function HomeContent() {
 
   const [username, setUsername] = useState("");
   const failedUsernamesRef = useRef<Map<string, string>>(new Map()); // username -> error code
-  const [planets, setplanets] = useState<CompanyPlanet[]>([]);
+  const [planets, setPlanets] = useState<CompanyPlanet[]>([]);
   // Keep raw dev records so we can inject new companies and regenerate layout locally
   const rawCompaniesRef = useRef<CompanyRecord[]>([]);
   const [plazas, setPlazas] = useState<SpacePlaza[]>([]);
@@ -434,7 +434,7 @@ function HomeContent() {
   const [flyElapsedSec, setFlyElapsedSec] = useState(0);
   const [stats, setStats] = useState<UniverseStats>({ total_companies: 0, total_contributions: 0 });
   const [milestoneCelebrations, setMilestoneCelebrations] = useState<{ milestone: number; reached_at: string }[]>([]);
-  const [focusedplanet, setFocusedplanet] = useState<string | null>(null);
+  const [focusedPlanet, setfocusedPlanet] = useState<string | null>(null);
   const [shareData, setShareData] = useState<{
     login: string;
     contributions: number;
@@ -452,7 +452,7 @@ function HomeContent() {
   const [session, setSession] = useState<Session | null>(null);
   const [claiming, setClaiming] = useState(false);
   const [purchasedItem, setPurchasedItem] = useState<string | null>(null);
-  const [selectedplanet, setSelectedplanet] = useState<CompanyPlanet | null>(null);
+  const [selectedPlanet, setselectedPlanet] = useState<CompanyPlanet | null>(null);
   const [giftClaimed, setGiftClaimed] = useState(false);
   const [claimingGift, setClaimingGift] = useState(false);
   const [feedEvents, setFeedEvents] = useState<FeedEvent[]>([]);
@@ -461,7 +461,7 @@ function HomeContent() {
   const [kudosSent, setKudosSent] = useState(false);
   const [kudosError, setKudosError] = useState<string | null>(null);
   const visitTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
-  const [compareplanet, setCompareplanet] = useState<CompanyPlanet | null>(null);
+  const [comparePlanet, setcomparePlanet] = useState<CompanyPlanet | null>(null);
   const [comparePair, setComparePair] = useState<[CompanyPlanet, CompanyPlanet] | null>(null);
   const [compareSelfHint, setCompareSelfHint] = useState(false);
   const [giftModalOpen, setGiftModalOpen] = useState(false);
@@ -535,14 +535,14 @@ function HomeContent() {
 
   // Track successful raid data before state resets
   useEffect(() => {
-    if (raidState.raidData?.success && raidState.defenderplanet) {
+    if (raidState.raidData?.success && raidState.defenderPlanet) {
       lastSuccessfulRaidRef.current = {
-        defenderLogin: raidState.defenderplanet.login,
+        defenderLogin: raidState.defenderPlanet.login,
         attackerLogin: raidState.raidData.attacker.login,
         tagStyle: raidState.raidData.tag_style,
       };
     }
-  }, [raidState.raidData, raidState.defenderplanet]);
+  }, [raidState.raidData, raidState.defenderPlanet]);
 
   // Update planet with raid tag when raid exits
   useEffect(() => {
@@ -552,7 +552,7 @@ function HomeContent() {
     if (raidState.phase === "idle" && prev !== "idle" && prev !== "preview" && lastSuccessfulRaidRef.current) {
       const { defenderLogin, attackerLogin, tagStyle } = lastSuccessfulRaidRef.current;
       lastSuccessfulRaidRef.current = null;
-      setplanets((prev) =>
+      setPlanets((prev) =>
         prev.map((b) =>
           b.login === defenderLogin
             ? {
@@ -578,7 +578,7 @@ function HomeContent() {
   }, []);
 
   // Derived — second focused planet for dual-focus camera
-  const focusedplanetB = comparePair ? comparePair[1].login : null;
+  const focusedPlanetB = comparePair ? comparePair[1].login : null;
 
   const [isMobile, setIsMobile] = useState(false);
 
@@ -752,15 +752,15 @@ function HomeContent() {
 
   // Visit tracking: fire visit POST after 3s of profile card open
   useEffect(() => {
-    if (selectedplanet && session && selectedplanet.login.toLowerCase() !== authLogin) {
+    if (selectedPlanet && session && selectedPlanet.login.toLowerCase() !== authLogin) {
       visitTimerRef.current = setTimeout(async () => {
         try {
-          const planet = planets.find(b => b.login === selectedplanet.login);
+          const planet = planets.find(b => b.login === selectedPlanet.login);
           if (!planet) return;
           await fetch("/api/interactions/visit", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ planet_login: selectedplanet.login }),
+            body: JSON.stringify({ planet_login: selectedPlanet.login }),
           });
           trackMissionRef.current("visit_planet");
           trackMissionRef.current("visit_3_planets");
@@ -770,31 +770,31 @@ function HomeContent() {
     return () => {
       if (visitTimerRef.current) clearTimeout(visitTimerRef.current);
     };
-  }, [selectedplanet, session, authLogin, planets]);
+  }, [selectedPlanet, session, authLogin, planets]);
 
   // Kudos handler
   const handleGiveKudos = useCallback(async () => {
-    if (!selectedplanet || kudosSending || kudosSent || !session) return;
-    if (selectedplanet.login.toLowerCase() === authLogin) return;
+    if (!selectedPlanet || kudosSending || kudosSent || !session) return;
+    if (selectedPlanet.login.toLowerCase() === authLogin) return;
     setKudosSending(true);
     setKudosError(null);
     try {
       const res = await fetch("/api/interactions/kudos", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ receiver_login: selectedplanet.login }),
+        body: JSON.stringify({ receiver_login: selectedPlanet.login }),
       });
       if (res.ok) {
-        trackKudosSent(selectedplanet.login);
+        trackKudosSent(selectedPlanet.login);
         trackMissionRef.current("give_kudos");
         trackMissionRef.current("give_kudos_3");
         setKudosSent(true);
         // Increment kudos_count locally
-        const newCount = (selectedplanet.kudos_count ?? 0) + 1;
-        setSelectedplanet({ ...selectedplanet, kudos_count: newCount });
-        setplanets((prev) =>
+        const newCount = (selectedPlanet.kudos_count ?? 0) + 1;
+        setselectedPlanet({ ...selectedPlanet, kudos_count: newCount });
+        setPlanets((prev) =>
           prev.map((b) =>
-            b.login === selectedplanet.login ? { ...b, kudos_count: newCount } : b
+            b.login === selectedPlanet.login ? { ...b, kudos_count: newCount } : b
           )
         );
         setTimeout(() => setKudosSent(false), 3000);
@@ -806,29 +806,29 @@ function HomeContent() {
       }
     } catch { /* ignore */ }
     finally { setKudosSending(false); }
-  }, [selectedplanet, kudosSending, kudosSent, session, authLogin]);
+  }, [selectedPlanet, kudosSending, kudosSent, session, authLogin]);
 
   // Gift: open modal with available items
   const handleOpenGift = useCallback(async () => {
-    if (!selectedplanet || !session) return;
+    if (!selectedPlanet || !session) return;
     setGiftModalOpen(true);
     setGiftItems(null);
     try {
       const res = await fetch("/api/items");
       if (!res.ok) return;
       const { items } = await res.json();
-      const receiverOwned = new Set(selectedplanet.owned_items ?? []);
+      const receiverOwned = new Set(selectedPlanet.owned_items ?? []);
       const NON_GIFTABLE = new Set(["flag", "custom_color"]);
       const available = (items as { id: string; price_usd_cents: number; category: string }[])
         .filter((i) => i.price_usd_cents > 0 && !NON_GIFTABLE.has(i.id))
         .map((i) => ({ ...i, owned: receiverOwned.has(i.id) }));
       setGiftItems(available);
     } catch { /* ignore */ }
-  }, [selectedplanet, session]);
+  }, [selectedPlanet, session]);
 
   // Gift: checkout for receiver
   const handleGiftCheckout = useCallback(async (itemId: string) => {
-    if (!selectedplanet || giftBuying) return;
+    if (!selectedPlanet || giftBuying) return;
     setGiftBuying(itemId);
     try {
       const res = await fetch("/api/checkout", {
@@ -837,7 +837,7 @@ function HomeContent() {
         body: JSON.stringify({
           item_id: itemId,
           provider: "stripe",
-          gifted_to_login: selectedplanet.login,
+          gifted_to_login: selectedPlanet.login,
         }),
       });
       const data = await res.json();
@@ -846,7 +846,7 @@ function HomeContent() {
       }
     } catch { /* ignore */ }
     finally { setGiftBuying(null); }
-  }, [selectedplanet, giftBuying]);
+  }, [selectedPlanet, giftBuying]);
 
 
   const lastDistRef = useRef(999);
@@ -860,8 +860,8 @@ function HomeContent() {
   // During fly mode: only close overlays (profile card) — AirplaneFlight handles pause/exit
   // Outside fly mode: compare → share modal → profile card → focus → explore mode
   useEffect(() => {
-    if (flyMode && !selectedplanet && !pillModalOpen && !founderMessageOpen) return;
-    if (!flyMode && !exploreMode && !focusedplanet && !shareData && !selectedplanet && !giftClaimed && !giftModalOpen && !comparePair && !compareplanet && !founderMessageOpen && !pillModalOpen && !rabbitCinematic && !invitePreview && raidState.phase === "idle") return;
+    if (flyMode && !selectedPlanet && !pillModalOpen && !founderMessageOpen) return;
+    if (!flyMode && !exploreMode && !focusedPlanet && !shareData && !selectedPlanet && !giftClaimed && !giftModalOpen && !comparePair && !comparePlanet && !founderMessageOpen && !pillModalOpen && !rabbitCinematic && !invitePreview && raidState.phase === "idle") return;
     const onKey = (e: KeyboardEvent) => {
       if (e.code === "Escape") {
         // Founder modals take highest priority
@@ -882,35 +882,35 @@ function HomeContent() {
           }
           return;
         }
-        if (flyMode && selectedplanet) {
-          setSelectedplanet(null);
-          setFocusedplanet(null);
+        if (flyMode && selectedPlanet) {
+          setselectedPlanet(null);
+          setfocusedPlanet(null);
         } else if (!flyMode) {
           // Compare states take priority after fly mode
           if (comparePair) {
             // Return to planet A's profile card
-            setSelectedplanet(comparePair[0]);
-            setFocusedplanet(comparePair[0].login);
+            setselectedPlanet(comparePair[0]);
+            setfocusedPlanet(comparePair[0].login);
             setComparePair(null);
-            setCompareplanet(null);
-          } else if (compareplanet) {
+            setcomparePlanet(null);
+          } else if (comparePlanet) {
             // Cancel pick, restore profile card of first planet
-            setSelectedplanet(compareplanet);
-            setFocusedplanet(compareplanet.login);
-            setCompareplanet(null);
+            setselectedPlanet(comparePlanet);
+            setfocusedPlanet(comparePlanet.login);
+            setcomparePlanet(null);
           } else if (giftModalOpen) { setGiftModalOpen(false); setGiftItems(null); }
           else if (giftClaimed) setGiftClaimed(false);
           else if (invitePreview) { setInvitePreview(null); }
-          else if (shareData) { setShareData(null); setSelectedplanet(null); setFocusedplanet(null); }
-          else if (selectedplanet) { setSelectedplanet(null); setFocusedplanet(null); }
-          else if (focusedplanet) setFocusedplanet(null);
-          else if (exploreMode) { setExploreMode(false); setFocusedplanet(savedFocusRef.current); savedFocusRef.current = null; }
+          else if (shareData) { setShareData(null); setselectedPlanet(null); setfocusedPlanet(null); }
+          else if (selectedPlanet) { setselectedPlanet(null); setfocusedPlanet(null); }
+          else if (focusedPlanet) setfocusedPlanet(null);
+          else if (exploreMode) { setExploreMode(false); setfocusedPlanet(savedFocusRef.current); savedFocusRef.current = null; }
         }
       }
     };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
-  }, [flyMode, exploreMode, focusedplanet, shareData, selectedplanet, giftClaimed, giftModalOpen, comparePair, compareplanet, founderMessageOpen, pillModalOpen, rabbitCinematic, endRabbitCinematic, raidState.phase, raidActions, invitePreview]);
+  }, [flyMode, exploreMode, focusedPlanet, shareData, selectedPlanet, giftClaimed, giftModalOpen, comparePair, comparePlanet, founderMessageOpen, pillModalOpen, rabbitCinematic, endRabbitCinematic, raidState.phase, raidActions, invitePreview]);
 
   // Rabbit cinematic text phase timing (8s total flyover)
   useEffect(() => {
@@ -1093,7 +1093,7 @@ function HomeContent() {
     rawCompaniesRef.current = allcompanies;
     setStats(UniverseStats);
     const layout = generateUniverseLayout(allcompanies);
-    setplanets(layout.planets);
+    setPlanets(layout.planets);
     setPlazas(layout.plazas);
     setDecorations(layout.decorations);
     setRiver(layout.river);
@@ -1129,7 +1129,7 @@ function HomeContent() {
     const cached = getUniverseCache();
     if (cached) {
       rawCompaniesRef.current = cached.rawcompanies ?? [];
-      setplanets(cached.planets);
+      setPlanets(cached.planets);
       setPlazas(cached.plazas);
       setDecorations(cached.decorations);
       setRiver(cached.river);
@@ -1238,7 +1238,7 @@ function HomeContent() {
         rawCompaniesRef.current = allcompanies;
         setStats(UniverseStats);
         const finalLayout = generateUniverseLayout(allcompanies);
-        setplanets(finalLayout.planets);
+        setPlanets(finalLayout.planets);
         setPlazas(finalLayout.plazas);
         setDecorations(finalLayout.decorations);
         setRiver(finalLayout.river);
@@ -1379,7 +1379,7 @@ function HomeContent() {
           };
           rawCompaniesRef.current = [...rawCompaniesRef.current, newDev];
           const layout = generateUniverseLayout(rawCompaniesRef.current);
-          setplanets(layout.planets);
+          setPlanets(layout.planets);
           setPlazas(layout.plazas);
           setDecorations(layout.decorations);
           setRiver(layout.river);
@@ -1396,12 +1396,12 @@ function HomeContent() {
     if (!didFocusUserParam.current) {
       // First focus: enter explore mode
       didFocusUserParam.current = true;
-      setFocusedplanet(userParam);
-      setSelectedplanet(found);
+      setfocusedPlanet(userParam);
+      setselectedPlanet(found);
       setExploreMode(true);
     } else {
-      // planets array was replaced (full layout loaded) — keep selectedplanet in sync
-      setSelectedplanet(prev =>
+      // planets array was replaced (full layout loaded) — keep selectedPlanet in sync
+      setselectedPlanet(prev =>
         prev && prev.login.toLowerCase() === userParam.toLowerCase() ? found : prev
       );
     }
@@ -1451,7 +1451,7 @@ function HomeContent() {
         };
         rawCompaniesRef.current = [...rawCompaniesRef.current, newDev];
         const layout = generateUniverseLayout(rawCompaniesRef.current);
-        setplanets(layout.planets);
+        setPlanets(layout.planets);
         setPlazas(layout.plazas);
         setDecorations(layout.decorations);
         setRiver(layout.river);
@@ -1479,7 +1479,7 @@ function HomeContent() {
     if (bA && bB) {
       didHandleCompareParam.current = true;
       setComparePair([bA, bB]);
-      setFocusedplanet(bA.login);
+      setfocusedPlanet(bA.login);
       setExploreMode(true);
       return;
     }
@@ -1497,7 +1497,7 @@ function HomeContent() {
       const foundB = updated.find((b: CompanyPlanet) => b.login.toLowerCase() === parts[1]);
       if (foundA && foundB) {
         setComparePair([foundA, foundB]);
-        setFocusedplanet(foundA.login);
+        setfocusedPlanet(foundA.login);
         setExploreMode(true);
       }
     })();
@@ -1525,12 +1525,12 @@ function HomeContent() {
       setGiftedInfo({ item: giftedParam, to: userParam });
       reloadUniverse();
       // Focus on receiver's planet
-      setFocusedplanet(userParam);
+      setfocusedPlanet(userParam);
       const found = planets.find(
         (b) => b.login.toLowerCase() === userParam.toLowerCase()
       );
       if (found) {
-        setSelectedplanet(found);
+        setselectedPlanet(found);
         setExploreMode(true);
       }
       const timer = setTimeout(() => setGiftedInfo(null), 5000);
@@ -1552,12 +1552,12 @@ function HomeContent() {
     }
 
     // Snapshot compare state before async work — ESC may clear it mid-flight
-    const wasComparing = compareplanet;
+    const wasComparing = comparePlanet;
 
     setLoading(true);
     setFeedback({ type: "loading" });
-    setFocusedplanet(null);
-    setSelectedplanet(null);
+    setfocusedPlanet(null);
+    setselectedPlanet(null);
     setShareData(null);
 
     try {
@@ -1636,7 +1636,7 @@ function HomeContent() {
         : [...rawCompaniesRef.current, syncedDev];
 
       const layout = generateUniverseLayout(rawCompaniesRef.current);
-      setplanets(layout.planets);
+      setPlanets(layout.planets);
       setPlazas(layout.plazas);
       setDecorations(layout.decorations);
       setRiver(layout.river);
@@ -1646,7 +1646,7 @@ function HomeContent() {
       updatedplanets = layout.planets;
 
       // Focus camera on the searched planet
-      setFocusedplanet(devData.github_login);
+      setfocusedPlanet(devData.github_login);
 
       // A8: Ghost preview — if user searched for themselves, show temporary effect
       if (
@@ -1668,13 +1668,13 @@ function HomeContent() {
       // Compare pick mode: use snapshot so ESC mid-search doesn't cause stale state
       if (wasComparing && !comparePair && foundplanet) {
         // Only complete if compare mode is still active (not cancelled by ESC)
-        if (compareplanet) {
+        if (comparePlanet) {
           setComparePair([wasComparing, foundplanet]);
-          setFocusedplanet(wasComparing.login);
+          setfocusedPlanet(wasComparing.login);
         } else {
           // Compare was cancelled during search — fall through to normal
           if (foundplanet) {
-            setSelectedplanet(foundplanet);
+            setselectedPlanet(foundplanet);
             setExploreMode(true);
           }
         }
@@ -1686,11 +1686,11 @@ function HomeContent() {
           rank: devData.rank,
           avatar_url: devData.avatar_url,
         });
-        if (foundplanet) setSelectedplanet(foundplanet);
+        if (foundplanet) setselectedPlanet(foundplanet);
         setCopied(false);
       } else if (foundplanet) {
         // Existing company: enter explore mode and show profile card
-        setSelectedplanet(foundplanet);
+        setselectedPlanet(foundplanet);
         setExploreMode(true);
       }
       setUsername("");
@@ -1700,7 +1700,7 @@ function HomeContent() {
       setLoading(false);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [username, planets, authLogin, compareplanet, comparePair, stats]);
+  }, [username, planets, authLogin, comparePlanet, comparePair, stats]);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -1719,7 +1719,7 @@ function HomeContent() {
     try {
       const res = await fetch("/api/claim", { method: "POST" });
       if (res.ok) {
-        trackplanetClaimed(authLogin);
+        trackPlanetClaimed(authLogin);
         await reloadUniverse();
       }
     } finally {
@@ -1936,8 +1936,8 @@ function HomeContent() {
                 style={{
                   fontSize: "clamp(0.85rem, 3vw, 1.5rem)",
                   letterSpacing: "0.05em",
-                  opaUniverse: introPhase === i ? 1 : 0,
-                  transition: "opaUniverse 0.7s ease-in-out",
+                  opacity: introPhase === i ? 1 : 0,
+                  transition: "opacity 0.7s ease-in-out",
                 }}
               >
                 {text}
@@ -1948,9 +1948,9 @@ function HomeContent() {
             <div
               className="absolute flex flex-col items-center gap-1"
               style={{
-                opaUniverse: introPhase === 3 ? 1 : 0,
+                opacity: introPhase === 3 ? 1 : 0,
                 transform: introPhase === 3 ? "scale(1)" : "scale(0.95)",
-                transition: "opaUniverse 0.8s ease-out, transform 0.8s ease-out",
+                transition: "opacity 0.8s ease-out, transform 0.8s ease-out",
               }}
             >
               <p
@@ -1988,7 +1988,7 @@ function HomeContent() {
                       backgroundColor: color,
                       animation: `introConfettiFall ${duration}s ${delay}s ease-in forwards`,
                       transform: `rotate(${rotation}deg) translateX(${drift}px)`,
-                      opaUniverse: 0,
+                      opacity: 0,
                     }}
                   />
                 );
@@ -2184,12 +2184,12 @@ function HomeContent() {
           <div className="pointer-events-auto absolute top-3 left-3 sm:top-4 sm:left-4">
             <button
               onClick={() => {
-                if (selectedplanet) {
-                  setSelectedplanet(null);
-                  setFocusedplanet(null);
+                if (selectedPlanet) {
+                  setselectedPlanet(null);
+                  setfocusedPlanet(null);
                 } else {
                   setExploreMode(false);
-                  setFocusedplanet(savedFocusRef.current);
+                  setfocusedPlanet(savedFocusRef.current);
                   savedFocusRef.current = null;
                 }
               }}
@@ -2232,7 +2232,7 @@ function HomeContent() {
           )}
 
           {/* Navigation hints (bottom-right) — hidden when planet card is open */}
-          {!selectedplanet && (
+          {!selectedPlanet && (
             <div className="absolute bottom-3 right-3 text-right text-[8px] leading-loose text-muted sm:bottom-4 sm:right-4 sm:text-[9px]">
               <div><span className="text-cream">Drag</span> orbit</div>
               <div><span className="text-cream">Scroll</span> zoom</div>
@@ -2337,8 +2337,8 @@ function HomeContent() {
                                   (b) => b.login.toLowerCase() === dev.githubLogin.toLowerCase(),
                                 );
                                 if (b) {
-                                  setSelectedplanet(null);
-                                  setFocusedplanet(b.login);
+                                  setselectedPlanet(null);
+                                  setfocusedPlanet(b.login);
                                   setCodingPanelOpen(false);
                                 }
                               }}
@@ -2569,7 +2569,7 @@ function HomeContent() {
                 <button
                   onClick={() => { handleClaim(); setMobileMenuOpen(false); }}
                   disabled={claiming}
-                  className="btn-press mt-4 w-full py-2.5 text-xs text-bg disabled:opaUniverse-40"
+                  className="btn-press mt-4 w-full py-2.5 text-xs text-bg disabled:opacity-40"
                   style={{ backgroundColor: theme.accent, boxShadow: `2px 2px 0 0 ${theme.shadow}` }}
                 >
                   {claiming ? "..." : "Claim your planet"}
@@ -2901,7 +2901,7 @@ function HomeContent() {
                 <button
                   type="submit"
                   disabled={loading || !username.trim()}
-                  className="btn-press shrink-0 px-4 py-2 text-xs text-bg disabled:opaUniverse-40 sm:px-5 sm:py-2.5"
+                  className="btn-press shrink-0 px-4 py-2 text-xs text-bg disabled:opacity-40 sm:px-5 sm:py-2.5"
                   style={{
                     backgroundColor: theme.accent,
                     boxShadow: `4px 4px 0 0 ${theme.shadow}`,
@@ -2940,7 +2940,7 @@ function HomeContent() {
                 <button
                   onClick={handleClaimFreeGift}
                   disabled={claimingGift}
-                  className="gift-cta btn-press px-7 py-3 text-xs sm:py-3.5 sm:text-sm text-bg disabled:opaUniverse-60"
+                  className="gift-cta btn-press px-7 py-3 text-xs sm:py-3.5 sm:text-sm text-bg disabled:opacity-60"
                   style={{
                     backgroundColor: theme.accent,
                     ["--gift-glow-color" as string]: theme.accent + "66",
@@ -2967,7 +2967,7 @@ function HomeContent() {
                   <div className="relative">
                     <button
                       onClick={() => {
-                        setFocusedplanet(null);
+                        setfocusedPlanet(null);
                         setFlyMode(true);
                         setFlyScore({ score: 0, earned: 0, combo: 0, collected: 0, maxCombo: 1 });
                         flyStartTime.current = Date.now();
@@ -2995,7 +2995,7 @@ function HomeContent() {
                           NEW
                         </span>
                       </span>
-                      <span className="block text-[8px] opaUniverse-60 normal-case">Collect PX</span>
+                      <span className="block text-[8px] opacity-60 normal-case">Collect PX</span>
                     </button>
                     {/* Feature 2: First-Fly Tooltip */}
                     {showFlyHint && (
@@ -3037,7 +3037,7 @@ function HomeContent() {
                     onClick={() => {
                       setShowDailyNudge(false);
                       clearTimeout(dailyNudgeTimerRef.current);
-                      setFocusedplanet(null);
+                      setfocusedPlanet(null);
                       setFlyMode(true);
                       setFlyScore({ score: 0, earned: 0, combo: 0, collected: 0, maxCombo: 1 });
                       flyStartTime.current = Date.now();
@@ -3109,7 +3109,7 @@ function HomeContent() {
                       <button
                         onClick={handleClaim}
                         disabled={claiming}
-                        className="btn-press px-3 py-1.5 text-[10px] text-bg disabled:opaUniverse-40"
+                        className="btn-press px-3 py-1.5 text-[10px] text-bg disabled:opacity-40"
                         style={{
                           backgroundColor: theme.accent,
                           boxShadow: `2px 2px 0 0 ${theme.shadow}`,
@@ -3204,7 +3204,7 @@ function HomeContent() {
                 <button
                   onClick={handleClaim}
                   disabled={claiming}
-                  className="btn-press px-3 py-1.5 text-[10px] text-bg disabled:opaUniverse-40"
+                  className="btn-press px-3 py-1.5 text-[10px] text-bg disabled:opacity-40"
                   style={{ backgroundColor: theme.accent, boxShadow: `2px 2px 0 0 ${theme.shadow}` }}
                 >
                   {claiming ? "..." : "Claim"}
@@ -3368,7 +3368,7 @@ function HomeContent() {
 
       {/* ─── planet Profile Card ─── */}
       {/* Desktop: right edge, vertically centered. Mobile: bottom sheet, centered. */}
-      {selectedplanet && (!flyMode || flyPaused) && !comparePair && raidState.phase === "idle" && (
+      {selectedPlanet && (!flyMode || flyPaused) && !comparePair && raidState.phase === "idle" && (
         <>
           {/* Nav hints — only on desktop, bottom-right */}
           <div className="pointer-events-none fixed bottom-6 right-6 z-30 hidden text-right text-[9px] leading-loose text-muted sm:block">
@@ -3388,7 +3388,7 @@ function HomeContent() {
             >
               {/* Close */}
               <button
-                onClick={() => { setSelectedplanet(null); setFocusedplanet(null); }}
+                onClick={() => { setselectedPlanet(null); setfocusedPlanet(null); }}
                 className="absolute top-2 right-3 text-[10px] text-muted transition-colors hover:text-cream z-10"
               >
                 ESC
@@ -3401,10 +3401,10 @@ function HomeContent() {
 
               {/* Header with avatar + name */}
               <div className="flex items-center gap-3 px-4 pb-3 sm:pt-4">
-                {selectedplanet.avatar_url && (
+                {selectedPlanet.avatar_url && (
                   <Image
-                    src={selectedplanet.avatar_url}
-                    alt={selectedplanet.login}
+                    src={selectedPlanet.avatar_url}
+                    alt={selectedPlanet.login}
                     width={48}
                     height={48}
                     className="border-2 border-border shrink-0"
@@ -3413,10 +3413,10 @@ function HomeContent() {
                 )}
                 <div className="min-w-0 flex-1">
                   <div className="flex items-center gap-2">
-                    {selectedplanet.name && (
-                      <p className="truncate text-sm text-cream">{selectedplanet.name}</p>
+                    {selectedPlanet.name && (
+                      <p className="truncate text-sm text-cream">{selectedPlanet.name}</p>
                     )}
-                    {selectedplanet.claimed && (
+                    {selectedPlanet.claimed && (
                       <span
                         className="shrink-0 px-1.5 py-0.5 text-[7px] text-bg"
                         style={{ backgroundColor: theme.accent }}
@@ -3425,10 +3425,10 @@ function HomeContent() {
                       </span>
                     )}
                   </div>
-                  <p className="truncate text-[10px] text-muted">@{selectedplanet.login}</p>
-                  {selectedplanet.active_raid_tag && (
+                  <p className="truncate text-[10px] text-muted">@{selectedPlanet.login}</p>
+                  {selectedPlanet.active_raid_tag && (
                     <p className="text-[8px] text-red-400">
-                      Attacked by @{selectedplanet.active_raid_tag.attacker_login}
+                      Attacked by @{selectedPlanet.active_raid_tag.attacker_login}
                     </p>
                   )}
                 </div>
@@ -3436,23 +3436,23 @@ function HomeContent() {
 
               {/* XP Level badge + progress */}
               {(() => {
-                const bTier = tierFromLevel(selectedplanet.xp_level ?? 1);
-                const bRank = rankFromLevel(selectedplanet.xp_level ?? 1);
-                const bProgress = levelProgress(selectedplanet.xp_total ?? 0);
-                const bXpCurrent = (selectedplanet.xp_total ?? 0) - xpForLevel(selectedplanet.xp_level ?? 1);
-                const bXpNeeded = xpForLevel((selectedplanet.xp_level ?? 1) + 1) - xpForLevel(selectedplanet.xp_level ?? 1);
+                const bTier = tierFromLevel(selectedPlanet.xp_level ?? 1);
+                const bRank = rankFromLevel(selectedPlanet.xp_level ?? 1);
+                const bProgress = levelProgress(selectedPlanet.xp_total ?? 0);
+                const bXpCurrent = (selectedPlanet.xp_total ?? 0) - xpForLevel(selectedPlanet.xp_level ?? 1);
+                const bXpNeeded = xpForLevel((selectedPlanet.xp_level ?? 1) + 1) - xpForLevel(selectedPlanet.xp_level ?? 1);
                 return (
                   <div className="mx-4 mb-2 flex items-center gap-2">
                     <span
                       className="flex h-7 w-7 items-center justify-center border-2 text-xs font-bold"
                       style={{ borderColor: bTier.color, color: bTier.color }}
                     >
-                      {selectedplanet.xp_level ?? 1}
+                      {selectedPlanet.xp_level ?? 1}
                     </span>
                     <div className="flex-1 min-w-0">
                       <div className="flex items-center gap-1.5">
                         <span className="text-[10px] font-bold" style={{ color: bTier.color }}>
-                          Lv {selectedplanet.xp_level ?? 1} · {bRank.title}
+                          Lv {selectedPlanet.xp_level ?? 1} · {bRank.title}
                         </span>
                         <span
                           className="px-1 py-px text-[7px] font-bold"
@@ -3476,13 +3476,13 @@ function HomeContent() {
               })()}
 
               {/* constellation badge */}
-              {selectedplanet.constellation && (
+              {selectedPlanet.constellation && (
                 <div className="px-4 pb-2">
                   <span
                     className="inline-block px-2 py-0.5 text-[8px] text-bg"
-                    style={{ backgroundColor: CONSTELLATION_COLORS[selectedplanet.constellation] ?? '#888' }}
+                    style={{ backgroundColor: CONSTELLATION_COLORS[selectedPlanet.constellation] ?? '#888' }}
                   >
-                    {CONSTELLATION_NAMES[selectedplanet.constellation] ?? selectedplanet.constellation}
+                    {CONSTELLATION_NAMES[selectedPlanet.constellation] ?? selectedPlanet.constellation}
                   </span>
                 </div>
               )}
@@ -3490,12 +3490,12 @@ function HomeContent() {
               {/* Stats */}
               <div className="grid grid-cols-3 gap-px bg-border/30 mx-4 mb-3 border border-border/50">
                 {[
-                  { label: "Rank", value: `#${selectedplanet.rank}` },
-                  { label: "Contribs", value: selectedplanet.contributions.toLocaleString() },
-                  { label: "Repos", value: selectedplanet.public_repos.toLocaleString() },
-                  { label: "Stars", value: selectedplanet.total_stars.toLocaleString() },
-                  { label: "Kudos", value: (selectedplanet.kudos_count ?? 0).toLocaleString() },
-                  { label: "Visits", value: (selectedplanet.visit_count ?? 0).toLocaleString() },
+                  { label: "Rank", value: `#${selectedPlanet.rank}` },
+                  { label: "Contribs", value: selectedPlanet.contributions.toLocaleString() },
+                  { label: "Repos", value: selectedPlanet.public_repos.toLocaleString() },
+                  { label: "Stars", value: selectedPlanet.total_stars.toLocaleString() },
+                  { label: "Kudos", value: (selectedPlanet.kudos_count ?? 0).toLocaleString() },
+                  { label: "Visits", value: (selectedPlanet.visit_count ?? 0).toLocaleString() },
                 ].map((s) => (
                   <div key={s.label} className="bg-bg-card p-2 text-center">
                     <div className="text-xs" style={{ color: theme.accent }}>{s.value}</div>
@@ -3505,9 +3505,9 @@ function HomeContent() {
               </div>
 
               {/* Achievements with tier colors, sorted by tier */}
-              {selectedplanet.achievements && selectedplanet.achievements.length > 0 && (
+              {selectedPlanet.achievements && selectedPlanet.achievements.length > 0 && (
                 <div className="mx-4 mb-3 flex flex-wrap gap-1">
-                  {[...selectedplanet.achievements]
+                  {[...selectedPlanet.achievements]
                     .sort((a, b) => {
                       const tierOrder = ["diamond", "gold", "silver", "bronze"];
                       const ta = tierOrder.indexOf(ACHIEVEMENT_TIERS_MAP[a] ?? "bronze");
@@ -3532,26 +3532,26 @@ function HomeContent() {
                         </span>
                       );
                     })}
-                  {selectedplanet.achievements.length > 3 && (
+                  {selectedPlanet.achievements.length > 3 && (
                     <Link
-                      href={`/dev/${selectedplanet.login}`}
+                      href={`/dev/${selectedPlanet.login}`}
                       className="px-1.5 py-0.5 text-[8px] transition-colors hover:text-cream"
                       style={{ color: theme.accent }}
                     >
-                      +{selectedplanet.achievements.length - 3} more &rarr;
+                      +{selectedPlanet.achievements.length - 3} more &rarr;
                     </Link>
                   )}
                 </div>
               )}
 
               {/* A7: Show equipped items on other companies' planets (mimetic desire) */}
-              {selectedplanet.login.toLowerCase() !== authLogin && (() => {
+              {selectedPlanet.login.toLowerCase() !== authLogin && (() => {
                 const equipped: string[] = [];
-                if (selectedplanet.loadout?.crown) equipped.push(selectedplanet.loadout.crown);
-                if (selectedplanet.loadout?.roof) equipped.push(selectedplanet.loadout.roof);
-                if (selectedplanet.loadout?.aura) equipped.push(selectedplanet.loadout.aura);
+                if (selectedPlanet.loadout?.crown) equipped.push(selectedPlanet.loadout.crown);
+                if (selectedPlanet.loadout?.roof) equipped.push(selectedPlanet.loadout.roof);
+                if (selectedPlanet.loadout?.aura) equipped.push(selectedPlanet.loadout.aura);
                 for (const fi of ["custom_color", "billboard", "led_banner"]) {
-                  if (selectedplanet.owned_items.includes(fi)) equipped.push(fi);
+                  if (selectedPlanet.owned_items.includes(fi)) equipped.push(fi);
                 }
                 if (equipped.length === 0) return null;
                 const shown = equipped.slice(0, 3);
@@ -3594,7 +3594,7 @@ function HomeContent() {
               })()}
 
               {/* Kudos: give kudos (other's planet, logged in) */}
-              {session && selectedplanet.login.toLowerCase() !== authLogin && (
+              {session && selectedPlanet.login.toLowerCase() !== authLogin && (
                 <div className="relative mx-4 mb-3">
                   {/* Floating emoji animation on success */}
                   {kudosSent && (
@@ -3651,8 +3651,8 @@ function HomeContent() {
                   )}
                   <button
                     onClick={() => {
-                      if (authLogin && selectedplanet) {
-                        raidActions.startPreview(selectedplanet.login, planets, authLogin);
+                      if (authLogin && selectedPlanet) {
+                        raidActions.startPreview(selectedPlanet.login, planets, authLogin);
                       }
                     }}
                     disabled={raidState.loading}
@@ -3688,7 +3688,7 @@ function HomeContent() {
               )}
 
               {/* Own planet: copy invite link */}
-              {selectedplanet.login.toLowerCase() === authLogin && (
+              {selectedPlanet.login.toLowerCase() === authLogin && (
                 <div className="mx-4 mb-3">
                   <button
                     onClick={() => {
@@ -3710,8 +3710,8 @@ function HomeContent() {
                 <div className="mx-4 mb-3">
                   <button
                     onClick={() => {
-                      setCompareplanet(selectedplanet);
-                      setSelectedplanet(null);
+                      setcomparePlanet(selectedPlanet);
+                      setselectedPlanet(null);
                       if (!exploreMode) setExploreMode(true);
                     }}
                     className="btn-press w-full border-2 border-border py-1.5 text-center text-[9px] text-cream transition-colors hover:border-border-light"
@@ -3723,10 +3723,10 @@ function HomeContent() {
 
               {/* Actions */}
               <div className="flex gap-2 p-4 pt-0 pb-5 sm:pb-4">
-                {selectedplanet.login.toLowerCase() === authLogin ? (
+                {selectedPlanet.login.toLowerCase() === authLogin ? (
                   <>
                     <Link
-                      href={`/shop/${selectedplanet.login}?tab=loadout`}
+                      href={`/shop/${selectedPlanet.login}?tab=loadout`}
                       className="btn-press flex-1 py-2 text-center text-[10px] text-bg"
                       style={{
                         backgroundColor: theme.accent,
@@ -3736,7 +3736,7 @@ function HomeContent() {
                       Loadout
                     </Link>
                     <Link
-                      href={`/dev/${selectedplanet.login}`}
+                      href={`/dev/${selectedPlanet.login}`}
                       className="btn-press flex-1 border-2 border-border py-2 text-center text-[10px] text-cream transition-colors hover:border-border-light"
                     >
                       Profile
@@ -3745,7 +3745,7 @@ function HomeContent() {
                 ) : (
                   <>
                     <Link
-                      href={`/dev/${selectedplanet.login}`}
+                      href={`/dev/${selectedPlanet.login}`}
                       className="btn-press flex-1 py-2 text-center text-[10px] text-bg"
                       style={{
                         backgroundColor: theme.accent,
@@ -3755,7 +3755,7 @@ function HomeContent() {
                       View Profile
                     </Link>
                     <a
-                      href={`https://github.com/${selectedplanet.login}`}
+                      href={`https://github.com/${selectedPlanet.login}`}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="btn-press flex-1 border-2 border-border py-2 text-center text-[10px] text-cream transition-colors hover:border-border-light"
@@ -3771,7 +3771,7 @@ function HomeContent() {
       )}
 
       {/* ─── Compare Pick Prompt ─── */}
-      {compareplanet && !comparePair && !flyMode && (
+      {comparePlanet && !comparePair && !flyMode && (
         <div className="fixed top-3 left-1/2 z-40 -translate-x-1/2 w-[calc(100%-1.5rem)] max-w-sm sm:top-4 sm:w-auto">
           <div className="border-[3px] border-border bg-bg-raised/95 px-4 py-2.5 backdrop-blur-sm">
             <div className="flex items-center gap-3 min-w-0">
@@ -3780,13 +3780,13 @@ function HomeContent() {
                 style={{ backgroundColor: theme.accent }}
               />
               <span className="text-[10px] text-cream normal-case truncate min-w-0">
-                Comparing <span style={{ color: theme.accent }}>@{compareplanet.login}</span>
+                Comparing <span style={{ color: theme.accent }}>@{comparePlanet.login}</span>
               </span>
               <button
                 onClick={() => {
-                  setSelectedplanet(compareplanet);
-                  setFocusedplanet(compareplanet.login);
-                  setCompareplanet(null);
+                  setselectedPlanet(comparePlanet);
+                  setfocusedPlanet(comparePlanet.login);
+                  setcomparePlanet(null);
                 }}
                 className="ml-1 shrink-0 text-[9px] text-muted transition-colors hover:text-cream"
               >
@@ -3820,7 +3820,7 @@ function HomeContent() {
               <button
                 type="submit"
                 disabled={loading || !username.trim()}
-                className="btn-press shrink-0 px-3 py-1.5 text-[10px] text-bg disabled:opaUniverse-40"
+                className="btn-press shrink-0 px-3 py-1.5 text-[10px] text-bg disabled:opacity-40"
                 style={{ backgroundColor: theme.accent }}
               >
                 {loading ? "_" : "Go"}
@@ -3862,7 +3862,7 @@ function HomeContent() {
           ? `Tie ${totalAWins}-${totalBWins}`
           : `@${cmpWinner} wins ${Math.max(totalAWins, totalBWins)}-${Math.min(totalAWins, totalBWins)}`;
 
-        const closeCompare = () => { setSelectedplanet(comparePair[0]); setFocusedplanet(comparePair[0].login); setComparePair(null); setCompareplanet(null); };
+        const closeCompare = () => { setselectedPlanet(comparePair[0]); setfocusedPlanet(comparePair[0].login); setComparePair(null); setcomparePlanet(null); };
 
         return (
           <>
@@ -4057,8 +4057,8 @@ function HomeContent() {
                     onClick={() => {
                       const first = comparePair[0];
                       setComparePair(null);
-                      setCompareplanet(first);
-                      setFocusedplanet(first.login);
+                      setcomparePlanet(first);
+                      setfocusedPlanet(first.login);
                     }}
                     className="btn-press flex-1 border-[2px] border-border py-2 text-center text-[10px] text-cream transition-colors hover:border-border-light"
                   >
@@ -4095,14 +4095,14 @@ function HomeContent() {
           {/* Backdrop */}
           <div
             className="absolute inset-0 bg-bg/70 backdrop-blur-sm"
-            onClick={() => { setShareData(null); setSelectedplanet(null); setFocusedplanet(null); }}
+            onClick={() => { setShareData(null); setselectedPlanet(null); setfocusedPlanet(null); }}
           />
 
           {/* Modal */}
           <div className="relative mx-3 border-[3px] border-border bg-bg-raised p-4 text-center sm:mx-0 sm:p-6">
             {/* Close */}
             <button
-              onClick={() => { setShareData(null); setSelectedplanet(null); setFocusedplanet(null); }}
+              onClick={() => { setShareData(null); setselectedPlanet(null); setfocusedPlanet(null); }}
               className="absolute top-2 right-3 text-[10px] text-muted transition-colors hover:text-cream"
             >
               &#10005;
@@ -4134,11 +4134,11 @@ function HomeContent() {
             <div className="mt-4 flex flex-col items-center gap-2 sm:mt-5 sm:flex-row sm:justify-center sm:gap-3">
               <button
                 onClick={() => {
-                  if (!selectedplanet && shareData) {
+                  if (!selectedPlanet && shareData) {
                     const b = planets.find(
                       (b) => b.login.toLowerCase() === shareData.login.toLowerCase()
                     );
-                    if (b) setSelectedplanet(b);
+                    if (b) setselectedPlanet(b);
                   }
                   setShareData(null);
                   setExploreMode(true);
@@ -4332,12 +4332,12 @@ function HomeContent() {
           ))}
           <style jsx>{`
             @keyframes toastDrop {
-              from { opaUniverse: 0; transform: translateY(-16px); }
-              to { opaUniverse: 1; transform: translateY(0); }
+              from { opacity: 0; transform: translateY(-16px); }
+              to { opacity: 1; transform: translateY(0); }
             }
             @keyframes toastOut {
-              from { opaUniverse: 1; }
-              to { opaUniverse: 0; transform: translateY(-8px); }
+              from { opacity: 1; }
+              to { opacity: 0; transform: translateY(-8px); }
             }
           `}</style>
         </div>
@@ -4354,13 +4354,13 @@ function HomeContent() {
           events={feedEvents}
           hasBottomBar={false}
           onEventClick={(evt) => {
-            if (compareplanet || comparePair) return;
+            if (comparePlanet || comparePair) return;
             const login = evt.actor?.login;
             if (login) {
-              setFocusedplanet(login);
+              setfocusedPlanet(login);
               const found = planets.find(b => b.login.toLowerCase() === login.toLowerCase());
               if (found) {
-                setSelectedplanet(found);
+                setselectedPlanet(found);
                 if (!exploreMode) setExploreMode(true);
               }
             }
@@ -4370,7 +4370,7 @@ function HomeContent() {
       )}
 
       {/* ─── Gift Modal ─── */}
-      {giftModalOpen && selectedplanet && (
+      {giftModalOpen && selectedPlanet && (
         <div className="fixed inset-0 z-50 flex items-center justify-center px-4">
           <div
             className="absolute inset-0 bg-bg/70 backdrop-blur-sm"
@@ -4381,7 +4381,7 @@ function HomeContent() {
             <div className="flex items-center justify-between border-b border-border px-4 py-3">
               <div>
                 <h3 className="text-xs" style={{ color: theme.accent }}>Send Gift</h3>
-                <p className="mt-0.5 text-[8px] text-muted normal-case">to @{selectedplanet.login}</p>
+                <p className="mt-0.5 text-[8px] text-muted normal-case">to @{selectedPlanet.login}</p>
               </div>
               <button
                 onClick={() => { setGiftModalOpen(false); setGiftItems(null); }}
@@ -4409,7 +4409,7 @@ function HomeContent() {
                       key={item.id}
                       onClick={() => !item.owned && handleGiftCheckout(item.id)}
                       disabled={!!giftBuying || item.owned}
-                      className={`flex w-full items-center gap-3 border-b border-border/30 px-4 py-2.5 text-left transition-colors ${item.owned ? "opaUniverse-35 cursor-not-allowed" : "hover:bg-bg-card/80 disabled:opaUniverse-40"}`}
+                      className={`flex w-full items-center gap-3 border-b border-border/30 px-4 py-2.5 text-left transition-colors ${item.owned ? "opacity-35 cursor-not-allowed" : "hover:bg-bg-card/80 disabled:opacity-40"}`}
                     >
                       <span className="text-base shrink-0">{ITEM_EMOJIS[item.id] ?? "🎁"}</span>
                       <span className="flex-1 text-[10px] text-cream">
@@ -4433,12 +4433,12 @@ function HomeContent() {
         open={feedPanelOpen}
         onClose={() => setFeedPanelOpen(false)}
         onNavigate={(login) => {
-          if (compareplanet || comparePair) return;
+          if (comparePlanet || comparePair) return;
           setFeedPanelOpen(false);
-          setFocusedplanet(login);
+          setfocusedPlanet(login);
           const found = planets.find(b => b.login.toLowerCase() === login.toLowerCase());
           if (found) {
-            setSelectedplanet(found);
+            setselectedPlanet(found);
             if (!exploreMode) setExploreMode(true);
           }
         }}
@@ -4517,7 +4517,7 @@ function HomeContent() {
               <button
                 onClick={() => {
                   setShowFlyResults(null); clearTimeout(flyResultsTimerRef.current);
-                  setFocusedplanet(null);
+                  setfocusedPlanet(null);
                   setFlyMode(true);
                   setFlyScore({ score: 0, earned: 0, combo: 0, collected: 0, maxCombo: 1 });
                   flyStartTime.current = Date.now();
@@ -4626,8 +4626,8 @@ function HomeContent() {
                 onClick={() => {
                   setGiftClaimed(false);
                   if (myplanet) {
-                    setFocusedplanet(myplanet.login);
-                    setSelectedplanet(myplanet);
+                    setfocusedPlanet(myplanet.login);
+                    setselectedPlanet(myplanet);
                     setExploreMode(true);
                   }
                 }}
@@ -4684,7 +4684,7 @@ function HomeContent() {
             sessionStorage.setItem("constellation_dismissed", "1");
             setconstellationChooserOpen(false);
             // Update the planet in local state
-            setplanets((prev) =>
+            setPlanets((prev) =>
               prev.map((b) =>
                 b.login === myplanet.login
                   ? { ...b, constellation: constellationId, constellation_chosen: true }
@@ -4736,7 +4736,7 @@ function HomeContent() {
 
           {/* CRT scanlines */}
           <div
-            className="absolute inset-0 opaUniverse-[0.04]"
+            className="absolute inset-0 opacity-[0.04]"
             style={{
               backgroundImage: "repeating-linear-gradient(0deg, transparent, transparent 1px, rgba(0,255,65,0.08) 1px, rgba(0,255,65,0.08) 2px)",
               backgroundSize: "100% 2px",
@@ -4754,8 +4754,8 @@ function HomeContent() {
                   letterSpacing: "0.08em",
                   color: "#00ff41",
                   textShadow: "0 0 20px rgba(0,255,65,0.5), 0 0 40px rgba(0,255,65,0.2)",
-                  opaUniverse: rabbitCinematicPhase === i ? 1 : 0,
-                  transition: "opaUniverse 0.7s ease-in-out",
+                  opacity: rabbitCinematicPhase === i ? 1 : 0,
+                  transition: "opacity 0.7s ease-in-out",
                 }}
               >
                 {text}
@@ -4795,10 +4795,10 @@ function HomeContent() {
           </p>
           <style jsx>{`
             @keyframes rabbitHintAnim {
-              0% { opaUniverse: 0; }
-              15% { opaUniverse: 1; }
-              70% { opaUniverse: 1; }
-              100% { opaUniverse: 0; }
+              0% { opacity: 0; }
+              15% { opacity: 1; }
+              70% { opacity: 1; }
+              100% { opacity: 0; }
             }
           `}</style>
         </div>

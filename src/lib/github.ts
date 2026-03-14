@@ -348,7 +348,7 @@ export const CONSTELLATION_DESCRIPTIONS: Record<string, string> = {
   devops: 'Infrastructure, CI/CD, and cloud.',
   security: 'Hacking, defense, and cryptography.',
   gamedev: 'Game engines, physics, and fun.',
-  vibe_coder: 'Aesthetic code. Vibes over veloUniverse.',
+  vibe_coder: 'Aesthetic code. Vibes over velocity.',
   creator: 'Open-source tools and content.',
 };
 

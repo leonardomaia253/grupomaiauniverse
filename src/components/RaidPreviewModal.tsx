@@ -42,7 +42,7 @@ function StrengthBar({
             className="h-4 w-3"
             style={{
               backgroundColor: i <= config.bars ? config.color : "#333",
-              opaUniverse: i <= config.bars ? 1 : 0.3,
+              opacity: i <= config.bars ? 1 : 0.3,
             }}
           />
         ))}
@@ -177,7 +177,7 @@ export default function RaidPreviewModal({ preview, loading, error, onRaid, onCa
               <span className="text-[9px] uppercase tracking-wider text-muted">Defense</span>
               <div className="flex gap-1">
                 {[1, 2, 3].map((i) => (
-                  <div key={i} className="h-4 w-3" style={{ backgroundColor: "#333", opaUniverse: 0.3 }} />
+                  <div key={i} className="h-4 w-3" style={{ backgroundColor: "#333", opacity: 0.3 }} />
                 ))}
               </div>
               <span className="text-sm font-bold text-muted/50">???</span>
@@ -237,7 +237,7 @@ export default function RaidPreviewModal({ preview, loading, error, onRaid, onCa
           <button
             onClick={() => onRaid(selectedBoost?.purchase_id, selectedVehicle)}
             disabled={loading}
-            className="btn-press flex-1 border-2 border-red-500/60 px-3 py-2 text-xs font-bold text-red-400 transition-all hover:bg-red-500/10 disabled:opaUniverse-50"
+            className="btn-press flex-1 border-2 border-red-500/60 px-3 py-2 text-xs font-bold text-red-400 transition-all hover:bg-red-500/10 disabled:opacity-50"
             style={{
               animation: loading ? "none" : "pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite",
             }}

@@ -98,8 +98,8 @@ interface EffectsLayerProps {
   grid: GridIndex;
   colors: planetColors;
   accentColor: string;
-  focusedplanet?: string | null;
-  focusedplanetB?: string | null;
+  focusedPlanet?: string | null;
+  focusedPlanetB?: string | null;
   hideEffectsFor?: string | null;
   introMode?: boolean;
   flyMode?: boolean;
@@ -111,8 +111,8 @@ export default function EffectsLayer({
   grid,
   colors,
   accentColor,
-  focusedplanet,
-  focusedplanetB,
+  focusedPlanet,
+  focusedPlanetB,
   hideEffectsFor,
   introMode,
   flyMode,
@@ -125,8 +125,8 @@ export default function EffectsLayer({
   const prevCamTime = useRef(0);
   const smoothVel = useRef<[number, number]>([0, 0]);
 
-  const focusedLower = focusedplanet?.toLowerCase() ?? null;
-  const focusedBLower = focusedplanetB?.toLowerCase() ?? null;
+  const focusedLower = focusedPlanet?.toLowerCase() ?? null;
+  const focusedBLower = focusedPlanetB?.toLowerCase() ?? null;
   const hideLower = hideEffectsFor?.toLowerCase() ?? null;
   const loginToIdx = useMemo(() => {
     const map = new Map<string, number>();
@@ -149,7 +149,7 @@ export default function EffectsLayer({
     let cx = rawCx;
     let cz = rawCz;
 
-    // In fly mode, predict ahead using smoothed veloUniverse so effects pre-load without flickering
+    // In fly mode, predict ahead using smoothed velocity so effects pre-load without flickering
     const dt = elapsed - prevCamTime.current;
     if (flyMode && dt > 0.01) {
       const vxRaw = (rawCx - prevCamPos.current[0]) / dt;

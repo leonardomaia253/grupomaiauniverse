@@ -133,7 +133,7 @@ export default function constellationChooser({
         <button
           onClick={handleConfirm}
           disabled={!selected || submitting}
-          className="btn-press mt-4 w-full border-[3px] border-border px-4 py-2.5 text-sm text-bg transition-colors disabled:opaUniverse-40"
+          className="btn-press mt-4 w-full border-[3px] border-border px-4 py-2.5 text-sm text-bg transition-colors disabled:opacity-40"
           style={{
             backgroundColor: selected
               ? constellation_COLORS[selected]

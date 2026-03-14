@@ -419,7 +419,7 @@ function SmokeTrail({ vehicleRef, active }: {
   return (
     <instancedMesh ref={meshRef} args={[undefined, undefined, SMOKE_COUNT]} frustumCulled={false}>
       <sphereGeometry args={[1, 5, 5]} />
-      <meshBasicMaterial color="#888" transparent opaUniverse={0.12} depthWrite={false} />
+      <meshBasicMaterial color="#888" transparent opacity={0.12} depthWrite={false} />
     </instancedMesh>
   );
 }
@@ -446,7 +446,7 @@ function Shockwave({ active, position }: {
     meshRef.current.scale.set(scale, scale, 1);
 
     const mat = meshRef.current.material as THREE.MeshBasicMaterial;
-    mat.opaUniverse = Math.max(0, 0.7 * (1 - t * 1.5));
+    mat.opacity = Math.max(0, 0.7 * (1 - t * 1.5));
   });
 
   if (!active) return null;
@@ -457,7 +457,7 @@ function Shockwave({ active, position }: {
       <meshBasicMaterial
         color="#ff6600"
         transparent
-        opaUniverse={0.7}
+        opacity={0.7}
         side={THREE.DoubleSide}
         depthWrite={false}
       />
@@ -574,7 +574,7 @@ function ProjectilePool({ active, vehicleRef, targetPos, onImpact }: {
         <meshBasicMaterial
           color="#ff4400"
           transparent
-          opaUniverse={0.25}
+          opacity={0.25}
           depthWrite={false}
         />
       </instancedMesh>
@@ -652,7 +652,7 @@ function DebrisParticles({ active, origin }: { active: boolean; origin: THREE.Ve
       </instancedMesh>
       <instancedMesh ref={glowRef} args={[undefined, undefined, DEBRIS_COUNT]} frustumCulled={false}>
         <sphereGeometry args={[0.8, 4, 4]} />
-        <meshBasicMaterial color="#ff4400" transparent opaUniverse={0.5} depthWrite={false} />
+        <meshBasicMaterial color="#ff4400" transparent opacity={0.5} depthWrite={false} />
       </instancedMesh>
     </group>
   );
@@ -703,12 +703,12 @@ function ShieldDome({ active, position, size, strength, hitIntensity }: {
     const mat = meshRef.current.material as THREE.MeshBasicMaterial;
     const basePulse = Math.sin(clock.elapsedTime * 4) * 0.05;
     const hitPulse = hitIntensity * 0.3;
-    const baseOpaUniverse = strength === "strong" ? 0.15 : strength === "medium" ? 0.1 : 0.05;
-    mat.opaUniverse = baseOpaUniverse + basePulse + hitPulse;
+    const baseopacity = strength === "strong" ? 0.15 : strength === "medium" ? 0.1 : 0.05;
+    mat.opacity = baseopacity + basePulse + hitPulse;
 
     if (wireRef.current) {
       const wireMat = wireRef.current.material as THREE.MeshBasicMaterial;
-      wireMat.opaUniverse = (strength === "strong" ? 0.35 : strength === "medium" ? 0.2 : 0.1) + hitPulse * 0.5;
+      wireMat.opacity = (strength === "strong" ? 0.35 : strength === "medium" ? 0.2 : 0.1) + hitPulse * 0.5;
     }
   });
 
@@ -721,11 +721,11 @@ function ShieldDome({ active, position, size, strength, hitIntensity }: {
     <group position={position}>
       <mesh ref={meshRef}>
         <sphereGeometry args={[radius, 20, 20]} />
-        <meshBasicMaterial color={color} transparent opaUniverse={0.15} side={THREE.DoubleSide} />
+        <meshBasicMaterial color={color} transparent opacity={0.15} side={THREE.DoubleSide} />
       </mesh>
       <mesh ref={wireRef}>
         <sphereGeometry args={[radius * 1.01, 20, 20]} />
-        <meshBasicMaterial color="#00ccff" wireframe transparent opaUniverse={0.3} />
+        <meshBasicMaterial color="#00ccff" wireframe transparent opacity={0.3} />
       </mesh>
     </group>
   );

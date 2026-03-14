@@ -152,7 +152,7 @@ function SupportContent() {
                   key={amount}
                   disabled={loadingAmount !== null}
                   onClick={() => handleStripeCheckout(amount)}
-                  className="btn-press border-2 border-border px-5 py-2 text-xs text-cream transition-colors hover:border-border-light disabled:cursor-wait disabled:opaUniverse-50"
+                  className="btn-press border-2 border-border px-5 py-2 text-xs text-cream transition-colors hover:border-border-light disabled:cursor-wait disabled:opacity-50"
                 >
                   {loadingAmount === amount ? "..." : `$${amount}`}
                 </button>
@@ -175,7 +175,7 @@ function SupportContent() {
                 <button
                   disabled={loadingAmount !== null || !customAmount || parseInt(customAmount, 10) < 1}
                   onClick={() => handleStripeCheckout(parseInt(customAmount, 10))}
-                  className="btn-press border-2 border-border px-3 py-2 text-[10px] text-cream transition-colors hover:border-border-light disabled:cursor-not-allowed disabled:opaUniverse-30"
+                  className="btn-press border-2 border-border px-3 py-2 text-[10px] text-cream transition-colors hover:border-border-light disabled:cursor-not-allowed disabled:opacity-30"
                 >
                   {loadingAmount && loadingAmount !== 5 && loadingAmount !== 10 && loadingAmount !== 25 ? "..." : "GO"}
                 </button>

@@ -160,7 +160,7 @@ export default function DailiesWidget({ data, accent, shadow, isMobile, onClaim,
               <div className="min-w-0 flex-1">
                 <div
                   className={`leading-tight ${isMobile ? "text-[12px]" : "text-[10px]"}`}
-                  style={m.completed ? { color: accent, textDecoration: "line-through", opaUniverse: 0.7 } : { color: "#e0d8cc" }}
+                  style={m.completed ? { color: accent, textDecoration: "line-through", opacity: 0.7 } : { color: "#e0d8cc" }}
                 >
                   {m.title}
                 </div>
@@ -168,7 +168,7 @@ export default function DailiesWidget({ data, accent, shadow, isMobile, onClaim,
                   <div className={`mt-0.5 leading-tight text-muted ${isMobile ? "text-[10px]" : "text-[9px]"}`}>
                     {m.description}
                     {m.threshold > 1 && (
-                      <span style={{ color: accent, opaUniverse: 0.8 }}>
+                      <span style={{ color: accent, opacity: 0.8 }}>
                         {" "}({m.progress}/{m.threshold})
                       </span>
                     )}
@@ -201,7 +201,7 @@ export default function DailiesWidget({ data, accent, shadow, isMobile, onClaim,
                 <div className={`leading-tight font-bold ${isMobile ? "text-[12px]" : "text-[10px]"}`} style={{ color: "#FFD700" }}>
                   {starVerifying ? "Verifying..." : starOpened ? "I starred it — Verify" : "Star on GitHub"}
                 </div>
-                <div className={`mt-0.5 leading-tight ${isMobile ? "text-[10px]" : "text-[9px]"}`} style={{ color: "#FFD700", opaUniverse: 0.7 }}>
+                <div className={`mt-0.5 leading-tight ${isMobile ? "text-[10px]" : "text-[9px]"}`} style={{ color: "#FFD700", opacity: 0.7 }}>
                   {starOpened ? "Click to check or wait..." : "Star the repo to unlock an exclusive item"}
                 </div>
               </div>
@@ -225,13 +225,13 @@ export default function DailiesWidget({ data, accent, shadow, isMobile, onClaim,
                 color: "#0d0f0e",
                 backgroundColor: accent,
                 boxShadow: `3px 3px 0 0 ${shadow}`,
-                opaUniverse: claiming ? 0.6 : 1,
+                opacity: claiming ? 0.6 : 1,
               }}
             >
               {claiming ? "Claiming..." : "Claim Reward"}
             </button>
           ) : reward_claimed && all_completed ? (
-            <div className="text-center text-[10px]" style={{ color: accent, opaUniverse: 0.7 }}>
+            <div className="text-center text-[10px]" style={{ color: accent, opacity: 0.7 }}>
               All done! Resets in {timeLeft}
             </div>
           ) : (
