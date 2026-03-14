@@ -1,10 +1,10 @@
 -- Roadmap feature voting
 create table roadmap_votes (
   id bigint generated always as identity primary key,
-  developer_id bigint not null references developers(id) on delete cascade,
+  company_id bigint not null references companies(id) on delete cascade,
   item_id text not null,
   created_at timestamptz not null default now(),
-  unique(developer_id, item_id)
+  unique(company_id, item_id)
 );
 
 create index idx_roadmap_votes_item on roadmap_votes(item_id);

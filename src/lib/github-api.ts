@@ -215,7 +215,14 @@ export interface GitHubcompanyData {
   contributions: number;
   public_repos: number;
   total_stars: number;
-  primary_language: string | null;
+  category: string | null;
+  employee_count: number;
+  applications_count: number;
+  yield_percent: number;
+  rank: number | null;
+  referred_by: string | null;
+  referral_count: number;
+  kudos_count: number;
   top_repos: TopRepo[];
   github_etag: string | null;
   contributions_total?: number;
@@ -320,9 +327,16 @@ export async function fetchGitHubcompanyData(
     contributions,
     public_repos: publicRepos,
     total_stars: totalStars,
-    primary_language: primaryLanguage,
+    category: primaryLanguage, // Map fallback to primary language until backend sets category explicitly
+    employee_count: 1,
+    applications_count: 0,
+    yield_percent: 0,
     top_repos: topRepos,
     github_etag: userRes.headers.get("etag"),
+    rank: null,
+    referred_by: null,
+    referral_count: 0,
+    kudos_count: 0,
     ...(expanded ? {
       contributions_total: expanded.contributions_total,
       contribution_years: expanded.contribution_years,

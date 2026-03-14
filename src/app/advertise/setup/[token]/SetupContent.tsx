@@ -204,7 +204,7 @@ export function SetupContent({
         </p>
 
         <div className="mt-5 space-y-5">
-          {/* Ad text (shown on building) */}
+          {/* Ad text (shown on planet) */}
           <div>
             <label className="block text-xs text-muted normal-case">
               Ad text
@@ -226,7 +226,7 @@ export function SetupContent({
               </span>
             </p>
             <p className="text-[11px] text-muted normal-case">
-              This is what appears on the building in the city
+              This is what appears on the planet in the city
             </p>
           </div>
 

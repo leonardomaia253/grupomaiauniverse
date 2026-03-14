@@ -12,12 +12,12 @@ END;
 $$;
 
 -- 2. Drop the functions
-DROP FUNCTION IF EXISTS get_cached_city_snapshot();
-DROP FUNCTION IF EXISTS refresh_city_snapshot();
-DROP FUNCTION IF EXISTS get_city_snapshot();
+DROP FUNCTION IF EXISTS get_cached_universe_snapshot();
+DROP FUNCTION IF EXISTS refresh_universe_snapshot();
+DROP FUNCTION IF EXISTS get_universe_snapshot();
 
 -- 3. Drop the cache table
-DROP TABLE IF EXISTS city_snapshot_cache;
+DROP TABLE IF EXISTS universe_snapshot_cache;
 
 -- 4. Add missing indexes for the PostgREST city queries
 -- Gift purchases query has no index on gifted_to (full table scan per chunk)
@@ -26,4 +26,4 @@ CREATE INDEX IF NOT EXISTS idx_purchases_gifted_to
 
 -- Customizations query has no index at all (full table scan per chunk)
 CREATE INDEX IF NOT EXISTS idx_customizations_dev_item
-  ON developer_customizations(developer_id, item_id);
+  ON company_customizations(company_id, item_id);

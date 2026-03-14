@@ -3,7 +3,7 @@ import { readFile } from "node:fs/promises";
 import { join } from "node:path";
 import { createClient } from "@supabase/supabase-js";
 
-export const alt = "Developer Comparison - Git City";
+export const alt = "Company Comparison - Git City";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
@@ -32,12 +32,12 @@ export default async function Image({
 
   const [{ data: devA }, { data: devB }] = await Promise.all([
     supabase
-      .from("developers")
+      .from("companies")
       .select("github_login, name, avatar_url, contributions, contributions_total, public_repos, total_stars, rank, kudos_count")
       .eq("github_login", userA.toLowerCase())
       .single(),
     supabase
-      .from("developers")
+      .from("companies")
       .select("github_login, name, avatar_url, contributions, contributions_total, public_repos, total_stars, rank, kudos_count")
       .eq("github_login", userB.toLowerCase())
       .single(),
@@ -119,7 +119,7 @@ export default async function Image({
   const aColor = aIsWinner || isTie ? accent : muted;
   const bColor = bIsWinner || isTie ? accent : muted;
 
-  // Building heights proportional to contributions
+  // Planet heights proportional to contributions
   const maxContrib = Math.max(contribsA, contribsB, 1);
   const MIN_H = 200;
   const MAX_H = 400;
@@ -127,7 +127,7 @@ export default async function Image({
   const heightB = Math.round(MIN_H + (contribsB / maxContrib) * (MAX_H - MIN_H));
   const GROUND_Y = 520;
 
-  // Building window generator
+  // Planet window generator
   const WSIZE = 24;
   const WGAP = 10;
   const WCOLS = 5;
@@ -233,7 +233,7 @@ export default async function Image({
           )}
         </div>
 
-        {/* Building A */}
+        {/* Planet A */}
         <div
           style={{
             position: "absolute",
@@ -256,7 +256,7 @@ export default async function Image({
           {renderWindows(heightA, aColor)}
         </div>
 
-        {/* Building B */}
+        {/* Planet B */}
         <div
           style={{
             position: "absolute",

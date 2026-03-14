@@ -3493,13 +3493,19 @@ function HomeContent() {
                   { label: "Rank", value: `#${selectedPlanet.rank}` },
                   { label: "Contribs", value: selectedPlanet.contributions.toLocaleString() },
                   { label: "Repos", value: selectedPlanet.public_repos.toLocaleString() },
+                  { label: "Yield", value: `${selectedPlanet.yield_percent >= 0 ? '+' : ''}${selectedPlanet.yield_percent.toFixed(1)}%` },
                   { label: "Stars", value: selectedPlanet.total_stars.toLocaleString() },
                   { label: "Kudos", value: (selectedPlanet.kudos_count ?? 0).toLocaleString() },
                   { label: "Visits", value: (selectedPlanet.visit_count ?? 0).toLocaleString() },
                 ].map((s) => (
                   <div key={s.label} className="bg-bg-card p-2 text-center">
-                    <div className="text-xs" style={{ color: theme.accent }}>{s.value}</div>
-                    <div className="text-[8px] text-muted mt-0.5">{s.label}</div>
+                    <p className="text-[8px] uppercase text-dim">{s.label}</p>
+                    <p 
+                      className="text-[10px] font-bold text-cream"
+                      style={s.label === "Yield" ? { color: selectedPlanet.yield_percent >= 0 ? '#4ade80' : '#f87171' } : undefined}
+                    >
+                      {s.value}
+                    </p>
                   </div>
                 ))}
               </div>

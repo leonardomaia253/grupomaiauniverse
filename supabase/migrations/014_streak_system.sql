@@ -4,8 +4,8 @@
 -- streak achievements, and streak_freeze consumable item.
 -- ============================================================
 
--- ─── 1. New columns on developers ──────────────────────────
-ALTER TABLE developers
+-- ─── 1. New columns on companies ──────────────────────────
+ALTER TABLE companies
   ADD COLUMN IF NOT EXISTS app_streak              int     DEFAULT 0,
   ADD COLUMN IF NOT EXISTS app_longest_streak      int     DEFAULT 0,
   ADD COLUMN IF NOT EXISTS last_checkin_date       date    NULL,
@@ -16,15 +16,15 @@ ALTER TABLE developers
 
 -- ─── 2. streak_checkins table ──────────────────────────────
 CREATE TABLE IF NOT EXISTS streak_checkins (
-  developer_id  bigint    NOT NULL REFERENCES developers(id),
+  company_id  bigint    NOT NULL REFERENCES companies(id),
   checkin_date  date      NOT NULL DEFAULT current_date,
   type          text      NOT NULL DEFAULT 'active' CHECK (type IN ('active', 'frozen')),
   created_at    timestamptz NOT NULL DEFAULT now(),
-  PRIMARY KEY (developer_id, checkin_date)
+  PRIMARY KEY (company_id, checkin_date)
 );
 
 CREATE INDEX IF NOT EXISTS idx_streak_checkins_dev_date
-  ON streak_checkins (developer_id, checkin_date DESC);
+  ON streak_checkins (company_id, checkin_date DESC);
 
 ALTER TABLE streak_checkins ENABLE ROW LEVEL SECURITY;
 
@@ -35,14 +35,14 @@ CREATE POLICY "streak_checkins_public_read" ON streak_checkins
 -- ─── 3. streak_freeze_log table ────────────────────────────
 CREATE TABLE IF NOT EXISTS streak_freeze_log (
   id            uuid        PRIMARY KEY DEFAULT gen_random_uuid(),
-  developer_id  bigint      NOT NULL REFERENCES developers(id),
+  company_id  bigint      NOT NULL REFERENCES companies(id),
   action        text        NOT NULL CHECK (action IN ('purchased', 'granted_milestone', 'consumed')),
   frozen_date   date        NULL,
   created_at    timestamptz NOT NULL DEFAULT now()
 );
 
 CREATE INDEX IF NOT EXISTS idx_streak_freeze_log_dev
-  ON streak_freeze_log (developer_id, created_at DESC);
+  ON streak_freeze_log (company_id, created_at DESC);
 
 ALTER TABLE streak_freeze_log ENABLE ROW LEVEL SECURITY;
 
@@ -51,7 +51,7 @@ CREATE POLICY "streak_freeze_log_public_read" ON streak_freeze_log
   FOR SELECT USING (true);
 
 -- ─── 4. perform_checkin RPC ────────────────────────────────
-CREATE OR REPLACE FUNCTION perform_checkin(p_developer_id bigint)
+CREATE OR REPLACE FUNCTION perform_checkin(p_company_id bigint)
 RETURNS jsonb
 LANGUAGE plpgsql
 AS $$
@@ -63,17 +63,17 @@ DECLARE
   v_today        date := current_date;
   v_was_frozen   boolean := false;
 BEGIN
-  -- Lock the developer row to prevent race conditions
+  -- Lock the company row to prevent race conditions
   SELECT last_checkin_date, app_streak, app_longest_streak, streak_freezes_available
     INTO v_last_date, v_streak, v_longest, v_freezes
-    FROM developers
-   WHERE id = p_developer_id
+    FROM companies
+   WHERE id = p_company_id
      FOR UPDATE;
 
   IF NOT FOUND THEN
     RETURN jsonb_build_object(
       'checked_in', false,
-      'error', 'developer_not_found'
+      'error', 'company_not_found'
     );
   END IF;
 
@@ -98,13 +98,13 @@ BEGIN
     v_was_frozen := true;
 
     -- Insert the frozen day check-in (yesterday)
-    INSERT INTO streak_checkins (developer_id, checkin_date, type)
-    VALUES (p_developer_id, v_today - 1, 'frozen')
+    INSERT INTO streak_checkins (company_id, checkin_date, type)
+    VALUES (p_company_id, v_today - 1, 'frozen')
     ON CONFLICT DO NOTHING;
 
     -- Log the freeze consumption
-    INSERT INTO streak_freeze_log (developer_id, action, frozen_date)
-    VALUES (p_developer_id, 'consumed', v_today - 1);
+    INSERT INTO streak_freeze_log (company_id, action, frozen_date)
+    VALUES (p_company_id, 'consumed', v_today - 1);
 
   -- Any other gap: reset
   ELSE
@@ -116,17 +116,17 @@ BEGIN
     v_longest := v_streak;
   END IF;
 
-  -- Update developer row
-  UPDATE developers
+  -- Update company row
+  UPDATE companies
      SET app_streak = v_streak,
          app_longest_streak = v_longest,
          last_checkin_date = v_today,
          streak_freezes_available = v_freezes
-   WHERE id = p_developer_id;
+   WHERE id = p_company_id;
 
   -- Insert today's check-in
-  INSERT INTO streak_checkins (developer_id, checkin_date, type)
-  VALUES (p_developer_id, v_today, 'active')
+  INSERT INTO streak_checkins (company_id, checkin_date, type)
+  VALUES (p_company_id, v_today, 'active')
   ON CONFLICT DO NOTHING;
 
   RETURN jsonb_build_object(
@@ -140,14 +140,14 @@ END;
 $$;
 
 -- ─── 5. grant_streak_freeze RPC ───────────────────────────
-CREATE OR REPLACE FUNCTION grant_streak_freeze(p_developer_id bigint)
+CREATE OR REPLACE FUNCTION grant_streak_freeze(p_company_id bigint)
 RETURNS void
 LANGUAGE plpgsql
 AS $$
 BEGIN
-  UPDATE developers
+  UPDATE companies
      SET streak_freezes_available = LEAST(streak_freezes_available + 1, 2)
-   WHERE id = p_developer_id;
+   WHERE id = p_company_id;
 END;
 $$;
 

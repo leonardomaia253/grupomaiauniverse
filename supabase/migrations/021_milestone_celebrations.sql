@@ -10,7 +10,7 @@ VALUES (
   'pioneer_10k',
   'milestone',
   '10K Pioneer',
-  'Was part of Git City when it reached 10,000 developers',
+  'Was part of Git City when it reached 10,000 companies',
   0,
   'diamond',
   'exclusive_badge',
@@ -19,6 +19,6 @@ VALUES (
 ) ON CONFLICT (id) DO NOTHING;
 
 -- Bulk grant to ALL existing devs
-INSERT INTO developer_achievements (developer_id, achievement_id)
-SELECT id, 'pioneer_10k' FROM developers
-ON CONFLICT (developer_id, achievement_id) DO NOTHING;
+INSERT INTO company_achievements (company_id, achievement_id)
+SELECT id, 'pioneer_10k' FROM companies
+ON CONFLICT (company_id, achievement_id) DO NOTHING;

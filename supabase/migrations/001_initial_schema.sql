@@ -2,8 +2,8 @@
 -- Git City — Initial Schema
 -- ============================================================
 
--- 1. developers — one row per GitHub user
-create table if not exists developers (
+-- 1. companies — one row per GitHub user
+create table if not exists companies (
   id            bigint generated always as identity primary key,
   github_login  text    not null unique,
   github_id     bigint,
@@ -20,10 +20,10 @@ create table if not exists developers (
   created_at    timestamptz not null default now()
 );
 
-create index if not exists idx_developers_rank on developers (rank);
-create index if not exists idx_developers_login on developers (github_login);
-create index if not exists idx_developers_contributions on developers (contributions desc);
-create index if not exists idx_developers_fetched_at on developers (fetched_at);
+create index if not exists idx_companies_rank on companies (rank);
+create index if not exists idx_companies_login on companies (github_login);
+create index if not exists idx_companies_contributions on companies (contributions desc);
+create index if not exists idx_companies_fetched_at on companies (fetched_at);
 
 -- 2. add_requests — rate limiting table
 create table if not exists add_requests (
@@ -34,28 +34,28 @@ create table if not exists add_requests (
 
 create index if not exists idx_add_requests_ip_created on add_requests (ip_hash, created_at);
 
--- 3. city_stats — singleton for global stats
-create table if not exists city_stats (
+-- 3. universe_stats — singleton for global stats
+create table if not exists universe_stats (
   id                  int  primary key default 1 check (id = 1),
-  total_developers    int  not null default 0,
+  total_companies    int  not null default 0,
   total_contributions bigint not null default 0,
   updated_at          timestamptz not null default now()
 );
 
 -- seed singleton
-insert into city_stats (id) values (1) on conflict do nothing;
+insert into universe_stats (id) values (1) on conflict do nothing;
 
--- 4. RLS — public read for developers and city_stats
-alter table developers   enable row level security;
-alter table city_stats   enable row level security;
+-- 4. RLS — public read for companies and universe_stats
+alter table companies   enable row level security;
+alter table universe_stats   enable row level security;
 alter table add_requests enable row level security;
 
-create policy "Public read developers"
-  on developers for select
+create policy "Public read companies"
+  on companies for select
   using (true);
 
-create policy "Public read city_stats"
-  on city_stats for select
+create policy "Public read universe_stats"
+  on universe_stats for select
   using (true);
 
 -- add_requests: no public access (server-side only via service role)
@@ -69,16 +69,16 @@ as $$
 begin
   with ranked as (
     select id, row_number() over (order by contributions desc, github_login asc) as new_rank
-    from developers
+    from companies
   )
-  update developers d
+  update companies d
   set rank = r.new_rank
   from ranked r
   where d.id = r.id;
 
-  update city_stats
-  set total_developers    = (select count(*) from developers),
-      total_contributions = (select coalesce(sum(contributions), 0) from developers),
+  update universe_stats
+  set total_companies    = (select count(*) from companies),
+      total_contributions = (select coalesce(sum(contributions), 0) from companies),
       updated_at          = now()
   where id = 1;
 end;

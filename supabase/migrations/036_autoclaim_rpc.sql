@@ -10,8 +10,8 @@ AS $$
   LIMIT 1;
 $$;
 
--- RPC: list auth users who logged in but have no developer record yet
-CREATE OR REPLACE FUNCTION get_auth_users_without_developer()
+-- RPC: list auth users who logged in but have no company record yet
+CREATE OR REPLACE FUNCTION get_auth_users_without_company()
 RETURNS TABLE(github_login text)
 LANGUAGE sql
 SECURITY DEFINER
@@ -20,13 +20,13 @@ AS $$
   FROM auth.users
   WHERE raw_user_meta_data->>'user_name' IS NOT NULL
     AND NOT EXISTS (
-      SELECT 1 FROM developers d
+      SELECT 1 FROM companies d
       WHERE d.github_login = lower(raw_user_meta_data->>'user_name')
     );
 $$;
 
 -- Backfill: claim all devs whose github_login matches an existing auth user
-UPDATE developers d
+UPDATE companies d
 SET
   claimed     = true,
   claimed_by  = au.id,

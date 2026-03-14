@@ -1,5 +1,5 @@
--- 013_building_ads.sql
--- Expand sky_ads vehicle column to support building ad formats
+-- 013_planet_ads.sql
+-- Expand sky_ads vehicle column to support planet ad formats
 
 -- Drop existing CHECK constraint and recreate with new vehicle types
 ALTER TABLE sky_ads DROP CONSTRAINT IF EXISTS sky_ads_vehicle_check;

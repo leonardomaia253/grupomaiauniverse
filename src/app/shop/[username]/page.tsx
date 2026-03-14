@@ -6,7 +6,7 @@ import { createServerSupabase } from "@/lib/supabase-server";
 import { getSupabaseAdmin } from "@/lib/supabase";
 import { getOwnedItems } from "@/lib/items";
 import type { ShopItem } from "@/lib/items";
-import { calcBuildingDims } from "@/lib/github";
+import { calcPlanetDims } from "@/lib/github";
 import ShopClient from "@/components/ShopClient";
 
 interface Props {
@@ -14,10 +14,10 @@ interface Props {
   searchParams: Promise<{ purchased?: string; gifted?: string; to?: string }>;
 }
 
-async function getDeveloper(username: string) {
+async function getCompany(username: string) {
   const sb = getSupabaseAdmin();
   const { data } = await sb
-    .from("developers")
+    .from("companies")
     .select("*")
     .eq("github_login", username.toLowerCase())
     .single();
@@ -37,15 +37,15 @@ async function getActiveItems(): Promise<ShopItem[]> {
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { username } = await params;
-  const dev = await getDeveloper(username);
+  const dev = await getCompany(username);
 
   if (!dev) {
-    return { title: "Developer Not Found - Git City" };
+    return { title: "Company Not Found - Git City" };
   }
 
   return {
     title: `Shop - @${dev.github_login} - Git City`,
-    description: `Customize @${dev.github_login}'s building in Git City`,
+    description: `Customize @${dev.github_login}'s planet in Git City`,
   };
 }
 
@@ -54,11 +54,11 @@ const ACCENT = "#c8e64a";
 export default async function ShopPage({ params, searchParams }: Props) {
   const { username } = await params;
   const { purchased: purchasedItem, gifted: giftedItem, to: giftedTo } = await searchParams;
-  const dev = await getDeveloper(username);
+  const dev = await getCompany(username);
 
   if (!dev) notFound();
 
-  // Check if the logged-in user owns this building
+  // Check if the logged-in user owns this planet
   const supabase = await createServerSupabase();
   const { data: { user } } = await supabase.auth.getUser();
   const authLogin = (
@@ -84,8 +84,8 @@ export default async function ShopPage({ params, searchParams }: Props) {
             <h1 className="text-lg text-cream">Shop Locked</h1>
             <p className="mt-3 text-[10px] text-muted normal-case">
               {!dev.claimed
-                ? `@${dev.github_login} needs to claim their building before the shop is available.`
-                : "Only the building owner can customize it. Sign in with the matching GitHub account."}
+                ? `@${dev.github_login} needs to claim their planet before the shop is available.`
+                : "Only the planet owner can customize it. Sign in with the matching GitHub account."}
             </p>
             <Link
               href={`/dev/${dev.github_login}`}
@@ -109,42 +109,42 @@ export default async function ShopPage({ params, searchParams }: Props) {
     getActiveItems(),
     getOwnedItems(dev.id),
     sb
-      .from("developer_customizations")
+      .from("company_customizations")
       .select("item_id, config")
-      .eq("developer_id", dev.id)
+      .eq("company_id", dev.id)
       .in("item_id", ["custom_color", "billboard"]),
     sb
       .from("purchases")
       .select("id", { count: "exact", head: true })
-      .eq("developer_id", dev.id)
+      .eq("company_id", dev.id)
       .eq("item_id", "billboard")
       .eq("status", "completed"),
     sb
-      .from("developers")
+      .from("companies")
       .select("contributions")
       .order("rank", { ascending: true })
       .limit(1)
       .single(),
     sb
-      .from("developers")
+      .from("companies")
       .select("total_stars")
       .order("total_stars", { ascending: false })
       .limit(1)
       .single(),
     sb
-      .from("developer_achievements")
+      .from("company_achievements")
       .select("achievement_id")
-      .eq("developer_id", dev.id),
+      .eq("company_id", dev.id),
     sb
-      .from("developer_customizations")
+      .from("company_customizations")
       .select("config")
-      .eq("developer_id", dev.id)
+      .eq("company_id", dev.id)
       .eq("item_id", "loadout")
       .maybeSingle(),
     sb
-      .from("developer_customizations")
+      .from("company_customizations")
       .select("config")
-      .eq("developer_id", dev.id)
+      .eq("company_id", dev.id)
       .eq("item_id", "raid_loadout")
       .maybeSingle(),
     // A10+A13: Count purchases per item for popularity badges + social proof
@@ -176,7 +176,7 @@ export default async function ShopPage({ params, searchParams }: Props) {
   const billboardSlots = billboardPurchasesResult.count ?? 0;
   const maxContrib = topDevResult.data?.contributions ?? dev.contributions;
   const maxStars = topStarsResult.data?.total_stars ?? dev.total_stars;
-  const buildingDims = calcBuildingDims(
+  const planetDims = calcPlanetDims(
     dev.github_login,
     dev.contributions,
     dev.public_repos,
@@ -230,7 +230,7 @@ export default async function ShopPage({ params, searchParams }: Props) {
             <div>
               <h1 className="text-lg text-cream">Shop</h1>
               <p className="mt-0.5 text-[10px] text-muted normal-case">
-                Customize @{dev.github_login}&apos;s building
+                Customize @{dev.github_login}&apos;s planet
               </p>
             </div>
           </div>
@@ -239,13 +239,13 @@ export default async function ShopPage({ params, searchParams }: Props) {
         {/* Shop items (client component) */}
         <ShopClient
           githubLogin={dev.github_login}
-          developerId={dev.id}
+          companyId={dev.id}
           items={items}
           ownedItems={ownedItems}
           initialCustomColor={initialCustomColor}
           initialBillboardImages={initialBillboardImages}
           billboardSlots={billboardSlots}
-          buildingDims={buildingDims}
+          planetDims={planetDims}
           achievements={achievements}
           initialLoadout={initialLoadout}
           initialRaidLoadout={(raidLoadoutResult?.data?.config as { vehicle: string; tag: string }) ?? null}

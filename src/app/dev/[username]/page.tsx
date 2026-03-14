@@ -7,7 +7,7 @@ import { createServerSupabase } from "@/lib/supabase-server";
 import { getSupabaseAdmin } from "@/lib/supabase";
 import { getOwnedItems } from "@/lib/items";
 import { TIER_COLORS } from "@/lib/achievements";
-import { DISTRICT_NAMES, DISTRICT_COLORS } from "@/lib/github";
+import { CONSTELLATION_NAMES, CONSTELLATION_COLORS } from "@/lib/github";
 import { ITEM_NAMES } from "@/lib/zones";
 import { rankFromLevel, tierFromLevel, levelProgress, xpForLevel } from "@/lib/xp";
 import ClaimButton from "@/components/ClaimButton";
@@ -23,10 +23,10 @@ interface Props {
   params: Promise<{ username: string }>;
 }
 
-const getDeveloper = cache(async (username: string) => {
+const getCompany = cache(async (username: string) => {
   const supabase = await createServerSupabase();
   const { data } = await supabase
-    .from("developers")
+    .from("companies")
     .select("*")
     .eq("github_login", username.toLowerCase())
     .single();
@@ -35,15 +35,15 @@ const getDeveloper = cache(async (username: string) => {
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { username } = await params;
-  const dev = await getDeveloper(username);
+  const dev = await getCompany(username);
 
   if (!dev) {
-    return { title: "Developer Not Found - Git City" };
+    return { title: "Company Not Found - Git City" };
   }
 
   const contribs = (dev.contributions_total && dev.contributions_total > 0) ? dev.contributions_total : dev.contributions;
   const title = `@${dev.github_login} - Git City | ${contribs.toLocaleString()} contributions`;
-  const description = `See @${dev.github_login}'s building in Git City. ${contribs.toLocaleString()} contributions, ${dev.public_repos.toLocaleString()} repos, ${dev.total_stars.toLocaleString()} stars. Rank #${dev.rank ?? "?"} in the city.`;
+  const description = `See @${dev.github_login}'s planet in Git City. ${contribs.toLocaleString()} contributions, ${dev.public_repos.toLocaleString()} repos, ${dev.total_stars.toLocaleString()} stars. Rank #${dev.rank ?? "?"} in the city.`;
 
   return {
     title,
@@ -68,7 +68,7 @@ interface AchievementRow {
 
 export default async function DevPage({ params }: Props) {
   const { username } = await params;
-  const dev = await getDeveloper(username);
+  const dev = await getCompany(username);
 
   if (!dev) notFound();
 
@@ -79,24 +79,24 @@ export default async function DevPage({ params }: Props) {
   // Fetch achievements with name+tier from DB (no hardcoded maps)
   const sb = getSupabaseAdmin();
   const { data: devAchievements } = await sb
-    .from("developer_achievements")
+    .from("company_achievements")
     .select("achievement_id, achievements(name, tier)")
-    .eq("developer_id", dev.id);
+    .eq("company_id", dev.id);
   const achievements: AchievementRow[] = (devAchievements ?? []).map((a: Record<string, unknown>) => ({
     achievement_id: a.achievement_id as string,
     name: (a.achievements as Record<string, unknown>)?.name as string ?? (a.achievement_id as string),
     tier: (a.achievements as Record<string, unknown>)?.tier as string ?? "bronze",
   }));
 
-  // Fetch referred developers (who this dev brought to the city)
+  // Fetch referred companies (who this dev brought to the city)
   const { data: referredDevs } = await sb
-    .from("developers")
+    .from("companies")
     .select("github_login, avatar_url")
     .eq("referred_by", dev.github_login)
     .order("claimed_at", { ascending: false })
     .limit(20);
 
-  // Check if the logged-in user owns this building
+  // Check if the logged-in user owns this planet
   const supabase = await createServerSupabase();
   const { data: { user } } = await supabase.auth.getUser();
   const authLogin = (
@@ -187,20 +187,15 @@ export default async function DevPage({ params }: Props) {
                 </div>
               )}
 
-              {/* District badge */}
-              {dev.district && (
+              {/* Constellation badge */}
+              {dev.category && (
                 <div className="mt-2 flex items-center gap-2">
                   <span
                     className="px-2 py-0.5 text-[10px] text-bg"
-                    style={{ backgroundColor: DISTRICT_COLORS[dev.district] ?? '#888' }}
+                    style={{ backgroundColor: CONSTELLATION_COLORS[dev.category] ?? '#888' }}
                   >
-                    {DISTRICT_NAMES[dev.district] ?? dev.district}
+                    {CONSTELLATION_NAMES[dev.category] ?? dev.category}
                   </span>
-                  {dev.district_rank && (
-                    <span className="text-[10px] text-muted">
-                      {dev.district_rank === 1 ? 'Mayor' : `#${dev.district_rank}`} in {DISTRICT_NAMES[dev.district]}
-                    </span>
-                  )}
                 </div>
               )}
 
@@ -286,14 +281,14 @@ export default async function DevPage({ params }: Props) {
           </Link>
         </div>
 
-        {/* Customize Building — only for the logged-in owner */}
+        {/* Customize Planet — only for the logged-in owner */}
         {isOwner && (
           <div className="mt-3">
             <Link
               href={`/shop/${dev.github_login}`}
               className="btn-press flex w-full items-center justify-center gap-2 border-[3px] border-border px-6 py-3 text-sm text-cream transition-colors hover:border-border-light"
             >
-              Customize Building
+              Customize Planet
             </Link>
           </div>
         )}
@@ -366,7 +361,7 @@ export default async function DevPage({ params }: Props) {
         {/* Owned Items */}
         {ownedItems.length > 0 && (
           <div className="mt-5">
-            <h2 className="mb-3 text-sm text-cream">Building Items</h2>
+            <h2 className="mb-3 text-sm text-cream">Planet Items</h2>
             <div className="flex flex-wrap gap-2">
               {ownedItems.map((itemId) => (
                 <span
@@ -388,7 +383,7 @@ export default async function DevPage({ params }: Props) {
           </div>
         )}
 
-        {/* Referred Developers */}
+        {/* Referred Companies */}
         {referredDevs && referredDevs.length > 0 && (
           <div className="mt-5">
             <h2 className="mb-3 text-sm text-cream">
@@ -438,7 +433,7 @@ export default async function DevPage({ params }: Props) {
             <div className="mt-3 flex items-center justify-between gap-4">
               <div>
                 <p className="text-[10px] text-muted normal-case">
-                  Permanently delete your account, your building, and all associated data.
+                  Permanently delete your account, your planet, and all associated data.
                 </p>
               </div>
               <DeleteAccountButton />

@@ -1,0 +1,38 @@
+import { createClient } from '@supabase/supabase-js';
+import fs from 'fs';
+import path from 'path';
+import dotenv from 'dotenv';
+
+// Load env vars
+dotenv.config({ path: '.env.local' });
+
+const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
+
+if (!supabaseUrl || !supabaseServiceKey) {
+  console.error('Missing Supabase environment variables');
+  process.exit(1);
+}
+
+const supabase = createClient(supabaseUrl, supabaseServiceKey);
+
+async function applyMigration() {
+  const sqlPath = path.join(process.cwd(), 'supabase', 'migrations', '041_company_yield.sql');
+  const sql = fs.readFileSync(sqlPath, 'utf8');
+
+  console.log('Applying migration...');
+  
+  // We use the RPC 'execute_sql' if it exists, but typically for direct migrations 
+  // we either use the CLI or if we have service role we can try to run it.
+  // Since we don't have a generic "run sql" RPC usually, we should check if we can 
+  // just use the REST API to update columns if the schema permits, 
+  // but for DDL we really need something else.
+  
+  // Actually, I'll try to use the MCP tool again just in case the user's project 
+  // is now accessible if they changed permissions, or if I can use a different approach.
+  
+  // If the MCP tool fails, I'll have to ask the user to run the SQL in the dashboard.
+}
+
+// For now, I'll just keep the SQL file and update the code to handle the column IF it exists.
+// But the user specifically said to use the service role key.

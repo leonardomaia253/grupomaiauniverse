@@ -1,16 +1,16 @@
 -- 022: Notification system (channel-agnostic: email, push, in_app)
 -- Architecture based on Knock/Novu patterns. Email now, push ready.
 
--- ── developers table: email + activity tracking ──
-ALTER TABLE developers
+-- ── companies table: email + activity tracking ──
+ALTER TABLE companies
   ADD COLUMN IF NOT EXISTS email TEXT,
   ADD COLUMN IF NOT EXISTS email_verified BOOLEAN DEFAULT FALSE,
   ADD COLUMN IF NOT EXISTS email_updated_at TIMESTAMPTZ,
   ADD COLUMN IF NOT EXISTS timezone TEXT DEFAULT 'UTC',
   ADD COLUMN IF NOT EXISTS last_active_at TIMESTAMPTZ;
 
-CREATE INDEX IF NOT EXISTS idx_developers_email ON developers (email) WHERE email IS NOT NULL;
-CREATE INDEX IF NOT EXISTS idx_developers_last_active_at ON developers (last_active_at) WHERE last_active_at IS NOT NULL;
+CREATE INDEX IF NOT EXISTS idx_companies_email ON companies (email) WHERE email IS NOT NULL;
+CREATE INDEX IF NOT EXISTS idx_companies_last_active_at ON companies (last_active_at) WHERE last_active_at IS NOT NULL;
 
 -- ── notification_preferences ──
 -- Per-category booleans apply to ALL channels.
@@ -18,7 +18,7 @@ CREATE INDEX IF NOT EXISTS idx_developers_last_active_at ON developers (last_act
 -- channel_overrides JSONB for granular per-channel-per-category (Linear/Discord pattern).
 -- digest_frequency lets users choose how often they get non-urgent notifications.
 CREATE TABLE IF NOT EXISTS notification_preferences (
-  developer_id     INTEGER PRIMARY KEY REFERENCES developers(id) ON DELETE CASCADE,
+  company_id     INTEGER PRIMARY KEY REFERENCES companies(id) ON DELETE CASCADE,
   -- Master channel toggles
   email_enabled    BOOLEAN NOT NULL DEFAULT TRUE,
   push_enabled     BOOLEAN NOT NULL DEFAULT TRUE,
@@ -31,7 +31,7 @@ CREATE TABLE IF NOT EXISTS notification_preferences (
   -- Digest frequency: how often batched notifications are flushed
   -- 'realtime' = send immediately, 'hourly' / 'daily' / 'weekly' = accumulate then flush
   digest_frequency TEXT NOT NULL DEFAULT 'realtime' CHECK (digest_frequency IN ('realtime', 'hourly', 'daily', 'weekly')),
-  -- Push quiet hours (hour 0-23 in developer's timezone)
+  -- Push quiet hours (hour 0-23 in company's timezone)
   quiet_hours_start SMALLINT,
   quiet_hours_end   SMALLINT,
   -- Granular per-channel-per-category overrides (Linear/Discord pattern)
@@ -44,18 +44,18 @@ ALTER TABLE notification_preferences ENABLE ROW LEVEL SECURITY;
 
 CREATE POLICY "Users can read own preferences" ON notification_preferences
   FOR SELECT USING (
-    developer_id IN (SELECT id FROM developers WHERE claimed_by = auth.uid())
+    company_id IN (SELECT id FROM companies WHERE claimed_by = auth.uid())
   );
 
 CREATE POLICY "Users can update own preferences" ON notification_preferences
   FOR UPDATE USING (
-    developer_id IN (SELECT id FROM developers WHERE claimed_by = auth.uid())
+    company_id IN (SELECT id FROM companies WHERE claimed_by = auth.uid())
   );
 
 -- ── notification_log (channel-agnostic, with delivery lifecycle) ──
 CREATE TABLE IF NOT EXISTS notification_log (
   id                UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-  developer_id      INTEGER NOT NULL REFERENCES developers(id) ON DELETE CASCADE,
+  company_id      INTEGER NOT NULL REFERENCES companies(id) ON DELETE CASCADE,
   channel           TEXT NOT NULL CHECK (channel IN ('email', 'push', 'in_app')),
   notification_type TEXT NOT NULL,
   recipient         TEXT NOT NULL,       -- email address, push token, or dev ID
@@ -76,8 +76,8 @@ CREATE TABLE IF NOT EXISTS notification_log (
   UNIQUE(dedup_key, channel)
 );
 
-CREATE INDEX IF NOT EXISTS idx_notification_log_dev_type ON notification_log (developer_id, notification_type);
-CREATE INDEX IF NOT EXISTS idx_notification_log_dev_channel_created ON notification_log (developer_id, channel, created_at);
+CREATE INDEX IF NOT EXISTS idx_notification_log_dev_type ON notification_log (company_id, notification_type);
+CREATE INDEX IF NOT EXISTS idx_notification_log_dev_channel_created ON notification_log (company_id, channel, created_at);
 CREATE INDEX IF NOT EXISTS idx_notification_log_dedup ON notification_log (dedup_key, channel) WHERE dedup_key IS NOT NULL;
 CREATE INDEX IF NOT EXISTS idx_notification_log_provider ON notification_log (provider_id) WHERE provider_id IS NOT NULL;
 
@@ -90,7 +90,7 @@ ALTER TABLE notification_log ENABLE ROW LEVEL SECURITY;
 CREATE TABLE IF NOT EXISTS notification_batches (
   id               SERIAL PRIMARY KEY,
   batch_key        TEXT NOT NULL,         -- deterministic: "raids:42", "social:42:daily"
-  developer_id     INTEGER NOT NULL REFERENCES developers(id) ON DELETE CASCADE,
+  company_id     INTEGER NOT NULL REFERENCES companies(id) ON DELETE CASCADE,
   notification_type TEXT NOT NULL,        -- category being batched
   channel          TEXT NOT NULL CHECK (channel IN ('email', 'push', 'in_app')),
   closes_at        TIMESTAMPTZ NOT NULL,  -- when this batch window ends
@@ -101,7 +101,7 @@ CREATE TABLE IF NOT EXISTS notification_batches (
 
 CREATE INDEX IF NOT EXISTS idx_batches_pending ON notification_batches (closes_at)
   WHERE processed_at IS NULL;
-CREATE INDEX IF NOT EXISTS idx_batches_dev ON notification_batches (developer_id)
+CREATE INDEX IF NOT EXISTS idx_batches_dev ON notification_batches (company_id)
   WHERE processed_at IS NULL;
 
 ALTER TABLE notification_batches ENABLE ROW LEVEL SECURITY;
@@ -134,7 +134,7 @@ ALTER TABLE notification_suppressions ENABLE ROW LEVEL SECURITY;
 -- ── push_subscriptions (ready for future use) ──
 CREATE TABLE IF NOT EXISTS push_subscriptions (
   id            UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-  developer_id  INTEGER NOT NULL REFERENCES developers(id) ON DELETE CASCADE,
+  company_id  INTEGER NOT NULL REFERENCES companies(id) ON DELETE CASCADE,
   token         TEXT NOT NULL UNIQUE,
   platform      TEXT NOT NULL CHECK (platform IN ('web', 'ios', 'android')),
   user_agent    TEXT,
@@ -143,13 +143,13 @@ CREATE TABLE IF NOT EXISTS push_subscriptions (
   last_used_at  TIMESTAMPTZ
 );
 
-CREATE INDEX IF NOT EXISTS idx_push_subs_dev ON push_subscriptions (developer_id) WHERE active = TRUE;
+CREATE INDEX IF NOT EXISTS idx_push_subs_dev ON push_subscriptions (company_id) WHERE active = TRUE;
 
 ALTER TABLE push_subscriptions ENABLE ROW LEVEL SECURITY;
 
 CREATE POLICY "Users can manage own push subscriptions" ON push_subscriptions
   FOR ALL USING (
-    developer_id IN (SELECT id FROM developers WHERE claimed_by = auth.uid())
+    company_id IN (SELECT id FROM companies WHERE claimed_by = auth.uid())
   );
 
 -- FK from notification_log.batch_id (deferred because tables created in order)
@@ -161,13 +161,13 @@ ALTER TABLE notification_log
 -- MANUAL SQL (run separately in Supabase SQL editor):
 --
 -- Backfill emails from auth.users:
---   UPDATE developers d
+--   UPDATE companies d
 --   SET email = u.email, email_updated_at = NOW()
 --   FROM auth.users u
 --   WHERE d.claimed_by = u.id AND d.email IS NULL AND u.email IS NOT NULL;
 --
--- Insert default preferences for all claimed developers:
---   INSERT INTO notification_preferences (developer_id)
---   SELECT id FROM developers WHERE claimed = TRUE
---   ON CONFLICT (developer_id) DO NOTHING;
+-- Insert default preferences for all claimed companies:
+--   INSERT INTO notification_preferences (company_id)
+--   SELECT id FROM companies WHERE claimed = TRUE
+--   ON CONFLICT (company_id) DO NOTHING;
 -- ══════════════════════════════════════════════════════════════

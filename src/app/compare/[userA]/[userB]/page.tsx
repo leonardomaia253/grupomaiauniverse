@@ -16,12 +16,12 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
   const [{ data: devA }, { data: devB }] = await Promise.all([
     supabase
-      .from("developers")
+      .from("companies")
       .select("github_login, contributions, contributions_total, total_stars, rank")
       .eq("github_login", userA.toLowerCase())
       .single(),
     supabase
-      .from("developers")
+      .from("companies")
       .select("github_login, contributions, contributions_total, total_stars, rank")
       .eq("github_login", userB.toLowerCase())
       .single(),

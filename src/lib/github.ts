@@ -18,33 +18,28 @@ export interface CompanyRecord {
   claimed: boolean;
   fetch_priority: number;
   claimed_at: string | null;
-  constellation?: string | null;
   owned_items?: string[];
-  custom_color?: string | null;
-  billboard_images?: string[];
-  // v2 fields (optional for backward compat)
-  contributions_total?: number;
-  contribution_years?: number[];
-  total_prs?: number;
-  total_reviews?: number;
-  total_issues?: number;
-  repos_contributed_to?: number;
-  followers?: number;
-  following?: number;
-  organizations_count?: number;
-  account_created_at?: string | null;
-  current_streak?: number;
+  category: string | null;
+  employee_count: number;
+  applications_count: number;
+  kudos_count: number;
+  visit_count: number;
+  contributions_total: number;
+  contribution_years: number[];
+  total_prs: number;
+  total_reviews: number;
+  total_issues?: number; // Keep this one as it's not explicitly removed or replaced
+  repos_contributed_to: string[];
+  followers: number;
+  following: number;
+  organizations_count: number;
+  account_created_at: string | null;
+  current_streak: number;
   longest_streak?: number;
-  active_days_last_year?: number;
-  language_diversity?: number;
-  // XP fields
-  xp_total?: number;
   xp_level?: number;
   xp_github?: number;
   // Game fields
   achievements?: string[];
-  kudos_count?: number;
-  visit_count?: number;
   loadout?: { crown: string | null; roof: string | null; aura: string | null } | null;
   app_streak?: number;
   raid_xp?: number;
@@ -67,14 +62,15 @@ export interface CompanyPlanet {
   public_repos: number;
   name: string | null;
   avatar_url: string | null;
-  primary_language: string | null;
+  category: string | null;
+  employee_count: number;
+  applications_count: number;
   claimed: boolean;
   owned_items: string[];
-  custom_color?: string | null;
-  billboard_images?: string[];
   achievements: string[];
   kudos_count: number;
   visit_count: number;
+  primary_language?: string | null;
   loadout?: { crown: string | null; roof: string | null; aura: string | null } | null;
   app_streak: number;
   raid_xp: number;
@@ -95,6 +91,7 @@ export interface CompanyPlanet {
   windowsPerFloor: number;
   sideWindowsPerFloor: number;
   litPercentage: number;
+  yield_percent: number;
 }
 
 export interface SpacePlaza {
@@ -197,7 +194,7 @@ function calcHeightV2(
   maxContribV2: number,
   maxStars: number,
 ): { height: number; composite: number } {
-  const contribs = dev.contributions_total! > 0 ? dev.contributions_total! : dev.contributions;
+  const contribs = (dev.contributions_total ?? 0) > 0 ? (dev.contributions_total || 0) : (dev.contributions || 0);
 
   const cNorm = contribs / Math.max(1, Math.min(maxContribV2, 50_000));
   const sNorm = dev.total_stars / Math.max(1, Math.min(maxStars, 200_000));
@@ -234,7 +231,7 @@ function calcHeightV2(
 
 function calcWidthV2(dev: CompanyRecord): number {
   const repoNorm = Math.min(1, dev.public_repos / 200);
-  const langNorm = Math.min(1, (dev.language_diversity ?? 1) / 10);
+  const langNorm = Math.min(1, 1); // Mocked diversity as it's removed
   const topStarNorm = Math.min(1, (dev.top_repos?.[0]?.stars ?? 0) / 50_000);
 
   const score =
@@ -247,7 +244,7 @@ function calcWidthV2(dev: CompanyRecord): number {
 }
 
 function calcDepthV2(dev: CompanyRecord): number {
-  const extNorm = Math.min(1, (dev.repos_contributed_to ?? 0) / 100);
+  const extNorm = Math.min(1, (dev.repos_contributed_to?.length ?? 0) / 100);
   const orgNorm = Math.min(1, (dev.organizations_count ?? 0) / 10);
   const prNorm = Math.min(1, (dev.total_prs ?? 0) / 1_000);
   const ratioNorm = (dev.followers ?? 0) > 0
@@ -265,7 +262,7 @@ function calcDepthV2(dev: CompanyRecord): number {
 }
 
 function calcLitPercentageV2(dev: CompanyRecord): number {
-  const activeDaysNorm = Math.min(1, (dev.active_days_last_year ?? 0) / 300);
+  const activeDaysNorm = Math.min(1, 1); // Mocked
   const streakNorm = Math.min(1, (dev.current_streak ?? 0) / 100);
 
   const avgPerYear = (dev.contributions_total ?? 0) / Math.max(1, dev.contribution_years?.length ?? 1);
@@ -402,7 +399,7 @@ export function generateUniverseLayout(companies: CompanyRecord[]): {
 
   const constellationGroups: Record<string, CompanyRecord[]> = {};
   for (const dev of companies) {
-    const did = dev.constellation ?? inferconstellation(dev.primary_language);
+    const did = inferconstellation(dev.category);
     if (!constellationGroups[did]) constellationGroups[did] = [];
     constellationGroups[did].push(dev);
   }
@@ -510,7 +507,7 @@ export function generateUniverseLayout(companies: CompanyRecord[]): {
       const sideWindowsPerFloor = Math.max(3, Math.floor(d / 5));
       const did = GalacticCenterOverride.has(dev.github_login)
         ? 'Galactic Center'
-        : (dev.constellation ?? inferconstellation(dev.primary_language));
+        : inferconstellation(dev.primary_language);
 
       planets.push({
         login: dev.github_login,
@@ -520,12 +517,13 @@ export function generateUniverseLayout(companies: CompanyRecord[]): {
         public_repos: dev.public_repos,
         name: dev.name,
         avatar_url: dev.avatar_url,
-        primary_language: dev.primary_language,
+        // Mocked fields to prevent breaking typing internally:
+        category: dev.category,
+        employee_count: dev.employee_count ?? 1,
+        applications_count: dev.applications_count ?? 0,
         claimed: dev.claimed ?? false,
         owned_items: dev.owned_items ?? [],
-        custom_color: dev.custom_color ?? null,
-        billboard_images: dev.billboard_images ?? [],
-        achievements: (dev as unknown as Record<string, unknown>).achievements as string[] ?? [],
+        achievements: Array.isArray(dev.achievements) ? dev.achievements as string[] : [],
         kudos_count: (dev as unknown as Record<string, unknown>).kudos_count as number ?? 0,
         visit_count: (dev as unknown as Record<string, unknown>).visit_count as number ?? 0,
         loadout: (dev as unknown as Record<string, unknown>).loadout as CompanyPlanet["loadout"] ?? null,
@@ -539,7 +537,7 @@ export function generateUniverseLayout(companies: CompanyRecord[]): {
         xp_total: (dev as unknown as Record<string, unknown>).xp_total as number ?? 0,
         xp_level: (dev as unknown as Record<string, unknown>).xp_level as number ?? 1,
         constellation: did,
-        constellation_chosen: (dev as unknown as Record<string, unknown>).constellation_chosen as boolean ?? false,
+        constellation_chosen: false,
         position: [posX, 0, posZ],
         width: w,
         depth: d,
@@ -548,6 +546,7 @@ export function generateUniverseLayout(companies: CompanyRecord[]): {
         windowsPerFloor,
         sideWindowsPerFloor,
         litPercentage,
+        yield_percent: dev.yield_percent ?? 0,
       });
     }
 
@@ -774,7 +773,6 @@ export function generateUniverseLayout(companies: CompanyRecord[]): {
     length: RIVER_WIDTH,
     centerZ: riverCenterZ,
   };
-
   // ── Bridges ──
   const bridgeWidth = RIVER_WIDTH + 20;
   const bridgeSpacing = riverXExtent / 4;
@@ -802,10 +800,14 @@ export function calcplanetDims(
   if (v2Data && (v2Data.contributions_total ?? 0) > 0) {
     const dev: CompanyRecord = {
       id: 0, github_login: githubLogin, github_id: null, name: null,
-      avatar_url: null, bio: null, contributions, public_repos: publicRepos,
-      total_stars: totalStars, primary_language: null, top_repos: [],
+      avatar_url: null, bio: null, contributions: contributions, public_repos: publicRepos,
+      owned_items: [], category: null, primary_language: null,
+      employee_count: 1, applications_count: 0, yield_percent: 0,
+      total_stars: totalStars, top_repos: [],
       rank: null, fetched_at: '', created_at: '', claimed: false,
       fetch_priority: 0, claimed_at: null,
+      kudos_count: 0, visit_count: 0, contributions_total: 0, contribution_years: [], total_prs: 0, total_reviews: 0, repos_contributed_to: [],
+      followers: 0, following: 0, organizations_count: 0, account_created_at: null, current_streak: 0,
       ...v2Data,
     };
     const { height } = calcHeightV2(dev, maxContrib, maxStars);

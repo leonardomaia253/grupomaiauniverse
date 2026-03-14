@@ -29,14 +29,14 @@ on conflict (id) do nothing;
 
 -- Aura zone — neon_trim replaces neon_outline
 insert into items (id, category, name, description, price_usd_cents, price_brl_cents, zone, metadata) values
-  ('neon_trim',      'effect',    'Neon Trim',      'Thick neon bars on building edges, pulses gently',           100, 490, 'aura', '{}'),
-  ('hologram_ring',  'effect',    'Hologram Ring',   'Translucent ring rotating slowly around building',          200, 990, 'aura', '{}'),
+  ('neon_trim',      'effect',    'Neon Trim',      'Thick neon bars on planet edges, pulses gently',           100, 490, 'aura', '{}'),
+  ('hologram_ring',  'effect',    'Hologram Ring',   'Translucent ring rotating slowly around planet',          200, 990, 'aura', '{}'),
   ('lightning_aura', 'effect',    'Lightning Aura',  'Electric bolts crackling with intermittent flash',          300, 1490, 'aura', '{}')
 on conflict (id) do nothing;
 
 -- Faces zone
 insert into items (id, category, name, description, price_usd_cents, price_brl_cents, zone, metadata) values
-  ('led_banner',     'identity',  'LED Banner',     'Scrolling text marquee on building facade',                  250, 1290, 'faces', '{}')
+  ('led_banner',     'identity',  'LED Banner',     'Scrolling text marquee on planet facade',                  250, 1290, 'faces', '{}')
 on conflict (id) do nothing;
 
 -- 5. Update existing item descriptions and prices to match v2 catalog

@@ -10,7 +10,7 @@ CREATE TABLE districts (
   population INT DEFAULT 0,
   total_contributions BIGINT DEFAULT 0,
   weekly_score BIGINT DEFAULT 0,
-  mayor_id INT REFERENCES developers(id),
+  mayor_id INT REFERENCES companies(id),
   created_at TIMESTAMPTZ DEFAULT now()
 );
 
@@ -26,19 +26,19 @@ INSERT INTO districts (id, name, color) VALUES
   ('vibe_coder', 'Vibe Coder',     '#8b5cf6'),
   ('creator',    'Creator',        '#eab308');
 
--- 1b. New columns on developers
-ALTER TABLE developers ADD COLUMN district TEXT REFERENCES districts(id);
-ALTER TABLE developers ADD COLUMN district_chosen BOOLEAN DEFAULT false;
-ALTER TABLE developers ADD COLUMN district_changes_count INT DEFAULT 0;
-ALTER TABLE developers ADD COLUMN district_changed_at TIMESTAMPTZ;
-ALTER TABLE developers ADD COLUMN district_rank INT;
-CREATE INDEX idx_developers_district ON developers(district);
-CREATE INDEX idx_developers_district_rank ON developers(district, district_rank);
+-- 1b. New columns on companies
+ALTER TABLE companies ADD COLUMN district TEXT REFERENCES districts(id);
+ALTER TABLE companies ADD COLUMN district_chosen BOOLEAN DEFAULT false;
+ALTER TABLE companies ADD COLUMN district_changes_count INT DEFAULT 0;
+ALTER TABLE companies ADD COLUMN district_changed_at TIMESTAMPTZ;
+ALTER TABLE companies ADD COLUMN district_rank INT;
+CREATE INDEX idx_companies_district ON companies(district);
+CREATE INDEX idx_companies_district_rank ON companies(district, district_rank);
 
 -- 1c. District changes history table
 CREATE TABLE district_changes (
   id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
-  developer_id INT REFERENCES developers(id) NOT NULL,
+  company_id INT REFERENCES companies(id) NOT NULL,
   from_district TEXT REFERENCES districts(id),
   to_district TEXT REFERENCES districts(id) NOT NULL,
   reason TEXT DEFAULT 'inferred',
@@ -46,7 +46,7 @@ CREATE TABLE district_changes (
 );
 
 -- 1d. Auto-inference for all existing devs
-UPDATE developers SET district = CASE
+UPDATE companies SET district = CASE
   WHEN primary_language IN ('TypeScript','JavaScript','CSS','HTML','SCSS','Vue','Svelte') THEN 'frontend'
   WHEN primary_language IN ('Java','Go','Rust','C#','PHP','Ruby','Elixir','C','C++','Assembly','Verilog','VHDL') THEN 'backend'
   WHEN primary_language IN ('Python','Jupyter Notebook','R','Julia') THEN 'data_ai'
@@ -59,5 +59,5 @@ WHERE district IS NULL;
 
 -- 1e. Update district population cache
 UPDATE districts d SET population = (
-  SELECT COUNT(*) FROM developers dev WHERE dev.district = d.id
+  SELECT COUNT(*) FROM companies dev WHERE dev.district = d.id
 );

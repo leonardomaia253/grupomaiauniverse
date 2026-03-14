@@ -1,11 +1,11 @@
 -- ============================================================
 -- 016: White Rabbit System
--- Adds rabbit progress columns to developers,
+-- Adds rabbit progress columns to companies,
 -- white_rabbit achievement, and white_rabbit crown item.
 -- ============================================================
 
--- 1. New columns on developers
-ALTER TABLE developers
+-- 1. New columns on companies
+ALTER TABLE companies
   ADD COLUMN IF NOT EXISTS rabbit_progress     int         DEFAULT 0,
   ADD COLUMN IF NOT EXISTS rabbit_started_at   timestamptz NULL,
   ADD COLUMN IF NOT EXISTS rabbit_completed    boolean     DEFAULT false,

@@ -3,12 +3,12 @@ import { getSupabaseAdmin } from "@/lib/supabase";
 
 export async function GET(
   _request: Request,
-  { params }: { params: Promise<{ developerId: string }> }
+  { params }: { params: Promise<{ companyId: string }> }
 ) {
-  const { developerId: devIdStr } = await params;
-  const developerId = parseInt(devIdStr, 10);
-  if (isNaN(developerId)) {
-    return NextResponse.json({ error: "Invalid developer ID" }, { status: 400 });
+  const { companyId: devIdStr } = await params;
+  const companyId = parseInt(devIdStr, 10);
+  if (isNaN(companyId)) {
+    return NextResponse.json({ error: "Invalid company ID" }, { status: 400 });
   }
 
   const sb = getSupabaseAdmin();
@@ -16,9 +16,9 @@ export async function GET(
   const [allRes, unlockedRes] = await Promise.all([
     sb.from("achievements").select("*").order("sort_order"),
     sb
-      .from("developer_achievements")
+      .from("company_achievements")
       .select("achievement_id, unlocked_at, seen")
-      .eq("developer_id", developerId),
+      .eq("company_id", companyId),
   ]);
 
   const unlockedMap = new Map(

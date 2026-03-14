@@ -131,8 +131,8 @@ export async function GET(
 
   const fields = "github_login, name, avatar_url, contributions, contributions_total, public_repos, total_stars, rank, kudos_count";
   const [{ data: devA }, { data: devB }] = await Promise.all([
-    supabase.from("developers").select(fields).eq("github_login", userA.toLowerCase()).single(),
-    supabase.from("developers").select(fields).eq("github_login", userB.toLowerCase()).single(),
+    supabase.from("companies").select(fields).eq("github_login", userA.toLowerCase()).single(),
+    supabase.from("companies").select(fields).eq("github_login", userB.toLowerCase()).single(),
   ]);
 
   if (!devA || !devB) {
@@ -208,7 +208,7 @@ function renderLandscape(
     (
       <div style={{ width: "100%", height: "100%", display: "flex", backgroundColor: bg, fontFamily: "Silkscreen", border: `6px solid ${border}`, position: "relative", overflow: "hidden" }}>
 
-        {/* ── Left side: Dev A avatar + building ── */}
+        {/* ── Left side: Dev A avatar + planet ── */}
         <div style={{ position: "absolute", left: 30, top: 28, display: "flex", alignItems: "center", gap: 12 }}>
           {devA.avatar_url ? <img src={devA.avatar_url as string} width={64} height={64} style={{ border: `3px solid ${aColor}` }} /> : null}
           <div style={{ display: "flex", flexDirection: "column" }}>
@@ -217,12 +217,12 @@ function renderLandscape(
           </div>
         </div>
 
-        {/* Building A */}
+        {/* Planet A */}
         <div style={{ position: "absolute", left: 60, top: GROUND_Y - heightA, width: BLDG_W, height: heightA, backgroundColor: cardBg, borderTop: `6px solid ${aColor}`, borderLeft: `3px solid ${aIsWinner || isTie ? `${accent}50` : border}`, borderRight: `3px solid ${aIsWinner || isTie ? `${accent}50` : border}`, display: "flex", flexDirection: "column", alignItems: "center", paddingTop: 14, gap: WGAP }}>
           {renderWindows(heightA, aColor)}
         </div>
 
-        {/* ── Right side: Dev B avatar + building ── */}
+        {/* ── Right side: Dev B avatar + planet ── */}
         <div style={{ position: "absolute", right: 30, top: 28, display: "flex", alignItems: "center", gap: 12 }}>
           <div style={{ display: "flex", flexDirection: "column", alignItems: "flex-end" }}>
             <div style={{ display: "flex", fontSize: 22, color: cream, textTransform: "uppercase" }}>{((devB.name ?? devB.github_login) as string).slice(0, 14)}</div>
@@ -231,7 +231,7 @@ function renderLandscape(
           {devB.avatar_url ? <img src={devB.avatar_url as string} width={64} height={64} style={{ border: `3px solid ${bColor}` }} /> : null}
         </div>
 
-        {/* Building B */}
+        {/* Planet B */}
         <div style={{ position: "absolute", right: 60, top: GROUND_Y - heightB, width: BLDG_W, height: heightB, backgroundColor: cardBg, borderTop: `6px solid ${bColor}`, borderLeft: `3px solid ${bIsWinner || isTie ? `${accent}50` : border}`, borderRight: `3px solid ${bIsWinner || isTie ? `${accent}50` : border}`, display: "flex", flexDirection: "column", alignItems: "center", paddingTop: 14, gap: WGAP }}>
           {renderWindows(heightB, bColor)}
         </div>
@@ -320,7 +320,7 @@ function renderStories(
           </div>
         </div>
 
-        {/* Buildings side by side */}
+        {/* Planets side by side */}
         <div style={{ position: "absolute", left: 140, top: GROUND_Y - heightA, width: 260, height: heightA, backgroundColor: cardBg, borderTop: `6px solid ${aColor}`, borderLeft: `3px solid ${aIsWinner || isTie ? `${accent}50` : border}`, borderRight: `3px solid ${aIsWinner || isTie ? `${accent}50` : border}`, display: "flex", flexDirection: "column", alignItems: "center", paddingTop: 14, gap: WGAP }}>
           {renderWindows(heightA, aColor)}
         </div>

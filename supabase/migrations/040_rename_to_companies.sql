@@ -1,18 +1,18 @@
 -- ============================================================
--- Git Universe — Rename Developers to Companies
+-- Git Universe — Rename Companies to Companies
 -- ============================================================
 
 -- 1. Rename core tables
-alter table if exists developers rename to companies;
-alter table if exists city_stats rename to universe_stats;
+alter table if exists companies rename to companies;
+alter table if exists universe_stats rename to universe_stats;
 
 -- 2. Rename columns in stats
-alter table universe_stats rename column total_developers to total_companies;
+alter table universe_stats rename column total_companies to total_companies;
 
 -- 3. Rename social tables
-alter table if exists developer_achievements rename to company_achievements;
-alter table if exists developer_kudos rename to company_kudos;
-alter table if exists building_visits rename to planet_visits;
+alter table if exists company_achievements rename to company_achievements;
+alter table if exists company_kudos rename to company_kudos;
+alter table if exists planet_visits rename to planet_visits;
 
 -- 4. Rename foreign key columns in other tables
 -- activity_feed
@@ -20,17 +20,17 @@ alter table activity_feed rename column actor_id to actor_id; -- already actor_i
 alter table activity_feed rename column target_id to target_id;
 
 -- purchases
-alter table purchases rename column developer_id to company_id;
+alter table purchases rename column company_id to company_id;
 -- gifted_to already exists
 
 -- company_achievements
-alter table company_achievements rename column developer_id to company_id;
+alter table company_achievements rename column company_id to company_id;
 
 -- company_kudos
 -- giver_id, receiver_id are fine but we should be consistent
 
 -- planet_visits
-alter table planet_visits rename column building_id to planet_id;
+alter table planet_visits rename column planet_id to planet_id;
 -- visitor_id is fine
 
 -- 5. Update functions

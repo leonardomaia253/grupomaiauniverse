@@ -1,7 +1,7 @@
 -- Sky collectibles: per-session fly scores with daily seed leaderboard
 CREATE TABLE fly_scores (
   id            bigint GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
-  developer_id  int NOT NULL REFERENCES developers(id),
+  company_id  int NOT NULL REFERENCES companies(id),
   score         int NOT NULL,
   collected     int NOT NULL,
   max_combo     int NOT NULL DEFAULT 1,
@@ -11,7 +11,7 @@ CREATE TABLE fly_scores (
 );
 
 CREATE INDEX idx_fly_scores_seed_score ON fly_scores(seed, score DESC);
-CREATE INDEX idx_fly_scores_developer  ON fly_scores(developer_id, created_at DESC);
+CREATE INDEX idx_fly_scores_company  ON fly_scores(company_id, created_at DESC);
 
 ALTER TABLE fly_scores ENABLE ROW LEVEL SECURITY;
 CREATE POLICY "fly_scores_read" ON fly_scores FOR SELECT USING (true);

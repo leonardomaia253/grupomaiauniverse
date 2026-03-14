@@ -41,7 +41,7 @@ const i18n: Record<Lang, {
     stars: "STARS",
     kudos: "KUDOS",
     cta: "Can you beat this?",
-    notFound: "Developer not found",
+    notFound: "Company not found",
   },
   pt: {
     inTheCity: "na cidade",
@@ -115,7 +115,7 @@ export async function GET(
   );
 
   const { data: dev } = await supabase
-    .from("developers")
+    .from("companies")
     .select(
       "id, github_login, name, avatar_url, contributions, contributions_total, public_repos, total_stars, rank, kudos_count"
     )
@@ -159,9 +159,9 @@ export async function GET(
 
   // Fetch achievements
   const { data: devAchievements } = await supabase
-    .from("developer_achievements")
+    .from("company_achievements")
     .select("achievement_id, achievements(name, tier)")
-    .eq("developer_id", dev.id);
+    .eq("company_id", dev.id);
 
   const achievements = (devAchievements ?? []).map(
     (a: Record<string, unknown>) => ({
@@ -200,7 +200,7 @@ function renderLandscape(
   fontData: Buffer,
   t: typeof i18n.en
 ) {
-  const buildingH = Math.round(
+  const planetH = Math.round(
     Math.min(
       520,
       Math.max(320, 320 + ((dev.contributions as number) / 1000) * 160)
@@ -229,14 +229,14 @@ function renderLandscape(
           overflow: "hidden",
         }}
       >
-        {/* Building */}
+        {/* Planet */}
         <div
           style={{
             position: "absolute",
             left: 80,
-            top: GROUND_Y - buildingH,
+            top: GROUND_Y - planetH,
             width: 260,
-            height: buildingH,
+            height: planetH,
             backgroundColor: cardBg,
             borderTop: `6px solid ${accent}`,
             borderLeft: `3px solid ${accent}50`,
@@ -248,7 +248,7 @@ function renderLandscape(
             gap: WGAP,
           }}
         >
-          {renderWindows(buildingH, accent)}
+          {renderWindows(planetH, accent)}
         </div>
 
         {/* Right column */}
@@ -497,18 +497,18 @@ const TAUNTS: Record<Lang, { rank: [number, string][]; contribs: [number, string
     rank: [
       [5, "I AM THE SKYLINE"],
       [15, "THE VIEW FROM UP HERE IS INSANE"],
-      [50, "I CAN SEE YOUR BUILDING FROM HERE"],
+      [50, "I CAN SEE YOUR PLANET FROM HERE"],
       [100, "MY ELEVATOR DOESN'T GO THAT LOW"],
       [250, "PENTHOUSE VIBES ONLY"],
-      [500, "MY BUILDING HAS A ROOFTOP POOL"],
+      [500, "MY PLANET HAS A ROOFTOP POOL"],
       [1000, "NOT BAD FOR SOMEONE WHO SLEEPS"],
     ],
     contribs: [
       [5000, "I DON'T TOUCH GRASS. I PUSH CODE."],
-      [2000, "YOUR BUILDING FITS IN MY LOBBY"],
+      [2000, "YOUR PLANET FITS IN MY LOBBY"],
       [1000, "MY COMMITS HAVE COMMITS"],
       [500, "TALLER THAN YOUR ATTENTION SPAN"],
-      [200, "SMALL BUILDING, BIG ENERGY"],
+      [200, "SMALL PLANET, BIG ENERGY"],
       [50, "EVERY SKYSCRAPER STARTS SOMEWHERE"],
     ],
     fallback: "JUST MOVED IN. WATCH ME GROW.",
@@ -556,7 +556,7 @@ function getTaunt(rank: number | null, contributions: number, lang: Lang): strin
 //   356  name                        → ends ~406
 //   418  @login                      → ends ~446
 //   462  rank + tier                 → ends ~498
-//   ≥540 building top (dynamic)      → building hero
+//   ≥540 planet top (dynamic)      → planet hero
 //   1320 ground line
 //   1360 stats (3 flat)              → ends ~1440
 //   1470 achievement badges          → ends ~1502
@@ -573,7 +573,7 @@ function renderStories(
 ) {
   const contributions = dev.contributions as number;
   const rank = dev.rank as number | null;
-  const buildingH = Math.round(
+  const planetH = Math.round(
     Math.min(750, Math.max(500, 500 + (contributions / 1000) * 200))
   );
   const BWIDTH = 320;
@@ -709,14 +709,14 @@ function renderStories(
           </div>
         </div>
 
-        {/* ── Building (HERO — fills the center) ── */}
+        {/* ── Planet (HERO — fills the center) ── */}
         <div
           style={{
             position: "absolute",
             left: (1080 - BWIDTH) / 2,
-            top: GROUND_Y - buildingH,
+            top: GROUND_Y - planetH,
             width: BWIDTH,
-            height: buildingH,
+            height: planetH,
             backgroundColor: cardBg,
             borderTop: `6px solid ${accent}`,
             borderLeft: `3px solid ${accent}50`,
@@ -728,7 +728,7 @@ function renderStories(
             gap: WGAP,
           }}
         >
-          {renderWindows(buildingH, accent)}
+          {renderWindows(planetH, accent)}
         </div>
 
         {/* ── Ground line ── */}

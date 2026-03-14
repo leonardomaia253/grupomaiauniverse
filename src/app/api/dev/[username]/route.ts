@@ -109,7 +109,7 @@ export async function GET(
       const data = await fetchGitHubcompanyData(username, isOwnProfile ? { allowEmpty: true } : undefined);
       if (rateLimitKey) await recordRateLimitRequest(rateLimitKey);
 
-      // Own profile: create building as fallback (auth callback may have failed)
+      // Own profile: create planet as fallback (auth callback may have failed)
       if (isOwnProfile && authUserId) {
         const { data: created, error: createErr } = await sb
           .from("companies")
@@ -331,14 +331,14 @@ export async function GET(
     };
 
     const { data: upserted, error: upsertError } = await sb
-      .from("developers")
+      .from("companies")
       .upsert(record, { onConflict: "github_login" })
       .select()
       .single();
 
     if (upsertError) {
       console.error("Upsert error:", upsertError);
-      return NextResponse.json({ error: "Failed to save developer data" }, { status: 500 });
+      return NextResponse.json({ error: "Failed to save company data" }, { status: 500 });
     }
 
     // Recalculate GitHub XP and grant diff
@@ -353,8 +353,8 @@ export async function GET(
       const prevGithubXp = (cached.xp_github as number) ?? 0;
       if (newGithubXp > prevGithubXp) {
         const diff = newGithubXp - prevGithubXp;
-        await sb.rpc("grant_xp", { p_developer_id: devId, p_source: "github", p_amount: diff });
-        await sb.from("developers").update({ xp_github: newGithubXp }).eq("id", devId);
+        await sb.rpc("grant_xp", { p_company_id: devId, p_source: "github", p_amount: diff });
+        await sb.from("companies").update({ xp_github: newGithubXp }).eq("id", devId);
       }
     }
 
@@ -367,7 +367,7 @@ export async function GET(
       const matchedUser = (matchedUsers as { id: string }[] | null)?.[0];
       if (matchedUser?.id) {
         await admin
-          .from("developers")
+          .from("companies")
           .update({
             claimed: true,
             claimed_by: matchedUser.id,
@@ -379,7 +379,7 @@ export async function GET(
     }
 
     const { data: withRank } = await sb
-      .from("developers")
+      .from("companies")
       .select("*")
       .eq("github_login", record.github_login)
       .single();

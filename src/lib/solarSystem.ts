@@ -18,6 +18,8 @@ export interface CompanyPlanet {
   color: string;
   hasRings: boolean;
   atmosphereDensity: number;
+  isHealthy: boolean;
+  yield_percent: number;
   
   // Original record ref
   raw: CompanyRecord;
@@ -80,6 +82,8 @@ export function generateSolarSystem(companies: CompanyRecord[]): SolarSystem {
       color,
       hasRings: dev.total_stars > 1000,
       atmosphereDensity: Math.min(1, dev.public_repos / 100),
+      isHealthy: (dev.yield_percent ?? 0) >= 0,
+      yield_percent: dev.yield_percent ?? 0,
       raw: dev
     };
   });

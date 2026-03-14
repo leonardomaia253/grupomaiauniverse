@@ -1,13 +1,13 @@
 -- Single RPC that returns all city data in one SQL call.
 -- Eliminates 30+ HTTP round-trips to PostgREST.
-CREATE OR REPLACE FUNCTION get_city_snapshot()
+CREATE OR REPLACE FUNCTION get_universe_snapshot()
 RETURNS json
 LANGUAGE sql
 STABLE
 SET statement_timeout = '60s'
 AS $$
   SELECT json_build_object(
-    'developers', (
+    'companies', (
       SELECT COALESCE(json_agg(row_to_json(t)), '[]'::json)
       FROM (
         SELECT id, github_login, name, avatar_url, contributions, total_stars,
@@ -25,14 +25,14 @@ AS $$
                COALESCE(current_week_contributions, 0) AS current_week_contributions,
                COALESCE(current_week_kudos_given, 0) AS current_week_kudos_given,
                COALESCE(current_week_kudos_received, 0) AS current_week_kudos_received
-        FROM developers
+        FROM companies
         ORDER BY rank ASC
       ) t
     ),
     'purchases', (
       SELECT COALESCE(json_agg(row_to_json(t)), '[]'::json)
       FROM (
-        SELECT developer_id, item_id
+        SELECT company_id, item_id
         FROM purchases
         WHERE status = 'completed' AND gifted_to IS NULL
       ) t
@@ -48,29 +48,29 @@ AS $$
     'customizations', (
       SELECT COALESCE(json_agg(row_to_json(t)), '[]'::json)
       FROM (
-        SELECT developer_id, item_id, config
-        FROM developer_customizations
+        SELECT company_id, item_id, config
+        FROM company_customizations
         WHERE item_id IN ('custom_color', 'billboard', 'loadout')
       ) t
     ),
     'achievements', (
       SELECT COALESCE(json_agg(row_to_json(t)), '[]'::json)
       FROM (
-        SELECT developer_id, achievement_id
-        FROM developer_achievements
+        SELECT company_id, achievement_id
+        FROM company_achievements
       ) t
     ),
     'raid_tags', (
       SELECT COALESCE(json_agg(row_to_json(t)), '[]'::json)
       FROM (
-        SELECT building_id, attacker_login, tag_style, expires_at
+        SELECT planet_id, attacker_login, tag_style, expires_at
         FROM raid_tags
         WHERE active = true
       ) t
     ),
     'stats', (
       SELECT row_to_json(t)
-      FROM (SELECT * FROM city_stats WHERE id = 1) t
+      FROM (SELECT * FROM universe_stats WHERE id = 1) t
     )
   );
 $$;

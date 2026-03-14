@@ -1,20 +1,20 @@
 -- Cache table for pre-computed city snapshot.
 -- Eliminates 114s CPU-bound query from user request path.
-CREATE TABLE IF NOT EXISTS city_snapshot_cache (
+CREATE TABLE IF NOT EXISTS universe_snapshot_cache (
   id   int PRIMARY KEY DEFAULT 1 CHECK (id = 1),
   data jsonb NOT NULL,
   refreshed_at timestamptz NOT NULL DEFAULT now()
 );
 
-ALTER TABLE city_snapshot_cache ENABLE ROW LEVEL SECURITY;
+ALTER TABLE universe_snapshot_cache ENABLE ROW LEVEL SECURITY;
 
 CREATE POLICY "Anyone can read snapshot cache"
-  ON city_snapshot_cache FOR SELECT
+  ON universe_snapshot_cache FOR SELECT
   USING (true);
 
 -- Background function that refreshes the cache.
 -- Called by pg_cron every 5 minutes.
-CREATE OR REPLACE FUNCTION refresh_city_snapshot()
+CREATE OR REPLACE FUNCTION refresh_universe_snapshot()
 RETURNS void
 LANGUAGE plpgsql
 SET statement_timeout = '180s'
@@ -22,9 +22,9 @@ AS $$
 DECLARE
   snapshot json;
 BEGIN
-  SELECT get_city_snapshot() INTO snapshot;
+  SELECT get_universe_snapshot() INTO snapshot;
 
-  INSERT INTO city_snapshot_cache (id, data, refreshed_at)
+  INSERT INTO universe_snapshot_cache (id, data, refreshed_at)
   VALUES (1, snapshot::jsonb, now())
   ON CONFLICT (id) DO UPDATE
     SET data = EXCLUDED.data,
@@ -33,25 +33,25 @@ END;
 $$;
 
 -- Thin RPC for the API to call.
-CREATE OR REPLACE FUNCTION get_cached_city_snapshot()
+CREATE OR REPLACE FUNCTION get_cached_universe_snapshot()
 RETURNS jsonb
 LANGUAGE sql
 STABLE
 SET statement_timeout = '5s'
 AS $$
-  SELECT data FROM city_snapshot_cache WHERE id = 1;
+  SELECT data FROM universe_snapshot_cache WHERE id = 1;
 $$;
 
 -- Bump the statement_timeout on the original RPC so the background
 -- refresh doesn't get killed mid-query.
-CREATE OR REPLACE FUNCTION get_city_snapshot()
+CREATE OR REPLACE FUNCTION get_universe_snapshot()
 RETURNS json
 LANGUAGE sql
 STABLE
 SET statement_timeout = '180s'
 AS $$
   SELECT json_build_object(
-    'developers', (
+    'companies', (
       SELECT COALESCE(json_agg(row_to_json(t)), '[]'::json)
       FROM (
         SELECT id, github_login, name, avatar_url, contributions, total_stars,
@@ -69,14 +69,14 @@ AS $$
                COALESCE(current_week_contributions, 0) AS current_week_contributions,
                COALESCE(current_week_kudos_given, 0) AS current_week_kudos_given,
                COALESCE(current_week_kudos_received, 0) AS current_week_kudos_received
-        FROM developers
+        FROM companies
         ORDER BY rank ASC
       ) t
     ),
     'purchases', (
       SELECT COALESCE(json_agg(row_to_json(t)), '[]'::json)
       FROM (
-        SELECT developer_id, item_id
+        SELECT company_id, item_id
         FROM purchases
         WHERE status = 'completed' AND gifted_to IS NULL
       ) t
@@ -92,29 +92,29 @@ AS $$
     'customizations', (
       SELECT COALESCE(json_agg(row_to_json(t)), '[]'::json)
       FROM (
-        SELECT developer_id, item_id, config
-        FROM developer_customizations
+        SELECT company_id, item_id, config
+        FROM company_customizations
         WHERE item_id IN ('custom_color', 'billboard', 'loadout')
       ) t
     ),
     'achievements', (
       SELECT COALESCE(json_agg(row_to_json(t)), '[]'::json)
       FROM (
-        SELECT developer_id, achievement_id
-        FROM developer_achievements
+        SELECT company_id, achievement_id
+        FROM company_achievements
       ) t
     ),
     'raid_tags', (
       SELECT COALESCE(json_agg(row_to_json(t)), '[]'::json)
       FROM (
-        SELECT building_id, attacker_login, tag_style, expires_at
+        SELECT planet_id, attacker_login, tag_style, expires_at
         FROM raid_tags
         WHERE active = true
       ) t
     ),
     'stats', (
       SELECT row_to_json(t)
-      FROM (SELECT * FROM city_stats WHERE id = 1) t
+      FROM (SELECT * FROM universe_stats WHERE id = 1) t
     )
   );
 $$;
@@ -131,5 +131,5 @@ $$;
 SELECT cron.schedule(
   'refresh-city-snapshot',
   '*/5 * * * *',
-  $$SELECT refresh_city_snapshot()$$
+  $$SELECT refresh_universe_snapshot()$$
 );

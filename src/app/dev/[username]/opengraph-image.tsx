@@ -3,7 +3,7 @@ import { readFile } from "node:fs/promises";
 import { join } from "node:path";
 import { createClient } from "@supabase/supabase-js";
 
-export const alt = "Developer Profile - Git City";
+export const alt = "Company Profile - Git City";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
@@ -24,7 +24,7 @@ export default async function Image({
   );
 
   const { data: dev } = await supabase
-    .from("developers")
+    .from("companies")
     .select("github_login, name, avatar_url, contributions, contributions_total, public_repos, total_stars, rank, kudos_count")
     .eq("github_login", username.toLowerCase())
     .single();
@@ -53,7 +53,7 @@ export default async function Image({
             border: `6px solid ${border}`,
           }}
         >
-          Developer not found
+          Company not found
         </div>
       ),
       {
@@ -102,8 +102,8 @@ export default async function Image({
   // Effective contributions (matches rank calculation)
   const contribs = (dev.contributions_total && dev.contributions_total > 0) ? dev.contributions_total : dev.contributions;
 
-  // Building height — tall and dominant, scales with contributions
-  const buildingH = Math.round(Math.min(480, Math.max(320, 320 + (contribs / 1000) * 160)));
+  // Planet height — tall and dominant, scales with contributions
+  const planetH = Math.round(Math.min(480, Math.max(320, 320 + (contribs / 1000) * 160)));
   const GROUND_Y = 550;
 
   const stats = [
@@ -127,14 +127,14 @@ export default async function Image({
           overflow: "hidden",
         }}
       >
-        {/* Building — hero element */}
+        {/* Planet — hero element */}
         <div
           style={{
             position: "absolute",
             left: 80,
-            top: GROUND_Y - buildingH,
+            top: GROUND_Y - planetH,
             width: 260,
-            height: buildingH,
+            height: planetH,
             backgroundColor: cardBg,
             borderTop: `6px solid ${accent}`,
             borderLeft: `3px solid ${accent}50`,
@@ -146,7 +146,7 @@ export default async function Image({
             gap: WGAP,
           }}
         >
-          {renderWindows(buildingH, accent)}
+          {renderWindows(planetH, accent)}
         </div>
 
         {/* Right column: Info + Stats */}

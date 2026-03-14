@@ -3,17 +3,17 @@
 
 -- ─── Daily mission progress table ───────────────────────────────────────
 CREATE TABLE IF NOT EXISTS daily_mission_progress (
-  developer_id  bigint  NOT NULL REFERENCES developers(id),
+  company_id  bigint  NOT NULL REFERENCES companies(id),
   mission_date  date    NOT NULL DEFAULT current_date,
   mission_id    text    NOT NULL,
   progress      int     NOT NULL DEFAULT 0,
   completed     boolean NOT NULL DEFAULT false,
   completed_at  timestamptz,
-  PRIMARY KEY (developer_id, mission_date, mission_id)
+  PRIMARY KEY (company_id, mission_date, mission_id)
 );
 
 CREATE INDEX IF NOT EXISTS idx_dmp_dev_date
-  ON daily_mission_progress(developer_id, mission_date DESC);
+  ON daily_mission_progress(company_id, mission_date DESC);
 
 ALTER TABLE daily_mission_progress ENABLE ROW LEVEL SECURITY;
 
@@ -26,15 +26,15 @@ CREATE POLICY "dmp_service_insert"
 CREATE POLICY "dmp_service_update"
   ON daily_mission_progress FOR UPDATE USING (false);
 
--- ─── Columns on developers ─────────────────────────────────────────────
-ALTER TABLE developers
+-- ─── Columns on companies ─────────────────────────────────────────────
+ALTER TABLE companies
   ADD COLUMN IF NOT EXISTS dailies_completed int DEFAULT 0,
   ADD COLUMN IF NOT EXISTS dailies_streak    int DEFAULT 0,
   ADD COLUMN IF NOT EXISTS last_dailies_date date;
 
 -- ─── RPC: record mission progress (idempotent, race-safe) ──────────────
 CREATE OR REPLACE FUNCTION record_mission_progress(
-  p_developer_id bigint,
+  p_company_id bigint,
   p_mission_id   text,
   p_threshold    int,
   p_increment    int DEFAULT 1
@@ -46,16 +46,16 @@ DECLARE
   v_completed boolean;
 BEGIN
   -- Upsert progress row
-  INSERT INTO daily_mission_progress (developer_id, mission_date, mission_id, progress)
-  VALUES (p_developer_id, v_today, p_mission_id, p_increment)
-  ON CONFLICT (developer_id, mission_date, mission_id)
+  INSERT INTO daily_mission_progress (company_id, mission_date, mission_id, progress)
+  VALUES (p_company_id, v_today, p_mission_id, p_increment)
+  ON CONFLICT (company_id, mission_date, mission_id)
   DO UPDATE SET progress = LEAST(daily_mission_progress.progress + p_increment, p_threshold)
   WHERE daily_mission_progress.completed = false;
 
   -- Read current state
   SELECT progress, completed INTO v_progress, v_completed
   FROM daily_mission_progress
-  WHERE developer_id = p_developer_id
+  WHERE company_id = p_company_id
     AND mission_date = v_today
     AND mission_id = p_mission_id;
 
@@ -63,7 +63,7 @@ BEGIN
   IF v_progress >= p_threshold AND NOT v_completed THEN
     UPDATE daily_mission_progress
     SET completed = true, completed_at = now()
-    WHERE developer_id = p_developer_id
+    WHERE company_id = p_company_id
       AND mission_date = v_today
       AND mission_id = p_mission_id;
 
@@ -79,7 +79,7 @@ END;
 $$;
 
 -- ─── RPC: complete all dailies (called when 3/3 done) ──────────────────
-CREATE OR REPLACE FUNCTION complete_all_dailies(p_developer_id bigint)
+CREATE OR REPLACE FUNCTION complete_all_dailies(p_company_id bigint)
 RETURNS jsonb LANGUAGE plpgsql AS $$
 DECLARE
   v_today       date := current_date;
@@ -88,11 +88,11 @@ DECLARE
   v_new_streak  int;
   v_total       int;
 BEGIN
-  -- Lock the developer row
+  -- Lock the company row
   SELECT last_dailies_date, dailies_streak, dailies_completed
   INTO v_last_date, v_old_streak, v_total
-  FROM developers
-  WHERE id = p_developer_id
+  FROM companies
+  WHERE id = p_company_id
   FOR UPDATE;
 
   -- Already completed today
@@ -109,11 +109,11 @@ BEGIN
 
   v_total := v_total + 1;
 
-  UPDATE developers
+  UPDATE companies
   SET dailies_completed = v_total,
       dailies_streak = v_new_streak,
       last_dailies_date = v_today
-  WHERE id = p_developer_id;
+  WHERE id = p_company_id;
 
   RETURN jsonb_build_object(
     'already_completed', false,

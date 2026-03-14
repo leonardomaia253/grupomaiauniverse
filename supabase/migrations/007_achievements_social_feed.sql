@@ -2,21 +2,21 @@
 -- Git City v2 — Achievements, Social Interactions, Activity Feed
 -- ============================================================
 
--- 1. Extend developers table
-alter table developers add column if not exists kudos_count int not null default 0;
-alter table developers add column if not exists visit_count int not null default 0;
-alter table developers add column if not exists referred_by text;
-alter table developers add column if not exists referral_count int not null default 0;
+-- 1. Extend companies table
+alter table companies add column if not exists kudos_count int not null default 0;
+alter table companies add column if not exists visit_count int not null default 0;
+alter table companies add column if not exists referred_by text;
+alter table companies add column if not exists referral_count int not null default 0;
 
 -- 2. Extend purchases table for gifts
-alter table purchases add column if not exists gifted_to bigint references developers(id);
+alter table purchases add column if not exists gifted_to bigint references companies(id);
 
 -- Drop the old unique index and recreate to allow gifts
--- Old: unique on (developer_id, item_id) where status = 'completed'
--- New: unique on (developer_id, item_id, coalesce(gifted_to, 0)) where status = 'completed'
+-- Old: unique on (company_id, item_id) where status = 'completed'
+-- New: unique on (company_id, item_id, coalesce(gifted_to, 0)) where status = 'completed'
 drop index if exists idx_purchases_unique_completed;
 create unique index idx_purchases_unique_completed
-  on purchases(developer_id, item_id, coalesce(gifted_to, 0)) where status = 'completed';
+  on purchases(company_id, item_id, coalesce(gifted_to, 0)) where status = 'completed';
 
 -- 3. Achievements catalog (static)
 create table if not exists achievements (
@@ -35,60 +35,60 @@ alter table achievements enable row level security;
 drop policy if exists "Public read achievements" on achievements;
 create policy "Public read achievements" on achievements for select using (true);
 
--- 4. Developer achievements (per-dev unlocks)
-create table if not exists developer_achievements (
-  developer_id    bigint not null references developers(id),
+-- 4. Company achievements (per-dev unlocks)
+create table if not exists company_achievements (
+  company_id    bigint not null references companies(id),
   achievement_id  text not null references achievements(id),
   unlocked_at     timestamptz not null default now(),
   seen            boolean not null default false,
-  primary key (developer_id, achievement_id)
+  primary key (company_id, achievement_id)
 );
 
-create index if not exists idx_dev_achievements_dev on developer_achievements(developer_id);
+create index if not exists idx_dev_achievements_dev on company_achievements(company_id);
 
-alter table developer_achievements enable row level security;
-drop policy if exists "Public read developer_achievements" on developer_achievements;
-create policy "Public read developer_achievements" on developer_achievements for select using (true);
+alter table company_achievements enable row level security;
+drop policy if exists "Public read company_achievements" on company_achievements;
+create policy "Public read company_achievements" on company_achievements for select using (true);
 
--- 5. Developer kudos (daily, one per pair per day)
-create table if not exists developer_kudos (
-  giver_id      bigint not null references developers(id),
-  receiver_id   bigint not null references developers(id),
+-- 5. Company kudos (daily, one per pair per day)
+create table if not exists company_kudos (
+  giver_id      bigint not null references companies(id),
+  receiver_id   bigint not null references companies(id),
   given_date    date not null default current_date,
   created_at    timestamptz not null default now(),
   primary key (giver_id, receiver_id, given_date)
 );
 
-create index if not exists idx_kudos_giver_date on developer_kudos(giver_id, given_date);
-create index if not exists idx_kudos_receiver on developer_kudos(receiver_id);
+create index if not exists idx_kudos_giver_date on company_kudos(giver_id, given_date);
+create index if not exists idx_kudos_receiver on company_kudos(receiver_id);
 
-alter table developer_kudos enable row level security;
+alter table company_kudos enable row level security;
 -- Public read for kudos (to show "you already gave kudos today")
-drop policy if exists "Public read kudos" on developer_kudos;
-create policy "Public read kudos" on developer_kudos for select using (true);
+drop policy if exists "Public read kudos" on company_kudos;
+create policy "Public read kudos" on company_kudos for select using (true);
 
--- 6. Building visits (daily, one per visitor per building per day)
-create table if not exists building_visits (
-  visitor_id    bigint not null references developers(id),
-  building_id   bigint not null references developers(id),
+-- 6. Planet visits (daily, one per visitor per planet per day)
+create table if not exists planet_visits (
+  visitor_id    bigint not null references companies(id),
+  planet_id   bigint not null references companies(id),
   visit_date    date not null default current_date,
   created_at    timestamptz not null default now(),
-  primary key (visitor_id, building_id, visit_date)
+  primary key (visitor_id, planet_id, visit_date)
 );
 
-create index if not exists idx_visits_building on building_visits(building_id);
-create index if not exists idx_visits_visitor_date on building_visits(visitor_id, visit_date);
+create index if not exists idx_visits_planet on planet_visits(planet_id);
+create index if not exists idx_visits_visitor_date on planet_visits(visitor_id, visit_date);
 
-alter table building_visits enable row level security;
-drop policy if exists "Public read visits" on building_visits;
-create policy "Public read visits" on building_visits for select using (true);
+alter table planet_visits enable row level security;
+drop policy if exists "Public read visits" on planet_visits;
+create policy "Public read visits" on planet_visits for select using (true);
 
 -- 7. Activity feed (event log)
 create table if not exists activity_feed (
   id          uuid primary key default gen_random_uuid(),
   event_type  text not null,
-  actor_id    bigint references developers(id),
-  target_id   bigint references developers(id),
+  actor_id    bigint references companies(id),
+  target_id   bigint references companies(id),
   metadata    jsonb default '{}',
   created_at  timestamptz not null default now()
 );
@@ -108,7 +108,7 @@ language plpgsql
 security definer
 as $$
 begin
-  update developers
+  update companies
   set kudos_count = kudos_count + 1
   where id = target_dev_id;
 end;
@@ -120,7 +120,7 @@ language plpgsql
 security definer
 as $$
 begin
-  update developers
+  update companies
   set visit_count = visit_count + 1
   where id = target_dev_id;
 end;
@@ -132,7 +132,7 @@ language plpgsql
 security definer
 as $$
 begin
-  update developers
+  update companies
   set referral_count = referral_count + 1
   where id = referrer_dev_id;
 end;
@@ -168,9 +168,9 @@ on conflict (id) do nothing;
 
 -- Social (referrals)
 insert into achievements (id, category, name, description, threshold, tier, reward_type, reward_item_id, sort_order) values
-  ('recruiter',   'social',  'Recruiter',   'Refer 3 developers to Git City',            3,     'bronze',  'unlock_item',     'helipad',         13),
-  ('influencer',  'social',  'Influencer',  'Refer 10 developers to Git City',           10,    'gold',    'exclusive_badge',  null,              14),
-  ('mayor',       'social',  'Mayor',       'Refer 50 developers to Git City',           50,    'diamond', 'exclusive_badge',  null,              15)
+  ('recruiter',   'social',  'Recruiter',   'Refer 3 companies to Git City',            3,     'bronze',  'unlock_item',     'helipad',         13),
+  ('influencer',  'social',  'Influencer',  'Refer 10 companies to Git City',           10,    'gold',    'exclusive_badge',  null,              14),
+  ('mayor',       'social',  'Mayor',       'Refer 50 companies to Git City',           50,    'diamond', 'exclusive_badge',  null,              15)
 on conflict (id) do nothing;
 
 -- Gifts sent

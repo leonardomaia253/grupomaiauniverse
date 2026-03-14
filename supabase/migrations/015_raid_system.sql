@@ -4,8 +4,8 @@
 -- tags, raid XP/titles, vehicles, boosters, and achievements.
 -- ============================================================
 
--- 1. New columns on developers
-ALTER TABLE developers
+-- 1. New columns on companies
+ALTER TABLE companies
   ADD COLUMN IF NOT EXISTS raid_xp                      int NOT NULL DEFAULT 0,
   ADD COLUMN IF NOT EXISTS current_week_contributions   int NOT NULL DEFAULT 0,
   ADD COLUMN IF NOT EXISTS current_week_kudos_given     int NOT NULL DEFAULT 0,
@@ -14,8 +14,8 @@ ALTER TABLE developers
 -- 2. raids table
 CREATE TABLE IF NOT EXISTS raids (
   id                UUID        PRIMARY KEY DEFAULT gen_random_uuid(),
-  attacker_id       BIGINT      NOT NULL REFERENCES developers(id),
-  defender_id       BIGINT      NOT NULL REFERENCES developers(id),
+  attacker_id       BIGINT      NOT NULL REFERENCES companies(id),
+  defender_id       BIGINT      NOT NULL REFERENCES companies(id),
   attack_score      INT         NOT NULL,
   defense_score     INT         NOT NULL,
   success           BOOLEAN     NOT NULL,
@@ -41,8 +41,8 @@ CREATE POLICY "raids_public_read" ON raids FOR SELECT USING (true);
 CREATE TABLE IF NOT EXISTS raid_tags (
   id            UUID        PRIMARY KEY DEFAULT gen_random_uuid(),
   raid_id       UUID        NOT NULL REFERENCES raids(id) ON DELETE CASCADE,
-  building_id   BIGINT      NOT NULL REFERENCES developers(id),
-  attacker_id   BIGINT      NOT NULL REFERENCES developers(id),
+  planet_id   BIGINT      NOT NULL REFERENCES companies(id),
+  attacker_id   BIGINT      NOT NULL REFERENCES companies(id),
   attacker_login TEXT       NOT NULL,
   tag_style     TEXT        NOT NULL DEFAULT 'default',
   active        BOOLEAN     NOT NULL DEFAULT true,
@@ -50,9 +50,9 @@ CREATE TABLE IF NOT EXISTS raid_tags (
   created_at    TIMESTAMPTZ NOT NULL DEFAULT now()
 );
 
--- Only 1 active tag per building
-CREATE UNIQUE INDEX IF NOT EXISTS idx_raid_tags_building_active
-  ON raid_tags (building_id)
+-- Only 1 active tag per planet
+CREATE UNIQUE INDEX IF NOT EXISTS idx_raid_tags_planet_active
+  ON raid_tags (planet_id)
   WHERE active = true;
 
 CREATE INDEX IF NOT EXISTS idx_raid_tags_expires
@@ -92,9 +92,9 @@ ON CONFLICT (id) DO NOTHING;
 CREATE OR REPLACE FUNCTION increment_kudos_week(p_giver_id bigint, p_receiver_id bigint)
 RETURNS void LANGUAGE plpgsql AS $$
 BEGIN
-  UPDATE developers SET current_week_kudos_given = current_week_kudos_given + 1
+  UPDATE companies SET current_week_kudos_given = current_week_kudos_given + 1
   WHERE id = p_giver_id;
-  UPDATE developers SET current_week_kudos_received = current_week_kudos_received + 1
+  UPDATE companies SET current_week_kudos_received = current_week_kudos_received + 1
   WHERE id = p_receiver_id;
 END;
 $$;
@@ -106,35 +106,35 @@ DECLARE
   week_start DATE := date_trunc('week', now())::date;
 BEGIN
   -- Kudos given this week
-  UPDATE developers d SET current_week_kudos_given = COALESCE(sub.cnt, 0)
+  UPDATE companies d SET current_week_kudos_given = COALESCE(sub.cnt, 0)
   FROM (
     SELECT giver_id, COUNT(*) as cnt
-    FROM developer_kudos
+    FROM company_kudos
     WHERE given_date >= week_start
     GROUP BY giver_id
   ) sub
   WHERE d.id = sub.giver_id;
 
   -- Kudos received this week
-  UPDATE developers d SET current_week_kudos_received = COALESCE(sub.cnt, 0)
+  UPDATE companies d SET current_week_kudos_received = COALESCE(sub.cnt, 0)
   FROM (
     SELECT receiver_id, COUNT(*) as cnt
-    FROM developer_kudos
+    FROM company_kudos
     WHERE given_date >= week_start
     GROUP BY receiver_id
   ) sub
   WHERE d.id = sub.receiver_id;
 
   -- Reset devs with 0 this week
-  UPDATE developers SET current_week_kudos_given = 0
+  UPDATE companies SET current_week_kudos_given = 0
   WHERE current_week_kudos_given > 0
   AND id NOT IN (
-    SELECT giver_id FROM developer_kudos WHERE given_date >= week_start
+    SELECT giver_id FROM company_kudos WHERE given_date >= week_start
   );
-  UPDATE developers SET current_week_kudos_received = 0
+  UPDATE companies SET current_week_kudos_received = 0
   WHERE current_week_kudos_received > 0
   AND id NOT IN (
-    SELECT receiver_id FROM developer_kudos WHERE given_date >= week_start
+    SELECT receiver_id FROM company_kudos WHERE given_date >= week_start
   );
 END;
 $$;

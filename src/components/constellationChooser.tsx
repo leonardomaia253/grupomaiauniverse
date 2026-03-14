@@ -2,9 +2,9 @@
 
 import { useState, useEffect } from "react";
 import {
-  constellation_NAMES,
-  constellation_COLORS,
-  constellation_DESCRIPTIONS,
+  CONSTELLATION_NAMES,
+  CONSTELLATION_COLORS,
+  CONSTELLATION_DESCRIPTIONS,
 } from "@/lib/github";
 
 interface constellationChooserProps {
@@ -85,8 +85,8 @@ export default function constellationChooser({
         {inferredconstellation && (
           <p className="mt-1 text-[10px] text-muted normal-case">
             You were auto-assigned to{" "}
-            <span style={{ color: constellation_COLORS[inferredconstellation] }}>
-              {constellation_NAMES[inferredconstellation]}
+            <span style={{ color: CONSTELLATION_COLORS[inferredconstellation] }}>
+              {CONSTELLATION_NAMES[inferredconstellation]}
             </span>{" "}
             based on your primary language. Choose where you really belong:
           </p>
@@ -96,7 +96,7 @@ export default function constellationChooser({
         <div className="mt-4 grid grid-cols-1 gap-2 sm:grid-cols-2">
           {CHOOSABLE_constellationS.map((id) => {
             const isSelected = selected === id;
-            const color = constellation_COLORS[id] ?? "#888";
+            const color = CONSTELLATION_COLORS[id] ?? "#888";
             return (
               <button
                 key={id}
@@ -114,10 +114,10 @@ export default function constellationChooser({
                     className="text-[11px]"
                     style={{ color: isSelected ? color : "var(--color-cream)" }}
                   >
-                    {constellation_NAMES[id]}
+                    {CONSTELLATION_NAMES[id]}
                   </span>
                   <p className="mt-0.5 text-[8px] text-muted normal-case">
-                    {constellation_DESCRIPTIONS[id]}
+                    {CONSTELLATION_DESCRIPTIONS[id]}
                   </p>
                 </div>
               </button>
@@ -136,7 +136,7 @@ export default function constellationChooser({
           className="btn-press mt-4 w-full border-[3px] border-border px-4 py-2.5 text-sm text-bg transition-colors disabled:opacity-40"
           style={{
             backgroundColor: selected
-              ? constellation_COLORS[selected]
+              ? CONSTELLATION_COLORS[selected]
               : "var(--color-muted)",
           }}
         >
