@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useCallback, useRef, useEffect } from "react";
-import type { Universeplanet } from "@/lib/github";
+import type { UniversePlanet } from "@/lib/github";
 import type { RaidPreviewResponse, RaidExecuteResponse } from "@/lib/raid";
 import { preloadRaidAudio, playRaidSound, stopRaidSound, fadeOutRaidSound, stopAllRaidSounds } from "@/lib/raidAudio";
 
@@ -22,14 +22,14 @@ export interface RaidState {
   phase: RaidPhase;
   previewData: RaidPreviewResponse | null;
   raidData: RaidExecuteResponse | null;
-  attackerplanet: Universeplanet | null;
-  defenderplanet: Universeplanet | null;
+  attackerPlanet: UniversePlanet | null;
+  defenderPlanet: UniversePlanet | null;
   error: string | null;
   loading: boolean;
 }
 
 export interface RaidActions {
-  startPreview: (targetLogin: string, planets: Universeplanet[], myLogin: string) => void;
+  startPreview: (targetLogin: string, planets: UniversePlanet[], myLogin: string) => void;
   executeRaid: (boostPurchaseId?: number, vehicleId?: string) => void;
   skipToShare: () => void;
   exitRaid: () => void;
@@ -40,8 +40,8 @@ const INITIAL_STATE: RaidState = {
   phase: "idle",
   previewData: null,
   raidData: null,
-  attackerplanet: null,
-  defenderplanet: null,
+  attackerPlanet: null,
+  defenderPlanet: null,
   error: null,
   loading: false,
 };
@@ -142,13 +142,13 @@ export function useRaidSequence(): [RaidState, RaidActions] {
   }, [state.phase]);
 
   const startPreview = useCallback(
-    async (targetLogin: string, planets: Universeplanet[], myLogin: string) => {
+    async (targetLogin: string, planets: UniversePlanet[], myLogin: string) => {
       targetLoginRef.current = targetLogin;
       setState((prev) => ({ ...prev, loading: true, error: null }));
 
       // Find planets for position data
-      const attackerplanet = planets.find((b) => b.login === myLogin) ?? null;
-      const defenderplanet = planets.find((b) => b.login === targetLogin) ?? null;
+      const attackerPlanet = planets.find((b) => b.login === myLogin) ?? null;
+      const defenderPlanet = planets.find((b) => b.login === targetLogin) ?? null;
 
       try {
         const res = await fetch("/api/raid/preview", {
@@ -173,8 +173,8 @@ export function useRaidSequence(): [RaidState, RaidActions] {
           phase: "preview",
           previewData,
           raidData: null,
-          attackerplanet,
-          defenderplanet,
+          attackerPlanet,
+          defenderPlanet,
           error: null,
           loading: false,
         });
@@ -218,13 +218,13 @@ export function useRaidSequence(): [RaidState, RaidActions] {
 
         // Override positions with client-side planet data
         setState((prev) => {
-          if (prev.attackerplanet) {
-            raidData.attacker.position = prev.attackerplanet.position;
-            raidData.attacker.height = prev.attackerplanet.height;
+          if (prev.attackerPlanet) {
+            raidData.attacker.position = prev.attackerPlanet.position;
+            raidData.attacker.height = prev.attackerPlanet.height;
           }
-          if (prev.defenderplanet) {
-            raidData.defender.position = prev.defenderplanet.position;
-            raidData.defender.height = prev.defenderplanet.height;
+          if (prev.defenderPlanet) {
+            raidData.defender.position = prev.defenderPlanet.position;
+            raidData.defender.height = prev.defenderPlanet.height;
           }
           return {
             ...prev,

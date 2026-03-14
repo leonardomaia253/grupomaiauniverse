@@ -163,7 +163,7 @@ export async function GET(
           contributions: data.contributions,
           public_repos: data.public_repos,
           total_stars: data.total_stars,
-          primary_language: data.primary_language,
+          category: data.category,
         },
       });
     } catch (err) {

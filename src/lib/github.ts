@@ -54,7 +54,7 @@ export interface TopRepo {
   url: string;
 }
 
-export interface CompanyPlanet {
+export interface UniversePlanet {
   login: string;
   rank: number;
   contributions: number;
@@ -374,14 +374,14 @@ function localBlockAxisPos(idx: number, footprint: number): number {
 }
 
 export function generateUniverseLayout(companies: CompanyRecord[]): {
-  planets: CompanyPlanet[];
+  planets: UniversePlanet[];
   plazas: SpacePlaza[];
   decorations: SpaceDecoration[];
   river: SpaceRiver;
   bridges: SpaceBridge[];
   GalaxyZones: GalaxyZone[];
 } {
-  const planets: CompanyPlanet[] = [];
+  const planets: UniversePlanet[] = [];
   const plazas: SpacePlaza[] = [];
   const decorations: SpaceDecoration[] = [];
   const GalaxyZones: GalaxyZone[] = [];
@@ -532,7 +532,7 @@ export function generateUniverseLayout(companies: CompanyRecord[]): {
         current_week_contributions: (dev as unknown as Record<string, unknown>).current_week_contributions as number ?? 0,
         current_week_kudos_given: (dev as unknown as Record<string, unknown>).current_week_kudos_given as number ?? 0,
         current_week_kudos_received: (dev as unknown as Record<string, unknown>).current_week_kudos_received as number ?? 0,
-        active_raid_tag: (dev as unknown as Record<string, unknown>).active_raid_tag as CompanyPlanet["active_raid_tag"] ?? null,
+        active_raid_tag: (dev as unknown as Record<string, unknown>).active_raid_tag as UniversePlanet["active_raid_tag"] ?? null,
         rabbit_completed: (dev as unknown as Record<string, unknown>).rabbit_completed as boolean ?? false,
         xp_total: (dev as unknown as Record<string, unknown>).xp_total as number ?? 0,
         xp_level: (dev as unknown as Record<string, unknown>).xp_level as number ?? 1,
@@ -734,7 +734,7 @@ export function generateUniverseLayout(companies: CompanyRecord[]): {
   }
 
   // ── constellation zones (computed from actual planet positions) ──
-  const dzMap: Record<string, CompanyPlanet[]> = {};
+  const dzMap: Record<string, UniversePlanet[]> = {};
   for (const b of planets) {
     const did = b.constellation ?? 'fullstack';
     if (!dzMap[did]) dzMap[did] = [];
@@ -787,7 +787,7 @@ export function generateUniverseLayout(companies: CompanyRecord[]): {
 
 // ─── planet Dimensions (reusable for shop preview) ────────
 
-export function calcplanetDims(
+export function calcPlanetDims(
   githubLogin: string,
   contributions: number,
   publicRepos: number,

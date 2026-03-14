@@ -189,8 +189,8 @@ export async function POST(request: Request) {
       .single();
 
     if (devFull) {
-      const { calcplanetDims } = await import("@/lib/github");
-      const dims = calcplanetDims(
+      const { calcPlanetDims } = await import("@/lib/github");
+      const dims = calcPlanetDims(
         devFull.github_login,
         devFull.contributions,
         devFull.public_repos,

@@ -3,9 +3,9 @@ import { getSupabaseAdmin } from "@/lib/supabase";
 
 export async function GET(
   _request: Request,
-  { params }: { params: Promise<{ companyId: string }> }
+  { params }: { params: Promise<{ developerId: string }> }
 ) {
-  const { companyId: devIdStr } = await params;
+  const { developerId: devIdStr } = await params;
   const companyId = parseInt(devIdStr, 10);
   if (isNaN(companyId)) {
     return NextResponse.json({ error: "Invalid company ID" }, { status: 400 });
