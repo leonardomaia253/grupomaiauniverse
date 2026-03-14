@@ -140,7 +140,7 @@ export async function GET(request: NextRequest) {
   }
 
   // Merge
-  const companies = companies.map((dev) => ({
+  const mergedCompanies = companies.map((dev) => ({
     ...dev,
     kudos_count: dev.kudos_count ?? 0,
     visit_count: dev.visit_count ?? 0,
@@ -161,7 +161,7 @@ export async function GET(request: NextRequest) {
   }));
 
   const snapshot = JSON.stringify({
-    companies,
+    companies: mergedCompanies,
     stats: statsResult.data ?? { total_companies: 0, total_contributions: 0 },
     generated_at: new Date().toISOString(),
   });

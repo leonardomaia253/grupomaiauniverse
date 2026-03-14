@@ -5,7 +5,7 @@ import { checkAchievements } from "@/lib/achievements";
 import { cacheEmailFromAuth, touchLastActive, ensurePreferences } from "@/lib/notification-helpers";
 import { sendWelcomeNotification } from "@/lib/notification-senders/welcome";
 import { sendReferralJoinedNotification } from "@/lib/notification-senders/referral";
-import { fetchGitHubCompanyeloperData } from "@/lib/github-api";
+import { fetchGitHubcompanyData } from "@/lib/github-api";
 import { calculateGithubXp } from "@/lib/xp";
 
 // Extend timeout for GitHub API calls during login
@@ -45,7 +45,7 @@ export async function GET(request: Request) {
     if (!existingCompany) {
       // ─── New Company: create planet from GitHub data on login ───
       try {
-        const ghData = await fetchGitHubCompanyeloperData(githubLogin, { allowEmpty: true });
+        const ghData = await fetchGitHubcompanyData(githubLogin, { allowEmpty: true });
 
         const { data: created, error: createErr } = await admin
           .from("companies")

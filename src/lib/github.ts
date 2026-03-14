@@ -323,7 +323,7 @@ function precomputeComposites(
 // ─── constellation Layout ────────────────────────────────────────
 
 export const CONSTELLATION_NAMES: Record<string, string> = {
-  Galactic Center: 'Galactic Center',
+  'Galactic Center': 'Galactic Center',
   frontend: 'Frontend', backend: 'Backend', fullstack: 'Full Stack',
   mobile: 'Mobile', data_ai: 'Data & AI', devops: 'DevOps & Cloud',
   security: 'Security', gamedev: 'GameDev', vibe_coder: 'Vibe Coder',
@@ -331,7 +331,7 @@ export const CONSTELLATION_NAMES: Record<string, string> = {
 };
 
 export const CONSTELLATION_COLORS: Record<string, string> = {
-  Galactic Center: '#fbbf24',
+  'Galactic Center': '#fbbf24',
   frontend: '#3b82f6', backend: '#ef4444', fullstack: '#a855f7',
   mobile: '#22c55e', data_ai: '#06b6d4', devops: '#f97316',
   security: '#dc2626', gamedev: '#ec4899', vibe_coder: '#8b5cf6',
@@ -339,7 +339,7 @@ export const CONSTELLATION_COLORS: Record<string, string> = {
 };
 
 export const CONSTELLATION_DESCRIPTIONS: Record<string, string> = {
-  Galactic Center: 'The elite core. Top 50 companies by global rank.',
+  'Galactic Center': 'The elite core. Top 50 companies by global rank.',
   frontend: 'Pixels, components, and beautiful interfaces.',
   backend: 'APIs, systems, and server-side logic.',
   fullstack: 'Jack of all trades. Ship everything.',
@@ -418,36 +418,36 @@ export function generateUniverseLayout(companies: CompanyRecord[]): {
   }
 
   // ── Extract top 50 global companies as "Galactic Center" (center, around the spire) ──
-  const Galactic Center_COUNT = 50;
+  const GalacticCenter_COUNT = 50;
   const LOTS_PER_BLOCK = BLOCK_SIZE * BLOCK_SIZE; // 16
   const allcompaniesSorted = [...companies].sort((a, b) =>
     (composites.get(b.github_login) ?? 0) - (composites.get(a.github_login) ?? 0)
   );
-  const Galactic Centercompanies = allcompaniesSorted.slice(0, Galactic Center_COUNT);
-  const Galactic CenterSet = new Set(Galactic Centercompanies.map(d => d.github_login));
+  const GalacticCentercompanies = allcompaniesSorted.slice(0, GalacticCenter_COUNT);
+  const GalacticCenterSet = new Set(GalacticCentercompanies.map(d => d.github_login));
 
-  for (let i = 0; i < Galactic Centercompanies.length; i += LOTS_PER_BLOCK) {
-    const end = Math.min(i + LOTS_PER_BLOCK, Galactic Centercompanies.length);
-    const slice = Galactic Centercompanies.slice(i, end);
+  for (let i = 0; i < GalacticCentercompanies.length; i += LOTS_PER_BLOCK) {
+    const end = Math.min(i + LOTS_PER_BLOCK, GalacticCentercompanies.length);
+    const slice = GalacticCentercompanies.slice(i, end);
     const shuffled = seededShuffle(slice, hashStr('Galactic Center') + i);
-    for (let j = 0; j < shuffled.length; j++) Galactic Centercompanies[i + j] = shuffled[j];
+    for (let j = 0; j < shuffled.length; j++) GalacticCentercompanies[i + j] = shuffled[j];
   }
 
-  const Galactic CenterOverride = new Set(Galactic Centercompanies.map(d => d.github_login));
+  const GalacticCenterOverride = new Set(GalacticCentercompanies.map(d => d.github_login));
 
   // ── Per-constellation dev arrays (sorted by composite, block-shuffled, minus Galactic Center) ──
   const constellationDevArrays: { did: string; companies: CompanyRecord[] }[] = [];
   for (const did of constellation_ORDER) {
     const group = constellationGroups[did];
     if (!group || group.length === 0) continue;
-    const filtered = group.filter(d => !Galactic CenterSet.has(d.github_login));
+    const filtered = group.filter(d => !GalacticCenterSet.has(d.github_login));
     if (filtered.length === 0) continue;
     // Full shuffle: organic mix of tall and short planets
     constellationDevArrays.push({ did, companies: seededShuffle(filtered, hashStr(did)) });
   }
   for (const [did, group] of Object.entries(constellationGroups)) {
     if (!constellation_ORDER.includes(did)) {
-      const filtered = group.filter(d => !Galactic CenterSet.has(d.github_login));
+      const filtered = group.filter(d => !GalacticCenterSet.has(d.github_login));
       if (filtered.length === 0) continue;
       constellationDevArrays.push({ did, companies: seededShuffle(filtered, hashStr(did)) });
     }
@@ -508,7 +508,7 @@ export function generateUniverseLayout(companies: CompanyRecord[]): {
       const floors = Math.max(3, Math.floor(height / floorH));
       const windowsPerFloor = Math.max(3, Math.floor(w / 5));
       const sideWindowsPerFloor = Math.max(3, Math.floor(d / 5));
-      const did = Galactic CenterOverride.has(dev.github_login)
+      const did = GalacticCenterOverride.has(dev.github_login)
         ? 'Galactic Center'
         : (dev.constellation ?? inferconstellation(dev.primary_language));
 
@@ -664,7 +664,7 @@ export function generateUniverseLayout(companies: CompanyRecord[]): {
   }
 
   // ── A) Galactic Center: spiral at grid (0, 0) ──
-  placeSpiralCluster(Galactic Centercompanies, 0, 0, true);
+  placeSpiralCluster(GalacticCentercompanies, 0, 0, true);
 
   // ── B) constellations: spiral at offset grid positions ──
   for (let di = 0; di < constellationDevArrays.length; di++) {

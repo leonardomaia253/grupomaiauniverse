@@ -7,7 +7,7 @@ import { calculateGithubXp } from "@/lib/xp";
 import {
   ghHeaders,
   fetchExpandedGitHubData,
-  fetchGitHubDeveloperData,
+  fetchGitHubcompanyData,
   GitHubFetchError,
   FETCH_TIMEOUT_MS,
 } from "@/lib/github-api";
@@ -67,7 +67,7 @@ export async function GET(
   const sb = getSupabaseAdmin();
 
   const { data: cached } = await sb
-    .from("developers")
+    .from("companies")
     .select("*")
     .eq("github_login", username.toLowerCase())
     .single();
@@ -106,13 +106,13 @@ export async function GET(
     }
 
     try {
-      const data = await fetchGitHubDeveloperData(username, isOwnProfile ? { allowEmpty: true } : undefined);
+      const data = await fetchGitHubcompanyData(username, isOwnProfile ? { allowEmpty: true } : undefined);
       if (rateLimitKey) await recordRateLimitRequest(rateLimitKey);
 
       // Own profile: create building as fallback (auth callback may have failed)
       if (isOwnProfile && authUserId) {
         const { data: created, error: createErr } = await sb
-          .from("developers")
+          .from("companies")
           .upsert({
             ...data,
             fetched_at: new Date().toISOString(),
@@ -126,7 +126,7 @@ export async function GET(
 
         if (created && !createErr) {
           // Rank + XP
-          await sb.rpc("assign_new_dev_rank", { dev_id: created.id });
+          await sb.rpc("assign_new_company_rank", { company_id: created.id });
           sb.rpc("recalculate_ranks").then(() => {}, () => {});
 
           const xp = calculateGithubXp({
@@ -136,13 +136,13 @@ export async function GET(
             total_prs: data.total_prs ?? 0,
           });
           if (xp > 0) {
-            await sb.rpc("grant_xp", { p_developer_id: created.id, p_source: "github", p_amount: xp });
-            await sb.from("developers").update({ xp_github: xp }).eq("id", created.id);
+            await sb.rpc("grant_xp", { p_company_id: created.id, p_source: "github", p_amount: xp });
+            await sb.from("companies").update({ xp_github: xp }).eq("id", created.id);
           }
 
           // Re-fetch with assigned rank
           const { data: withRank } = await sb
-            .from("developers")
+            .from("companies")
             .select("*")
             .eq("id", created.id)
             .single();
