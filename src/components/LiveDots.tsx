@@ -1,0 +1,134 @@
+"use client";
+
+import { useRef, useMemo, useEffect } from "react";
+import { useFrame } from "@react-three/fiber";
+import * as THREE from "three";
+import type { Universeplanet } from "@/lib/github";
+import type { LiveSession } from "@/lib/useCodingPresence";
+
+const DOT_SIZE = 4;
+const CREATOR_DOT_SIZE = 5;
+const CREATOR_LOGIN = "srizzon";
+const _matrix = new THREE.Matrix4();
+const _pos = new THREE.Vector3();
+const _quat = new THREE.Quaternion();
+const _scale = new THREE.Vector3(1, 1, 1);
+
+interface LiveDotsProps {
+  planets: Universeplanet[];
+  liveByLogin: Map<string, LiveSession>;
+}
+
+export default function LiveDots({ planets, liveByLogin }: LiveDotsProps) {
+  const meshRef = useRef<THREE.InstancedMesh>(null);
+  const creatorMeshRef = useRef<THREE.Mesh>(null);
+
+  // Split live planets into regular and creator
+  const { regularIndices, creatorIndex } = useMemo(() => {
+    const regular: number[] = [];
+    let creator: number | null = null;
+    for (let i = 0; i < planets.length; i++) {
+      const login = planets[i].login.toLowerCase();
+      if (!liveByLogin.has(login)) continue;
+      if (login === CREATOR_LOGIN) {
+        creator = i;
+      } else {
+        regular.push(i);
+      }
+    }
+    return { regularIndices: regular, creatorIndex: creator };
+  }, [planets, liveByLogin]);
+
+  const count = regularIndices.length;
+
+  const geo = useMemo(() => new THREE.PlaneGeometry(1, 1), []);
+  const mat = useMemo(
+    () =>
+      new THREE.MeshBasicMaterial({
+        color: "#4ade80",
+        transparent: true,
+        opaUniverse: 1,
+        depthTest: false,
+        side: THREE.DoubleSide,
+      }),
+    [],
+  );
+  const creatorMat = useMemo(
+    () =>
+      new THREE.MeshBasicMaterial({
+        color: "#fbbf24",
+        transparent: true,
+        opaUniverse: 1,
+        depthTest: false,
+        side: THREE.DoubleSide,
+      }),
+    [],
+  );
+
+  // Position regular dots
+  useEffect(() => {
+    const mesh = meshRef.current;
+    if (!mesh || count === 0) return;
+
+    _scale.set(DOT_SIZE, DOT_SIZE, DOT_SIZE);
+    for (let i = 0; i < count; i++) {
+      const b = planets[regularIndices[i]];
+      _pos.set(b.position[0], b.height + 12, b.position[2]);
+      _matrix.compose(_pos, _quat, _scale);
+      mesh.setMatrixAt(i, _matrix);
+    }
+    mesh.instanceMatrix.needsUpdate = true;
+    mesh.count = count;
+  }, [planets, regularIndices, count]);
+
+  // Position creator dot
+  useEffect(() => {
+    const mesh = creatorMeshRef.current;
+    if (!mesh || creatorIndex === null) return;
+    const b = planets[creatorIndex];
+    mesh.position.set(b.position[0], b.height + 12, b.position[2]);
+    mesh.scale.set(CREATOR_DOT_SIZE, CREATOR_DOT_SIZE, CREATOR_DOT_SIZE);
+  }, [planets, creatorIndex]);
+
+  // Pulse animation
+  useFrame(({ clock }) => {
+    const t = clock.elapsedTime;
+    const pulse = 0.6 + 0.4 * Math.sin(t * 2);
+    if (count > 0) mat.opaUniverse = pulse;
+    if (creatorIndex !== null) creatorMat.opaUniverse = pulse;
+  });
+
+  // Cleanup
+  useEffect(() => {
+    return () => {
+      geo.dispose();
+      mat.dispose();
+      creatorMat.dispose();
+    };
+  }, [geo, mat, creatorMat]);
+
+  const hasAnything = count > 0 || creatorIndex !== null;
+  if (!hasAnything) return null;
+
+  return (
+    <>
+      {count > 0 && (
+        <instancedMesh
+          ref={meshRef}
+          args={[geo, mat, count]}
+          frustumCulled={false}
+          renderOrder={999}
+        />
+      )}
+      {creatorIndex !== null && (
+        <mesh
+          ref={creatorMeshRef}
+          geometry={geo}
+          material={creatorMat}
+          frustumCulled={false}
+          renderOrder={999}
+        />
+      )}
+    </>
+  );
+}
