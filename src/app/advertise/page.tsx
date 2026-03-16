@@ -32,7 +32,7 @@ function formatK(n: number): string {
 }
 
 async function getStats() {
-  if (!process.env.NEXT_PUBLIC_SUPABASE_URL || !process.env.SUPABASE_SERVICE_ROLE_KEY) {
+  if (!process.env.NEXT_PUBLIC_SUPABASE_URL) {
     return { devCount: 0, monthlyImpressions: 0, monthlyClicks: 0, ctr: 0 };
   }
   const supabase = getSupabaseAdmin();

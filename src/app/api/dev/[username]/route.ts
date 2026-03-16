@@ -19,7 +19,7 @@ export const maxDuration = 60;
 
 // ... [Rate limiting functions - hashKey, isRateLimited, recordRateLimitRequest, resolveRateLimitKey] ...
 async function hashKey(key: string): Promise<string> {
-  const data = new TextEncoder().encode(key + (process.env.SUPABASE_SERVICE_ROLE_KEY ?? ""));
+  const data = new TextEncoder().encode(key + (process.env.ADMIN_PROXY_SECRET ?? ""));
   const buf = await crypto.subtle.digest("SHA-256", data);
   return Array.from(new Uint8Array(buf))
     .map((b) => b.toString(16).padStart(2, "0"))

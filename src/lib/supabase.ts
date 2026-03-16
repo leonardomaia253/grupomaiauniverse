@@ -14,12 +14,28 @@ export function createBrowserSupabase() {
   return browserClient;
 }
 
-/** Server-side Supabase client (service role, bypasses RLS) */
+/** Server-side Supabase client (service role, bypasses RLS). Now proxied via Edge Function. */
 export function getSupabaseAdmin(): SupabaseClient {
+  const adminSecret = process.env.ADMIN_PROXY_SECRET || "fallback-secret";
   return createClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.SUPABASE_SERVICE_ROLE_KEY!,
-    { auth: { persistSession: false } }
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!, // Use anon key to bypass local checks, proxy overrides it
+    {
+      auth: { persistSession: false },
+      global: {
+        fetch: async (url, options) => {
+          const proxyUrl = `${process.env.NEXT_PUBLIC_SUPABASE_URL}/functions/v1/admin-proxy`;
+          const newHeaders = new Headers(options?.headers);
+          newHeaders.set("x-admin-proxy-secret", adminSecret);
+          newHeaders.set("x-target-url", url.toString());
+
+          return fetch(proxyUrl, {
+            ...options,
+            headers: newHeaders,
+          });
+        },
+      },
+    }
   );
 }
 
@@ -36,14 +52,15 @@ export async function broadcastToChannel(
   payload: Record<string, unknown>,
 ) {
   const url = `${process.env.NEXT_PUBLIC_SUPABASE_URL}/realtime/v1/api/broadcast`;
-  const key = process.env.SUPABASE_SERVICE_ROLE_KEY!;
+  const proxyUrl = `${process.env.NEXT_PUBLIC_SUPABASE_URL}/functions/v1/admin-proxy`;
+  const adminSecret = process.env.ADMIN_PROXY_SECRET || "fallback-secret";
 
   try {
-    await fetch(url, {
+    await fetch(proxyUrl, {
       method: "POST",
       headers: {
-        "apikey": key,
-        "Authorization": `Bearer ${key}`,
+        "x-admin-proxy-secret": adminSecret,
+        "x-target-url": url,
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
