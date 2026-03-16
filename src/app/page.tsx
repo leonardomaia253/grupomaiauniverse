@@ -486,6 +486,7 @@ function HomeContent() {
   const [rabbitSighting, setRabbitSighting] = useState<number | null>(null);
   const [rabbitCompletion, setRabbitCompletion] = useState(false);
   const [rabbitHintFlash, setRabbitHintFlash] = useState<string | null>(null);
+  const [searchBarOpen, setSearchBarOpen] = useState(false);
 
   // Growth optimization (A1: sign-in prompt, A5: ad direct open)
   const planetClickCountRef = useRef(0);
@@ -2854,72 +2855,58 @@ function HomeContent() {
               )}
             </div>
 
-            {/* Search / Welcome CTA takeover */}
-            {welcomeCtaVisible && !session ? (
-              <div
-                className="flex w-full max-w-md flex-col items-center gap-2 border-[3px] bg-bg-raised/90 px-5 py-4 backdrop-blur-sm animate-[slide-up_0.3s_ease-out]"
-                style={{ borderColor: theme.accent }}
-              >
-                <p className="text-[11px] text-cream normal-case leading-relaxed">
-                  Find your planet in the Universe
-                </p>
+            {/* Search Toggle + Form */}
+            <div className="flex w-full max-w-md flex-col items-center gap-2">
+              {!searchBarOpen && !welcomeCtaVisible ? (
                 <button
-                  onClick={() => {
-                    setWelcomeCtaVisible(false);
-                    localStorage.setItem("gitUniverse_welcome_seen", "true");
-                    handleSignIn();
-                  }}
-                  className="btn-press w-full max-w-60 py-2.5 text-[10px] text-bg"
-                  style={{
-                    backgroundColor: theme.accent,
-                    boxShadow: `3px 3px 0 0 ${theme.shadow}`,
-                  }}
+                  onClick={() => setSearchBarOpen(true)}
+                  className="btn-press border-[3px] border-border bg-bg-raised/80 px-5 py-2 text-[10px] text-cream backdrop-blur-sm transition-colors hover:border-border-light"
+                  style={{ color: theme.accent }}
                 >
-                  Entrar com Maia
+                  &#128269; Search Username
                 </button>
-                <button
-                  onClick={() => {
-                    setWelcomeCtaVisible(false);
-                    localStorage.setItem("gitUniverse_welcome_seen", "true");
-                    setTimeout(() => searchInputRef.current?.focus(), 100);
+              ) : (
+                <form
+                  onSubmit={(e) => {
+                    handleSubmit(e);
+                    setSearchBarOpen(false);
                   }}
-                  className="text-[9px] text-dim transition-colors hover:text-muted normal-case"
+                  className="flex w-full items-center gap-2 animate-[slide-up_0.2s_ease-in-out]"
                 >
-                  or type your username
-                </button>
-              </div>
-            ) : (
-              <form
-                onSubmit={handleSubmit}
-                className="flex w-full max-w-md items-center gap-2"
-              >
-                <input
-                  ref={searchInputRef}
-                  type="text"
-                  value={username}
-                  onChange={(e) => {
-                    setUsername(e.target.value);
-                    if (feedback?.type === "error") setFeedback(null);
-                  }}
-                  placeholder={session ? "search any GitHub username" : "type your GitHub username"}
-                  className="min-w-0 flex-1 border-[3px] border-border bg-bg-raised px-3 py-2 text-base sm:text-xs text-cream outline-none transition-colors placeholder:text-dim sm:px-4 sm:py-2.5"
-                  style={{ borderColor: undefined }}
-                  onFocus={(e) => (e.currentTarget.style.borderColor = theme.accent)}
-                  onBlur={(e) => (e.currentTarget.style.borderColor = "")}
-                />
-                <button
-                  type="submit"
-                  disabled={loading || !username.trim()}
-                  className="btn-press shrink-0 px-4 py-2 text-xs text-bg disabled:opacity-40 sm:px-5 sm:py-2.5"
-                  style={{
-                    backgroundColor: theme.accent,
-                    boxShadow: `4px 4px 0 0 ${theme.shadow}`,
-                  }}
-                >
-                  {loading ? <span className="blink-dot inline-block">_</span> : "Search"}
-                </button>
-              </form>
-            )}
+                  <input
+                    ref={searchInputRef}
+                    type="text"
+                    autoFocus
+                    value={username}
+                    onChange={(e) => {
+                      setUsername(e.target.value);
+                      if (feedback?.type === "error") setFeedback(null);
+                    }}
+                    placeholder={session ? "search any GitHub username" : "type your GitHub username"}
+                    className="min-w-0 flex-1 border-[3px] border-border bg-bg-raised px-3 py-2 text-base sm:text-xs text-cream outline-none transition-colors placeholder:text-dim sm:px-4 sm:py-2.5"
+                    style={{ borderColor: theme.accent }}
+                  />
+                  <button
+                    type="submit"
+                    disabled={loading || !username.trim()}
+                    className="btn-press shrink-0 px-4 py-2 text-xs text-bg disabled:opacity-40 sm:px-5 sm:py-2.5"
+                    style={{
+                      backgroundColor: theme.accent,
+                      boxShadow: `4px 4px 0 0 ${theme.shadow}`,
+                    }}
+                  >
+                    {loading ? <span className="blink-dot inline-block">_</span> : "Go"}
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setSearchBarOpen(false)}
+                    className="text-[10px] text-muted transition-colors hover:text-cream"
+                  >
+                    &#10005;
+                  </button>
+                </form>
+              )}
+            </div>
 
             {/* Search Feedback: loading phases + errors */}
             <SearchFeedback feedback={feedback} accentColor={theme.accent} onDismiss={() => setFeedback(null)} onRetry={searchUser} />

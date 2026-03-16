@@ -718,6 +718,11 @@ function SpaceshipFlight({ onExit, onHud, onPause, pauseSignal = 0, hasOverlay =
         e.preventDefault();
         if (paused.current) doResume();
         else doPause();
+      } else if (e.code === "KeyF") {
+        e.preventDefault();
+        if (!paused.current || !hasOverlayRef.current) {
+          onExit();
+        }
       } else if (e.code === "KeyR") {
         if (!paused.current) {
           // Return to Universe
@@ -2009,7 +2014,19 @@ export default function CityCanvas({ planets, plazas, decorations, river, bridge
   const t = THEMES[themeIndex] ?? THEMES[0];
   const showPerf = typeof window !== "undefined" && new URLSearchParams(window.location.search).has("perf");
   const [dpr, setDpr] = useState(1);
-  const [bloomEnabled, setBloomEnabled] = useState(false);
+
+  // Performance optimization: Memoize static-ish components to prevent unneeded re-renders
+  const memoizedSun = useMemo(() => (
+    <directionalLight
+      position={t.sunPos}
+      intensity={t.sunIntensity}
+      color={t.sunColor}
+      castShadow
+      shadow-mapSize={[1024, 1024]}
+    />
+  ), [t.sunPos, t.sunIntensity, t.sunColor]);
+
+  const [bloomEnabled, setBloomEnabled] = useState(true);
   const flyPosRef = useRef(new THREE.Vector3());
 
   const UniverseRadius = useMemo(() => {
