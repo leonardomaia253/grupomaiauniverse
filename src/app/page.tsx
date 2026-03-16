@@ -64,7 +64,7 @@ const RaidOverlay = dynamic(() => import("@/components/RaidOverlay"), { ssr: fal
 const PillModal = dynamic(() => import("@/components/PillModal"), { ssr: false });
 const FounderMessage = dynamic(() => import("@/components/FounderMessage"), { ssr: false });
 const RabbitCompletion = dynamic(() => import("@/components/RabbitCompletion"), { ssr: false });
-const ConstellationChooser = dynamic(() => import("@/components/ConstellationChooser"), { ssr: false });
+const ConstellationChooser = dynamic(() => import("@/components/constellation-chooser"), { ssr: false });
 const LevelUpToast = dynamic(() => import("@/components/LevelUpToast"), { ssr: false });
 const MiniMap = dynamic(() => import("@/components/MiniMap"), { ssr: false });
 
