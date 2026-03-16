@@ -47,7 +47,7 @@ export async function POST(request: Request) {
   const { data: dev } = await sb
     .from("companies")
     .select("id, claimed, claimed_by")
-    .eq("github_login", githubLogin)
+    .eq("username", githubLogin)
     .single();
 
   if (!dev || !dev.claimed) {
@@ -97,7 +97,7 @@ export async function POST(request: Request) {
     const { data: receiver } = await sb
       .from("companies")
       .select("id")
-      .eq("github_login", gifted_to_login.toLowerCase())
+      .eq("username", gifted_to_login.toLowerCase())
       .single();
 
     if (!receiver) {
@@ -184,14 +184,14 @@ export async function POST(request: Request) {
     // Fetch planet dimensions to calculate max slots
     const { data: devFull } = await sb
       .from("companies")
-      .select("github_login, contributions, public_repos, total_stars, rank, contributions_total, contribution_years, total_prs, total_reviews, repos_contributed_to, followers, following, organizations_count, account_created_at, current_streak, longest_streak, active_days_last_year, language_diversity, top_repos")
+      .select("username, contributions, public_repos, total_stars, rank, contributions_total, contribution_years, total_prs, total_reviews, repos_contributed_to, followers, following, organizations_count, account_created_at, current_streak, longest_streak, active_days_last_year, language_diversity, top_repos")
       .eq("id", dev.id)
       .single();
 
     if (devFull) {
       const { calcPlanetDims } = await import("@/lib/github");
       const dims = calcPlanetDims(
-        devFull.github_login,
+        devFull.username,
         devFull.contributions,
         devFull.public_repos,
         devFull.total_stars,

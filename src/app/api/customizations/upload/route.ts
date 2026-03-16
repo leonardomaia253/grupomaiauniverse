@@ -40,7 +40,7 @@ export async function POST(request: Request) {
   const { data: dev } = await sb
     .from("companies")
     .select("id, claimed, claimed_by")
-    .eq("github_login", githubLogin)
+    .eq("username", githubLogin)
     .single();
 
   if (!dev || !dev.claimed || dev.claimed_by !== user.id) {

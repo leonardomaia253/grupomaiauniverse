@@ -20,7 +20,7 @@ export const metadata: Metadata = {
 };
 
 interface company {
-  github_login: string;
+  username: string;
   name: string | null;
   avatar_url: string | null;
   contributions: number;
@@ -95,7 +95,7 @@ export default async function LeaderboardPage({
     const { data: achievercompanies } = achieverIds.length > 0
       ? await supabase
         .from("companies")
-        .select("id, github_login, name, avatar_url, contributions, contributions_total, total_stars, public_repos, primary_language, rank, referral_count, kudos_count, created_at, xp_total, xp_level")
+        .select("id, username, name, avatar_url, contributions, contributions_total, total_stars, public_repos, primary_language, rank, referral_count, kudos_count, created_at, xp_total, xp_level")
         .in("id", achieverIds)
       : { data: [] };
 
@@ -106,12 +106,12 @@ export default async function LeaderboardPage({
 
     companies = sorted as unknown as company[];
     for (const d of sorted) {
-      achieverCounts[d.github_login] = d.ach_count;
+      achieverCounts[d.username] = d.ach_count;
     }
   } else {
     const { data } = await supabase
       .from("companies")
-      .select("github_login, name, avatar_url, contributions, contributions_total, total_stars, public_repos, primary_language, rank, referral_count, kudos_count, created_at, xp_total, xp_level")
+      .select("username, name, avatar_url, contributions, contributions_total, total_stars, public_repos, primary_language, rank, referral_count, kudos_count, created_at, xp_total, xp_level")
       .order(orderColumn, { ascending: orderAscending, nullsFirst: false })
       .order("created_at", { ascending: true })
       .limit(50);
@@ -123,14 +123,14 @@ export default async function LeaderboardPage({
     ? companies.some((d) => (d.referral_count ?? 0) > 0)
     : true;
 
-  const topLogins = companies.map((d) => d.github_login.toLowerCase());
+  const topLogins = companies.map((d) => d.username.toLowerCase());
 
   function getMetricValue(dev: company): string {
     switch (activeTab) {
       case "contributors": return ((dev.contributions_total && dev.contributions_total > 0) ? dev.contributions_total : dev.contributions).toLocaleString();
       case "stars": return dev.total_stars.toLocaleString();
       case "architects": return dev.public_repos.toLocaleString();
-      case "achievers": return String(achieverCounts[dev.github_login] ?? 0);
+      case "achievers": return String(achieverCounts[dev.username] ?? 0);
       case "recruiters": return (dev.referral_count ?? 0).toLocaleString();
       case "xp": return (dev.xp_total ?? 0).toLocaleString();
       default: return "";
@@ -157,7 +157,7 @@ export default async function LeaderboardPage({
       case "contributors": return (dev.contributions_total && dev.contributions_total > 0) ? dev.contributions_total : dev.contributions;
       case "stars": return dev.total_stars;
       case "architects": return dev.public_repos;
-      case "achievers": return achieverCounts[dev.github_login] ?? 0;
+      case "achievers": return achieverCounts[dev.username] ?? 0;
       case "recruiters": return dev.referral_count ?? 0;
       case "xp": return dev.xp_total ?? 0;
       default: return 0;
@@ -165,7 +165,7 @@ export default async function LeaderboardPage({
   }
 
   const devMetrics = companies.map((d) => ({
-    login: d.github_login.toLowerCase(),
+    login: d.username.toLowerCase(),
     value: getMetricValueRaw(d),
   }));
 
@@ -174,7 +174,7 @@ export default async function LeaderboardPage({
   const newLogins = new Set(
     companies
       .filter((d) => d.created_at && new Date(d.created_at).getTime() > sevenDaysAgo)
-      .map((d) => d.github_login.toLowerCase())
+      .map((d) => d.username.toLowerCase())
   );
 
   return (
@@ -285,8 +285,8 @@ export default async function LeaderboardPage({
                 const pos = i + 1;
                 return (
                   <Link
-                    key={dev.github_login}
-                    href={`/dev/${dev.github_login}`}
+                    key={dev.username}
+                    href={`/dev/${dev.username}`}
                     className="flex items-center gap-4 border-b border-border/50 px-5 py-3.5 transition-colors hover:bg-bg-card"
                   >
                     <span className="w-10 text-center">
@@ -296,7 +296,7 @@ export default async function LeaderboardPage({
                       >
                         {pos}
                       </span>
-                      {newLogins.has(dev.github_login.toLowerCase()) && (
+                      {newLogins.has(dev.username.toLowerCase()) && (
                         <span className="block text-[7px] font-bold" style={{ color: "#ffd700" }}>
                           NEW
                         </span>
@@ -307,7 +307,7 @@ export default async function LeaderboardPage({
                       {dev.avatar_url && (
                         <Image
                           src={dev.avatar_url}
-                          alt={dev.github_login}
+                          alt={dev.username}
                           width={36}
                           height={36}
                           className="border-2 border-border"
@@ -316,12 +316,12 @@ export default async function LeaderboardPage({
                       )}
                       <div className="overflow-hidden">
                         <p className="truncate text-sm text-cream">
-                          {dev.name ?? dev.github_login}
-                          <LeaderboardYouBadge login={dev.github_login} />
+                          {dev.name ?? dev.username}
+                          <LeaderboardYouBadge login={dev.username} />
                         </p>
                         {dev.name && (
                           <p className="truncate text-[10px] text-muted">
-                            @{dev.github_login}
+                            @{dev.username}
                           </p>
                         )}
                       </div>

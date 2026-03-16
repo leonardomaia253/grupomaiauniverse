@@ -22,13 +22,13 @@ export async function GET(request: Request) {
   const [raidsAttacker, raidsDefender, activeTagRes, totalAttacker, totalDefender] = await Promise.all([
     admin
       .from("raids")
-      .select("id, attacker_id, defender_id, success, created_at, attacker:companies!raids_attacker_id_fkey(github_login), defender:companies!raids_defender_id_fkey(github_login)")
+      .select("id, attacker_id, defender_id, success, created_at, attacker:companies!raids_attacker_id_fkey(username), defender:companies!raids_defender_id_fkey(username)")
       .eq("attacker_id", devId)
       .order("created_at", { ascending: false })
       .range(offset, offset + limit - 1),
     admin
       .from("raids")
-      .select("id, attacker_id, defender_id, success, created_at, attacker:companies!raids_attacker_id_fkey(github_login), defender:companies!raids_defender_id_fkey(github_login)")
+      .select("id, attacker_id, defender_id, success, created_at, attacker:companies!raids_attacker_id_fkey(username), defender:companies!raids_defender_id_fkey(username)")
       .eq("defender_id", devId)
       .order("created_at", { ascending: false })
       .range(offset, offset + limit - 1),
@@ -59,8 +59,8 @@ export async function GET(request: Request) {
     .slice(0, limit)
     .map((r) => ({
       id: r.id,
-      attacker_login: (r.attacker as unknown as { github_login: string })?.github_login ?? "unknown",
-      defender_login: (r.defender as unknown as { github_login: string })?.github_login ?? "unknown",
+      attacker_login: (r.attacker as unknown as { username: string })?.username ?? "unknown",
+      defender_login: (r.defender as unknown as { username: string })?.username ?? "unknown",
       success: r.success,
       created_at: r.created_at,
     }));

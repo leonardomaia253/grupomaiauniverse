@@ -54,7 +54,7 @@ export default async function RoadmapPage() {
         const { data: dev } = await admin
           .from("companies")
           .select("id")
-          .eq("github_login", userLogin)
+          .eq("username", userLogin)
           .single();
 
         if (dev) {

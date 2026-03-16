@@ -160,7 +160,7 @@ export async function POST() {
   const { data: dev } = await sb
     .from("companies")
     .select("id, claimed, contributions, public_repos, total_stars, kudos_count, app_streak, streak_freeze_30d_claimed, last_checkin_date")
-    .eq("github_login", githubLogin)
+    .eq("username", githubLogin)
     .single();
 
   if (!dev || !dev.claimed) {
@@ -304,14 +304,14 @@ export async function POST() {
     const lastCheckin = dev.last_checkin_date as string | null;
     const { data: recentRaids } = await sb
       .from("raids")
-      .select("attacker_id, success, created_at, attacker:companies!raids_attacker_id_fkey(github_login)")
+      .select("attacker_id, success, created_at, attacker:companies!raids_attacker_id_fkey(username)")
       .eq("defender_id", dev.id)
       .gt("created_at", lastCheckin ?? "1970-01-01")
       .order("created_at", { ascending: false })
       .limit(5);
 
     raidsSinceLast = (recentRaids ?? []).map((r) => ({
-      attacker_login: (r.attacker as unknown as { github_login: string })?.github_login ?? "unknown",
+      attacker_login: (r.attacker as unknown as { username: string })?.username ?? "unknown",
       success: r.success,
       created_at: r.created_at,
     }));

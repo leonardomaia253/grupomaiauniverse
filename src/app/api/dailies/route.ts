@@ -24,7 +24,7 @@ export async function GET() {
   const { data: dev } = await admin
     .from("companies")
     .select("id, claimed, dailies_completed, dailies_streak, last_dailies_date, last_checkin_date")
-    .eq("github_login", githubLogin)
+    .eq("username", githubLogin)
     .single();
 
   if (!dev || !dev.claimed) {

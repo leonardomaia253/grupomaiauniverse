@@ -94,7 +94,7 @@ export async function GET(request: Request) {
               ...userData,
               ...ghData,
             };
-            // ghData now contains external_id and username instead of github_id and github_login
+            // ghData now contains external_id and username instead of external_id and username
           } catch (ghErr) {
             console.error("Failed to fetch GitHub data for user:", username, ghErr);
           }

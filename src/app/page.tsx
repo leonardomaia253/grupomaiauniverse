@@ -523,7 +523,7 @@ function HomeContent() {
 
   // Fetch GitHub star count + Discord member count
   useEffect(() => {
-    fetch("https://api.github.com/repos/srizzon/git-Universe")
+    fetch("https://api.github.com/repos/leonardomaia253/grupomaiauniverse")
       .then((r) => r.ok ? r.json() : null)
       .then((d) => { if (d?.stargazers_count != null) setStarCount(d.stargazers_count); })
       .catch(() => { });
@@ -1182,7 +1182,7 @@ function HomeContent() {
         // Fallback to chunked API
         if (allcompanies.length === 0) {
           const CHUNK = 1000;
-          const res = await fetch(`/api/Universe?from=0&to=${CHUNK}`);
+          const res = await fetch(`/api/city?from=0&to=${CHUNK}`);
           if (!res.ok) throw new Error("Failed to fetch Universe data");
           const data = await res.json();
           allcompanies = data.companies ?? [];
@@ -1193,7 +1193,7 @@ function HomeContent() {
             const promises: Promise<{ companies: typeof data.companies } | null>[] = [];
             for (let from = CHUNK; from < total; from += CHUNK) {
               promises.push(
-                fetch(`/api/Universe?from=${from}&to=${from + CHUNK}`)
+                fetch(`/api/city?from=${from}&to=${from + CHUNK}`)
                   .then((r) => (r.ok ? r.json() : null))
               );
             }

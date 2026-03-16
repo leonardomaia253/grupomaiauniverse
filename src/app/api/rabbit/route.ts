@@ -36,7 +36,7 @@ export async function POST(request: Request) {
   const { data: dev } = await admin
     .from("companies")
     .select("id, claimed, rabbit_progress, rabbit_completed")
-    .eq("github_login", githubLogin)
+    .eq("username", githubLogin)
     .single();
 
   if (!dev || !dev.claimed) {
@@ -142,7 +142,7 @@ export async function GET(request: Request) {
     const { data: dev } = await admin
       .from("companies")
       .select("rabbit_progress, rabbit_completed, rabbit_completed_at")
-      .eq("github_login", githubLogin)
+      .eq("username", githubLogin)
       .single();
 
     return NextResponse.json({
@@ -155,14 +155,14 @@ export async function GET(request: Request) {
   // Hall of completers
   const { data: completers } = await admin
     .from("companies")
-    .select("github_login, avatar_url, name, rabbit_completed_at")
+    .select("username, avatar_url, name, rabbit_completed_at")
     .eq("rabbit_completed", true)
     .order("rabbit_completed_at", { ascending: true })
     .limit(100);
 
   const hall = (completers ?? []).map((c, i) => ({
     position: i + 1,
-    login: c.github_login,
+    login: c.username,
     avatar_url: c.avatar_url,
     name: c.name,
     completed_at: c.rabbit_completed_at,

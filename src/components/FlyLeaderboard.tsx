@@ -16,7 +16,7 @@ interface FlyEntry {
   max_combo: number;
   flight_ms: number;
   created_at: string;
-  github_login: string;
+  username: string;
   avatar_url: string | null;
 }
 
@@ -156,7 +156,7 @@ export default function FlyLeaderboard() {
   // Find user in leaderboard
   const userIndex = authLogin
     ? leaderboard.findIndex(
-        (e) => e.github_login?.toLowerCase() === authLogin,
+        (e) => e.username?.toLowerCase() === authLogin,
       )
     : -1;
   const userEntry = userIndex >= 0 ? leaderboard[userIndex] : null;
@@ -320,10 +320,10 @@ export default function FlyLeaderboard() {
             const pos = i + 1;
             const isYou =
               authLogin &&
-              entry.github_login?.toLowerCase() === authLogin;
+              entry.username?.toLowerCase() === authLogin;
             return (
               <div
-                key={`${entry.github_login}-${i}`}
+                key={`${entry.username}-${i}`}
                 className="flex items-center gap-4 border-b border-border/50 px-5 py-3.5 transition-colors hover:bg-bg-card"
                 style={
                   isYou
@@ -344,7 +344,7 @@ export default function FlyLeaderboard() {
                   {entry.avatar_url && (
                     <Image
                       src={entry.avatar_url}
-                      alt={entry.github_login}
+                      alt={entry.username}
                       width={36}
                       height={36}
                       className="border-2 border-border"
@@ -353,7 +353,7 @@ export default function FlyLeaderboard() {
                   )}
                   <div className="overflow-hidden">
                     <p className="truncate text-sm text-cream">
-                      {entry.github_login}
+                      {entry.username}
                       {isYou && (
                         <span
                           className="ml-2 text-[10px]"

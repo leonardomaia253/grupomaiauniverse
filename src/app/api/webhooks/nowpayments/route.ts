@@ -81,14 +81,14 @@ export async function POST(request: Request) {
         // Insert feed event
         const { data: dev } = await sb
           .from("companies")
-          .select("github_login")
+          .select("username")
           .eq("id", purchase.company_id)
           .single();
 
         if (purchase.gifted_to) {
           const { data: receiver } = await sb
             .from("companies")
-            .select("github_login")
+            .select("username")
             .eq("id", purchase.gifted_to)
             .single();
           await sb.from("activity_feed").insert({
@@ -96,20 +96,20 @@ export async function POST(request: Request) {
             actor_id: purchase.company_id,
             target_id: purchase.gifted_to,
             metadata: {
-              giver_login: dev?.github_login,
-              receiver_login: receiver?.github_login ?? "unknown",
+              giver_login: dev?.username,
+              receiver_login: receiver?.username ?? "unknown",
               item_id: purchase.item_id,
             },
           });
-          sendGiftSentNotification(purchase.company_id, dev?.github_login ?? "", receiver?.github_login ?? "unknown", purchase.id, purchase.item_id);
-          sendGiftReceivedNotification(purchase.gifted_to, dev?.github_login ?? "someone", receiver?.github_login ?? "unknown", purchase.id, purchase.item_id);
+          sendGiftSentNotification(purchase.company_id, dev?.username ?? "", receiver?.username ?? "unknown", purchase.id, purchase.item_id);
+          sendGiftReceivedNotification(purchase.gifted_to, dev?.username ?? "someone", receiver?.username ?? "unknown", purchase.id, purchase.item_id);
         } else {
           await sb.from("activity_feed").insert({
             event_type: "item_purchased",
             actor_id: purchase.company_id,
-            metadata: { login: dev?.github_login, item_id: purchase.item_id },
+            metadata: { login: dev?.username, item_id: purchase.item_id },
           });
-          sendPurchaseNotification(purchase.company_id, dev?.github_login ?? "", purchase.id, purchase.item_id);
+          sendPurchaseNotification(purchase.company_id, dev?.username ?? "", purchase.id, purchase.item_id);
         }
         break;
       }

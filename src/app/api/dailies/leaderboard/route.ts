@@ -11,7 +11,7 @@ export async function GET() {
 
   const { data, error } = await admin
     .from("companies")
-    .select("github_login, avatar_url, dailies_completed, dailies_streak")
+    .select("username, avatar_url, dailies_completed, dailies_streak")
     .eq("claimed", true)
     .gt("dailies_completed", 0)
     .order("dailies_streak", { ascending: false })

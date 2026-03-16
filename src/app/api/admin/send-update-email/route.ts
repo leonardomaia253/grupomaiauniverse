@@ -46,7 +46,7 @@ export async function POST(request: NextRequest) {
   while (true) {
     const { data: companies } = await sb
       .from("companies")
-      .select("id, github_login")
+      .select("id, username")
       .eq("claimed", true)
       .not("email", "is", null)
       .range(offset, offset + batchSize - 1);

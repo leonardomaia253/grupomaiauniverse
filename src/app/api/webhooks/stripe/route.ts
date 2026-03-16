@@ -183,7 +183,7 @@ export async function POST(request: Request) {
             await sb.from("activity_feed").insert({
               event_type: "item_purchased",
               actor_id: Number(companyId),
-              metadata: { login: session.metadata?.github_login, item_id: "streak_freeze" },
+              metadata: { login: session.metadata?.username, item_id: "streak_freeze" },
             });
             break;
           }
@@ -194,11 +194,11 @@ export async function POST(request: Request) {
           await autoEquipIfSolo(ownerId, itemId);
 
           // Insert feed event + send notifications
-          const githubLogin = session.metadata?.github_login;
+          const githubLogin = session.metadata?.username;
           if (giftedTo) {
             const { data: receiver } = await sb
               .from("companies")
-              .select("github_login")
+              .select("username")
               .eq("id", Number(giftedTo))
               .single();
             await sb.from("activity_feed").insert({
@@ -207,14 +207,14 @@ export async function POST(request: Request) {
               target_id: Number(giftedTo),
               metadata: {
                 giver_login: githubLogin,
-                receiver_login: receiver?.github_login ?? "unknown",
+                receiver_login: receiver?.username ?? "unknown",
                 item_id: itemId,
               },
             });
 
             // Gift notifications: receipt to buyer, alert to receiver
-            sendGiftSentNotification(Number(companyId), githubLogin ?? "", receiver?.github_login ?? "unknown", pending.id, itemId);
-            sendGiftReceivedNotification(Number(giftedTo), githubLogin ?? "someone", receiver?.github_login ?? "unknown", pending.id, itemId);
+            sendGiftSentNotification(Number(companyId), githubLogin ?? "", receiver?.username ?? "unknown", pending.id, itemId);
+            sendGiftReceivedNotification(Number(giftedTo), githubLogin ?? "someone", receiver?.username ?? "unknown", pending.id, itemId);
           } else {
             await sb.from("activity_feed").insert({
               event_type: "item_purchased",

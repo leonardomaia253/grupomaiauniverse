@@ -32,7 +32,7 @@ export async function GET(request: Request) {
   const { data: dev } = await sb
     .from("companies")
     .select("id")
-    .eq("github_login", githubLogin)
+    .eq("username", githubLogin)
     .single();
 
   if (!dev) {

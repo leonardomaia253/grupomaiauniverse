@@ -81,7 +81,7 @@ export async function POST(request: NextRequest) {
 
   const { data: dev, error: devErr } = await sb
     .from("companies")
-    .select("id, github_login, avatar_url")
+    .select("id, username, avatar_url")
     .eq("vscode_api_key_hash", hashKey(apiKey))
     .single();
 
@@ -172,7 +172,7 @@ export async function POST(request: NextRequest) {
     const isOffline = lastHb.status === "offline";
     if (shouldBroadcast(dev.id, isOffline)) {
       broadcastToChannel("coding-presence", "heartbeat", {
-        githubLogin: dev.github_login,
+        githubLogin: dev.username,
         avatarUrl: dev.avatar_url,
         status: isOffline ? "offline" : "active",
         language: lastHb.language,

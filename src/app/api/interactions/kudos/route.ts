@@ -39,7 +39,7 @@ export async function POST(request: Request) {
   const { data: giver } = await admin
     .from("companies")
     .select("id, claimed, contributions, public_repos, total_stars, kudos_count, kudos_streak, last_kudos_given_date")
-    .eq("github_login", githubLogin)
+    .eq("username", githubLogin)
     .single();
 
   if (!giver || !giver.claimed) {
@@ -49,8 +49,8 @@ export async function POST(request: Request) {
   // Fetch receiver
   const { data: receiver } = await admin
     .from("companies")
-    .select("id, claimed, github_login")
-    .eq("github_login", receiver_login.toLowerCase())
+    .select("id, claimed, username")
+    .eq("username", receiver_login.toLowerCase())
     .single();
 
   if (!receiver) {
@@ -107,7 +107,7 @@ export async function POST(request: Request) {
       target_id: receiver.id,
       metadata: {
         giver_login: githubLogin,
-        receiver_login: receiver.github_login,
+        receiver_login: receiver.username,
       },
     });
 

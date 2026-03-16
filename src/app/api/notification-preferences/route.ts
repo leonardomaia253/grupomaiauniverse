@@ -37,7 +37,7 @@ export async function GET() {
   const { data: dev } = await sb
     .from("companies")
     .select("id")
-    .eq("github_login", githubLogin)
+    .eq("username", githubLogin)
     .single();
 
   if (!dev) {
@@ -94,7 +94,7 @@ export async function PATCH(request: Request) {
   const { data: dev } = await sb
     .from("companies")
     .select("id")
-    .eq("github_login", githubLogin)
+    .eq("username", githubLogin)
     .single();
 
   if (!dev) {

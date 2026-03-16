@@ -24,7 +24,7 @@ async function getAuthenticatedDevId(): Promise<{ devId: number } | { error: str
   const { data: dev } = await sb
     .from("companies")
     .select("id")
-    .eq("github_login", githubLogin)
+    .eq("username", githubLogin)
     .single();
 
   if (!dev) return { error: "company not found", status: 404 };

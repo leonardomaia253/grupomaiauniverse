@@ -30,7 +30,7 @@ export async function POST() {
   // Check that the user hasn't already claimed a different planet
   const { data: alreadyClaimed } = await admin
     .from("companies")
-    .select("github_login")
+    .select("username")
     .eq("claimed_by", user.id)
     .maybeSingle();
 
@@ -50,10 +50,10 @@ export async function POST() {
       claimed_at: new Date().toISOString(),
       fetch_priority: 1,
     })
-    .eq("github_login", githubLogin)
+    .eq("username", githubLogin)
     .eq("claimed", false)
     .is("claimed_by", null)
-    .select("github_login")
+    .select("username")
     .single();
 
   if (error || !data) {
@@ -67,7 +67,7 @@ export async function POST() {
   const { data: dev } = await admin
     .from("companies")
     .select("id")
-    .eq("github_login", githubLogin)
+    .eq("username", githubLogin)
     .single();
 
   if (dev) {
@@ -78,5 +78,5 @@ export async function POST() {
     });
   }
 
-  return NextResponse.json({ claimed: true, github_login: data.github_login });
+  return NextResponse.json({ claimed: true, username: data.username });
 }

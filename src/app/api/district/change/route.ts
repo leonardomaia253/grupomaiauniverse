@@ -45,7 +45,7 @@ export async function POST(request: Request) {
   const { data: dev, error: devError } = await admin
     .from("companies")
     .select("id, claimed, constellation, constellation_chosen, constellation_changes_count, constellation_changed_at")
-    .eq("github_login", login)
+    .eq("username", login)
     .single();
 
   if (devError || !dev) {

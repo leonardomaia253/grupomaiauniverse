@@ -80,7 +80,7 @@ export async function GET(request: NextRequest) {
       // Find companies who were last active in the target window for this tier
       const { data: companies } = await sb
         .from("companies")
-        .select("id, github_login")
+        .select("id, username")
         .eq("claimed", true)
         .not("email", "is", null)
         .lte("last_active_at", inactiveBefore)
@@ -129,10 +129,10 @@ export async function GET(request: NextRequest) {
           category: "marketing",
           companyId: dev.id,
           dedupKey: `re_engage:${dev.id}:${tier.tier}:${yearWeek}`,
-          title: tier.subject(dev.github_login),
-          body: tier.body(dev.github_login),
-          html: tier.html(dev.github_login, extraInfo),
-          actionUrl: `${BASE_URL}/?user=${dev.github_login}`,
+          title: tier.subject(dev.username),
+          body: tier.body(dev.username),
+          html: tier.html(dev.username, extraInfo),
+          actionUrl: `${BASE_URL}/?user=${dev.username}`,
           priority: "low",
           channels: ["email"],
         });

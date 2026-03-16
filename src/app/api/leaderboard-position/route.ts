@@ -14,8 +14,8 @@ export async function GET(request: Request) {
 
   const { data: dev } = await sb
     .from("companies")
-    .select("id, github_login, name, avatar_url, contributions, contributions_total, total_stars, public_repos, rank, referral_count, kudos_count")
-    .eq("github_login", login)
+    .select("id, username, name, avatar_url, contributions, contributions_total, total_stars, public_repos, rank, referral_count, kudos_count")
+    .eq("username", login)
     .single();
 
   if (!dev) {
@@ -66,7 +66,7 @@ export async function GET(request: Request) {
 
   return NextResponse.json(
     {
-      github_login: dev.github_login,
+      username: dev.username,
       name: dev.name,
       avatar_url: dev.avatar_url,
       position,

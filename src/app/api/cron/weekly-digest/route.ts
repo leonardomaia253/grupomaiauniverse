@@ -26,7 +26,7 @@ export async function GET(request: NextRequest) {
   while (true) {
     const { data: companies } = await sb
       .from("companies")
-      .select("id, github_login, contributions, app_streak, kudos_count, rank")
+      .select("id, username, contributions, app_streak, kudos_count, rank")
       .eq("claimed", true)
       .not("email", "is", null)
       .range(offset, offset + batchSize - 1);
@@ -118,9 +118,9 @@ export async function GET(request: NextRequest) {
           html: `
             <p style="color: #c8e64a; font-size: 16px;">Your week in Git Universe</p>
             ${buildStatsTable(stats)}
-            ${buildButton("Visit Git Universe", `${BASE_URL}/?user=${dev.github_login}`)}
+            ${buildButton("Visit Git Universe", `${BASE_URL}/?user=${dev.username}`)}
           `,
-          actionUrl: `${BASE_URL}/?user=${dev.github_login}`,
+          actionUrl: `${BASE_URL}/?user=${dev.username}`,
           priority: "high", // Digests are their own batch, don't re-batch
           channels: ["email"],
         });

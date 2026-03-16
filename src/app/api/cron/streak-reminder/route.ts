@@ -24,7 +24,7 @@ export async function GET(request: NextRequest) {
     // Find companies with streak >= 3 who haven't checked in today
     const { data: companies } = await sb
       .from("companies")
-      .select("id, github_login, app_streak, streak_freeze_count, last_checkin_date")
+      .select("id, username, app_streak, streak_freeze_count, last_checkin_date")
       .eq("claimed", true)
       .not("email", "is", null)
       .gte("app_streak", 3)
@@ -57,7 +57,7 @@ export async function GET(request: NextRequest) {
 
         sendStreakReminderNotification(
           dev.id,
-          dev.github_login,
+          dev.username,
           dev.app_streak,
           hasFreezeAvailable,
           today,
@@ -105,7 +105,7 @@ export async function GET(request: NextRequest) {
 
     const { data: companies } = await sb
       .from("companies")
-      .select("id, github_login")
+      .select("id, username")
       .in("id", batch)
       .eq("claimed", true)
       .not("email", "is", null);
@@ -113,7 +113,7 @@ export async function GET(request: NextRequest) {
     for (const dev of companies ?? []) {
       try {
         const completedCount = countMap.get(dev.id) ?? 0;
-        sendDailiesReminderNotification(dev.id, dev.github_login, completedCount, today);
+        sendDailiesReminderNotification(dev.id, dev.username, completedCount, today);
         dailiesResults.reminded++;
       } catch {
         dailiesResults.skipped++;

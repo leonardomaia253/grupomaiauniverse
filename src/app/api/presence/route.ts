@@ -13,7 +13,7 @@ export async function GET() {
       status,
       current_language,
       last_heartbeat_at,
-      companies!inner(github_login, avatar_url)
+      companies!inner(username, avatar_url)
     `)
     .in("status", ["active", "idle"])
     .gte("last_heartbeat_at", cutoff);
@@ -35,7 +35,7 @@ export async function GET() {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const dev = s.companies as any;
     return {
-      githubLogin: dev.github_login,
+      githubLogin: dev.username,
       avatarUrl: dev.avatar_url,
       status: s.status,
       language: s.current_language,

@@ -26,7 +26,7 @@ export async function GET() {
   const { data: dev } = await sb
     .from("companies")
     .select("Universe_theme")
-    .eq("github_login", githubLogin)
+    .eq("username", githubLogin)
     .single();
 
   if (!dev) {
@@ -66,7 +66,7 @@ export async function PATCH(request: Request) {
   const { error } = await sb
     .from("companies")
     .update({ Universe_theme: theme })
-    .eq("github_login", githubLogin);
+    .eq("username", githubLogin);
 
   if (error) {
     return NextResponse.json({ error: error.message }, { status: 500 });

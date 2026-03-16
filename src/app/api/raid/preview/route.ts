@@ -43,8 +43,8 @@ export async function POST(request: Request) {
   // Fetch attacker
   const attackerRes = await admin
     .from("companies")
-    .select("id, claimed, app_streak, github_login, avatar_url, current_week_contributions, current_week_kudos_given")
-    .eq("github_login", githubLogin)
+    .select("id, claimed, app_streak, username, avatar_url, current_week_contributions, current_week_kudos_given")
+    .eq("username", githubLogin)
     .single();
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const attacker = attackerRes.data as Record<string, any> | null;
@@ -56,8 +56,8 @@ export async function POST(request: Request) {
   // Fetch defender
   const defenderRes = await admin
     .from("companies")
-    .select("id, claimed, app_streak, avatar_url, github_login, contributions, current_week_contributions, current_week_kudos_received")
-    .eq("github_login", target_login.toLowerCase())
+    .select("id, claimed, app_streak, avatar_url, username, contributions, current_week_contributions, current_week_kudos_received")
+    .eq("username", target_login.toLowerCase())
     .single();
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const defender = defenderRes.data as Record<string, any> | null;
@@ -198,8 +198,8 @@ export async function POST(request: Request) {
     defense_score: defense.total,
     attack_breakdown: attack.breakdown,
     defense_breakdown: defense.breakdown,
-    attacker_login: attacker.github_login,
-    defender_login: defender.github_login,
+    attacker_login: attacker.username,
+    defender_login: defender.username,
     attacker_avatar: attacker.avatar_url ?? null,
     defender_avatar: defender.avatar_url ?? null,
     defender_planet_height: defenderHeight,

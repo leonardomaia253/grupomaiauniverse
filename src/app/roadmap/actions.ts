@@ -37,7 +37,7 @@ export async function toggleVote(itemId: string) {
   const { data: dev } = await admin
     .from("companies")
     .select("id")
-    .eq("github_login", githubLogin)
+    .eq("username", githubLogin)
     .single();
 
   if (!dev) {

@@ -21,7 +21,7 @@ export async function sendCommunityMilestoneNotifications(
   while (true) {
     const { data: companies } = await sb
       .from("companies")
-      .select("id, github_login")
+      .select("id, username")
       .eq("claimed", true)
       .not("email", "is", null)
       .range(offset, offset + batchSize - 1);
@@ -30,7 +30,7 @@ export async function sendCommunityMilestoneNotifications(
 
     const results = await Promise.allSettled(
       companies.map((dev) =>
-        sendNotificationForMilestone(dev.id, dev.github_login, milestone),
+        sendNotificationForMilestone(dev.id, dev.username, milestone),
       ),
     );
 

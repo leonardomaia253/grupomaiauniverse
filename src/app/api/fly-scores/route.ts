@@ -84,7 +84,7 @@ export async function POST(request: Request) {
   const { data: dev } = await admin
     .from("companies")
     .select("id")
-    .eq("github_login", githubLogin)
+    .eq("username", githubLogin)
     .single();
 
   if (!dev) {
@@ -159,7 +159,7 @@ export async function GET(request: Request) {
   const [{ data, error }, { data: devIds }] = await Promise.all([
     admin
       .from("fly_scores")
-      .select("score, collected, max_combo, flight_ms, created_at, company_id, companies!inner(github_login, avatar_url)")
+      .select("score, collected, max_combo, flight_ms, created_at, company_id, companies!inner(username, avatar_url)")
       .eq("seed", seed)
       .order("score", { ascending: false })
       .order("flight_ms", { ascending: true })
@@ -189,7 +189,7 @@ export async function GET(request: Request) {
     max_combo: row.max_combo,
     flight_ms: row.flight_ms,
     created_at: row.created_at,
-    github_login: row.companies?.github_login,
+    username: row.companies?.username,
     avatar_url: row.companies?.avatar_url,
   }));
 

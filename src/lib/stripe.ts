@@ -67,7 +67,7 @@ export async function createCheckoutSession(
     metadata: {
       company_id: String(companyId),
       item_id: itemId,
-      github_login: githubLogin,
+      username: githubLogin,
       ...(giftedToDevId ? { gifted_to: String(giftedToDevId) } : {}),
     },
     success_url: giftedToLogin

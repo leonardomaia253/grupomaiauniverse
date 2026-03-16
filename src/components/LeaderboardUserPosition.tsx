@@ -8,7 +8,7 @@ import { useLeaderboardAuth } from "./LeaderboardYouBadge";
 const ACCENT = "#c8e64a";
 
 interface UserPositionData {
-  github_login: string;
+  username: string;
   name: string | null;
   avatar_url: string | null;
   position: number;
@@ -47,7 +47,7 @@ export default function LeaderboardUserPosition({
         {"\u22EE"}
       </div>
       <Link
-        href={`/dev/${data.github_login}`}
+        href={`/dev/${data.username}`}
         className="flex items-center gap-4 border-t border-border/50 px-5 py-3.5 hover:bg-bg-card"
         style={{ backgroundColor: "rgba(200, 230, 74, 0.08)" }}
       >
@@ -58,7 +58,7 @@ export default function LeaderboardUserPosition({
           {data.avatar_url && (
             <Image
               src={data.avatar_url}
-              alt={data.github_login}
+              alt={data.username}
               width={36}
               height={36}
               className="border-2 border-border"
@@ -67,7 +67,7 @@ export default function LeaderboardUserPosition({
           )}
           <div className="overflow-hidden">
             <p className="truncate text-sm text-cream">
-              {data.name ?? data.github_login}
+              {data.name ?? data.username}
               <span className="ml-2 text-[10px]" style={{ color: ACCENT }}>YOU</span>
             </p>
           </div>

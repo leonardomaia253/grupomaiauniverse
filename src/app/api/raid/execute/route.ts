@@ -54,17 +54,17 @@ export async function POST(request: Request) {
   ).toLowerCase();
 
   // Fetch attacker + defender in parallel
-  const raidColumns = "id, claimed, github_login, avatar_url, contributions, public_repos, total_stars, kudos_count, app_streak, raid_xp, current_week_contributions, current_week_kudos_given, current_week_kudos_received";
+  const raidColumns = "id, claimed, username, avatar_url, contributions, public_repos, total_stars, kudos_count, app_streak, raid_xp, current_week_contributions, current_week_kudos_given, current_week_kudos_received";
   const [attackerRes, defenderRes] = await Promise.all([
     admin
       .from("companies")
       .select(raidColumns)
-      .eq("github_login", githubLogin)
+      .eq("username", githubLogin)
       .single(),
     admin
       .from("companies")
       .select(raidColumns)
-      .eq("github_login", target_login.toLowerCase())
+      .eq("username", target_login.toLowerCase())
       .single(),
   ]);
 
@@ -262,7 +262,7 @@ export async function POST(request: Request) {
         raid_id: raidId,
         planet_id: defender.id,
         attacker_id: attacker.id,
-        attacker_login: attacker.github_login,
+        attacker_login: attacker.username,
         tag_style: tagStyle,
         expires_at: new Date(Date.now() + RAID_TAG_DURATION_DAYS * 86400000).toISOString(),
       });
@@ -298,8 +298,8 @@ export async function POST(request: Request) {
       actor_id: attacker.id,
       target_id: defender.id,
       metadata: {
-        attacker_login: attacker.github_login,
-        defender_login: defender.github_login,
+        attacker_login: attacker.username,
+        defender_login: defender.username,
         attack_score: attack.total,
         defense_score: defense.total,
       },
@@ -311,8 +311,8 @@ export async function POST(request: Request) {
     if (success) trackDailyMission(attacker.id, "win_battle");
     sendRaidAlertNotification(
       defender.id,
-      defender.github_login,
-      attacker.github_login,
+      defender.username,
+      attacker.username,
       raidId,
       success,
       attack.total,
@@ -336,7 +336,7 @@ export async function POST(request: Request) {
           gifts_received: 0,
           raid_xp: newAttackerXp,
         },
-        attacker.github_login,
+        attacker.username,
       ),
       checkAchievements(
         defender.id,
@@ -350,7 +350,7 @@ export async function POST(request: Request) {
           gifts_received: 0,
           raid_xp: newDefenderXp,
         },
-        defender.github_login,
+        defender.username,
       ),
     ]);
 
@@ -365,13 +365,13 @@ export async function POST(request: Request) {
       attack_breakdown: attack.breakdown,
       defense_breakdown: defense.breakdown,
       attacker: {
-        login: attacker.github_login,
+        login: attacker.username,
         avatar: attacker.avatar_url,
         position: [0, 0, 0] as [number, number, number],
         height: Math.max(20, Math.min(300, (attacker.contributions ?? 0) * 0.15)),
       },
       defender: {
-        login: defender.github_login,
+        login: defender.username,
         avatar: defender.avatar_url,
         position: [0, 0, 0] as [number, number, number],
         height: Math.max(20, Math.min(300, (defender.contributions ?? 0) * 0.15)),

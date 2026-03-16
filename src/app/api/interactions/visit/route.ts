@@ -38,7 +38,7 @@ export async function POST(request: Request) {
   const { data: visitor } = await admin
     .from("companies")
     .select("id")
-    .eq("github_login", githubLogin)
+    .eq("username", githubLogin)
     .single();
 
   if (!visitor) {
@@ -49,7 +49,7 @@ export async function POST(request: Request) {
   const { data: planet } = await admin
     .from("companies")
     .select("id")
-    .eq("github_login", planet_login.toLowerCase())
+    .eq("username", planet_login.toLowerCase())
     .single();
 
   if (!planet) {

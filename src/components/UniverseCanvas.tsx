@@ -31,7 +31,7 @@ export default function UniverseCanvas({ companies }: { companies: CompanyRecord
         <Sun radius={solarSystem.sunRadius} />
         
         {/* @ts-ignore - solar system planets have different props but same base visual needs */}
-        <InstancedPlanets planets={solarSystem.planets as any} />
+        <InstancedPlanets planets={solarSystem.planets as any} colors={{ windowLit: ["#f8d880"], windowOff: "#1a1018", face: "#281828", roof: "#604050", accent: "#c8e64a" }} />
 
         <ambientLight intensity={0.2} />
         
