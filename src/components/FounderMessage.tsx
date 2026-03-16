@@ -315,7 +315,7 @@ export default function FounderMessage({ onClose, session, hasClaimed, onSignIn 
                 onMouseEnter={(e) => { e.currentTarget.style.background = "#00cc33"; e.currentTarget.style.borderColor = "#00cc33"; }}
                 onMouseLeave={(e) => { e.currentTarget.style.background = "#00ff41"; e.currentTarget.style.borderColor = "#00ff41"; }}
               >
-                {lang === "en" ? "Connect with GitHub — get your planet" : "Conectar com GitHub — resgatar seu prédio"}
+                {lang === "en" ? "Sign in — get your planet" : "Entrar — resgatar seu prédio"}
               </button>
             ) : (
               <a
@@ -368,7 +368,7 @@ export default function FounderMessage({ onClose, session, hasClaimed, onSignIn 
                 onMouseEnter={(e) => { e.currentTarget.style.background = "rgba(0, 255, 65, 0.15)"; e.currentTarget.style.borderColor = "#00ff41"; }}
                 onMouseLeave={(e) => { e.currentTarget.style.background = "rgba(0, 255, 65, 0.05)"; e.currentTarget.style.borderColor = "rgba(0, 255, 65, 0.4)"; }}
               >
-                {lang === "en" ? "Star on GitHub" : "Dar estrela no GitHub"}
+                {lang === "en" ? "View Source" : "Ver Código Fonte"}
               </a>
             )}
 

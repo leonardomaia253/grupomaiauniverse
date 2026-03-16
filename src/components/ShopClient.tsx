@@ -73,7 +73,7 @@ function getScarcityInfo(item: ShopItem, soldCount: number) {
 }
 
 interface Props {
-  githubLogin: string;
+  username: string;
   companyId: number;
   items: ShopItem[];
   ownedItems: string[];
@@ -99,7 +99,7 @@ interface PixModalData {
   purchaseId: string;
   itemId: string;
   itemName: string;
-  githubLogin: string;
+  username: string;
 }
 
 const ACCENT = "#c8e64a";
@@ -262,7 +262,7 @@ function PixModal({
             </p>
             <div className="mt-3 flex items-center justify-center gap-2">
               <a
-                href={`/?user=${data.githubLogin}`}
+                href={`/?user=${data.username}`}
                 className="btn-press px-4 py-2 text-[10px] text-bg"
                 style={{
                   backgroundColor: ACCENT,
@@ -614,7 +614,7 @@ function BillboardUploadPanel({
 /* ─── Shop Client ───────────────────────────────────────────── */
 
 export default function ShopClient({
-  githubLogin,
+  username,
   companyId,
   items,
   ownedItems,
@@ -994,7 +994,7 @@ export default function ShopClient({
             purchaseId: data.purchase_id,
             itemId,
             itemName: item?.name ?? "Item",
-            githubLogin,
+            username,
           });
         } else if (data.url) {
           window.location.href = data.url;
@@ -1006,7 +1006,7 @@ export default function ShopClient({
         setBuyingProvider(null);
       }
     },
-    [buyingItem, items, githubLogin]
+    [buyingItem, items, username]
   );
 
   const handlePixCompleted = useCallback(

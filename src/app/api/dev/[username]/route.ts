@@ -12,10 +12,12 @@ import {
   FETCH_TIMEOUT_MS,
 } from "@/lib/github-api";
 
+import { isAdmin } from "@/lib/admin";
+
 // Allow up to 60s on Vercel (Pro plan). Hobby plan max is 10s.
 export const maxDuration = 60;
 
-// ─── Rate Limiting ───────────────────────────────────────────
+// ... [Rate limiting functions - hashKey, isRateLimited, recordRateLimitRequest, resolveRateLimitKey] ...
 async function hashKey(key: string): Promise<string> {
   const data = new TextEncoder().encode(key + (process.env.SUPABASE_SERVICE_ROLE_KEY ?? ""));
   const buf = await crypto.subtle.digest("SHA-256", data);
@@ -69,31 +71,26 @@ export async function GET(
   const { data: cached } = await sb
     .from("companies")
     .select("*")
-    .eq("github_login", username.toLowerCase())
+    .eq("username", username.toLowerCase())
     .single();
+
+  // Check if current user is admin
+  let isRequesterAdmin = false;
+  let authUserId: string | null = null;
+  try {
+    const authClient = await createServerSupabase();
+    const { data: { user } } = await authClient.auth.getUser();
+    if (user) {
+      authUserId = user.id;
+      isRequesterAdmin = isAdmin(user.email);
+    }
+  } catch {}
 
   // ─── New dev ───────────────────────────────────────────────
   if (!cached) {
-    // Check if authenticated user is looking up their own profile
-    let isOwnProfile = false;
-    let authUserId: string | null = null;
-    try {
-      const authClient = await createServerSupabase();
-      const { data: { user } } = await authClient.auth.getUser();
-      if (user) {
-        authUserId = user.id;
-        const authLogin = (
-          user.user_metadata.user_name ??
-          user.user_metadata.preferred_username ??
-          ""
-        ).toLowerCase();
-        isOwnProfile = authLogin === username.toLowerCase();
-      }
-    } catch {}
-
-    // Rate limit (skip for own profile — they just logged in)
+    // Rate limit (skip for admin)
     let rateLimitKey: string | null = null;
-    if (!isOwnProfile && process.env.NODE_ENV !== "development") {
+    if (!isRequesterAdmin && process.env.NODE_ENV !== "development") {
       const key = await resolveRateLimitKey(request);
       rateLimitKey = key;
       const limited = await isRateLimited(key);
@@ -106,21 +103,22 @@ export async function GET(
     }
 
     try {
-      const data = await fetchGitHubcompanyData(username, isOwnProfile ? { allowEmpty: true } : undefined);
+      // Regular users only get a preview, they CANNOT trigger a planet creation.
+      // Admin users trigger creation/upsert.
+      const data = await fetchGitHubcompanyData(username, isRequesterAdmin ? { allowEmpty: true } : undefined);
       if (rateLimitKey) await recordRateLimitRequest(rateLimitKey);
 
-      // Own profile: create planet as fallback (auth callback may have failed)
-      if (isOwnProfile && authUserId) {
+      // Admin flow: create planet if it doesn't exist
+      if (isRequesterAdmin) {
         const { data: created, error: createErr } = await sb
           .from("companies")
           .upsert({
             ...data,
             fetched_at: new Date().toISOString(),
-            claimed: true,
-            claimed_by: authUserId,
-            claimed_at: new Date().toISOString(),
             fetch_priority: 1,
-          }, { onConflict: "github_login" })
+            // Admin created planets start unclaimed unless the admin IS the user being created
+            // For now we keep it simple: admin just adds it to the Universe
+          }, { onConflict: "username" })
           .select()
           .single();
 
@@ -147,24 +145,25 @@ export async function GET(
             .eq("id", created.id)
             .single();
 
-          revalidatePath(`/dev/${data.github_login}`);
+          revalidatePath(`/dev/${data.username}`);
           return NextResponse.json({ ...(withRank ?? created), exists: true });
         }
       }
 
-      // Not own profile (or creation failed): return preview
+      // Not an admin: return preview only
       return NextResponse.json({
         exists: false,
         preview: {
-          github_login: data.github_login,
+          username: data.username,
           avatar_url: data.avatar_url,
           name: data.name,
           bio: data.bio,
           contributions: data.contributions,
           public_repos: data.public_repos,
           total_stars: data.total_stars,
-          category: data.category,
+          primary_language: data.category,
         },
+        is_admin: isRequesterAdmin,
       });
     } catch (err) {
       if (err instanceof GitHubFetchError) {
@@ -172,13 +171,22 @@ export async function GET(
       }
       const isTimeout = err instanceof DOMException && err.name === "TimeoutError";
       return NextResponse.json(
-        { error: isTimeout ? "GitHub API timed out. Please try again." : "Failed to fetch GitHub data" },
+        { error: isTimeout ? "API timed out. Please try again." : "Failed to fetch data" },
         { status: isTimeout ? 504 : 500 },
       );
     }
   }
 
-  // ─── Existing dev: refresh + upsert (unchanged flow) ──────
+  // ─── Existing dev: refresh + upsert (RESTRICTED TO ADMIN) ──────
+
+  // If NOT admin, just return cached data. No refresh allowed for regular users.
+  if (!isRequesterAdmin) {
+    return NextResponse.json({ ...cached, exists: true, is_admin: false }, {
+      headers: {
+        "Cache-Control": "public, s-maxage=60, stale-while-revalidate=120",
+      },
+    });
+  }
 
   try {
     const headers = ghHeaders();
@@ -193,8 +201,6 @@ export async function GET(
     };
 
     // ETag conditional request
-    // GitHub's /users ETag does not cover repo-derived stars or GraphQL contribution totals,
-    // so only short-circuit while our cached stats are still fresh.
     const STATS_REFRESH_INTERVAL = 5 * 60 * 1000; // 5 minutes
     const cachedAge = cached.fetched_at
       ? Date.now() - new Date(cached.fetched_at).getTime()
@@ -227,7 +233,7 @@ export async function GET(
         return NextResponse.json({ error: "User not found" }, { status: 404 });
       }
       if (userRes.status === 403) {
-        return NextResponse.json({ error: "GitHub API rate limit exceeded." }, { status: 429 });
+        return NextResponse.json({ error: "API rate limit exceeded." }, { status: 429 });
       }
       return NextResponse.json({ error: "Failed to fetch user data" }, { status: userRes.status });
     }
@@ -236,12 +242,12 @@ export async function GET(
 
     if (ghUser?.type === "Organization") {
       return NextResponse.json(
-        { error: "Organizations are not supported. Search for a user profile instead." },
+        { error: "Organizations are not supported." },
         { status: 400 },
       );
     }
 
-    const login = ghUser?.login ?? cached.github_login;
+    const login = ghUser?.login ?? cached.username;
 
     const [expanded, reposPage1Res] = await Promise.all([
       fetchExpandedGitHubData(login),
@@ -256,7 +262,7 @@ export async function GET(
 
     if (contributions === 0 && publicRepos === 0) {
       return NextResponse.json(
-        { error: "This user has no public activity on GitHub yet." },
+        { error: "This user has no public activity yet." },
         { status: 400 },
       );
     }
@@ -299,8 +305,8 @@ export async function GET(
       }));
 
     const record = {
-      github_login: login.toLowerCase(),
-      github_id: ghUser?.id ?? cached.github_id,
+      username: login.toLowerCase(),
+      external_id: ghUser?.id ?? cached.external_id,
       name: ghUser?.name ?? cached.name,
       avatar_url: ghUser?.avatar_url ?? cached.avatar_url,
       bio: ghUser?.bio ?? cached.bio,
@@ -332,16 +338,16 @@ export async function GET(
 
     const { data: upserted, error: upsertError } = await sb
       .from("companies")
-      .upsert(record, { onConflict: "github_login" })
+      .upsert(record, { onConflict: "username" })
       .select()
       .single();
 
     if (upsertError) {
       console.error("Upsert error:", upsertError);
-      return NextResponse.json({ error: "Failed to save company data" }, { status: 500 });
+      return NextResponse.json({ error: "Failed to save data" }, { status: 500 });
     }
 
-    // Recalculate GitHub XP and grant diff
+    // Recalculate XP and grant diff
     const devId = upserted?.id;
     if (devId) {
       const newGithubXp = calculateGithubXp({
@@ -358,35 +364,15 @@ export async function GET(
       }
     }
 
-    // Auto-claim: if an auth user exists for this github_login but dev is unclaimed, claim it now
-    if (devId && upserted && !upserted.claimed) {
-      const admin = getSupabaseAdmin();
-      const { data: matchedUsers } = await admin.rpc("find_auth_user_by_github_login", {
-        p_github_login: upserted.github_login,
-      });
-      const matchedUser = (matchedUsers as { id: string }[] | null)?.[0];
-      if (matchedUser?.id) {
-        await admin
-          .from("companies")
-          .update({
-            claimed: true,
-            claimed_by: matchedUser.id,
-            claimed_at: new Date().toISOString(),
-          })
-          .eq("id", devId)
-          .eq("claimed", false);
-      }
-    }
-
     const { data: withRank } = await sb
       .from("companies")
       .select("*")
-      .eq("github_login", record.github_login)
+      .eq("username", record.username)
       .single();
 
-    revalidatePath(`/dev/${record.github_login}`);
+    revalidatePath(`/dev/${record.username}`);
 
-    return NextResponse.json({ ...(withRank ?? upserted), exists: true }, {
+    return NextResponse.json({ ...(withRank ?? upserted), exists: true, is_admin: true }, {
       headers: {
         "Cache-Control": "public, s-maxage=60, stale-while-revalidate=120",
       },
@@ -409,8 +395,8 @@ export async function GET(
     return NextResponse.json(
       {
         error: isTimeout
-          ? "GitHub API timed out. Please try again."
-          : "Failed to fetch GitHub data",
+          ? "API timed out. Please try again."
+          : "Failed to fetch data",
       },
       { status: isTimeout ? 504 : 500 },
     );

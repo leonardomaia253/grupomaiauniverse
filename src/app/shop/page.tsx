@@ -20,22 +20,24 @@ export default async function ShopLanding() {
   } = await supabase.auth.getUser();
 
   if (user) {
-    const githubLogin = (
+    const username = (
       user.user_metadata?.user_name ??
       user.user_metadata?.preferred_username ??
+      user.user_metadata?.full_name ??
+      user.email?.split("@")[0] ??
       ""
     ).toLowerCase();
 
-    if (githubLogin) {
+    if (username) {
       const sb = getSupabaseAdmin();
-      const { data: dev } = await sb
+      const { data: record } = await sb
         .from("companies")
-        .select("github_login, claimed")
-        .eq("github_login", githubLogin)
+        .select("username, claimed")
+        .eq("username", username)
         .single();
 
-      if (dev?.claimed) {
-        redirect(`/shop/${dev.github_login}`);
+      if (record?.claimed) {
+        redirect(`/shop/${record.username}`);
       }
     }
   }
@@ -70,7 +72,7 @@ export default async function ShopLanding() {
               <div className="flex gap-3 border-2 border-border bg-bg-card px-4 py-3">
                 <span style={{ color: ACCENT }}>1.</span>
                 <span>
-                  Sign in with <span className="text-cream">GitHub</span> to
+                  <span className="text-cream">Sign in</span> to
                   connect your account
                 </span>
               </div>

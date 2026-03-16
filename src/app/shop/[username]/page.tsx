@@ -19,7 +19,7 @@ async function getCompany(username: string) {
   const { data } = await sb
     .from("companies")
     .select("*")
-    .eq("github_login", username.toLowerCase())
+    .eq("username", username.toLowerCase())
     .single();
   return data;
 }
@@ -37,15 +37,15 @@ async function getActiveItems(): Promise<ShopItem[]> {
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { username } = await params;
-  const dev = await getCompany(username);
+  const record = await getCompany(username);
 
-  if (!dev) {
-    return { title: "Company Not Found - Git City" };
+  if (!record) {
+    return { title: "Company Not Found - Git Universe" };
   }
 
   return {
-    title: `Shop - @${dev.github_login} - Git City`,
-    description: `Customize @${dev.github_login}'s planet in Git City`,
+    title: `Shop - @${record.username} - Git Universe`,
+    description: `Customize @${record.username}'s planet in Git Universe`,
   };
 }
 
@@ -54,9 +54,9 @@ const ACCENT = "#c8e64a";
 export default async function ShopPage({ params, searchParams }: Props) {
   const { username } = await params;
   const { purchased: purchasedItem, gifted: giftedItem, to: giftedTo } = await searchParams;
-  const dev = await getCompany(username);
+  const record = await getCompany(username);
 
-  if (!dev) notFound();
+  if (!record) notFound();
 
   // Check if the logged-in user owns this planet
   const supabase = await createServerSupabase();
@@ -64,17 +64,19 @@ export default async function ShopPage({ params, searchParams }: Props) {
   const authLogin = (
     user?.user_metadata?.user_name ??
     user?.user_metadata?.preferred_username ??
+    user?.user_metadata?.full_name ??
+    user?.email?.split("@")[0] ??
     ""
   ).toLowerCase();
-  const isOwner = !!user && authLogin === dev.github_login.toLowerCase();
+  const isOwner = !!user && authLogin === record.username.toLowerCase();
 
   // Not the owner or not claimed — show message
-  if (!dev.claimed || !isOwner) {
+  if (!record.claimed || !isOwner) {
     return (
       <main className="min-h-screen bg-bg font-pixel uppercase text-warm">
         <div className="mx-auto max-w-2xl px-3 py-6 sm:px-4 sm:py-10">
           <Link
-            href={`/dev/${dev.github_login}`}
+            href={`/dev/${record.username}`}
             className="mb-6 inline-block text-sm text-muted transition-colors hover:text-cream sm:mb-8"
           >
             &larr; Back to Profile
@@ -83,12 +85,12 @@ export default async function ShopPage({ params, searchParams }: Props) {
           <div className="border-[3px] border-border bg-bg-raised p-6 text-center sm:p-10">
             <h1 className="text-lg text-cream">Shop Locked</h1>
             <p className="mt-3 text-[10px] text-muted normal-case">
-              {!dev.claimed
-                ? `@${dev.github_login} needs to claim their planet before the shop is available.`
-                : "Only the planet owner can customize it. Sign in with the matching GitHub account."}
+              {!record.claimed
+                ? `@${record.username} needs to claim their planet before the shop is available.`
+                : "Only the planet owner can customize it. Sign in with the matching account."}
             </p>
             <Link
-              href={`/dev/${dev.github_login}`}
+              href={`/dev/${record.username}`}
               className="btn-press mt-5 inline-block px-6 py-3 text-xs text-bg"
               style={{
                 backgroundColor: ACCENT,
@@ -107,16 +109,16 @@ export default async function ShopPage({ params, searchParams }: Props) {
 
   const [items, ownedItems, customizationsResult, billboardPurchasesResult, topDevResult, topStarsResult, achievementsResult, loadoutResult, raidLoadoutResult, allPurchasesResult] = await Promise.all([
     getActiveItems(),
-    getOwnedItems(dev.id),
+    getOwnedItems(record.id),
     sb
       .from("company_customizations")
       .select("item_id, config")
-      .eq("company_id", dev.id)
+      .eq("company_id", record.id)
       .in("item_id", ["custom_color", "billboard"]),
     sb
       .from("purchases")
       .select("id", { count: "exact", head: true })
-      .eq("company_id", dev.id)
+      .eq("company_id", record.id)
       .eq("item_id", "billboard")
       .eq("status", "completed"),
     sb
@@ -134,17 +136,17 @@ export default async function ShopPage({ params, searchParams }: Props) {
     sb
       .from("company_achievements")
       .select("achievement_id")
-      .eq("company_id", dev.id),
+      .eq("company_id", record.id),
     sb
       .from("company_customizations")
       .select("config")
-      .eq("company_id", dev.id)
+      .eq("company_id", record.id)
       .eq("item_id", "loadout")
       .maybeSingle(),
     sb
       .from("company_customizations")
       .select("config")
-      .eq("company_id", dev.id)
+      .eq("company_id", record.id)
       .eq("item_id", "raid_loadout")
       .maybeSingle(),
     // A10+A13: Count purchases per item for popularity badges + social proof
@@ -174,13 +176,13 @@ export default async function ShopPage({ params, searchParams }: Props) {
   const initialLoadout = (loadoutResult.data?.config as { crown: string | null; roof: string | null; aura: string | null } | null) ?? null;
 
   const billboardSlots = billboardPurchasesResult.count ?? 0;
-  const maxContrib = topDevResult.data?.contributions ?? dev.contributions;
-  const maxStars = topStarsResult.data?.total_stars ?? dev.total_stars;
+  const maxContrib = topDevResult.data?.contributions ?? record.contributions;
+  const maxStars = topStarsResult.data?.total_stars ?? record.total_stars;
   const planetDims = calcPlanetDims(
-    dev.github_login,
-    dev.contributions,
-    dev.public_repos,
-    dev.total_stars,
+    record.username,
+    record.contributions,
+    record.public_repos,
+    record.total_stars,
     maxContrib,
     maxStars,
   );
@@ -208,7 +210,7 @@ export default async function ShopPage({ params, searchParams }: Props) {
       <div className="mx-auto max-w-2xl px-3 py-6 sm:px-4 sm:py-10 lg:max-w-240">
         {/* Header */}
         <Link
-          href={`/dev/${dev.github_login}`}
+          href={`/dev/${record.username}`}
           className="mb-6 inline-block text-sm text-muted transition-colors hover:text-cream sm:mb-8"
         >
           &larr; Back to Profile
@@ -217,10 +219,10 @@ export default async function ShopPage({ params, searchParams }: Props) {
         {/* Profile mini-card */}
         <div className="mb-5 border-[3px] border-border bg-bg-raised p-4 sm:p-6">
           <div className="flex items-center gap-4">
-            {dev.avatar_url && (
+            {record.avatar_url && (
               <Image
-                src={dev.avatar_url}
-                alt={dev.github_login}
+                src={record.avatar_url}
+                alt={record.username}
                 width={56}
                 height={56}
                 className="border-2 border-border shrink-0"
@@ -230,7 +232,7 @@ export default async function ShopPage({ params, searchParams }: Props) {
             <div>
               <h1 className="text-lg text-cream">Shop</h1>
               <p className="mt-0.5 text-[10px] text-muted normal-case">
-                Customize @{dev.github_login}&apos;s planet
+                Customize @{record.username}&apos;s planet
               </p>
             </div>
           </div>
@@ -238,8 +240,8 @@ export default async function ShopPage({ params, searchParams }: Props) {
 
         {/* Shop items (client component) */}
         <ShopClient
-          githubLogin={dev.github_login}
-          companyId={dev.id}
+          username={record.username}
+          companyId={record.id}
           items={items}
           ownedItems={ownedItems}
           initialCustomColor={initialCustomColor}
@@ -252,7 +254,7 @@ export default async function ShopPage({ params, searchParams }: Props) {
           purchasedItem={purchasedItem ?? null}
           giftedItem={giftedItem ?? null}
           giftedTo={giftedTo ?? null}
-          streakFreezesAvailable={dev.streak_freezes_available ?? 0}
+          streakFreezesAvailable={record.streak_freezes_available ?? 0}
           popularItems={popularItems}
           purchaseCounts={weeklyPurchaseCounts}
           totalPurchaseCounts={purchaseCounts}
@@ -261,16 +263,16 @@ export default async function ShopPage({ params, searchParams }: Props) {
         {/* Back links */}
         <div className="mt-6 flex flex-col items-center gap-3 sm:flex-row sm:justify-center sm:gap-5">
           <Link
-            href={`/dev/${dev.github_login}`}
+            href={`/dev/${record.username}`}
             className="text-xs text-muted transition-colors hover:text-cream normal-case"
           >
             View profile &rarr;
           </Link>
           <Link
-            href={`/?user=${dev.github_login}`}
+            href={`/?user=${record.username}`}
             className="text-xs text-muted transition-colors hover:text-cream normal-case"
           >
-            View in city &rarr;
+            View in universe &rarr;
           </Link>
         </div>
 

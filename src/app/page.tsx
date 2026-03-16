@@ -173,8 +173,8 @@ const PERMANENT_ERROR_CODES = new Set(["not-found", "org", "no-activity"]);
 
 const ERROR_MESSAGES: Record<string, { primary: (u: string) => string; secondary: string; hasRetry?: boolean; hasLink?: boolean }> = {
   "not-found": {
-    primary: (u) => `"@${u}" doesn't exist on GitHub`,
-    secondary: "Check the spelling — could be a typo. GitHub usernames are case-insensitive.",
+    primary: (u) => `"@${u}" doesn't exist`,
+    secondary: "Check the spelling — could be a typo. Usernames are case-insensitive.",
   },
   "org": {
     primary: (u) => `"@${u}" is an organization, not a person`,
@@ -182,20 +182,20 @@ const ERROR_MESSAGES: Record<string, { primary: (u: string) => string; secondary
   },
   "no-activity": {
     primary: (u) => `"@${u}" has no public activity yet`,
-    secondary: "Is this you? Open your profile settings, scroll to 'Contributions & activity', and enable 'Include private contributions'. Then search again.",
+    secondary: "Ensure your profile activity is public in your account settings and try again.",
     hasLink: true,
   },
   "rate-limit": {
     primary: () => "Search limit reached",
     secondary: "You can look up 10 new profiles per hour. companies already in the Universe are unlimited.",
   },
-  "github-rate-limit": {
-    primary: () => "GitHub's API is temporarily unavailable",
-    secondary: "Too many requests to GitHub. Try again in a few minutes.",
+  "api-rate-limit": {
+    primary: () => "The external API is temporarily unavailable",
+    secondary: "Too many requests. Try again in a few minutes.",
   },
   "timeout": {
     primary: (u) => `Fetching "@${u}" took too long`,
-    secondary: "GitHub's API was slow to respond. This usually resolves itself — try again in a moment.",
+    secondary: "The external API was slow to respond. This usually resolves itself — try again in a moment.",
     hasRetry: true,
   },
   "network": {
@@ -614,14 +614,14 @@ function HomeContent() {
       setSession(s);
       if (s) {
         const login = (s.user?.user_metadata?.user_name ?? s.user?.user_metadata?.preferred_username ?? "").toLowerCase();
-        if (login) identifyUser({ github_login: login, email: s.user?.email ?? undefined });
+        if (login) identifyUser({ username: login, email: s.user?.email ?? undefined });
       }
     });
     const { data: { subscription } } = supabase.auth.onAuthStateChange((event: string, s: Session | null) => {
       setSession(s);
       if (s && event !== "TOKEN_REFRESHED") {
         const login = (s.user?.user_metadata?.user_name ?? s.user?.user_metadata?.preferred_username ?? "").toLowerCase();
-        if (login) identifyUser({ github_login: login, email: s.user?.email ?? undefined });
+        if (login) identifyUser({ username: login, email: s.user?.email ?? undefined });
       }
     });
     return () => subscription.unsubscribe();
@@ -715,7 +715,7 @@ function HomeContent() {
   }, [searchParams]);
 
   // Forward ref from localStorage to auth callback URL
-  const handleSignInWithRef = useCallback(async () => {
+  const handleSignInWithRef = useCallback(async (providerInput?: string) => {
     trackSignInClicked("Universe");
     const supabase = createBrowserSupabase();
     let redirectTo = `${window.location.origin}/auth/callback`;
@@ -729,7 +729,7 @@ function HomeContent() {
       }
     } catch { /* ignore */ }
     await supabase.auth.signInWithOAuth({
-      provider: "github",
+      provider: (providerInput || "github") as any,
       options: { redirectTo },
     });
   }, []);
@@ -1359,7 +1359,7 @@ function HomeContent() {
           if (devData.exists === false) return;
 
           // Dedup: another effect may have already injected this dev
-          if (rawCompaniesRef.current.some((d: CompanyRecord) => d.github_login.toLowerCase() === userParam.toLowerCase())) return;
+          if (rawCompaniesRef.current.some((d: CompanyRecord) => d.username.toLowerCase() === userParam.toLowerCase())) return;
 
           const newDev = {
             ...devData,
@@ -1431,7 +1431,7 @@ function HomeContent() {
         if (devData.exists === false) return;
 
         // Dedup: another effect or search may have already injected this dev
-        if (rawCompaniesRef.current.some((d: CompanyRecord) => d.github_login.toLowerCase() === authLogin)) return;
+        if (rawCompaniesRef.current.some((d: CompanyRecord) => d.username.toLowerCase() === authLogin)) return;
 
         const newDev = {
           ...devData,
@@ -1579,11 +1579,11 @@ function HomeContent() {
       const devData = await devRes.json();
 
       if (!devRes.ok) {
-        let code: "not-found" | "org" | "no-activity" | "rate-limit" | "github-rate-limit" | "timeout" | "generic" = "generic";
+        let code: "not-found" | "org" | "no-activity" | "rate-limit" | "api-rate-limit" | "timeout" | "generic" = "generic";
         if (devRes.status === 404) code = "not-found";
         else if (devRes.status === 504) code = "timeout";
         else if (devRes.status === 429) {
-          code = devData.error?.includes("GitHub") ? "github-rate-limit" : "rate-limit";
+          code = (devData.error?.includes("GitHub") || devData.error?.includes("API")) ? "api-rate-limit" : "rate-limit";
         } else if (devRes.status === 400) {
           if (devData.error?.includes("Organization")) code = "org";
           else if (devData.error?.includes("no public activity")) code = "no-activity";
@@ -1598,18 +1598,27 @@ function HomeContent() {
 
       setFeedback(null);
 
-      // Dev not in the Universe yet: show invite card instead of creating a planet
+      // Dev not in the Universe yet: show invite card ONLY for admins
       if (devData.exists === false && devData.preview) {
-        setInvitePreview(devData.preview);
-        setUsername("");
+        if (devData.is_admin) {
+          setInvitePreview(devData.preview);
+          setUsername("");
+        } else {
+          setFeedback({
+            type: "error",
+            code: "not-found",
+            username: trimmed,
+            raw: "This planet hasn't been added to the Universe yet. Contact an administrator to add it.",
+          });
+        }
         return;
       }
 
       // Merge the refreshed dev back into the live Universe so searches update stats immediately
       let updatedPlanets: UniversePlanet[] | null = null;
-      const refreshedLogin = (devData.github_login ?? trimmed).toLowerCase();
+      const refreshedLogin = (devData.username ?? trimmed).toLowerCase();
       const existingDev = rawCompaniesRef.current.find(
-        (d) => d.github_login?.toLowerCase() === refreshedLogin
+        (d) => d.username?.toLowerCase() === refreshedLogin
       );
       const eAny = existingDev as any;
       const syncedDev = {
@@ -1631,7 +1640,7 @@ function HomeContent() {
       };
       rawCompaniesRef.current = existedBefore
         ? rawCompaniesRef.current.map((d) =>
-          d.github_login?.toLowerCase() === refreshedLogin ? syncedDev : d
+          d.username?.toLowerCase() === refreshedLogin ? syncedDev : d
         )
         : [...rawCompaniesRef.current, syncedDev];
 
@@ -1646,7 +1655,7 @@ function HomeContent() {
       updatedPlanets = layout.planets;
 
       // Focus camera on the searched planet
-      setfocusedPlanet(devData.github_login);
+      setfocusedPlanet(devData.username);
 
       // A8: Ghost preview — if user searched for themselves, show temporary effect
       if (
@@ -1655,7 +1664,7 @@ function HomeContent() {
         !ghostPreviewShownRef.current
       ) {
         ghostPreviewShownRef.current = true;
-        setGhostPreviewLogin(devData.github_login);
+        setGhostPreviewLogin(devData.username);
         setTimeout(() => setGhostPreviewLogin(null), 4000);
       }
 
@@ -1681,7 +1690,7 @@ function HomeContent() {
       } else if (!existedBefore) {
         // New company: show the share modal
         setShareData({
-          login: devData.github_login,
+          login: devData.username,
           contributions: devData.contributions,
           rank: devData.rank,
           avatar_url: devData.avatar_url,
@@ -4160,7 +4169,7 @@ function HomeContent() {
 
               <a
                 href={`https://x.com/intent/tweet?text=${encodeURIComponent(
-                  `My GitHub just turned into a planet. ${shareData.contributions.toLocaleString()} contributions, Rank #${shareData.rank ?? "?"}. What does yours look like?`
+                  `My profile just turned into a planet! ${shareData.contributions.toLocaleString()} contributions, Rank #${shareData.rank ?? "?"}. What does yours look like?`
                 )}&url=${encodeURIComponent(
                   `${window.location.origin}/dev/${shareData.login}`
                 )}`}

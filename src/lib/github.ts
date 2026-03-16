@@ -2,8 +2,8 @@
 
 export interface CompanyRecord {
   id: number;
-  github_login: string;
-  github_id: number | null;
+  username: string;
+  external_id: number | null;
   name: string | null;
   avatar_url: string | null;
   bio: string | null;
@@ -49,6 +49,9 @@ export interface CompanyRecord {
   yield_percent?: number;
   custom_color?: string | null;
   billboard_images?: string[];
+  share_capital?: number;
+  revenue?: number;
+  health_score?: number;
 }
 
 export interface TopRepo {
@@ -98,6 +101,9 @@ export interface UniversePlanet {
   yield_percent: number;
   custom_color?: string | null;
   billboard_images?: string[];
+  share_capital: number;
+  revenue: number;
+  health_score: number;
 }
 
 export interface SpacePlaza {
@@ -192,94 +198,52 @@ function calcHeight(
 // ─── V2 Detection & Formulas ────────────────────────────────
 
 function isV2Dev(dev: CompanyRecord): boolean {
-  return (dev.contributions_total ?? 0) > 0;
+  return (dev.employee_count ?? 0) > 0 || (dev.revenue ?? 0) > 0;
 }
 
 function calcHeightV2(
   dev: CompanyRecord,
-  maxContribV2: number,
-  maxStars: number,
 ): { height: number; composite: number } {
-  const contribs = (dev.contributions_total ?? 0) > 0 ? (dev.contributions_total || 0) : (dev.contributions || 0);
+  // Normalize based on typical business ranges
+  const revNorm = Math.min((dev.revenue ?? 0) / 1_000_000, 1);
+  const capNorm = Math.min((dev.share_capital ?? 0) / 2_000_000, 1);
+  const healthNorm = (dev.health_score ?? 100) / 100;
 
-  const cNorm = contribs / Math.max(1, Math.min(maxContribV2, 50_000));
-  const sNorm = dev.total_stars / Math.max(1, Math.min(maxStars, 200_000));
-  const prNorm = ((dev.total_prs ?? 0) + (dev.total_reviews ?? 0)) / 5_000;
-  const extNorm = (dev.repos_contributed_to?.length ?? 0) / 100;
-  const fNorm = Math.log10(Math.max(1, dev.followers ?? 0)) / Math.log10(50_000);
-
-  // Consistency: years active / account age
-  const accountAgeYears = Math.max(1,
-    (Date.now() - new Date(dev.account_created_at || dev.created_at).getTime()) / (365.25 * 24 * 60 * 60 * 1000)
-  );
-  const yearsActive = dev.contribution_years?.length || 1;
-  const consistencyRaw = (yearsActive / accountAgeYears) * Math.min(1, contribs / (accountAgeYears * 200));
-  const consistencyNorm = Math.min(1, consistencyRaw);
-
-  const cScore = Math.pow(Math.min(cNorm, 3), 0.55);
-  const sScore = Math.pow(Math.min(sNorm, 3), 0.45);
-  const prScore = Math.pow(Math.min(prNorm, 2), 0.5);
-  const extScore = Math.pow(Math.min(extNorm, 2), 0.5);
-  const fScore = Math.pow(Math.min(fNorm, 2), 0.5);
-  const cnsScore = Math.pow(consistencyNorm, 0.6);
+  // Revenue and Capital are log-compressed for better visual hierarchy
+  const revScore = Math.pow(revNorm, 0.4);
+  const capScore = Math.pow(capNorm, 0.5);
+  const healthScore = Math.pow(healthNorm, 0.6);
 
   const composite =
-    cScore  * 0.35 +
-    sScore  * 0.20 +
-    prScore * 0.15 +
-    extScore * 0.10 +
-    cnsScore * 0.10 +
-    fScore  * 0.10;
+    revScore * 0.45 +
+    capScore * 0.35 +
+    healthScore * 0.20;
 
   const height = Math.min(MAX_planet_HEIGHT, MIN_planet_HEIGHT + composite * HEIGHT_RANGE);
   return { height, composite };
 }
 
 function calcWidthV2(dev: CompanyRecord): number {
-  const repoNorm = Math.min(1, dev.public_repos / 200);
-  const langNorm = Math.min(1, 1); // Mocked diversity as it's removed
-  const topStarNorm = Math.min(1, (dev.top_repos?.[0]?.stars ?? 0) / 50_000);
+  const empNorm = Math.min(dev.employee_count / 1000, 1);
+  const score = Math.pow(empNorm, 0.5);
 
-  const score =
-    Math.pow(repoNorm, 0.5) * 0.50 +
-    Math.pow(langNorm, 0.6) * 0.30 +
-    Math.pow(topStarNorm, 0.4) * 0.20;
-
-  const jitter = (seededRandom(hashStr(dev.github_login)) - 0.5) * 4;
-  return Math.round(14 + score * 24 + jitter);
+  const jitter = (seededRandom(hashStr(dev.username)) - 0.5) * 4;
+  return Math.round(14 + score * 30 + jitter);
 }
 
 function calcDepthV2(dev: CompanyRecord): number {
-  const extNorm = Math.min(1, (dev.repos_contributed_to?.length ?? 0) / 100);
-  const orgNorm = Math.min(1, (dev.organizations_count ?? 0) / 10);
-  const prNorm = Math.min(1, (dev.total_prs ?? 0) / 1_000);
-  const ratioNorm = (dev.followers ?? 0) > 0
-    ? Math.min(1, ((dev.followers ?? 0) / Math.max(1, dev.following ?? 1)) / 10)
-    : 0;
+  const appNorm = Math.min(dev.applications_count / 20, 1);
+  const score = Math.pow(appNorm, 0.5);
 
-  const score =
-    Math.pow(extNorm, 0.5) * 0.40 +
-    Math.pow(orgNorm, 0.5) * 0.25 +
-    Math.pow(prNorm, 0.5) * 0.20 +
-    Math.pow(ratioNorm, 0.5) * 0.15;
-
-  const jitter = (seededRandom(hashStr(dev.github_login) + 99) - 0.5) * 4;
-  return Math.round(12 + score * 20 + jitter);
+  const jitter = (seededRandom(hashStr(dev.username) + 99) - 0.5) * 4;
+  return Math.round(12 + score * 24 + jitter);
 }
 
 function calcLitPercentageV2(dev: CompanyRecord): number {
-  const activeDaysNorm = Math.min(1, 1); // Mocked
-  const streakNorm = Math.min(1, (dev.current_streak ?? 0) / 100);
+  const yieldNorm = dev.yield_percent ?? 0.5;
+  const streakNorm = Math.min((dev.app_streak ?? 0) / 30, 1);
 
-  const avgPerYear = (dev.contributions_total ?? 0) / Math.max(1, dev.contribution_years?.length ?? 1);
-  const trendRaw = avgPerYear > 0 ? dev.contributions / avgPerYear : 1;
-  const trendNorm = Math.min(2, Math.max(0, trendRaw)) / 2;
-
-  const score =
-    activeDaysNorm * 0.60 +
-    streakNorm * 0.25 +
-    trendNorm * 0.15;
-
+  const score = yieldNorm * 0.7 + streakNorm * 0.3;
   return 0.05 + score * 0.90;
 }
 
@@ -309,16 +273,13 @@ const RIVER_WIDTH = 40;
 
 function precomputeComposites(
   companies: CompanyRecord[],
-  maxContrib: number,
-  maxStars: number,
-  maxContribV2: number,
 ): Map<string, number> {
   const map = new Map<string, number>();
   for (const dev of companies) {
     const { composite } = isV2Dev(dev)
-      ? calcHeightV2(dev, maxContribV2, maxStars)
-      : calcHeight(dev.contributions, dev.total_stars, dev.public_repos, maxContrib, maxStars);
-    map.set(dev.github_login, composite);
+      ? calcHeightV2(dev)
+      : calcHeight(dev.contributions, dev.total_stars, dev.public_repos, 1, 1); // Fallback to 1 for max as it's less relevant now
+    map.set(dev.username, composite);
   }
   return map;
 }
@@ -396,7 +357,7 @@ export function generateUniverseLayout(companies: CompanyRecord[]): {
   const maxContribV2 = companies.reduce((max, d) => Math.max(max, d.contributions_total ?? 0), 1);
 
   // ── 1. Group by constellation, sort within each, concat in priority order ──
-  const composites = precomputeComposites(companies, maxContrib, maxStars, maxContribV2);
+  const composites = precomputeComposites(companies);
 
   const constellation_ORDER = [
     'backend', 'frontend', 'fullstack', 'data_ai', 'devops',
@@ -424,10 +385,10 @@ export function generateUniverseLayout(companies: CompanyRecord[]): {
   const GalacticCenter_COUNT = 50;
   const LOTS_PER_BLOCK = BLOCK_SIZE * BLOCK_SIZE; // 16
   const allcompaniesSorted = [...companies].sort((a, b) =>
-    (composites.get(b.github_login) ?? 0) - (composites.get(a.github_login) ?? 0)
+    (composites.get(b.username) ?? 0) - (composites.get(a.username) ?? 0)
   );
   const GalacticCentercompanies = allcompaniesSorted.slice(0, GalacticCenter_COUNT);
-  const GalacticCenterSet = new Set(GalacticCentercompanies.map(d => d.github_login));
+  const GalacticCenterSet = new Set(GalacticCentercompanies.map(d => d.username));
 
   for (let i = 0; i < GalacticCentercompanies.length; i += LOTS_PER_BLOCK) {
     const end = Math.min(i + LOTS_PER_BLOCK, GalacticCentercompanies.length);
@@ -436,21 +397,21 @@ export function generateUniverseLayout(companies: CompanyRecord[]): {
     for (let j = 0; j < shuffled.length; j++) GalacticCentercompanies[i + j] = shuffled[j];
   }
 
-  const GalacticCenterOverride = new Set(GalacticCentercompanies.map(d => d.github_login));
+  const GalacticCenterOverride = new Set(GalacticCentercompanies.map(d => d.username));
 
   // ── Per-constellation dev arrays (sorted by composite, block-shuffled, minus Galactic Center) ──
   const constellationDevArrays: { did: string; companies: CompanyRecord[] }[] = [];
   for (const did of constellation_ORDER) {
     const group = constellationGroups[did];
     if (!group || group.length === 0) continue;
-    const filtered = group.filter(d => !GalacticCenterSet.has(d.github_login));
+    const filtered = group.filter(d => !GalacticCenterSet.has(d.username));
     if (filtered.length === 0) continue;
     // Full shuffle: organic mix of tall and short planets
     constellationDevArrays.push({ did, companies: seededShuffle(filtered, hashStr(did)) });
   }
   for (const [did, group] of Object.entries(constellationGroups)) {
     if (!constellation_ORDER.includes(did)) {
-      const filtered = group.filter(d => !GalacticCenterSet.has(d.github_login));
+      const filtered = group.filter(d => !GalacticCenterSet.has(d.username));
       if (filtered.length === 0) continue;
       constellationDevArrays.push({ did, companies: seededShuffle(filtered, hashStr(did)) });
     }
@@ -493,13 +454,13 @@ export function generateUniverseLayout(companies: CompanyRecord[]): {
       let height: number, composite: number, w: number, d: number, litPercentage: number;
 
       if (isV2Dev(dev)) {
-        ({ height, composite } = calcHeightV2(dev, maxContribV2, maxStars));
+        ({ height, composite } = calcHeightV2(dev));
         w = calcWidthV2(dev);
         d = calcDepthV2(dev);
         litPercentage = calcLitPercentageV2(dev);
       } else {
         ({ height, composite } = calcHeight(dev.contributions, dev.total_stars, dev.public_repos, maxContrib, maxStars));
-        const seed1 = hashStr(dev.github_login);
+        const seed1 = hashStr(dev.username);
         const repoFactor = Math.min(1, dev.public_repos / 100);
         const baseW = 14 + repoFactor * 12;
         w = Math.round(baseW + seededRandom(seed1) * 8);
@@ -511,12 +472,12 @@ export function generateUniverseLayout(companies: CompanyRecord[]): {
       const floors = Math.max(3, Math.floor(height / floorH));
       const windowsPerFloor = Math.max(3, Math.floor(w / 5));
       const sideWindowsPerFloor = Math.max(3, Math.floor(d / 5));
-      const did = GalacticCenterOverride.has(dev.github_login)
+      const did = GalacticCenterOverride.has(dev.username)
         ? 'Galactic Center'
         : inferconstellation(dev.primary_language);
 
       planets.push({
-        login: dev.github_login,
+        login: dev.username,
         rank: dev.rank ?? globalDevIndex + i + 1,
         contributions: (dev.contributions_total && dev.contributions_total > 0) ? dev.contributions_total : dev.contributions,
         total_stars: dev.total_stars,
@@ -553,6 +514,9 @@ export function generateUniverseLayout(companies: CompanyRecord[]): {
         sideWindowsPerFloor,
         litPercentage,
         yield_percent: dev.yield_percent ?? 0,
+        share_capital: dev.share_capital ?? 0,
+        revenue: dev.revenue ?? 0,
+        health_score: dev.health_score ?? 100,
       });
     }
 
@@ -581,7 +545,7 @@ export function generateUniverseLayout(companies: CompanyRecord[]): {
 
     for (let bi = 0; bi < blockcompanies.length; bi++) {
       const bld = planets[planets.length - blockcompanies.length + bi];
-      const carSeed = hashStr(blockcompanies[bi].github_login) + 777;
+      const carSeed = hashStr(blockcompanies[bi].username) + 777;
       if (seededRandom(carSeed) > 0.6) {
         const side = seededRandom(carSeed + 1) > 0.5 ? 1 : -1;
         const carX = bld.position[0] + side * (bld.width / 2 + 6);
@@ -794,7 +758,7 @@ export function generateUniverseLayout(companies: CompanyRecord[]): {
 // ─── planet Dimensions (reusable for shop preview) ────────
 
 export function calcPlanetDims(
-  githubLogin: string,
+  username: string,
   contributions: number,
   publicRepos: number,
   totalStars: number,
@@ -805,7 +769,7 @@ export function calcPlanetDims(
   // V2 path when expanded data is available
   if (v2Data && (v2Data.contributions_total ?? 0) > 0) {
     const dev: CompanyRecord = {
-      id: 0, github_login: githubLogin, github_id: null, name: null,
+      id: 0, username: username, external_id: null, name: null,
       avatar_url: null, bio: null, contributions: contributions, public_repos: publicRepos,
       owned_items: [], category: null, primary_language: null,
       employee_count: 1, applications_count: 0, yield_percent: 0,
@@ -816,13 +780,13 @@ export function calcPlanetDims(
       followers: 0, following: 0, organizations_count: 0, account_created_at: null, current_streak: 0,
       ...v2Data,
     };
-    const { height } = calcHeightV2(dev, maxContrib, maxStars);
+    const { height } = calcHeightV2(dev);
     return { width: calcWidthV2(dev), height, depth: calcDepthV2(dev) };
   }
 
   // V1 fallback
   const { height } = calcHeight(contributions, totalStars, publicRepos, maxContrib, maxStars);
-  const seed1 = hashStr(githubLogin);
+  const seed1 = hashStr(username);
   const repoFactor = Math.min(1, publicRepos / 100);
   const baseW = 14 + repoFactor * 16;
   const width = Math.round(baseW + seededRandom(seed1) * 10);

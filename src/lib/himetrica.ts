@@ -20,16 +20,16 @@ function hm() {
 // ─── Identify ────────────────────────────────────────────────
 
 export function identifyUser(traits: {
-  github_login: string;
+  username: string;
   email?: string;
   company_id?: number;
   contributions?: number;
   referrer?: string;
 }) {
   hm()?.identify({
-    name: traits.github_login,
+    name: traits.username,
     email: traits.email,
-    github_login: traits.github_login,
+    username: traits.username,
     company_id: traits.company_id,
     contributions: traits.contributions,
     referrer: traits.referrer,
@@ -42,12 +42,12 @@ export function trackSignInClicked(source: string) {
   hm()?.track("sign_in_clicked", { source });
 }
 
-export function trackSignUpCompleted(github_login: string, ref?: string) {
-  hm()?.track("sign_up_completed", { github_login, ref });
+export function trackSignUpCompleted(username: string, ref?: string) {
+  hm()?.track("sign_up_completed", { username, ref });
 }
 
-export function trackPlanetClaimed(github_login: string) {
-  hm()?.track("planet_claimed", { github_login });
+export function trackPlanetClaimed(username: string) {
+  hm()?.track("planet_claimed", { username });
 }
 
 export function trackFreeItemClaimed() {

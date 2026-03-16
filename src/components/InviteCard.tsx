@@ -4,7 +4,7 @@ import { useState } from "react";
 import Image from "next/image";
 
 export interface InvitePreview {
-  github_login: string;
+  username: string;
   avatar_url: string | null;
   name: string | null;
   bio: string | null;
@@ -26,7 +26,7 @@ interface InviteCardProps {
 export default function InviteCard({ company, isLoggedIn, onLogin, onClose, accent, shadow }: InviteCardProps) {
   const [copied, setCopied] = useState(false);
 
-  const inviteUrl = `${window.location.origin}/?user=${company.github_login}`;
+  const inviteUrl = `${window.location.origin}/?user=${company.username}`;
 
   const handleInvite = () => {
     navigator.clipboard.writeText(inviteUrl);
@@ -53,7 +53,7 @@ export default function InviteCard({ company, isLoggedIn, onLogin, onClose, acce
         {company.avatar_url && (
           <Image
             src={company.avatar_url}
-            alt={company.github_login}
+            alt={company.username}
             width={48}
             height={48}
             className="mx-auto mb-3 border-2 border-border"
@@ -61,9 +61,8 @@ export default function InviteCard({ company, isLoggedIn, onLogin, onClose, acce
           />
         )}
 
-        {/* Name */}
         <p className="text-xs text-cream normal-case">
-          <span style={{ color: accent }}>@{company.github_login}</span>
+          <span style={{ color: accent }}>@{company.username}</span>
           {company.name && (
             <span className="text-muted"> ({company.name})</span>
           )}

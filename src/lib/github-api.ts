@@ -207,8 +207,8 @@ export class GitHubFetchError extends Error {
 }
 
 export interface GitHubcompanyData {
-  github_login: string;
-  github_id: number;
+  username: string;
+  external_id: number;
   name: string | null;
   avatar_url: string | null;
   bio: string | null;
@@ -319,8 +319,8 @@ export async function fetchGitHubcompanyData(
     .map((r) => ({ name: r.name, stars: r.stargazers_count, language: r.language, url: r.html_url }));
 
   return {
-    github_login: resolvedLogin.toLowerCase(),
-    github_id: ghUser.id,
+    username: resolvedLogin.toLowerCase(),
+    external_id: ghUser.id,
     name: ghUser.name,
     avatar_url: ghUser.avatar_url,
     bio: ghUser.bio,
