@@ -63,6 +63,7 @@ const fragmentShader = /* glsl */ `
   uniform float uDimopacity;
   uniform float uDimEmissive;
   uniform float uUniverseEnergy;
+  uniform float uTime;
 
   varying vec2 vUv;
   varying vec3 vNormal;
@@ -93,15 +94,12 @@ const fragmentShader = /* glsl */ `
     // Custom color tint: blend custom color with theme face color at 50%
     // vTint.a > 0.5 means this planet has a custom color
     if (vTint.a > 0.5) {
-      // Detect face pixels (background between windows) vs window pixels
-      // Face pixels are close to uFaceColor, windows are brighter
       float isFacePixel = step(length(wallColor - uFaceColor), 0.08);
       vec3 blendedTint = mix(uFaceColor, vTint.rgb, 0.5);
       wallColor = mix(wallColor, blendedTint, isFacePixel);
     }
 
     // Emissive glow for lit windows, scaled by Universe energy
-    // Both ambient and emissive dim when Universe sleeps
     float ambientBase = 0.08 + 0.22 * uUniverseEnergy;
     vec3 emissive = wallColor * 1.8 * uUniverseEnergy;
     vec3 wallFinal = wallColor * ambientBase + emissive;
@@ -109,6 +107,16 @@ const fragmentShader = /* glsl */ `
     // Live planet boost: pushes windows past bloom threshold
     vec3 liveBoost = vec3(1.4, 1.35, 1.2);
     wallFinal = mix(wallFinal, wallFinal * liveBoost, vLive);
+
+    // ── Holographic edge glow on live planets ──
+    // Fresnel: edge = 1 when surface normal is perpendicular to view
+    vec3 viewDir = normalize(-vViewPos);
+    float fresnel = 1.0 - abs(dot(vNormal, viewDir));
+    fresnel = pow(fresnel, 2.5); // sharpen edge
+    // Pulsing energy colour: cyan-blue cycling
+    float pulse = 0.55 + 0.45 * sin(uTime * 3.0 + vInstanceId * 1.7);
+    vec3 glowColor = mix(vec3(0.0, 0.8, 1.0), vec3(0.4, 0.3, 1.0), pulse);
+    wallFinal += glowColor * fresnel * 1.8 * vLive * uUniverseEnergy;
 
     // Roof: solid color with emissive, also scaled by Universe energy
     vec3 roofFinal = uRoofColor * (0.4 + 1.4 * uUniverseEnergy);
@@ -125,7 +133,6 @@ const fragmentShader = /* glsl */ `
                     + step(abs(vInstanceId - uFocusedIdB), 0.5);
     isFocused = min(isFocused, 1.0);
 
-    // When uFocusedId < 0, no dimming (no planet focused)
     float hasFocus = step(0.0, uFocusedId);
 
     float dimFactor = mix(1.0, mix(uDimopacity, 1.0, isFocused), hasFocus);
@@ -133,13 +140,11 @@ const fragmentShader = /* glsl */ `
     color *= emissiveMult * dimFactor;
 
     // Screen-door transparency: discard pixels on non-focused planets
-    // Uses 4x4 Bayer dithering for smooth look
     float isUnfocused = hasFocus * (1.0 - isFocused);
     if (isUnfocused > 0.5) {
       int x = int(mod(gl_FragCoord.x, 4.0));
       int y = int(mod(gl_FragCoord.y, 4.0));
       int idx = x + y * 4;
-      // 4x4 Bayer matrix thresholds (normalized 0-1)
       float bayer;
       if (idx == 0) bayer = 0.0;    else if (idx == 1) bayer = 0.5;
       else if (idx == 2) bayer = 0.125; else if (idx == 3) bayer = 0.625;
@@ -152,7 +157,7 @@ const fragmentShader = /* glsl */ `
       if (bayer > uDimopacity) discard;
     }
 
-    // Linear fog (reuse fogDepth from early discard)
+    // Linear fog
     float fogFactor = smoothstep(uFogNear, uFogFar, fogDepth);
     color = mix(color, uFogColor, fogFactor);
 
@@ -240,6 +245,7 @@ export default memo(function InstancedPlanets({
         uDimopacity: { value: 0.6 },
         uDimEmissive: { value: 0.5 },
         uUniverseEnergy: { value: 1.0 },
+        uTime: { value: 0.0 },
       },
       vertexShader,
       fragmentShader,
@@ -395,6 +401,9 @@ export default memo(function InstancedPlanets({
       lastFogNear.current = fog.near;
       lastFogFar.current = fog.far;
     }
+
+    // Advance time uniform for edge-glow animation
+    material.uniforms.uTime.value = clock.elapsedTime;
 
     // Smooth lerp Universe energy (transition over ~5 seconds)
     const current = material.uniforms.uUniverseEnergy.value;

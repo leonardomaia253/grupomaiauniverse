@@ -157,13 +157,13 @@ export default function RoadmapClient({
           <p className="mt-6 text-[9px] text-muted normal-case">
             built by{" "}
             <a
-              href="https://x.com/samuelrizzondev"
+              href="https://x.com/leonardomaia253"
               target="_blank"
               rel="noopener noreferrer"
               className="transition-colors hover:text-cream"
               style={{ color: ACCENT }}
             >
-              @samuelrizzondev
+              @leonardomaia253
             </a>
           </p>
         </div>
@@ -359,7 +359,7 @@ function SignInPrompt({ onClose, onSignIn }: { onClose: () => void; onSignIn: ()
             className="btn-press pixel-shadow-lime flex-1 px-3 py-2 text-[10px] text-bg"
             style={{ backgroundColor: ACCENT }}
           >
-            Sign in with GitHub
+            Entrar com Maia
           </button>
         </div>
       </div>

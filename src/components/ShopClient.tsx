@@ -894,7 +894,7 @@ export default function ShopClient({
     setError(null);
 
     try {
-      const res = await fetch("/api/verify-github-star", { method: "POST" });
+      const res = await fetch("/api/verify-maia-estrela", { method: "POST" });
       const data = await res.json();
 
       if (!res.ok) {

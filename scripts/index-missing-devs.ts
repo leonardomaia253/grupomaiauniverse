@@ -27,7 +27,7 @@ const DRY_RUN = process.argv.includes("--dry-run");
 const CONCURRENCY = parseInt(
   process.argv.find((a) => a.startsWith("--concurrency="))?.split("=")[1] ?? "2"
 );
-const BASE_URL = process.env.NEXT_PUBLIC_APP_URL || "https://thegitUniverse.com";
+const BASE_URL = process.env.NEXT_PUBLIC_APP_URL || "https://maiauniverse.com.br";
 
 const sb = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL!,

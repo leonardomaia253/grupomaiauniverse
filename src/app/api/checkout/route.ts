@@ -101,7 +101,7 @@ export async function POST(request: Request) {
       .single();
 
     if (!receiver) {
-      return NextResponse.json({ error: "User not found in Git Universe" }, { status: 400 });
+      return NextResponse.json({ error: "User not found in Maia Universe" }, { status: 400 });
     }
 
     // Check receiver doesn't already own this item (bought or gifted)

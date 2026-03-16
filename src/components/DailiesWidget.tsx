@@ -34,7 +34,7 @@ export default function DailiesWidget({ data, accent, shadow, isMobile, onClaim,
     return () => clearInterval(interval);
   }, []);
 
-  // GitHub Star bonus mission state
+  // Estrela Maia bonus mission state
   const [starOpened, setStarOpened] = useState(false);
   const [starVerifying, setStarVerifying] = useState(false);
   const [starVerified, setStarVerified] = useState(false);
@@ -43,7 +43,7 @@ export default function DailiesWidget({ data, accent, shadow, isMobile, onClaim,
     if (starVerifying || starVerified || data?.has_github_star) return;
     setStarVerifying(true);
     try {
-      const res = await fetch("/api/verify-github-star", { method: "POST" });
+      const res = await fetch("/api/verify-maia-estrela", { method: "POST" });
       if (!res.ok) { setStarVerifying(false); return; }
       const json = await res.json();
       if (json.verified) {

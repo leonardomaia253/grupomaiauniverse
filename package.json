@@ -2,13 +2,13 @@
   "name": "git-city",
   "version": "0.1.0",
   "private": true,
-  "description": "Your GitHub profile as a 3D pixel art building in an interactive city",
+  "description": "Your perfil da empresa as a 3D pixel art building in an interactive city",
   "homepage": "https://thegitcity.com",
   "repository": {
     "type": "git",
     "url": "https://github.com/srizzon/git-city"
   },
-  "author": "Samuel Rizzon",
+  "author": "leonardomaia253",
   "license": "AGPL-3.0",
   "keywords": [
     "github",

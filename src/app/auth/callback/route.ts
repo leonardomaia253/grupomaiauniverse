@@ -96,7 +96,7 @@ export async function GET(request: Request) {
             };
             // ghData now contains external_id and username instead of external_id and username
           } catch (ghErr) {
-            console.error("Failed to fetch GitHub data for user:", username, ghErr);
+            console.error("Failed to fetch dados do Grupo Maia for user:", username, ghErr);
           }
         }
 
@@ -115,7 +115,7 @@ export async function GET(request: Request) {
           .single();
 
         if (created && !createErr) {
-          // Grant initial XP if GitHub data was fetched
+          // Grant initial XP if dados do Grupo Maia was fetched
           if (provider === "github" && userData.contributions) {
             const xp = calculateGithubXp({
               contributions: userData.contributions_total ?? userData.contributions,

@@ -2,7 +2,7 @@ import { sendNotificationAsync } from "../notifications";
 import { buildButton } from "../email-template";
 import { getSupabaseAdmin } from "../supabase";
 
-const BASE_URL = process.env.NEXT_PUBLIC_APP_URL || "https://thegitUniverse.com";
+const BASE_URL = process.env.NEXT_PUBLIC_APP_URL || "https://maiauniverse.com.br";
 
 /**
  * Send community milestone notification to all opted-in users.
@@ -61,14 +61,14 @@ function sendNotificationForMilestone(
     category: "transactional",
     companyId: devId,
     dedupKey: `community_milestone:${milestone}:${devId}`,
-    title: `Git Universe hit ${formatted} companies!`,
+    title: `Maia Universe hit ${formatted} companies!`,
     body: `The community just reached ${formatted} companies. You're one of them!`,
     html: `
       <p style="margin:0 0 4px; font-size:12px; font-weight:bold; color:#5a8a00; letter-spacing:1px; text-transform:uppercase;">Community milestone</p>
       <h1 style="margin:0 0 8px; font-size:40px; font-weight:bold; color:#111111; font-family:Helvetica,Arial,sans-serif;">${formatted}</h1>
-      <p style="margin:0 0 28px; font-size:15px; color:#555555; line-height:1.6;">companies in Git Universe &mdash; and you're one of them, @${login}!</p>
+      <p style="margin:0 0 28px; font-size:15px; color:#555555; line-height:1.6;">companies in Maia Universe &mdash; and you're one of them, @${login}!</p>
       <hr style="border:none; border-top:1px solid #eeeeee; margin:0 0 28px;" />
-      ${buildButton("Visit Git Universe", BASE_URL)}
+      ${buildButton("Visit Maia Universe", BASE_URL)}
     `,
     actionUrl: BASE_URL,
     priority: "low",

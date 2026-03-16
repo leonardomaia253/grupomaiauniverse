@@ -50,7 +50,7 @@ function formatEvent(e: FeedEvent): string {
     case "streak_checkin":
       return `\u{1F525} ${meta.login ? `@${meta.login}` : actor} checked in (${meta.streak}-day streak)`;
     case "github_star_verified":
-      return `\u2B50 ${meta.login ? `@${meta.login}` : actor} unlocked the GitHub Star`;
+      return `\u2B50 ${meta.login ? `@${meta.login}` : actor} unlocked the Estrela Maia`;
     case "dev_highlight": {
       const login = meta.login ? `@${meta.login}` : actor;
       switch (meta.highlight) {

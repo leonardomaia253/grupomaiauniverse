@@ -47,7 +47,7 @@ export default async function UnsubscribePage({
             marginTop: 0,
           }}
         >
-          GIT Universe
+          MAIA Universe
         </h1>
 
         <div
@@ -63,7 +63,7 @@ export default async function UnsubscribePage({
             <p style={{ fontSize: 18, color: "#ff6b6b" }}>Invalid or expired link</p>
             <p style={{ color: "#666", fontSize: 14 }}>
               This unsubscribe link may have expired or is invalid.
-              You can manage your notifications from your Git Universe settings.
+              You can manage your notifications from your Maia Universe settings.
             </p>
           </>
         ) : success ? (
@@ -76,7 +76,7 @@ export default async function UnsubscribePage({
               .
             </p>
             <p style={{ color: "#666", fontSize: 14 }}>
-              You can re-enable notifications anytime from your Git Universe settings.
+              You can re-enable notifications anytime from your Maia Universe settings.
             </p>
           </>
         ) : (
@@ -94,10 +94,10 @@ export default async function UnsubscribePage({
         />
 
         <a
-          href="https://thegitUniverse.com"
+          href="https://maiauniverse.com.br"
           style={{ color: "#c8e64a", fontSize: 14, textDecoration: "underline" }}
         >
-          Back to Git Universe
+          Back to Maia Universe
         </a>
       </div>
     </div>

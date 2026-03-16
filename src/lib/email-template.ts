@@ -1,4 +1,4 @@
-const BASE_URL = "https://thegitUniverse.com";
+const BASE_URL = "https://maiauniverse.com.br";
 const FONT = `'Silkscreen', monospace`;
 const FONT_IMPORT = `@import url('https://fonts.googleapis.com/css2?family=Silkscreen:wght@400;700&display=swap');`;
 
@@ -34,7 +34,7 @@ export function wrapInBaseTemplate(bodyHtml: string, unsubscribeUrl?: string): s
           <!-- Logo -->
           <tr>
             <td align="center" style="padding-bottom: 24px;">
-              <img src="${BASE_URL}/icon-512.png" width="64" height="64" alt="Git Universe" style="display:block; border-radius:16px; border:0;" />
+              <img src="${BASE_URL}/icon-512.png" width="64" height="64" alt="Maia Universe" style="display:block; border-radius:16px; border:0;" />
             </td>
           </tr>
 
@@ -49,7 +49,7 @@ export function wrapInBaseTemplate(bodyHtml: string, unsubscribeUrl?: string): s
           <tr>
             <td align="center" style="padding-top: 24px;">
               <p style="margin: 0; font-size: 12px; color: #999999; font-family: Helvetica, Arial, sans-serif;">
-                ${footer}<a href="${BASE_URL}" style="color: #999999; text-decoration: none; font-size: 12px;">thegitUniverse.com</a>
+                ${footer}<a href="${BASE_URL}" style="color: #999999; text-decoration: none; font-size: 12px;">maiauniverse.com.br</a>
               </p>
             </td>
           </tr>

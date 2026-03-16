@@ -1,5 +1,5 @@
 -- ============================================================
--- Git Universe — Generalize Companies (Remove GitHub Dependency)
+-- Maia Universe — Generalize Companies (Remove GitHub Dependency)
 -- ============================================================
 
 -- 1. Rename core columns in companies

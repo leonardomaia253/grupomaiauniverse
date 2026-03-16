@@ -6,8 +6,8 @@ import { getSupabaseAdmin } from "@/lib/supabase";
 import SignInButton from "./sign-in-button";
 
 export const metadata: Metadata = {
-  title: "Shop - Git Universe",
-  description: "Customize your planet in Git Universe with effects, structures and more",
+  title: "Shop - Maia Universe",
+  description: "Customize your planet in Maia Universe with effects, structures and more",
 };
 
 const ACCENT = "#c8e64a";
@@ -55,7 +55,7 @@ export default async function ShopLanding() {
 
         <div className="border-[3px] border-border bg-bg-raised p-6 sm:p-10">
           <h1 className="text-center text-xl text-cream sm:text-2xl">
-            Git Universe <span style={{ color: ACCENT }}>Shop</span>
+            Maia Universe <span style={{ color: ACCENT }}>Shop</span>
           </h1>
 
           <p className="mt-4 text-center text-[10px] leading-relaxed text-muted normal-case">
@@ -107,13 +107,13 @@ export default async function ShopLanding() {
           <p className="text-[9px] text-muted normal-case">
             built by{" "}
             <a
-              href="https://x.com/samuelrizzondev"
+              href="https://x.com/leonardomaia253"
               target="_blank"
               rel="noopener noreferrer"
               className="transition-colors hover:text-cream"
               style={{ color: ACCENT }}
             >
-              @samuelrizzondev
+              @leonardomaia253
             </a>
           </p>
         </div>

@@ -69,7 +69,7 @@ const LevelUpToast = dynamic(() => import("@/components/LevelUpToast"), { ssr: f
 const MiniMap = dynamic(() => import("@/components/MiniMap"), { ssr: false });
 
 // Feature flags — flip to switch milestone banner
-const MILESTONE_MODE: "stars" | "companies" = "companies"; // "stars" = GitHub stars road to 1K, "companies" = total companies
+const MILESTONE_MODE: "stars" | "companies" = "companies"; // "stars" = Estrela Maias road to 1K, "companies" = total companies
 
 const THEMES = [
   { name: "Midnight", accent: "#6090e0", shadow: "#203870" },
@@ -178,7 +178,7 @@ const ERROR_MESSAGES: Record<string, { primary: (u: string) => string; secondary
   },
   "org": {
     primary: (u) => `"@${u}" is an organization, not a person`,
-    secondary: "Git Universe is for individual profiles. Try searching for one of its contributors by their personal username.",
+    secondary: "Maia Universe is for individual profiles. Try searching for one of its contributors by their personal username.",
   },
   "no-activity": {
     primary: (u) => `"@${u}" has no public activity yet`,
@@ -521,7 +521,7 @@ function HomeContent() {
   const prevRaidPhaseRef = useRef<string>("idle");
   const lastSuccessfulRaidRef = useRef<{ defenderLogin: string; attackerLogin: string; tagStyle: string } | null>(null);
 
-  // Fetch GitHub star count + Discord member count
+  // Fetch Estrela Maia count + Discord member count
   useEffect(() => {
     fetch("https://api.github.com/repos/leonardomaia253/grupomaiauniverse")
       .then((r) => r.ok ? r.json() : null)
@@ -1295,7 +1295,7 @@ function HomeContent() {
   // Phase 0: "Somewhere in the internet..."   0.8s → fade out ~3.8s
   // Phase 1: "companies became planets"    4.2s → fade out ~7.2s
   // Phase 2: "And commits became floors"      7.6s → fade out ~10.6s
-  // Phase 3: "Welcome to Git Universe"            11.0s → confetti + hold until end
+  // Phase 3: "Welcome to Maia Universe"            11.0s → confetti + hold until end
   const INTRO_TEXT_SCHEDULE = [800, 4200, 7600, 11000];
   const [introConfetti, setIntroConfetti] = useState(false);
 
@@ -1310,7 +1310,7 @@ function HomeContent() {
     for (let i = 0; i < INTRO_TEXT_SCHEDULE.length; i++) {
       timers.push(setTimeout(() => setIntroPhase(i), INTRO_TEXT_SCHEDULE[i]));
     }
-    // Confetti shortly after "Welcome to Git Universe"
+    // Confetti shortly after "Welcome to Maia Universe"
     timers.push(setTimeout(() => setIntroConfetti(true), INTRO_TEXT_SCHEDULE[3] + 500));
 
     return () => timers.forEach(clearTimeout);
@@ -1953,7 +1953,7 @@ function HomeContent() {
               </p>
             ))}
 
-            {/* Welcome to Git Universe (phase 3) */}
+            {/* Welcome to Maia Universe (phase 3) */}
             <div
               className="absolute flex flex-col items-center gap-1"
               style={{
@@ -2258,7 +2258,7 @@ function HomeContent() {
       {/* ─── GitHub Badge (mobile: top-center, desktop: top-right) ─── */}
       {!flyMode && !introMode && !rabbitCinematic && (
         <div className={`pointer-events-auto fixed top-3 left-3 z-30 items-center gap-1.5 sm:gap-2 sm:left-auto sm:right-4 sm:top-4 ${exploreMode ? "hidden lg:flex" : "flex"}`}>
-          {/* GitHub stars — only when loaded */}
+          {/* Estrela Maias — only when loaded */}
           {starCount != null && (
             <a
               href="https://github.com/srizzon/git-Universe"
@@ -2404,7 +2404,7 @@ function HomeContent() {
                               className="btn-press inline-block w-full py-2.5 text-center text-xs text-bg"
                               style={{ backgroundColor: "#4ade80", boxShadow: "2px 2px 0 0 #16a34a" }}
                             >
-                              Sign in with GitHub
+                              Entrar com Maia
                             </Link>
                           </div>
                         ) : liveByLogin.has(authLogin) ? (
@@ -2430,7 +2430,7 @@ function HomeContent() {
                               </button>
                             </div>
                             <div className="space-y-2.5 text-xs normal-case text-muted">
-                              <p><span className="text-cream">1.</span> Install <a href="https://marketplace.visualstudio.com/items?itemName=git-Universe.gitUniverse" target="_blank" rel="noopener noreferrer" className="text-[#4ade80] hover:underline">Git Universe: Pulse</a> in VS Code</p>
+                              <p><span className="text-cream">1.</span> Install <a href="https://marketplace.visualstudio.com/items?itemName=git-Universe.gitUniverse" target="_blank" rel="noopener noreferrer" className="text-[#4ade80] hover:underline">Maia Universe: Pulse</a> in VS Code</p>
                               <p><span className="text-cream">2.</span> Cmd+Shift+P &rarr; &ldquo;Pulse: Connect&rdquo;</p>
                               <p><span className="text-cream">3.</span> Paste your key and start coding</p>
                             </div>
@@ -2438,7 +2438,7 @@ function HomeContent() {
                               Your planet lights up in ~30s
                             </p>
                             <p className="mt-1.5 text-[10px] normal-case text-muted/50">
-                              Only your username and language are shared publicly. Control what&apos;s sent in VS Code Settings &gt; Git Universe &gt; Privacy.
+                              Only your username and language are shared publicly. Control what&apos;s sent in VS Code Settings &gt; Maia Universe &gt; Privacy.
                             </p>
                           </div>
                         ) : (
@@ -2451,7 +2451,7 @@ function HomeContent() {
                             </p>
                             <div className="mb-4 space-y-2.5 text-xs normal-case text-muted">
                               <p><span className="text-cream">1.</span> Generate your key below</p>
-                              <p><span className="text-cream">2.</span> Install <a href="https://marketplace.visualstudio.com/items?itemName=git-Universe.gitUniverse" target="_blank" rel="noopener noreferrer" className="text-[#4ade80] hover:underline">Git Universe: Pulse</a> in VS Code</p>
+                              <p><span className="text-cream">2.</span> Install <a href="https://marketplace.visualstudio.com/items?itemName=git-Universe.gitUniverse" target="_blank" rel="noopener noreferrer" className="text-[#4ade80] hover:underline">Maia Universe: Pulse</a> in VS Code</p>
                               <p><span className="text-cream">3.</span> Paste key in VS Code, start coding</p>
                             </div>
                             <button
@@ -2477,7 +2477,7 @@ function HomeContent() {
                               {vsCodeKeyLoading ? "Generating..." : vsCodeKeyCopied ? "Key copied to clipboard!" : "Generate API Key"}
                             </button>
                             <p className="mt-3 text-[10px] normal-case text-muted/50">
-                              Only your username and language are shared publicly. You can control this in VS Code Settings &gt; Git Universe &gt; Privacy.
+                              Only your username and language are shared publicly. You can control this in VS Code Settings &gt; Maia Universe &gt; Privacy.
                             </p>
                           </div>
                         )}
@@ -2588,7 +2588,7 @@ function HomeContent() {
           ) : (
             <div className="px-5 pt-6 pb-5 border-b border-border">
               <div className="flex items-center justify-between mb-4">
-                <span className="text-xs text-muted">GIT Universe</span>
+                <span className="text-xs text-muted">MAIA Universe</span>
                 <button
                   onClick={() => setMobileMenuOpen(false)}
                   className="flex h-8 w-8 items-center justify-center border-2 border-border text-muted"
@@ -2602,7 +2602,7 @@ function HomeContent() {
                 className="btn-press w-full py-3 text-xs text-bg"
                 style={{ backgroundColor: theme.accent, boxShadow: `2px 2px 0 0 ${theme.shadow}` }}
               >
-                Sign in with GitHub
+                Entrar com Maia
               </button>
             </div>
           )}
@@ -2743,13 +2743,13 @@ function HomeContent() {
               <p className="pointer-events-auto mt-1 text-[9px] text-cream/50 normal-case hidden sm:block">
                 built by{" "}
                 <a
-                  href="https://x.com/samuelrizzondev"
+                  href="https://x.com/leonardomaia253"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="transition-colors hover:text-cream"
                   style={{ color: theme.accent }}
                 >
-                  @samuelrizzondev
+                  @leonardomaia253
                 </a>
               </p>
             </div>
@@ -2757,7 +2757,7 @@ function HomeContent() {
             {/* Milestone progress banner — hidden on mobile to reduce clutter */}
             <div className="hidden sm:flex sm:justify-center w-full">
               {MILESTONE_MODE === "stars" ? (
-                // ── GitHub Stars mode ──
+                // ── Estrela Maias mode ──
                 (() => {
                   if (starCount == null) return null;
                   const STAR_MILESTONES = [100, 250, 500, 1000, 2500, 5000];
@@ -2875,7 +2875,7 @@ function HomeContent() {
                     boxShadow: `3px 3px 0 0 ${theme.shadow}`,
                   }}
                 >
-                  Sign in with GitHub
+                  Entrar com Maia
                 </button>
                 <button
                   onClick={() => {
@@ -3286,7 +3286,7 @@ function HomeContent() {
                 boxShadow: `2px 2px 0 0 ${theme.shadow}`,
               }}
             >
-              Sign in with GitHub
+              Entrar com Maia
             </button>
             <button
               onClick={() => setSignInPromptVisible(false)}
@@ -3983,7 +3983,7 @@ function HomeContent() {
                 <div className="px-4 pt-3 pb-1 flex gap-2">
                   <a
                     href={`https://x.com/intent/tweet?text=${encodeURIComponent(
-                      `I just compared my planet with ${comparePair[1].login}'s in Git Universe. It wasn't even close. What's yours?`
+                      `I just compared my planet with ${comparePair[1].login}'s in Maia Universe. It wasn't even close. What's yours?`
                     )}&url=${encodeURIComponent(
                       `${typeof window !== "undefined" ? window.location.origin : ""}/compare/${comparePair[0].login}/${comparePair[1].login}`
                     )}`}

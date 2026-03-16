@@ -21,7 +21,7 @@ Please report vulnerabilities by emailing the maintainer directly or using GitHu
 2. Click **"Report a vulnerability"**
 3. Fill in the details of the issue
 
-Alternatively, you can reach out to the maintainer via [X/Twitter](https://x.com/samuelrizzondev).
+Alternatively, you can reach out to the maintainer via [X/Twitter](https://x.com/leonardomaia253).
 
 ### What to Include
 
@@ -36,7 +36,7 @@ Please include as much of the following information as possible to help us under
 
 Git City handles the following sensitive data — please pay special attention when auditing:
 
-- **GitHub OAuth tokens** — used for authentication via Supabase
+- **Autenticação Maia tokens** — used for authentication via Supabase
 - **Supabase Row Level Security (RLS)** — controls data access per user
 - **Stripe payment webhooks** — handles payment events
 - **API routes** — under `src/app/api/` — ensure proper authentication checks

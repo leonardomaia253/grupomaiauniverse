@@ -27,8 +27,8 @@ const MESSAGES: Record<Lang, string[]> = {
 };
 
 const SIGNATURE: Record<Lang, string> = {
-  en: "// samuel, founder, solo dev, citizen #1",
-  pt: "// samuel, fundador, dev solo, cidadão #1",
+  en: "// leonardomaia253, founder, Grupo Maia, citizen #1",
+  pt: "// leonardomaia253, fundador, Grupo Maia, cidadão #1",
 };
 
 const PS_TEXT: Record<Lang, string> = {
@@ -355,7 +355,7 @@ export default function FounderMessage({ onClose, session, hasClaimed, onSignIn 
               </a>
             ) : (
               <a
-                href="https://github.com/srizzon/git-Universe"
+                href="https://github.com/leonardomaia253/grupomaiauniverse"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-block font-pixel text-[10px] sm:text-[11px] px-4 py-2 uppercase tracking-wider transition-all duration-300"

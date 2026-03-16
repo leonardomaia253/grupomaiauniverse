@@ -346,7 +346,7 @@ async function fetchAndUpsert(login: string): Promise<boolean> {
 // ─── Main ────────────────────────────────────────────────────
 
 async function main() {
-  console.log(`\nSeeding Git Universe with ${TOP_COMPANIES.length} companies...\n`);
+  console.log(`\nSeeding Maia Universe with ${TOP_COMPANIES.length} companies...\n`);
 
   // Deduplicate
   const unique = [...new Set(TOP_COMPANIES.map((d) => d.toLowerCase()))];

@@ -6,9 +6,9 @@ import RoadmapClient from "./RoadmapClient";
 export const revalidate = 300;
 
 export const metadata: Metadata = {
-  title: "Roadmap - Git Universe",
+  title: "Roadmap - Maia Universe",
   description:
-    "See what's coming next for Git Universe. Vote on the features you want most.",
+    "See what's coming next for Maia Universe. Vote on the features you want most.",
 };
 
 export default async function RoadmapPage() {

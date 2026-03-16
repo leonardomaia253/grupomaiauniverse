@@ -427,7 +427,7 @@ const _starGeo = /* @__PURE__ */ new THREE.ExtrudeGeometry(_starShape, {
   bevelEnabled: false,
 });
 
-// ─── GitHub Star (crown zone) ────────────────────────────────
+// ─── Estrela Maia (crown zone) ────────────────────────────────
 // Giant golden 5-pointed star floating above the planet like a trophy
 
 export const GitHubStar = memo(function GitHubStar({
@@ -794,7 +794,7 @@ const POC_NAMES: Record<string, string> = {
   shooting_star: "Shooting Star",
   star_beam: "Star Beam",
   starfall: "Starfall",
-  github_star: "GitHub Star",
+  github_star: "Estrela Maia",
   star_orbit: "Star Orbit",
   commit_stream: "Commit Stream",
 };

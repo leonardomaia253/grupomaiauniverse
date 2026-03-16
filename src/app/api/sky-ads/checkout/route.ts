@@ -134,8 +134,8 @@ export async function POST(request: NextRequest) {
           price_data: {
             currency,
             product_data: {
-              name: `Git Universe Ad: ${plan.label}`,
-              description: `${plan.label} monthly ad subscription on Git Universe`,
+              name: `Maia Universe Ad: ${plan.label}`,
+              description: `${plan.label} monthly ad subscription on Maia Universe`,
             },
             unit_amount: getPriceCents(plan_id, currency),
             recurring: { interval: "month" },

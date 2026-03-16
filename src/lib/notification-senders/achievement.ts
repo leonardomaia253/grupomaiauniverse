@@ -2,7 +2,7 @@ import { sendNotificationAsync } from "../notifications";
 import { buildButton } from "../email-template";
 import { TIER_EMOJI } from "../achievements";
 
-const BASE_URL = process.env.NEXT_PUBLIC_APP_URL || "https://thegitUniverse.com";
+const BASE_URL = process.env.NEXT_PUBLIC_APP_URL || "https://maiauniverse.com.br";
 
 interface AchievementInfo {
   id: string;

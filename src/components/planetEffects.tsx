@@ -1567,7 +1567,7 @@ export const StreakFlame = memo(function StreakFlame({
   );
 });
 
-// ─── GitHub Star (crown zone) ────────────────────────────────
+// ─── Estrela Maia (crown zone) ────────────────────────────────
 // Giant golden 5-pointed star floating above the planet
 
 function createStarShape(outerR: number, innerR: number, points = 5): THREE.Shape {

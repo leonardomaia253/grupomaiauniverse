@@ -3,7 +3,7 @@ import { getSupabaseAdmin } from "@/lib/supabase";
 import { sendNotificationAsync } from "@/lib/notifications";
 import { buildButton, buildStatsTable } from "@/lib/email-template";
 
-const BASE_URL = process.env.NEXT_PUBLIC_APP_URL || "https://thegitUniverse.com";
+const BASE_URL = process.env.NEXT_PUBLIC_APP_URL || "https://maiauniverse.com.br";
 
 /**
  * Cron: Monday 10:00 UTC - Weekly recap email for active companies.
@@ -113,12 +113,12 @@ export async function GET(request: NextRequest) {
           category: "digest",
           companyId: dev.id,
           dedupKey: `weekly_digest:${dev.id}:${weekStartDate}`,
-          title: `Your week in Git Universe: ${dev.app_streak ?? 0}-day streak, rank #${dev.rank ?? "?"}`,
+          title: `Your week in Maia Universe: ${dev.app_streak ?? 0}-day streak, rank #${dev.rank ?? "?"}`,
           body: `Streak: ${dev.app_streak ?? 0} days. Kudos: ${weeklyKudos}. Check your weekly recap.`,
           html: `
-            <p style="color: #c8e64a; font-size: 16px;">Your week in Git Universe</p>
+            <p style="color: #c8e64a; font-size: 16px;">Your week in Maia Universe</p>
             ${buildStatsTable(stats)}
-            ${buildButton("Visit Git Universe", `${BASE_URL}/?user=${dev.username}`)}
+            ${buildButton("Visit Maia Universe", `${BASE_URL}/?user=${dev.username}`)}
           `,
           actionUrl: `${BASE_URL}/?user=${dev.username}`,
           priority: "high", // Digests are their own batch, don't re-batch

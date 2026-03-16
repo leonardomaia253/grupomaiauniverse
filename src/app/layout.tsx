@@ -12,7 +12,7 @@ export const metadata: Metadata = {
         ? `https://${process.env.VERCEL_URL}`
         : "http://localhost:3000")
   ),
-  title: "Git Universe - Your GitHub as a 3D Universe",
+  title: "Maia Universe - Your GitHub as a 3D Universe",
   description:
     "Explore GitHub users as planets in a 3D pixel art Universe. Fly through the Universe and discover companies.",
   keywords: [
@@ -25,19 +25,19 @@ export const metadata: Metadata = {
     "git visualization",
   ],
   openGraph: {
-    title: "Git Universe - Your GitHub as a 3D Universe",
+    title: "Maia Universe - Your GitHub as a 3D Universe",
     description:
       "Explore GitHub users as planets in a 3D pixel art Universe. Fly through the Universe and discover companies.",
-    siteName: "Git Universe",
+    siteName: "Maia Universe",
     type: "website",
     locale: "en_US",
   },
   twitter: {
     card: "summary_large_image",
-    creator: "@samuelrizzondev",
-    site: "@samuelrizzondev",
+    creator: "@leonardomaia253",
+    site: "@leonardomaia253",
   },
-  authors: [{ name: "Samuel Rizzon", url: "https://x.com/samuelrizzondev" }],
+  authors: [{ name: "leonardomaia253", url: "https://x.com/leonardomaia253" }],
   icons: {
     icon: "/favicon.ico",
     apple: "/apple-icon.png",
@@ -53,16 +53,16 @@ const BASE_URL =
 const jsonLd = {
   "@context": "https://schema.org",
   "@type": "WebApplication",
-  name: "Git Universe",
+  name: "Maia Universe",
   description:
-    "Your GitHub profile as a 3D pixel art planet in an interactive Universe",
+    "Your perfil da empresa as a 3D pixel art planet in an interactive Universe",
   url: BASE_URL,
   applicationCategory: "companyApplication",
   operatingSystem: "Web",
   author: {
     "@type": "Person",
-    name: "Samuel Rizzon",
-    url: "https://x.com/samuelrizzondev",
+    name: "leonardomaia253",
+    url: "https://x.com/leonardomaia253",
   },
   offers: {
     "@type": "Offer",

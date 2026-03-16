@@ -53,9 +53,9 @@ export interface SendResult {
 
 // ── Config ──
 
-const FROM = "Git Universe <noreply@thegitUniverse.com>";
+const FROM = "Maia Universe <noreply@maiauniverse.com.br>";
 const HMAC_SECRET = process.env.UNSUBSCRIBE_HMAC_SECRET || process.env.CRON_SECRET || "fallback-secret";
-const BASE_URL = process.env.NEXT_PUBLIC_APP_URL || "https://thegitUniverse.com";
+const BASE_URL = process.env.NEXT_PUBLIC_APP_URL || "https://maiauniverse.com.br";
 
 const RATE_LIMITS: Record<Channel, { perHour: number; perDay: number }> = {
   email: { perHour: 5, perDay: 10 },

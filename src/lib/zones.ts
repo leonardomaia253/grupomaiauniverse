@@ -46,7 +46,7 @@ export const ITEM_NAMES: Record<string, string> = {
   raid_boost_medium: "Battle Armor",
   raid_boost_large: "EMP Device",
   white_rabbit: "White Rabbit",
-  github_star: "GitHub Star",
+  github_star: "Estrela Maia",
 };
 
 // Correct mapping: item_id → achievement that unlocks it (from migration 007 seed)

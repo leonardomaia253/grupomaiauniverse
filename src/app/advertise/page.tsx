@@ -7,21 +7,21 @@ import { AdPurchaseForm } from "./AdPurchaseForm";
 const ACCENT = "#c8e64a";
 
 export const metadata: Metadata = {
-  title: "Advertise on Git Universe",
+  title: "Advertise on Maia Universe",
   description:
     "Reach 9,000+ GitHub companies. Planes, blimps, and billboards in a 3D Universe. 1%+ CTR (2x industry avg). From $29/mo.",
   openGraph: {
-    title: "Advertise on Git Universe",
+    title: "Advertise on Maia Universe",
     description:
       "Reach 9,000+ GitHub companies. Planes, blimps, and billboards in a 3D Universe. 1%+ CTR (2x industry avg). From $29/mo.",
-    siteName: "Git Universe",
+    siteName: "Maia Universe",
     type: "website",
     locale: "en_US",
   },
   twitter: {
     card: "summary_large_image",
-    creator: "@samuelrizzondev",
-    site: "@samuelrizzondev",
+    creator: "@leonardomaia253",
+    site: "@leonardomaia253",
   },
 };
 
@@ -164,17 +164,17 @@ export default async function AdvertisePage() {
         {ctr > 0.5 && (
           <div className="mt-8 border-[3px] border-border p-5 sm:p-6">
             <p className="text-base text-cream">
-              Git Universe vs traditional ads
+              Maia Universe vs traditional ads
             </p>
             <p className="mt-1 text-xs text-muted normal-case">
               Click-through rate comparison (30-day average)
             </p>
 
             <div className="mt-5 space-y-3">
-              {/* Git Universe bar */}
+              {/* Maia Universe bar */}
               <div className="flex items-center gap-3">
                 <span className="w-28 shrink-0 text-xs text-cream normal-case sm:w-32">
-                  Git Universe
+                  Maia Universe
                 </span>
                 <div className="relative h-6 flex-1 overflow-hidden rounded-sm">
                   <div
@@ -303,7 +303,7 @@ export default async function AdvertisePage() {
                 },
                 {
                   q: "Who is the audience?",
-                  a: "100% GitHub companies. Software engineers, CTOs, indie hackers, open source maintainers. Every planet is a real GitHub profile with real contribution data. No bots, no fake traffic.",
+                  a: "100% GitHub companies. Software engineers, CTOs, indie hackers, open source maintainers. Every planet is a real perfil da empresa with real contribution data. No bots, no fake traffic.",
                 },
                 {
                   q: "What formats are available?",
@@ -327,7 +327,7 @@ export default async function AdvertisePage() {
                 },
                 {
                   q: "What if I want to cancel?",
-                  a: "You can cancel your subscription anytime. Your ad stays active until the end of the current billing period. Contact samuelrizzondev@gmail.com if you need help.",
+                  a: "You can cancel your subscription anytime. Your ad stays active until the end of the current billing period. Contact contato@grupomaia.com.br if you need help.",
                 },
               ].map((item) => (
                 <div key={item.q} className="border-2 border-border p-5">
@@ -345,23 +345,23 @@ export default async function AdvertisePage() {
             <p className="text-xs text-muted normal-case">
               Questions?{" "}
               <a
-                href="mailto:samuelrizzondev@gmail.com"
+                href="mailto:contato@grupomaia.com.br"
                 className="transition-colors hover:text-cream"
                 style={{ color: ACCENT }}
               >
-                samuelrizzondev@gmail.com
+                contato@grupomaia.com.br
               </a>
             </p>
             <p className="mt-4 text-xs text-muted normal-case">
               built by{" "}
               <a
-                href="https://x.com/samuelrizzondev"
+                href="https://x.com/leonardomaia253"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="transition-colors hover:text-cream"
                 style={{ color: ACCENT }}
               >
-                @samuelrizzondev
+                @leonardomaia253
               </a>
             </p>
           </div>

@@ -222,7 +222,7 @@ function SlideCover({ stats }: { stats: PitchStats }) {
         <span style={{ color: ACCENT }}>Universe</span>
       </div>
       <p className="max-w-lg text-base leading-relaxed text-muted normal-case sm:text-xl lg:text-2xl">
-        Your GitHub profile as a 3D pixel art planet in an interactive Universe
+        Your perfil da empresa as a 3D pixel art planet in an interactive Universe
       </p>
       <div className="mt-2 flex flex-wrap items-center justify-center gap-3">
         <Pill>{stats.formattedcompanies} companies</Pill>
@@ -245,7 +245,7 @@ function SlideProblem() {
         <ProblemCard
           icon="[ ]"
           title="Static profiles"
-          body="GitHub profiles are flat pages with a green square grid. No depth, no personality, no reason to come back."
+          body="perfis de empresas are flat pages with a green square grid. No depth, no personality, no reason to come back."
         />
         <ProblemCard
           icon="..."
@@ -275,7 +275,7 @@ function SlideSolution() {
     <div className="flex w-full max-w-4xl flex-col gap-8">
       <SlideHeader n="03" title="The Solution" />
       <p className="max-w-2xl text-base leading-relaxed text-muted normal-case sm:text-lg">
-        Git Universe transforms every GitHub company into a unique 3D pixel art
+        Maia Universe transforms every GitHub company into a unique 3D pixel art
         planet. Contributions become height. Repos become width. Activity
         lights up windows. Together, they form a living Universe.
       </p>
@@ -447,7 +447,7 @@ function SlideCompetition() {
             <tr className="border-b-2 border-border text-muted">
               <th className="pb-3 pr-6 text-sm sm:text-base">Feature</th>
               <th className="pb-3 pr-6 text-sm sm:text-base" style={{ color: ACCENT }}>
-                Git Universe
+                Maia Universe
               </th>
               <th className="pb-3 pr-6 text-sm sm:text-base">GitHub Skyline</th>
               <th className="pb-3 text-sm sm:text-base">CodersRank</th>
@@ -463,7 +463,7 @@ function SlideCompetition() {
         </table>
       </div>
       <p className="text-sm text-dim normal-case sm:text-base">
-        GitHub Skyline was discontinued. No active product does what Git Universe
+        GitHub Skyline was discontinued. No active product does what Maia Universe
         does.
       </p>
     </div>
@@ -522,7 +522,7 @@ function SlideFounder() {
               SR
             </div>
             <div>
-              <p className="text-2xl text-cream sm:text-3xl">Samuel Rizzon</p>
+              <p className="text-2xl text-cream sm:text-3xl">leonardomaia253</p>
               <p className="mt-1 text-sm text-muted normal-case sm:text-base">
                 Solo Founder & Full-Stack company
               </p>
@@ -544,7 +544,7 @@ function SlideFounder() {
             </div>
           </div>
           <p className="text-sm leading-relaxed text-muted normal-case sm:text-base">
-            Built Git Universe in a single day and has been iterating daily since.
+            Built Maia Universe in a single day and has been iterating daily since.
             Handles everything: 3D engine, backend, payments, marketing,
             community. planet in public on X/Twitter.
           </p>
@@ -577,7 +577,7 @@ function SlideVision() {
           <span style={{ color: ACCENT }}>Universe</span>.
         </p>
         <p className="mt-4 text-sm text-muted normal-case sm:text-base">
-          thegitUniverse.com
+          maiauniverse.com.br
         </p>
       </div>
     </div>
@@ -592,7 +592,7 @@ function SlideRoadmap() {
         <RoadmapItem quarter="Q1 2026" status="done" title="Core Universe" desc="3D Universe, leaderboards, achievements, streaks, shop, ads, constellations, battles" />
         <RoadmapItem quarter="Q2 2026" status="next" title="Street Mode" desc="Third-person walking. Visit planets, discover secrets, vehicles." />
         <RoadmapItem quarter="Q3 2026" status="planned" title="Pixels Economy" desc="Virtual currency, premium marketplace, season passes." />
-        <RoadmapItem quarter="Q4 2026" status="planned" title="Git Universe Wrapped" desc="Year-in-review animations. Viral shareable cards." />
+        <RoadmapItem quarter="Q4 2026" status="planned" title="Maia Universe Wrapped" desc="Year-in-review animations. Viral shareable cards." />
         <RoadmapItem quarter="2027" status="planned" title="100K+ companies" desc="Enterprise, API, analytics dashboard, global events." />
       </div>
     </div>
@@ -604,7 +604,7 @@ function SlideContact() {
     <div className="flex w-full max-w-4xl flex-col items-center justify-center gap-10 text-center">
       <SlideHeader n="13" title="Let's Talk" />
       <p className="max-w-xl text-base leading-relaxed text-muted normal-case sm:text-lg">
-        Interested in Git Universe? Have questions, ideas, or want to collaborate?
+        Interested in Maia Universe? Have questions, ideas, or want to collaborate?
       </p>
       <div className="flex flex-col gap-5">
         <a
@@ -616,14 +616,14 @@ function SlideContact() {
           @srizzon on X
         </a>
         <a
-          href="mailto:samuelrizzondev@gmail.com"
+          href="mailto:contato@grupomaia.com.br"
           className="border-[3px] border-border bg-bg-raised px-8 py-4 text-base text-cream transition-colors hover:border-border-light sm:text-lg"
         >
-          samuelrizzondev@gmail.com
+          contato@grupomaia.com.br
         </a>
       </div>
       <p className="mt-4 text-sm text-muted normal-case sm:text-base">
-        thegitUniverse.com
+        maiauniverse.com.br
       </p>
     </div>
   );

@@ -1,7 +1,7 @@
 <h1 align="center">Git City</h1>
 
 <p align="center">
-  <strong>Your GitHub profile as a 3D pixel art building in an interactive city.</strong>
+  <strong>Your perfil da empresa as a 3D pixel art building in an interactive city.</strong>
 </p>
 
 <p align="center">
@@ -16,7 +16,7 @@
 
 ## What is Git City?
 
-Git City transforms every GitHub profile into a unique pixel art building. The more you contribute, the taller your building grows. Explore an interactive 3D city, fly between buildings, and discover developers from around the world.
+Git City transforms every perfil da empresa into a unique pixel art building. The more you contribute, the taller your building grows. Explore an interactive 3D city, fly between buildings, and discover developers from around the world.
 
 ## Features
 
@@ -49,7 +49,7 @@ Buildings are rendered with instanced meshes and a LOD (Level of Detail) system 
 
 - **Framework:** [Next.js](https://nextjs.org) 16 (App Router, Turbopack)
 - **3D Engine:** [Three.js](https://threejs.org) via [@react-three/fiber](https://github.com/pmndrs/react-three-fiber) + [drei](https://github.com/pmndrs/drei)
-- **Database & Auth:** [Supabase](https://supabase.com) (PostgreSQL, GitHub OAuth, Row Level Security)
+- **Database & Auth:** [Supabase](https://supabase.com) (PostgreSQL, Autenticação Maia, Row Level Security)
 - **Payments:** [Stripe](https://stripe.com)
 - **Styling:** [Tailwind CSS](https://tailwindcss.com) v4 with pixel font (Silkscreen)
 - **Hosting:** [Vercel](https://vercel.com)
@@ -90,5 +90,5 @@ Open [http://localhost:3001](http://localhost:3001) to see the city.
 ---
 
 <p align="center">
-  Built by <a href="https://x.com/samuelrizzondev">@samuelrizzondev</a>
+  Built by <a href="https://x.com/leonardomaia253">@leonardomaia253</a>
 </p>

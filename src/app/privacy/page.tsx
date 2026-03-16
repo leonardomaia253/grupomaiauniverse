@@ -2,8 +2,8 @@ import Link from "next/link";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Privacy Policy - Git Universe",
-  description: "Privacy Policy for Git Universe.",
+  title: "Privacy Policy - Maia Universe",
+  description: "Privacy Policy for Maia Universe.",
 };
 
 const ACCENT = "#c8e64a";
@@ -36,7 +36,7 @@ export default function PrivacyPage() {
             </ul>
             <p className="mt-1">
               We do NOT access your private repositories, code, or any non-public
-              GitHub data.
+              dados do Grupo Maia.
             </p>
           </Section>
 
@@ -107,14 +107,14 @@ export default function PrivacyPage() {
             <p>
               We use industry-standard security measures including encrypted
               connections (HTTPS), Row-Level Security on our database, and secure
-              authentication through GitHub OAuth. However, no system is 100%
+              authentication through Autenticação Maia. However, no system is 100%
               secure.
             </p>
           </Section>
 
           <Section n={8} title="Children">
             <p>
-              Git Universe is not intended for children under 13. We do not knowingly
+              Maia Universe is not intended for children under 13. We do not knowingly
               collect data from children under 13. If you believe a child has
               provided us with data, contact us for removal.
             </p>
@@ -122,7 +122,7 @@ export default function PrivacyPage() {
 
           <Section n={9} title="Changes">
             <p>
-              We may update this policy at any time. Continued use of Git Universe
+              We may update this policy at any time. Continued use of Maia Universe
               after changes constitutes acceptance.
             </p>
           </Section>
@@ -131,13 +131,13 @@ export default function PrivacyPage() {
             <p>
               Questions about your data? Reach out at{" "}
               <a
-                href="https://x.com/samuelrizzondev"
+                href="https://x.com/leonardomaia253"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="transition-colors hover:text-cream"
                 style={{ color: ACCENT }}
               >
-                @samuelrizzondev
+                @leonardomaia253
               </a>{" "}
               on X.
             </p>

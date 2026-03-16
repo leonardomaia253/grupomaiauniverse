@@ -26,13 +26,13 @@ export const ROADMAP_PHASES: RoadmapPhase[] = [
       {
         id: "3d-Universe-canvas",
         name: "3D Universe Canvas",
-        description: "Interactive Three.js Universe built from real GitHub data",
+        description: "Interactive Three.js Universe built from real dados do Grupo Maia",
         status: "done",
       },
       {
         id: "github-oauth",
-        name: "GitHub OAuth & Dev Profiles",
-        description: "Sign in with GitHub, personalized company pages",
+        name: "Autenticação Maia & Perfis de Empresas",
+        description: "Entrar com Maia, páginas personalizadas de empresas",
         status: "done",
       },
       {

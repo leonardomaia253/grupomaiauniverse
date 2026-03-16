@@ -54,8 +54,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     },
     twitter: {
       card: "summary_large_image",
-      creator: "@samuelrizzondev",
-      site: "@samuelrizzondev",
+      creator: "@leonardomaia253",
+      site: "@leonardomaia253",
     },
   };
 }
@@ -387,7 +387,7 @@ export default async function DevPage({ params }: Props) {
         {referredDevs && referredDevs.length > 0 && (
           <div className="mt-5">
             <h2 className="mb-3 text-sm text-cream">
-              Invited Devs
+              Empresas Convidadas
               <span className="ml-2 text-[10px] text-muted">{dev.referral_count ?? referredDevs.length}</span>
             </h2>
             <div className="flex flex-wrap gap-2">
@@ -446,13 +446,13 @@ export default async function DevPage({ params }: Props) {
           <p className="text-[9px] text-muted normal-case">
             built by{" "}
             <a
-              href="https://x.com/samuelrizzondev"
+              href="https://x.com/leonardomaia253"
               target="_blank"
               rel="noopener noreferrer"
               className="transition-colors hover:text-cream"
               style={{ color: accent }}
             >
-              @samuelrizzondev
+              @leonardomaia253
             </a>
           </p>
         </div>

@@ -1,5 +1,5 @@
 -- ============================================================
--- Git Universe — Rename Companies to Companies
+-- Maia Universe — Rename Companies to Companies
 -- ============================================================
 
 -- 1. Rename core tables

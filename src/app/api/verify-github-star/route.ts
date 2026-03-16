@@ -89,7 +89,7 @@ export async function POST() {
     return NextResponse.json({ ok: true, verified: true, already_owned: true });
   }
 
-  // Check GitHub star
+  // Check Estrela Maia
   const starred = await isStargazer(githubLogin);
   if (!starred) {
     return NextResponse.json({ ok: true, verified: false });

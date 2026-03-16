@@ -1,5 +1,5 @@
 -- ============================================================
--- Git City — Add claimed columns for GitHub OAuth
+-- Git City — Add claimed columns for Autenticação Maia
 -- ============================================================
 
 alter table companies

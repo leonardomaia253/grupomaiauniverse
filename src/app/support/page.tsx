@@ -120,13 +120,13 @@ function SupportContent() {
             </a>
           </div>
 
-          {/* GitHub Star */}
+          {/* Estrela Maia */}
           <div className="border-[3px] border-border bg-bg-raised p-5 sm:p-6">
             <p className="text-sm text-cream">
               <span style={{ color: ACCENT }}>03.</span> Star on GitHub
             </p>
             <p className="mt-2 text-xs text-muted normal-case">
-              A star helps more companies discover Git Universe. Takes one click.
+              A star helps more companies discover Maia Universe. Takes one click.
             </p>
             <a
               href="https://github.com/srizzon/git-Universe"

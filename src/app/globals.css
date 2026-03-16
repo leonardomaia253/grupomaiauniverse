@@ -1,4 +1,5 @@
 @import "tailwindcss";
+@import url("https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700;900&family=Space+Grotesk:wght@300;400;500;600&display=swap");
 
 @theme inline {
   --color-bg: #0d0d0f;
@@ -14,13 +15,19 @@
   --color-lime: #c8e64a;
   --color-lime-dark: #8aaa1a;
   --font-pixel: "Silkscreen", monospace;
+  --font-orbitron: "Orbitron", sans-serif;
+  --font-space: "Space Grotesk", sans-serif;
 }
 
 body {
   background: #0d0d0f;
   color: #d4cfc4;
-  font-family: "Silkscreen", monospace;
+  font-family: "Space Grotesk", "Silkscreen", monospace;
 }
+
+.font-orbitron { font-family: "Orbitron", sans-serif; }
+.font-space    { font-family: "Space Grotesk", sans-serif; }
+.font-pixel    { font-family: "Silkscreen", monospace; }
 
 @keyframes blink-dot {
   0%,
@@ -216,4 +223,90 @@ body {
     gift-glow 2s ease-in-out infinite,
     gift-bounce 2.5s ease-in-out infinite,
     gift-shimmer 3s linear infinite;
+}
+
+/* ─── Futuristic / Sci-Fi Animations ─── */
+
+@keyframes holo-scan {
+  0%   { transform: translateY(-100%); opacity: 0.08; }
+  50%  { opacity: 0.15; }
+  100% { transform: translateY(100%); opacity: 0.08; }
+}
+.holo-scan {
+  animation: holo-scan 3s linear infinite;
+}
+
+@keyframes energy-pulse {
+  0%, 100% { box-shadow: 0 0 6px 2px var(--ep-color, #6090e0), 0 0 15px 4px transparent; opacity: 0.8; }
+  50%       { box-shadow: 0 0 12px 4px var(--ep-color, #6090e0), 0 0 30px 8px var(--ep-color, #6090e030); opacity: 1; }
+}
+.energy-pulse {
+  animation: energy-pulse 2s ease-in-out infinite;
+}
+
+@keyframes float-particle {
+  0%   { transform: translateY(0)   rotate(0deg);   opacity: 0; }
+  10%  { opacity: var(--fp-opacity, 0.6); }
+  90%  { opacity: var(--fp-opacity, 0.6); }
+  100% { transform: translateY(-120px) rotate(360deg); opacity: 0; }
+}
+
+@keyframes glitch-text {
+  0%, 92%, 100% { transform: none; clip-path: none; }
+  93%  { transform: translateX(-2px); clip-path: polygon(0 30%, 100% 30%, 100% 50%, 0 50%); }
+  94%  { transform: translateX(2px);  clip-path: polygon(0 60%, 100% 60%, 100% 80%, 0 80%); }
+  95%  { transform: none; clip-path: none; }
+  96%  { transform: translateX(-1px); }
+  97%  { transform: none; }
+}
+.glitch-text {
+  animation: glitch-text 6s ease-in-out infinite;
+}
+
+@keyframes hud-sweep {
+  0%   { width: 0%; }
+  100% { width: 100%; }
+}
+
+@keyframes hud-dot-glow {
+  0%, 100% { box-shadow: 0 0 4px 2px var(--hud-color, #6090e0); }
+  50%       { box-shadow: 0 0 10px 4px var(--hud-color, #6090e0); }
+}
+.hud-dot-glow {
+  animation: hud-dot-glow 1.2s ease-in-out infinite;
+}
+
+/* Neon text shadow utility */
+.neon-text {
+  text-shadow:
+    0 0 7px currentColor,
+    0 0 14px currentColor,
+    0 0 28px currentColor;
+}
+
+/* Holo border — animated gradient border */
+.holo-border {
+  border: 1px solid transparent;
+  background-clip: padding-box;
+  position: relative;
+}
+.holo-border::before {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  background: linear-gradient(
+    135deg,
+    rgba(96,144,224,0.5),
+    rgba(200,230,74,0.2),
+    rgba(224,64,192,0.3),
+    rgba(0,224,255,0.4)
+  );
+  background-size: 300% 300%;
+  animation: holo-border-rotate 4s linear infinite;
+  z-index: -1;
+}
+@keyframes holo-border-rotate {
+  0%   { background-position: 0% 50%; }
+  50%  { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
 }

@@ -2,8 +2,8 @@ import type { MetadataRoute } from "next";
 
 export default function manifest(): MetadataRoute.Manifest {
   return {
-    name: "Git Universe",
-    short_name: "Git Universe",
+    name: "Maia Universe",
+    short_name: "Maia Universe",
     description:
       "Explore GitHub users as planets in a 3D pixel art Universe. Fly through the Universe and discover companies.",
     start_url: "/",

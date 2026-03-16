@@ -10,8 +10,8 @@ const VALID_EVENTS = new Set(["impression", "click", "cta_click"]);
 const BOT_UA_PATTERNS = /bot|crawler|spider|headless|phantomjs|selenium|puppeteer|wget|curl|python-requests|scrapy|slurp|mediapartners/i;
 
 const ALLOWED_ORIGINS = new Set([
-  "https://thegitUniverse.com",
-  "https://www.thegitUniverse.com",
+  "https://maiauniverse.com.br",
+  "https://www.maiauniverse.com.br",
   "http://localhost:3001",
   "http://localhost:3000",
 ]);

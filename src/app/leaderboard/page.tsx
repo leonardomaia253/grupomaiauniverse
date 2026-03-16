@@ -14,9 +14,9 @@ import { rankFromLevel, tierFromLevel } from "@/lib/xp";
 export const revalidate = 300; // ISR: regenerate every 5 min
 
 export const metadata: Metadata = {
-  title: "Leaderboard - Git Universe",
+  title: "Leaderboard - Maia Universe",
   description:
-    "Top GitHub companies ranked by contributions, stars, repos, achievements, and referrals in Git Universe.",
+    "Top GitHub companies ranked by contributions, stars, repos, achievements, and referrals in Maia Universe.",
 };
 
 interface company {
@@ -197,7 +197,7 @@ export default async function LeaderboardPage({
             Leader<span style={{ color: ACCENT }}>board</span>
           </h1>
           <p className="mt-3 text-xs text-muted normal-case">
-            Top companies ranked in Git Universe
+            Top companies ranked in Maia Universe
           </p>
         </div>
 
@@ -383,13 +383,13 @@ export default async function LeaderboardPage({
           <p className="mt-6 text-[9px] text-muted normal-case">
             built by{" "}
             <a
-              href="https://x.com/samuelrizzondev"
+              href="https://x.com/leonardomaia253"
               target="_blank"
               rel="noopener noreferrer"
               className="transition-colors hover:text-cream"
               style={{ color: ACCENT }}
             >
-              @samuelrizzondev
+              @leonardomaia253
             </a>
           </p>
         </div>

@@ -40,12 +40,12 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const record = await getCompany(username);
 
   if (!record) {
-    return { title: "Company Not Found - Git Universe" };
+    return { title: "Company Not Found - Maia Universe" };
   }
 
   return {
-    title: `Shop - @${record.username} - Git Universe`,
-    description: `Customize @${record.username}'s planet in Git Universe`,
+    title: `Shop - @${record.username} - Maia Universe`,
+    description: `Customize @${record.username}'s planet in Maia Universe`,
   };
 }
 
@@ -281,13 +281,13 @@ export default async function ShopPage({ params, searchParams }: Props) {
           <p className="text-[9px] text-muted normal-case">
             built by{" "}
             <a
-              href="https://x.com/samuelrizzondev"
+              href="https://x.com/leonardomaia253"
               target="_blank"
               rel="noopener noreferrer"
               className="transition-colors hover:text-cream"
               style={{ color: ACCENT }}
             >
-              @samuelrizzondev
+              @leonardomaia253
             </a>
           </p>
         </div>
