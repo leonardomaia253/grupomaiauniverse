@@ -3,7 +3,7 @@ import { readFile } from "node:fs/promises";
 import { join } from "node:path";
 import { createClient } from "@supabase/supabase-js";
 
-export const alt = "Company Comparison - Git City";
+export const alt = "Comparação de Empresas - Maia Universe";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
@@ -281,6 +281,7 @@ export default async function Image({
 
         {/* Center: VS + Stats */}
         <div
+          title="Configurar seu Anúncio - Maia Universe"
           style={{
             position: "absolute",
             left: 310,
@@ -405,8 +406,8 @@ export default async function Image({
             textTransform: "uppercase",
           }}
         >
-          <span style={{ fontSize: 34, color: cream }}>GIT</span>
-          <span style={{ fontSize: 34, color: accent }}>CITY</span>
+          <span style={{ fontSize: 24, color: cream }}>MAIA</span>
+          <span style={{ fontSize: 24, color: accent }}>UNIVERSE</span>
           <span style={{ fontSize: 16, color: muted, marginLeft: 8 }}>by @leonardomaia253</span>
         </div>
       </div>

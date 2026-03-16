@@ -2,7 +2,7 @@ import { ImageResponse } from "next/og";
 import { readFile } from "node:fs/promises";
 import { join } from "node:path";
 
-export const alt = "Maia Universe - Your GitHub as a 3D Universe";
+export const alt = "Maia Universe - Suas empresas como um Universo 3D";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
@@ -104,8 +104,8 @@ export default async function Image() {
               textTransform: "uppercase",
             }}
           >
-            <span style={{ fontSize: 110, color: cream }}>GIT</span>
-            <span style={{ fontSize: 110, color: accent }}>Universe</span>
+            <span style={{ fontSize: 110, color: cream }}>MAIA</span>
+            <span style={{ fontSize: 110, color: accent }}>UNIVERSE</span>
           </div>
           <div
             style={{
@@ -116,8 +116,8 @@ export default async function Image() {
               gap: 10,
             }}
           >
-            <span style={{ color: muted }}>Where code</span>
-            <span style={{ color: accent }}>builds cities</span>
+            <span style={{ color: muted }}>Onde código</span>
+            <span style={{ color: accent }}>contrói universos</span>
           </div>
         </div>
 
@@ -197,11 +197,11 @@ export default async function Image() {
               gap: 14,
             }}
           >
-            <span>Explore</span>
+            <span>Explorar</span>
             <span>·</span>
-            <span>Fly</span>
+            <span>Voar</span>
             <span>·</span>
-            <span>Discover</span>
+            <span>Descobrir</span>
           </div>
           <div
             style={{

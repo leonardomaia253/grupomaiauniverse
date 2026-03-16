@@ -121,7 +121,7 @@ const DEV_CLASSES = [
   "Console.log Debugger",
   "Ctrl+C Ctrl+V Engineer",
   "Senior Googler",
-  "Git Push --force Enjoyer",
+  "Maia Power User",
   "Dark Mode Purist",
   "Rubber Duck Whisperer",
   "Merge Conflict Magnet",
@@ -327,18 +327,17 @@ function MiniLeaderboard({ planets, accent }: { planets: UniversePlanet[]; accen
         >
           {cat.label}
         </button>
-        <a
+        <Link
           href={`/leaderboard?tab=${cat.tab}`}
           className="text-[9px] text-muted transition-colors hover:text-cream normal-case"
         >
           View all &rarr;
-        </a>
+        </Link>
       </div>
       <div className="border-2 border-border bg-bg-raised/80 backdrop-blur-sm">
         {sorted.map((b, i) => (
-          <a
+          <div
             key={b.login}
-            href={`/dev/${b.login}`}
             className="flex items-center justify-between px-3 py-1.5 transition-colors hover:bg-bg-card"
           >
             <span className="flex items-center gap-2 overflow-hidden">
@@ -361,7 +360,7 @@ function MiniLeaderboard({ planets, accent }: { planets: UniversePlanet[]; accen
             <span className="ml-2 shrink-0 text-[10px] text-muted">
               {(b[cat.key] as number).toLocaleString()}
             </span>
-          </a>
+          </div>
         ))}
       </div>
     </div>
@@ -412,7 +411,7 @@ function HomeContent() {
 
   useEffect(() => {
     if (typeof window === "undefined") return;
-    const saved = localStorage.getItem("gitUniverse_theme");
+    const saved = localStorage.getItem("Universe_theme");
     if (saved !== null) {
       const n = parseInt(saved, 10);
       if (n >= 0 && n <= 3) setThemeIndex(n);
@@ -474,7 +473,6 @@ function HomeContent() {
   const [clickedAd, setClickedAd] = useState<import("@/lib/skyAds").SkyAd | null>(null);
   const [skyAds, setSkyAds] = useState<import("@/lib/skyAds").SkyAd[]>(DEFAULT_SKY_ADS);
   const [starCount, setStarCount] = useState<number | null>(null);
-  const [discordMembers, setDiscordMembers] = useState<number | null>(null);
   const [pillModalOpen, setPillModalOpen] = useState(false);
   const [founderMessageOpen, setFounderMessageOpen] = useState(false);
   const [constellationChooserOpen, setConstellationChooserOpen] = useState(false);
@@ -482,7 +480,7 @@ function HomeContent() {
   const [rabbitCinematicPhase, setRabbitCinematicPhase] = useState(-1);
   const [rabbitProgress, setRabbitProgress] = useState(0);
   useEffect(() => {
-    const saved = parseInt(localStorage.getItem("gitUniverse_rabbit_progress") ?? "0", 10) || 0;
+    const saved = parseInt(localStorage.getItem("Universe_rabbit_progress") ?? "0", 10) || 0;
     if (saved > 0) setRabbitProgress(saved);
   }, []);
   const [rabbitSighting, setRabbitSighting] = useState<number | null>(null);
@@ -524,15 +522,11 @@ function HomeContent() {
   const prevRaidPhaseRef = useRef<string>("idle");
   const lastSuccessfulRaidRef = useRef<{ defenderLogin: string; attackerLogin: string; tagStyle: string } | null>(null);
 
-  // Fetch Estrela Maia count + Discord member count
+  // Fetch Estrela Maia count
   useEffect(() => {
     fetch("https://api.github.com/repos/leonardomaia253/grupomaiauniverse")
       .then((r) => r.ok ? r.json() : null)
       .then((d) => { if (d?.stargazers_count != null) setStarCount(d.stargazers_count); })
-      .catch(() => { });
-    fetch("https://discord.com/api/v9/invites/2bTjFAkny7?with_counts=true")
-      .then((r) => r.ok ? r.json() : null)
-      .then((d) => { if (d?.approximate_member_count != null) setDiscordMembers(d.approximate_member_count); })
       .catch(() => { });
   }, []);
 
@@ -684,7 +678,7 @@ function HomeContent() {
       .then((data) => {
         if (data && typeof data.Universe_theme === "number" && data.Universe_theme >= 0 && data.Universe_theme <= 3) {
           setThemeIndex(data.Universe_theme);
-          localStorage.setItem("gitUniverse_theme", String(data.Universe_theme));
+          localStorage.setItem("Universe_theme", String(data.Universe_theme));
         }
       })
       .catch(() => { });
@@ -694,7 +688,7 @@ function HomeContent() {
   const cycleTheme = useCallback(() => {
     setThemeIndex((i) => {
       const next = (i + 1) % THEMES.length;
-      localStorage.setItem("gitUniverse_theme", String(next));
+      localStorage.setItem("Universe_theme", String(next));
       if (sessionUserId) {
         fetch("/api/preferences/theme", {
           method: "PATCH",
@@ -938,7 +932,7 @@ function HomeContent() {
         if (!res.ok) return;
         const data = await res.json();
         const serverProgress = data?.progress ?? 0;
-        const localProgress = parseInt(localStorage.getItem("gitUniverse_rabbit_progress") ?? "0", 10) || 0;
+        const localProgress = parseInt(localStorage.getItem("Universe_rabbit_progress") ?? "0", 10) || 0;
 
         // Sync local progress to server if ahead (silently fails if no claimed planet)
         if (localProgress > serverProgress) {
@@ -954,7 +948,7 @@ function HomeContent() {
 
         const best = Math.max(serverProgress, localProgress);
         setRabbitProgress(best);
-        localStorage.setItem("gitUniverse_rabbit_progress", String(best));
+        localStorage.setItem("Universe_rabbit_progress", String(best));
         if (best > 0 && best < 5) {
           setRabbitSighting(best + 1);
         }
@@ -991,7 +985,7 @@ function HomeContent() {
         const data = await res.json();
         if (res.ok) {
           setRabbitProgress(data.progress);
-          localStorage.setItem("gitUniverse_rabbit_progress", String(data.progress));
+          localStorage.setItem("Universe_rabbit_progress", String(data.progress));
 
           if (data.completed) {
             setRabbitCompletion(true);
@@ -1009,7 +1003,7 @@ function HomeContent() {
     // Local tracking (not logged in or API failed)
     const newProgress = sighting;
     setRabbitProgress(newProgress);
-    localStorage.setItem("gitUniverse_rabbit_progress", String(newProgress));
+    localStorage.setItem("Universe_rabbit_progress", String(newProgress));
 
     if (sighting >= 5) {
       // Final sighting: rabbit is free
@@ -1080,7 +1074,7 @@ function HomeContent() {
 
     // Apply loadout override from localStorage (saved in shop, TTL 10 min)
     try {
-      const raw = localStorage.getItem("gitUniverse:loadout_override");
+      const raw = localStorage.getItem("Universe:loadout_override");
       if (raw) {
         const { companyId, loadout, ts } = JSON.parse(raw);
         if (Date.now() - ts < 10 * 60 * 1000) {
@@ -1089,7 +1083,7 @@ function HomeContent() {
             allcompanies[idx] = { ...allcompanies[idx], loadout };
           }
         } else {
-          localStorage.removeItem("gitUniverse:loadout_override");
+          localStorage.removeItem("Universe:loadout_override");
         }
       }
     } catch { }
@@ -1111,7 +1105,7 @@ function HomeContent() {
   const handleLoadFadeComplete = useCallback(() => {
     setLoadStage("done");
     const hasDeepLink = searchParams.get("user") || searchParams.get("compare");
-    if (!localStorage.getItem("gitUniverse_intro_seen") && !hasDeepLink) {
+    if (!localStorage.getItem("Universe_intro_seen") && !hasDeepLink) {
       setIntroMode(true);
     }
   }, [searchParams]);
@@ -1220,7 +1214,7 @@ function HomeContent() {
 
         // Apply loadout override from localStorage (saved in shop, TTL 10 min)
         try {
-          const raw = localStorage.getItem("gitUniverse:loadout_override");
+          const raw = localStorage.getItem("Universe:loadout_override");
           if (raw) {
             const { companyId, loadout, ts } = JSON.parse(raw);
             if (Date.now() - ts < 10 * 60 * 1000) {
@@ -1229,7 +1223,7 @@ function HomeContent() {
                 allcompanies[idx] = { ...allcompanies[idx], loadout };
               }
             } else {
-              localStorage.removeItem("gitUniverse:loadout_override");
+              localStorage.removeItem("Universe:loadout_override");
             }
           }
         } catch { }
@@ -1296,11 +1290,14 @@ function HomeContent() {
   // re-mounts the component and loads fresh data via the mount effect above.
 
   // ─── Intro text phase timing (14s total) ─────────────────────
-  // Phase 0: "Somewhere in the internet..."   0.8s → fade out ~3.8s
-  // Phase 1: "companies became planets"    4.2s → fade out ~7.2s
-  // Phase 2: "And commits became floors"      7.6s → fade out ~10.6s
-  // Phase 3: "Welcome to Maia Universe"            11.0s → confetti + hold until end
-  const INTRO_TEXT_SCHEDULE = [800, 4200, 7600, 11000];
+  const INTRO_TEXT_SCHEDULE = [0, 2000, 4500, 7000, 10000]; // Phase 0 (Welcome), 1 (The Universe), 2 (Collect PX), 3 (Welcome to Maia), 4 (Done)
+  const INTRO_TEXTS = [
+    "Bem-vindo ao",
+    "O Universo das empresas",
+    "Navegue, Colete PX, Evolua",
+    "Bem-vindo ao Maia Universe",
+    ""
+  ];
   const [introConfetti, setIntroConfetti] = useState(false);
 
   useEffect(() => {
@@ -1325,9 +1322,9 @@ function HomeContent() {
     setIntroMode(false);
     setIntroPhase(-1);
     setIntroConfetti(false);
-    localStorage.setItem("gitUniverse_intro_seen", "true");
+    localStorage.setItem("universe_intro_seen", "true");
     // Show welcome CTA for non-logged-in users who haven't seen it
-    if (!session && !localStorage.getItem("gitUniverse_welcome_seen")) {
+    if (!session && !localStorage.getItem("universe_welcome_seen")) {
       setWelcomeCtaVisible(true);
       setTimeout(() => setWelcomeCtaVisible(false), 12000);
     }
@@ -2262,30 +2259,15 @@ function HomeContent() {
       {/* ─── GitHub Badge (mobile: top-center, desktop: top-right) ─── */}
       {!flyMode && !introMode && !rabbitCinematic && (
         <div className={`pointer-events-auto fixed top-3 left-3 z-30 items-center gap-1.5 sm:gap-2 sm:left-auto sm:right-4 sm:top-4 ${exploreMode ? "hidden lg:flex" : "flex"}`}>
-          {/* Estrela Maias — only when loaded */}
           {starCount != null && (
-            <a
-              href="https://github.com/srizzon/git-Universe"
-              target="_blank"
-              rel="noopener noreferrer"
+            <div
               className="flex items-center gap-1.5 border-[3px] border-border bg-bg/70 px-2.5 py-1 text-[10px] backdrop-blur-sm transition-colors hover:border-border-light"
             >
               <svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor" className="text-cream"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27s1.36.09 2 .27c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0016 8c0-4.42-3.58-8-8-8z" /></svg>
               <span style={{ color: theme.accent }}>&#9733;</span>
               <span className="text-cream">{starCount.toLocaleString()}</span>
-            </a>
+            </div>
           )}
-          {/* Discord — desktop only, goes in mobile menu */}
-          <a
-            href="https://discord.gg/2bTjFAkny7"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="hidden sm:flex items-center gap-1.5 border-[3px] border-border bg-bg/70 px-2.5 py-1 text-[10px] backdrop-blur-sm transition-colors hover:border-border-light"
-          >
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" className="text-[#5865F2]"><path d="M20.317 4.37a19.791 19.791 0 00-4.885-1.515.074.074 0 00-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 00-5.487 0 12.64 12.64 0 00-.617-1.25.077.077 0 00-.079-.037A19.736 19.736 0 003.677 4.37a.07.07 0 00-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 00.031.057 19.9 19.9 0 005.993 3.03.078.078 0 00.084-.028c.462-.63.874-1.295 1.226-1.994a.076.076 0 00-.041-.106 13.107 13.107 0 01-1.872-.892.077.077 0 01-.008-.128 10.2 10.2 0 00.372-.292.074.074 0 01.077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 01.078.01c.12.098.246.198.373.292a.077.077 0 01-.006.127 12.299 12.299 0 01-1.873.892.077.077 0 00-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 00.084.028 19.839 19.839 0 006.002-3.03.077.077 0 00.032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 00-.031-.03zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.095 2.157 2.42 0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.095 2.157 2.42 0 1.333-.947 2.418-2.157 2.418z" /></svg>
-            <span className="hidden sm:inline text-cream">Discord</span>
-            {discordMembers != null && <span className="text-cream">{discordMembers.toLocaleString()}</span>}
-          </a>
           {/* Live users — desktop only */}
           <div className="hidden sm:flex items-center gap-1.5 border-[3px] border-border bg-bg/70 px-2.5 py-1 text-[10px] backdrop-blur-sm">
             <span className="live-dot h-1.5 w-1.5 shrink-0 rounded-full bg-[#4ade80]" />
@@ -2527,14 +2509,14 @@ function HomeContent() {
                   className="btn-press mt-4 w-full py-2.5 text-xs text-bg disabled:opacity-40"
                   style={{ backgroundColor: theme.accent, boxShadow: `2px 2px 0 0 ${theme.shadow}` }}
                 >
-                  {claiming ? "..." : "Claim your planet"}
+                  {claiming ? "..." : "Reivindicar seu planeta"}
                 </button>
               )}
             </div>
           ) : (
             <div className="px-5 pt-6 pb-5 border-b border-border text-center">
               <span className="text-xs text-muted">MAIA Universe</span>
-              <p className="mt-3 text-xs text-muted normal-case leading-relaxed">The Universe is free and open to everyone.</p>
+              <p className="mt-3 text-xs text-muted normal-case leading-relaxed">O Universo é livre e aberto a todos.</p>
               {!session && (
                 <Link
                   href="/auth"
@@ -2591,34 +2573,8 @@ function HomeContent() {
                 </span>
                 <span className="text-xs" style={{ color: theme.accent }}>&#8594;</span>
               </Link>
-              <a
-                href="https://discord.gg/2bTjFAkny7"
-                target="_blank"
-                rel="noopener noreferrer"
-                onClick={() => setMobileMenuOpen(false)}
-                className="flex items-center justify-between px-5 py-4 active:bg-white/5"
-              >
-                <span className="flex items-center gap-2 text-sm text-cream">
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" className="text-[#5865F2] shrink-0"><path d="M20.317 4.37a19.791 19.791 0 00-4.885-1.515.074.074 0 00-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 00-5.487 0 12.64 12.64 0 00-.617-1.25.077.077 0 00-.079-.037A19.736 19.736 0 003.677 4.37a.07.07 0 00-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 00.031.057 19.9 19.9 0 005.993 3.03.078.078 0 00.084-.028c.462-.63.874-1.295 1.226-1.994a.076.076 0 00-.041-.106 13.107 13.107 0 01-1.872-.892.077.077 0 01-.008-.128 10.2 10.2 0 00.372-.292.074.074 0 01.077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 01.078.01c.12.098.246.198.373.292a.077.077 0 01-.006.127 12.299 12.299 0 01-1.873.892.077.077 0 00-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 00.084.028 19.839 19.839 0 006.002-3.03.077.077 0 00.032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 00-.031-.03zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.095 2.157 2.42 0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.095 2.157 2.42 0 1.333-.947 2.418-2.157 2.418z" /></svg>
-                  Discord
-                  {discordMembers != null && <span className="text-[10px] text-muted">{discordMembers.toLocaleString()} members</span>}
-                </span>
-                <span className="text-xs" style={{ color: theme.accent }}>&#8594;</span>
-              </a>
-              <a
-                href="https://github.com/srizzon/git-Universe"
-                target="_blank"
-                rel="noopener noreferrer"
-                onClick={() => setMobileMenuOpen(false)}
-                className="flex items-center justify-between px-5 py-4 active:bg-white/5"
-              >
-                <span className="flex items-center gap-2 text-sm text-cream">
-                  <svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor" className="text-cream shrink-0"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27s1.36.09 2 .27c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0016 8c0-4.42-3.58-8-8-8z" /></svg>
-                  GitHub
-                  {starCount != null && <span className="text-[10px] text-muted">&#9733; {starCount.toLocaleString()}</span>}
-                </span>
-                <span className="text-xs" style={{ color: theme.accent }}>&#8594;</span>
-              </a>
+            </div>
+
             </div>
 
             {/* ── Theme ── */}
@@ -2628,7 +2584,7 @@ function HomeContent() {
                 {THEMES.map((t, i) => (
                   <button
                     key={t.name}
-                    onClick={() => { setThemeIndex(i); try { localStorage.setItem("gitUniverse_theme", String(i)); } catch { } }}
+                    onClick={() => { setThemeIndex(i); try { localStorage.setItem("universe_theme", String(i)); } catch { } }}
                     className="py-2.5 text-[10px] border-2 transition-colors"
                     style={{
                       borderColor: themeIndex === i ? t.accent : "var(--color-border)",
@@ -2643,12 +2599,7 @@ function HomeContent() {
             </div>
 
             {/* ── Stats footer ── */}
-            <div className="border-t border-border px-5 py-4 flex items-center gap-4">
-              <div className="flex items-center gap-1.5 text-[10px] text-muted">
-                <span style={{ color: theme.accent }}>&#9733;</span>
-                <span className="text-cream">{starCount?.toLocaleString() ?? "..."}</span>
-                <span>stars</span>
-              </div>
+            <div className="border-t border-border px-5 py-4 flex items-center justify-center">
               <div className="flex items-center gap-1.5 text-[10px] text-muted">
                 <span className="live-dot h-1.5 w-1.5 rounded-full bg-[#4ade80]" />
                 <span className="text-cream">{liveUsers.toLocaleString()}</span>
@@ -2656,7 +2607,6 @@ function HomeContent() {
               </div>
             </div>
           </div>
-        </div>
       )}
 
       {/* ─── Main UI Overlay ─── */}
@@ -2671,14 +2621,13 @@ function HomeContent() {
           {/* Top */}
           <div className="pointer-events-auto flex w-full max-w-2xl flex-col items-center gap-2 sm:gap-5">
             <div className="text-center">
-              <h1 className="text-2xl text-cream sm:text-3xl md:text-5xl">
-                Git{" "}
-                <span style={{ color: theme.accent }}>Universe</span>
-              </h1>
+            <h1 className="text-2xl text-cream sm:text-3xl md:text-5xl uppercase font-bold">
+              Maia <span style={{ color: theme.accent }}>Universe</span>
+            </h1>
               <p className="mt-2 text-[10px] leading-relaxed text-cream/80 normal-case">
                 {stats.total_companies > 0
-                  ? `A Universe of ${stats.total_companies.toLocaleString()} GitHub companies. Find yourself.`
-                  : "A global Universe of GitHub companies. Find yourself."}
+                  ? `Um Universo de ${stats.total_companies.toLocaleString()} empresas. Encontre-se.`
+                  : "Um Universo de empresas. Encontre-se."}
               </p>
               <p className="pointer-events-auto mt-1 text-[9px] text-cream/50 normal-case hidden sm:block">
                 built by{" "}
@@ -2695,104 +2644,8 @@ function HomeContent() {
             </div>
 
             {/* Milestone progress banner — hidden on mobile to reduce clutter */}
-            <div className="hidden sm:flex sm:justify-center w-full">
-              {MILESTONE_MODE === "stars" ? (
-                // ── Estrela Maias mode ──
-                (() => {
-                  if (starCount == null) return null;
-                  const STAR_MILESTONES = [100, 250, 500, 1000, 2500, 5000];
-                  const target = STAR_MILESTONES.find((m) => starCount < m);
-                  if (!target) return null;
-                  const prev = STAR_MILESTONES[STAR_MILESTONES.indexOf(target) - 1] ?? 0;
-                  const progress = ((starCount - prev) / (target - prev)) * 100;
-                  const remaining = target - starCount;
-                  const label = target >= 1000 ? `${target / 1000}K` : target.toLocaleString();
-                  return (
-                    <a
-                      href="https://github.com/srizzon/git-Universe"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="block w-full max-w-sm group"
-                    >
-                      <div className="border-2 border-border bg-bg/80 px-4 py-3 backdrop-blur-sm transition-colors group-hover:border-[var(--hover-border)]" style={{ "--hover-border": theme.accent } as React.CSSProperties}>
-                        <div className="mb-2 flex items-baseline justify-between">
-                          <span className="text-[9px] tracking-wider" style={{ color: theme.accent }}>
-                            ROAD TO {label} STARS
-                          </span>
-                          <span className="text-[9px] text-cream/60">
-                            {remaining.toLocaleString()} to go
-                          </span>
-                        </div>
-                        <div className="relative h-2.5 w-full overflow-hidden border-2 border-border bg-bg">
-                          <div
-                            className="absolute inset-y-0 left-0 transition-all duration-1000"
-                            style={{
-                              width: `${progress}%`,
-                              backgroundColor: theme.accent,
-                              boxShadow: `0 0 8px ${theme.accent}60`,
-                            }}
-                          />
-                        </div>
-                        <div className="mt-2 flex items-baseline justify-between">
-                          <span className="text-[10px] text-cream">
-                            {starCount.toLocaleString()} <span className="text-cream/40">/ {target.toLocaleString()}</span>
-                          </span>
-                          <span className="text-[8px] text-cream/40 normal-case group-hover:text-cream/60 transition-colors">
-                            Star us on GitHub
-                          </span>
-                        </div>
-                      </div>
-                    </a>
-                  );
-                })()
-              ) : (
-                // ── Total companies mode ──
-                (() => {
-                  const MILESTONES = [10000, 20000, 50000, 100000];
-                  const count = stats.total_companies;
-                  if (count <= 0) return null;
+            <div className="hidden sm:block h-12" />
 
-                  const target = MILESTONES.find((m) => count < m);
-                  if (!target) return null;
-                  const prev = MILESTONES[MILESTONES.indexOf(target) - 1] ?? 0;
-                  const progress = ((count - prev) / (target - prev)) * 100;
-                  const remaining = target - count;
-                  const label = target >= 1000 ? `${target / 1000}K` : target.toLocaleString();
-                  return (
-                    <div className="w-full max-w-sm">
-                      <div className="border-[2px] border-border bg-bg/80 px-4 py-3 backdrop-blur-sm">
-                        <div className="mb-2 flex items-baseline justify-between">
-                          <span className="text-[9px] tracking-wider" style={{ color: theme.accent }}>
-                            ROAD TO {label}
-                          </span>
-                          <span className="text-[9px] text-cream/60">
-                            {remaining.toLocaleString()} to go
-                          </span>
-                        </div>
-                        <div className="relative h-2.5 w-full overflow-hidden border-[2px] border-border bg-bg">
-                          <div
-                            className="absolute inset-y-0 left-0 transition-all duration-1000"
-                            style={{
-                              width: `${progress}%`,
-                              backgroundColor: theme.accent,
-                              boxShadow: `0 0 8px ${theme.accent}60`,
-                            }}
-                          />
-                        </div>
-                        <div className="mt-2 flex items-baseline justify-between">
-                          <span className="text-[10px] text-cream">
-                            {count.toLocaleString()} <span className="text-cream/40">/ {target.toLocaleString()}</span>
-                          </span>
-                          <span className="text-[8px] text-cream/40 normal-case">
-                            Something unlocks at {label}...
-                          </span>
-                        </div>
-                      </div>
-                    </div>
-                  );
-                })()
-              )}
-            </div>
 
             {/* Search Toggle + Form */}
             <div className="flex w-full max-w-md flex-col items-center gap-2">
@@ -2802,7 +2655,7 @@ function HomeContent() {
                   className="btn-press border-[3px] border-border bg-bg-raised/80 px-5 py-2 text-[10px] text-cream backdrop-blur-sm transition-colors hover:border-border-light"
                   style={{ color: theme.accent }}
                 >
-                  &#128269; Search Username
+                  &#128269; Buscar Empresa
                 </button>
               ) : (
                 <form
@@ -2821,7 +2674,7 @@ function HomeContent() {
                       setUsername(e.target.value);
                       if (feedback?.type === "error") setFeedback(null);
                     }}
-                    placeholder={session ? "search any GitHub username" : "type your GitHub username"}
+                    placeholder={session ? "buscar qualquer empresa" : "digite o usuário da empresa"}
                     className="min-w-0 flex-1 border-[3px] border-border bg-bg-raised px-3 py-2 text-base sm:text-xs text-cream outline-none transition-colors placeholder:text-dim sm:px-4 sm:py-2.5"
                     style={{ borderColor: theme.accent }}
                   />
@@ -2834,7 +2687,7 @@ function HomeContent() {
                       boxShadow: `4px 4px 0 0 ${theme.shadow}`,
                     }}
                   >
-                    {loading ? <span className="blink-dot inline-block">_</span> : "Go"}
+                    {loading ? <span className="blink-dot inline-block">_</span> : "Ir"}
                   </button>
                   <button
                     type="button"
@@ -2896,7 +2749,7 @@ function HomeContent() {
                     boxShadow: `4px 4px 0 0 ${theme.shadow}`,
                   }}
                 >
-                  Explore Universe
+                  Explorar Universo
                 </button>
                 {!isMobile && (
                   <div className="relative">
@@ -2922,15 +2775,15 @@ function HomeContent() {
                       }}
                     >
                       <span className="relative">
-                        &#9992; Fly
+                        &#9992; Voar
                         <span
                           className="absolute -top-3 -right-8 animate-pulse rounded-sm px-1 py-px text-[7px] font-bold leading-none text-bg"
                           style={{ backgroundColor: theme.accent }}
                         >
-                          NEW
+                          NOVO
                         </span>
                       </span>
-                      <span className="block text-[8px] opacity-60 normal-case">Collect PX</span>
+                      <span className="block text-[8px] opacity-60 normal-case">Coletar PX</span>
                     </button>
                     {/* Feature 2: First-Fly Tooltip */}
                     {showFlyHint && (
@@ -2940,7 +2793,7 @@ function HomeContent() {
                           style={{ borderColor: theme.accent + "60" }}
                         >
                           <p className="text-[10px] leading-relaxed text-cream normal-case">
-                            Fly over your Universe. Collect coins. Compete on the daily leaderboard.
+                            Voe pelo Universo. Colete moedas. Compita no ranking diário.
                           </p>
                           <button
                             onClick={() => {
@@ -2951,7 +2804,7 @@ function HomeContent() {
                             className="mt-2 px-3 py-1 text-[9px] text-bg"
                             style={{ backgroundColor: theme.accent }}
                           >
-                            Got it
+                            Entendido
                           </button>
                           {/* Downward arrow */}
                           <div
@@ -2987,8 +2840,8 @@ function HomeContent() {
                     className="btn-press flex items-center gap-2 border-2 bg-bg/80 px-4 py-1.5 text-[10px] backdrop-blur-sm transition-colors hover:border-border-light"
                     style={{ borderColor: theme.accent + "60", color: theme.accent }}
                   >
-                    <span className="normal-case">Today&apos;s challenge is live</span>
-                    <span>Play &#8594;</span>
+                    <span className="normal-case">O desafio de hoje está no ar</span>
+                    <span>Jogar &#8594;</span>
                   </button>
                   <button
                     onClick={() => { setShowDailyNudge(false); clearTimeout(dailyNudgeTimerRef.current); }}
@@ -3008,19 +2861,7 @@ function HomeContent() {
                 >
                   Shop
                 </Link>
-                <Link
-                  href="/advertise"
-                  className="btn-press relative border-[3px] px-4 py-1.5 text-[10px] backdrop-blur-sm transition-colors"
-                  style={{ color: theme.accent, borderColor: theme.accent + "60", backgroundColor: theme.accent + "12" }}
-                >
-                  Place your Ad
-                  <span
-                    className="absolute -top-1.5 -right-2 rounded-sm px-1 py-px text-[7px] font-bold leading-none text-bg"
-                    style={{ backgroundColor: theme.accent }}
-                  >
-                    NEW
-                  </span>
-                </Link>
+
                 <Link
                   href="/leaderboard"
                   className="btn-press border-[3px] border-border bg-bg/80 px-4 py-1.5 text-[10px] backdrop-blur-sm transition-colors hover:border-border-light"
@@ -3664,16 +3505,8 @@ function HomeContent() {
                         boxShadow: `2px 2px 0 0 ${theme.shadow}`,
                       }}
                     >
-                      View Profile
+                      Ver Perfil
                     </Link>
-                    <a
-                      href={`https://github.com/${selectedPlanet.login}`}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="btn-press flex-1 border-2 border-border py-2 text-center text-[10px] text-cream transition-colors hover:border-border-light"
-                    >
-                      GitHub
-                    </a>
                   </>
                 )}
               </div>
@@ -3692,7 +3525,7 @@ function HomeContent() {
                 style={{ backgroundColor: theme.accent }}
               />
               <span className="text-[10px] text-cream normal-case truncate min-w-0">
-                Comparing <span style={{ color: theme.accent }}>@{comparePlanet.login}</span>
+                Comparando <span style={{ color: theme.accent }}>@{comparePlanet.login}</span>
               </span>
               <button
                 onClick={() => {
@@ -3702,13 +3535,13 @@ function HomeContent() {
                 }}
                 className="ml-1 shrink-0 text-[9px] text-muted transition-colors hover:text-cream"
               >
-                Cancel
+                Cancelar
               </button>
             </div>
             {/* Self-compare hint */}
             {compareSelfHint && (
               <p className="mt-1 text-[9px] normal-case" style={{ color: "#f85149" }}>
-                Pick a different planet to compare
+                Escolha um planeta diferente para comparar
               </p>
             )}
             {/* Search field for compare pick */}
@@ -3933,7 +3766,7 @@ function HomeContent() {
                       const url = URL.createObjectURL(blob);
                       const a = document.createElement("a");
                       a.href = url;
-                      a.download = `gitUniverse-${comparePair[0].login}-vs-${comparePair[1].login}.png`;
+                      a.download = `MaiaUniverse-${comparePair[0].login}-vs-${comparePair[1].login}.png`;
                       document.body.appendChild(a);
                       a.click();
                       a.remove();
@@ -4211,7 +4044,7 @@ function HomeContent() {
             title="Replay intro"
           >
             <span style={{ color: theme.accent }}>&#9654;</span>
-            <span className="text-cream">Intro</span>
+            <span className="text-cream">Início</span>
           </button>
         </div>
       )}
@@ -4455,7 +4288,7 @@ function HomeContent() {
                 onClick={() => { setShowFlyResults(null); clearTimeout(flyResultsTimerRef.current); }}
                 className="text-[9px] text-muted transition-colors hover:text-cream"
               >
-                Close
+                Fechar
               </button>
             </div>
           </div>

@@ -12,11 +12,10 @@ export const metadata: Metadata = {
         ? `https://${process.env.VERCEL_URL}`
         : "http://localhost:3000")
   ),
-  title: "Maia Universe - Your GitHub as a 3D Universe",
+  title: "Maia Universe - Suas empresas como um Universo 3D",
   description:
-    "Explore GitHub users as planets in a 3D pixel art Universe. Fly through the Universe and discover companies.",
+    "Explore empresas como planetas em um Universo pixel art 3D. Voe pelo Universo e descubra novas companhias.",
   keywords: [
-    "github",
     "3d Universe",
     "company profile",
     "contributions",
@@ -25,12 +24,18 @@ export const metadata: Metadata = {
     "git visualization",
   ],
   openGraph: {
-    title: "Maia Universe - Your GitHub as a 3D Universe",
+    title: "Maia Universe - Suas empresas como um Universo 3D",
     description:
-      "Explore GitHub users as planets in a 3D pixel art Universe. Fly through the Universe and discover companies.",
+      "Explore empresas como planetas em um Universo pixel art 3D. Voe pelo Universo e descubra novas companhias.",
     siteName: "Maia Universe",
     type: "website",
     locale: "en_US",
+    images: [
+      {
+        url: "/og-image.png",
+        alt: "Maia Universe: Suas empresas como planetas 3D em um universo interativo.",
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
@@ -55,7 +60,7 @@ const jsonLd = {
   "@type": "WebApplication",
   name: "Maia Universe",
   description:
-    "Your perfil da empresa as a 3D pixel art planet in an interactive Universe",
+    "Maia Universe: Suas empresas como planetas 3D em um universo interativo.",
   url: BASE_URL,
   applicationCategory: "companyApplication",
   operatingSystem: "Web",

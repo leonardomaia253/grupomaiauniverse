@@ -8,17 +8,17 @@ export default function DevNotFound() {
       <div className="text-center">
         <h1 className="text-5xl text-cream">404</h1>
         <p className="mt-4 text-xs text-muted normal-case">
-          This dev hasn&apos;t been added to Git City yet
+          Esta empresa ainda não foi adicionada ao Maia Universe.
         </p>
         <Link
           href="/"
-          className="btn-press mt-8 inline-block px-7 py-3.5 text-sm text-bg"
+          className="mt-8 inline-block px-6 py-3 text-sm text-bg transition-all"
           style={{
             backgroundColor: accent,
             boxShadow: "4px 4px 0 0 #5a7a00",
           }}
         >
-          Search in City
+          Voltar ao Universo
         </Link>
       </div>
     </main>

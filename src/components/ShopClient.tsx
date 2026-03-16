@@ -91,6 +91,7 @@ interface Props {
   popularItems?: string[];
   purchaseCounts?: Record<string, number>;
   totalPurchaseCounts?: Record<string, number>;
+  isOwner?: boolean;
 }
 
 interface PixModalData {
@@ -632,6 +633,7 @@ export default function ShopClient({
   popularItems = [],
   purchaseCounts = {},
   totalPurchaseCounts = {},
+  isOwner = false,
 }: Props) {
   // Loadout state
   const [loadout, setLoadout] = useState<Loadout>(
@@ -1071,7 +1073,7 @@ export default function ShopClient({
 
   const ownedFacesItems = owned.filter((id) => FACES_ITEMS.includes(id));
 
-  const saveButton = (
+  const saveButton = isOwner ? (
     <button
       onClick={handleSaveLoadout}
       disabled={!hasChanges || saving}
@@ -1081,9 +1083,9 @@ export default function ShopClient({
         boxShadow: `2px 2px 0 0 ${SHADOW}`,
       }}
     >
-      {saving ? "Saving..." : saved ? "Saved!" : "Save Loadout"}
+      {saving ? "Salvando..." : saved ? "Salvo!" : "Salvar Equipamento"}
     </button>
-  );
+  ) : null;
 
   return (
     <>
@@ -1267,13 +1269,9 @@ export default function ShopClient({
                       } else if (isOwned) {
                         handleEquip(zoneKey, itemId);
                       } else if (isGitHubStar && !isOwned) {
-                        // Step 1: open repo, Step 2: verify
-                        if (starVerifyStep === "idle") {
-                          window.open("https://github.com/srizzon/git-Universe", "_blank");
-                          setStarVerifyStep("opened");
-                        } else if (starVerifyStep === "opened") {
-                          verifyGitHubStar();
-                        }
+                        // Skip or show locked message? User wants GitHub removed.
+                        // I'll just do nothing as these items should ideally be hidden or non-interactive.
+                        return;
                       } else if (isFreeItem) {
                         claimFreeItem();
                       } else if (shopItem && shopItem.price_usd_cents > 0) {

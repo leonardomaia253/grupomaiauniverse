@@ -4,8 +4,7 @@ export default function manifest(): MetadataRoute.Manifest {
   return {
     name: "Maia Universe",
     short_name: "Maia Universe",
-    description:
-      "Explore GitHub users as planets in a 3D pixel art Universe. Fly through the Universe and discover companies.",
+    description: "Explore empresas como planetas em um Universo pixel art 3D. Voe pelo Universo e descubra novas companhias.",
     start_url: "/",
     display: "standalone",
     background_color: "#0d1117",

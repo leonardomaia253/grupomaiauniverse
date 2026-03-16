@@ -38,12 +38,12 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const dev = await getCompany(username);
 
   if (!dev) {
-    return { title: "Company Not Found - Git City" };
+    return { title: "Empresa não encontrada - Maia Universe" };
   }
 
   const contribs = (dev.contributions_total && dev.contributions_total > 0) ? dev.contributions_total : dev.contributions;
-  const title = `@${dev.github_login} - Git City | ${contribs.toLocaleString()} contributions`;
-  const description = `See @${dev.github_login}'s planet in Git City. ${contribs.toLocaleString()} contributions, ${dev.public_repos.toLocaleString()} repos, ${dev.total_stars.toLocaleString()} stars. Rank #${dev.rank ?? "?"} in the city.`;
+  const title = `@${dev.github_login} - Maia Universe | ${contribs.toLocaleString()} contribuições`;
+  const description = `Veja o planeta de @${dev.github_login} no Maia Universe. ${contribs.toLocaleString()} contribuições, ${dev.public_repos.toLocaleString()} repositórios, ${dev.total_stars.toLocaleString()} estrelas. Rank #${dev.rank ?? "?"} no universo.`;
 
   return {
     title,
@@ -129,7 +129,7 @@ export default async function DevPage({ params }: Props) {
     "@context": "https://schema.org",
     "@type": "BreadcrumbList",
     itemListElement: [
-      { "@type": "ListItem", position: 1, name: "Git City", item: baseUrl },
+      { "@type": "ListItem", position: 1, name: "Maia Universe", item: baseUrl },
       {
         "@type": "ListItem",
         position: 2,
@@ -156,7 +156,7 @@ export default async function DevPage({ params }: Props) {
           href="/"
           className="mb-6 inline-block text-sm text-muted transition-colors hover:text-cream sm:mb-8"
         >
-          &larr; Back to City
+          &larr; Voltar para o Universo
         </Link>
 
         {/* Profile Card */}
@@ -183,7 +183,7 @@ export default async function DevPage({ params }: Props) {
               {/* Rank Badge */}
               {dev.rank && (
                 <div className="mt-3 inline-block border-2 px-3 py-1 text-sm" style={{ borderColor: accent, color: accent }}>
-                  #{dev.rank} in the city
+                  #{dev.rank} no universo
                 </div>
               )}
 
@@ -277,7 +277,7 @@ export default async function DevPage({ params }: Props) {
               boxShadow: `4px 4px 0 0 ${shadow}`,
             }}
           >
-            View in City
+            Ver no Universo
           </Link>
         </div>
 
@@ -288,7 +288,7 @@ export default async function DevPage({ params }: Props) {
               href={`/shop/${dev.github_login}`}
               className="btn-press flex w-full items-center justify-center gap-2 border-[3px] border-border px-6 py-3 text-sm text-cream transition-colors hover:border-border-light"
             >
-              Customize Planet
+              Personalizar Planeta
             </Link>
           </div>
         )}
@@ -324,7 +324,13 @@ export default async function DevPage({ params }: Props) {
               <div className="text-xl" style={{ color: accent }}>
                 {stat.value}
               </div>
-              <div className="mt-2 text-xs text-muted">{stat.label}</div>
+              <div className="mt-2 text-xs text-muted">
+                {stat.label === "Contributions" ? "Contribuições" :
+                 stat.label === "Repos" ? "Repositórios" :
+                 stat.label === "Stars" ? "Estrelas" :
+                 stat.label === "Referrals" ? "Convites" :
+                 stat.label}
+              </div>
             </div>
           ))}
         </div>
@@ -361,7 +367,7 @@ export default async function DevPage({ params }: Props) {
         {/* Owned Items */}
         {ownedItems.length > 0 && (
           <div className="mt-5">
-            <h2 className="mb-3 text-sm text-cream">Planet Items</h2>
+            <h2 className="mb-3 text-sm text-cream">Itens do Planeta</h2>
             <div className="flex flex-wrap gap-2">
               {ownedItems.map((itemId) => (
                 <span
@@ -414,22 +420,11 @@ export default async function DevPage({ params }: Props) {
           </div>
         )}
 
-        {/* GitHub link */}
-        <div className="mt-8 text-center">
-          <a
-            href={`https://github.com/${dev.github_login}`}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-xs text-muted transition-colors hover:text-cream normal-case"
-          >
-            github.com/{dev.github_login} &rarr;
-          </a>
-        </div>
 
         {/* Danger Zone — owner only */}
         {isOwner && (
           <div className="mt-8 border-[3px] border-red-500/40 p-5">
-            <h2 className="text-xs text-red-400">Danger Zone</h2>
+            <h2 className="text-xs text-red-400">Zona de Perigo</h2>
             <div className="mt-3 flex items-center justify-between gap-4">
               <div>
                 <p className="text-[10px] text-muted normal-case">

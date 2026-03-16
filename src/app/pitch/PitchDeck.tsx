@@ -10,19 +10,19 @@ const MUTED = "#8c8c9c";
 const TOTAL_SLIDES = 13;
 
 const SLIDE_LABELS = [
-  "Cover",
-  "Problem",
-  "Solution",
-  "Product",
-  "Traction",
-  "Model",
-  "Market",
-  "Competition",
+  "Capa",
+  "Problema",
+  "Solução",
+  "Produto",
+  "Tração",
+  "Modelo",
+  "Mercado",
+  "Competição",
   "GTM",
-  "Founder",
-  "Vision",
+  "Fundador",
+  "Visão",
   "Roadmap",
-  "Contact",
+  "Contato",
 ];
 
 /* ─────────────── main component ─────────────── */
@@ -129,7 +129,7 @@ export default function PitchDeck({ stats }: { stats: PitchStats }) {
             href="/"
             className="text-xs text-dim transition-colors hover:text-cream sm:text-sm"
           >
-            &larr; Universe
+            &larr; Maia Universe
           </Link>
           <span className="text-sm text-muted sm:text-base">
             <span style={{ color: CREAM }}>
@@ -218,7 +218,7 @@ function SlideCover({ stats }: { stats: PitchStats }) {
   return (
     <div className="flex flex-col items-center gap-8 text-center">
       <div className="text-6xl sm:text-8xl lg:text-9xl">
-        <span style={{ color: CREAM }}>GIT</span>{" "}
+        <span style={{ color: CREAM }}>MAIA</span>{" "}
         <span style={{ color: ACCENT }}>Universe</span>
       </div>
       <p className="max-w-lg text-base leading-relaxed text-muted normal-case sm:text-xl lg:text-2xl">
@@ -263,7 +263,7 @@ function SlideProblem() {
           100M+
         </p>
         <p className="mt-3 text-sm text-muted normal-case sm:text-base">
-          GitHub accounts. Same green grid since 2013.
+          Maia Universe transforms every company into a unique 3D pixel art
         </p>
       </div>
     </div>
@@ -416,7 +416,7 @@ function SlideMarket() {
     <div className="flex w-full max-w-4xl flex-col gap-8">
       <SlideHeader n="07" title="Market Opportunity" />
       <div className="flex flex-col gap-6">
-        <MarketRow label="TAM" value="100M+" desc="GitHub accounts worldwide" />
+        <MarketRow label="TAM" value="100M+" desc="Empresas em todo o mundo" />
         <MarketRow
           label="SAM"
           value="4M"
@@ -449,7 +449,7 @@ function SlideCompetition() {
               <th className="pb-3 pr-6 text-sm sm:text-base" style={{ color: ACCENT }}>
                 Maia Universe
               </th>
-              <th className="pb-3 pr-6 text-sm sm:text-base">GitHub Skyline</th>
+              <th className="pb-3 pr-6 text-sm sm:text-base">Outros</th>
               <th className="pb-3 text-sm sm:text-base">CodersRank</th>
             </tr>
           </thead>
@@ -463,7 +463,7 @@ function SlideCompetition() {
         </table>
       </div>
       <p className="text-sm text-dim normal-case sm:text-base">
-        GitHub Skyline was discontinued. No active product does what Maia Universe
+        No active product does what Maia Universe
         does.
       </p>
     </div>
@@ -544,9 +544,8 @@ function SlideFounder() {
             </div>
           </div>
           <p className="text-sm leading-relaxed text-muted normal-case sm:text-base">
-            Built Maia Universe in a single day and has been iterating daily since.
             Handles everything: 3D engine, backend, payments, marketing,
-            community. planet in public on X/Twitter.
+            community. Desenvolvendo em público no X/Twitter.
           </p>
           <div className="flex flex-wrap gap-3">
             <Pill>Next.js</Pill>

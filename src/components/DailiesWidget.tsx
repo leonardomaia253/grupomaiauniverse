@@ -34,25 +34,6 @@ export default function DailiesWidget({ data, accent, shadow, isMobile, onClaim,
     return () => clearInterval(interval);
   }, []);
 
-  // Estrela Maia bonus mission state
-  const [starOpened, setStarOpened] = useState(false);
-  const [starVerifying, setStarVerifying] = useState(false);
-  const [starVerified, setStarVerified] = useState(false);
-
-  const verifyStarOnReturn = useCallback(async () => {
-    if (starVerifying || starVerified || data?.has_github_star) return;
-    setStarVerifying(true);
-    try {
-      const res = await fetch("/api/verify-maia-estrela", { method: "POST" });
-      if (!res.ok) { setStarVerifying(false); return; }
-      const json = await res.json();
-      if (json.verified) {
-        setStarVerified(true);
-        setStarOpened(false);
-      }
-    } catch { /* ignore */ }
-    setStarVerifying(false);
-  }, [starVerifying, starVerified, data?.has_github_star]);
 
   // Close on click/tap outside
   useEffect(() => {
@@ -70,26 +51,11 @@ export default function DailiesWidget({ data, accent, shadow, isMobile, onClaim,
     };
   }, [open]);
 
-  // Auto-verify when tab regains focus after opening GitHub
-  useEffect(() => {
-    if (!starOpened) return;
-    const onVisibility = () => {
-      if (document.visibilityState === "visible") verifyStarOnReturn();
-    };
-    const onFocus = () => verifyStarOnReturn();
-    document.addEventListener("visibilitychange", onVisibility);
-    window.addEventListener("focus", onFocus);
-    return () => {
-      document.removeEventListener("visibilitychange", onVisibility);
-      window.removeEventListener("focus", onFocus);
-    };
-  }, [starOpened, verifyStarOnReturn]);
 
   if (!data) return null;
 
-  const { missions, completed_count, all_completed, reward_claimed, has_github_star } = data;
+  const { missions, completed_count, all_completed, reward_claimed } = data;
   const canClaim = all_completed && !reward_claimed;
-  const showStarMission = !has_github_star && !starVerified;
 
   const handleClaim = async () => {
     if (claiming) return;
@@ -135,7 +101,7 @@ export default function DailiesWidget({ data, accent, shadow, isMobile, onClaim,
           <div className="flex items-center gap-1.5">
             <ListChecks size={13} style={{ color: accent }} />
             <span className="text-[11px] font-bold tracking-wider" style={{ color: accent }}>
-              DAILY MISSIONS
+              MISSÕES DIÁRIAS
             </span>
             <span className="text-[9px] text-muted">{completed_count}/3</span>
           </div>
@@ -179,35 +145,6 @@ export default function DailiesWidget({ data, accent, shadow, isMobile, onClaim,
           ))}
         </div>
 
-        {/* Bonus mission: Star on GitHub */}
-        {showStarMission && (
-          <div className={`px-4 ${isMobile ? "pb-2" : "pb-1.5"}`}>
-            <button
-              onClick={() => {
-                if (starOpened) {
-                  verifyStarOnReturn();
-                } else {
-                  window.open("https://github.com/srizzon/git-Universe", "_blank");
-                  setStarOpened(true);
-                }
-              }}
-              disabled={starVerifying}
-              className="w-full flex items-start gap-2.5 rounded border border-[#FFD700]/30 bg-[#FFD700]/5 px-3 py-2 text-left transition-colors hover:bg-[#FFD700]/10"
-            >
-              <span className="mt-0.5 text-[12px] leading-none" style={{ color: "#FFD700" }}>
-                {starVerifying ? "\u231B" : "\u2B50"}
-              </span>
-              <div className="min-w-0 flex-1">
-                <div className={`leading-tight font-bold ${isMobile ? "text-[12px]" : "text-[10px]"}`} style={{ color: "#FFD700" }}>
-                  {starVerifying ? "Verifying..." : starOpened ? "I starred it — Verify" : "Star on GitHub"}
-                </div>
-                <div className={`mt-0.5 leading-tight ${isMobile ? "text-[10px]" : "text-[9px]"}`} style={{ color: "#FFD700", opacity: 0.7 }}>
-                  {starOpened ? "Click to check or wait..." : "Star the repo to unlock an exclusive item"}
-                </div>
-              </div>
-            </button>
-          </div>
-        )}
 
         {/* Footer */}
         <div className={`border-t border-border px-4 ${isMobile ? "py-3 pb-4" : "py-2"}`}>
@@ -232,11 +169,11 @@ export default function DailiesWidget({ data, accent, shadow, isMobile, onClaim,
             </button>
           ) : reward_claimed && all_completed ? (
             <div className="text-center text-[10px]" style={{ color: accent, opacity: 0.7 }}>
-              All done! Resets in {timeLeft}
+              Tudo pronto! Reinicia em {timeLeft}
             </div>
           ) : (
             <div className="flex items-center justify-between text-[10px] text-muted">
-              <span>Resets in {timeLeft}</span>
+              <span>Reinicia em {timeLeft}</span>
               {completed_count === 2 && (
                 <span className="font-bold" style={{ color: accent }}>1 more!</span>
               )}

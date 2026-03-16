@@ -3,7 +3,7 @@ import { readFile } from "node:fs/promises";
 import { join } from "node:path";
 import { createClient } from "@supabase/supabase-js";
 
-export const alt = "Company Profile - Git City";
+export const alt = "Perfil da Empresa - Maia Universe";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
@@ -53,7 +53,7 @@ export default async function Image({
             border: `6px solid ${border}`,
           }}
         >
-          Company not found
+          Empresa não encontrada
         </div>
       ),
       {
@@ -207,7 +207,7 @@ export default async function Image({
                     textTransform: "uppercase",
                   }}
                 >
-                  {`#${dev.rank} in the city`}
+                  {`#${dev.rank} no universo`}
                 </div>
               )}
             </div>
@@ -297,8 +297,8 @@ export default async function Image({
             textTransform: "uppercase",
           }}
         >
-          <span style={{ fontSize: 28, color: cream }}>GIT</span>
-          <span style={{ fontSize: 28, color: accent }}>CITY</span>
+          <span style={{ fontSize: 28, color: cream }}>MAIA</span>
+          <span style={{ fontSize: 28, color: accent }}>UNIVERSE</span>
           <span style={{ fontSize: 16, color: muted, marginLeft: 8 }}>by @leonardomaia253</span>
         </div>
       </div>

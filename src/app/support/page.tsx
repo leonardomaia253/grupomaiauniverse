@@ -88,63 +88,27 @@ function SupportContent() {
           {/* Claim */}
           <div className="border-[3px] border-border bg-bg-raised p-5 sm:p-6">
             <p className="text-sm text-cream">
-              <span style={{ color: ACCENT }}>01.</span> Claim your planet
+              <span style={{ color: ACCENT }}>01.</span> Reivindicar seu planeta
             </p>
             <p className="mt-2 text-xs text-muted normal-case">
-              Connect your GitHub account and your planet appears in the Universe based on your real contributions.
+              Conecte sua conta e seu planeta aparecerá no Universo baseado em suas contribuições reais.
             </p>
             <Link
               href="/"
               className="btn-press mt-4 inline-block border-2 px-5 py-2 text-xs transition-colors"
               style={{ borderColor: ACCENT, color: ACCENT }}
             >
-              Go to the Universe →
+              Ir para o Universo →
             </Link>
           </div>
 
-          {/* Discord */}
-          <div className="border-[3px] border-border bg-bg-raised p-5 sm:p-6">
-            <p className="text-sm text-cream">
-              <span style={{ color: ACCENT }}>02.</span> Join the Discord
-            </p>
-            <p className="mt-2 text-xs text-muted normal-case">
-              Talk to other companies, follow updates, and help shape what gets built next.
-            </p>
-            <a
-              href="https://discord.gg/2bTjFAkny7"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="btn-press mt-4 inline-block border-2 border-border px-5 py-2 text-xs text-muted transition-colors hover:border-border-light hover:text-cream"
-            >
-              discord.gg/2bTjFAkny7
-            </a>
-          </div>
-
-          {/* Estrela Maia */}
-          <div className="border-[3px] border-border bg-bg-raised p-5 sm:p-6">
-            <p className="text-sm text-cream">
-              <span style={{ color: ACCENT }}>03.</span> Star on GitHub
-            </p>
-            <p className="mt-2 text-xs text-muted normal-case">
-              A star helps more companies discover Maia Universe. Takes one click.
-            </p>
-            <a
-              href="https://github.com/srizzon/git-Universe"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="btn-press mt-4 inline-block border-2 border-border px-5 py-2 text-xs text-muted transition-colors hover:border-border-light hover:text-cream"
-            >
-              github.com/srizzon/git-Universe
-            </a>
-          </div>
-
           {/* Financial support header */}
-          <p className="mt-2 text-xs text-dim uppercase tracking-widest">Financial support</p>
+          <p className="mt-2 text-xs text-dim uppercase tracking-widest">Apoio Financeiro</p>
 
           {/* Stripe */}
           <div className="border-[3px] border-border bg-bg-raised p-5 sm:p-6">
             <p className="text-sm text-cream">
-              <span style={{ color: ACCENT }}>04.</span> One-time Support
+              <span style={{ color: ACCENT }}>02.</span> Apoio único
             </p>
             <div className="mt-4 flex flex-wrap items-center gap-2">
               {[5, 10, 25].map((amount) => (
@@ -177,7 +141,7 @@ function SupportContent() {
                   onClick={() => handleStripeCheckout(parseInt(customAmount, 10))}
                   className="btn-press border-2 border-border px-3 py-2 text-[10px] text-cream transition-colors hover:border-border-light disabled:cursor-not-allowed disabled:opacity-30"
                 >
-                  {loadingAmount && loadingAmount !== 5 && loadingAmount !== 10 && loadingAmount !== 25 ? "..." : "GO"}
+                  {loadingAmount && loadingAmount !== 5 && loadingAmount !== 10 && loadingAmount !== 25 ? "..." : "IR"}
                 </button>
               </div>
             </div>
@@ -188,25 +152,10 @@ function SupportContent() {
             )}
           </div>
 
-          {/* GitHub Sponsors */}
-          <div className="border-[3px] border-border bg-bg-raised p-5 sm:p-6">
-            <p className="text-sm text-cream">
-              <span style={{ color: ACCENT }}>05.</span> GitHub Sponsors
-            </p>
-            <a
-              href="https://github.com/sponsors/srizzon"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="btn-press mt-4 inline-block border-2 border-border px-5 py-2 text-xs text-muted transition-colors hover:border-border-light hover:text-cream"
-            >
-              github.com/sponsors/srizzon
-            </a>
-          </div>
-
           {/* Crypto (ETH) */}
           <div className="border-[3px] border-border bg-bg-raised p-5 sm:p-6">
             <p className="text-sm text-cream">
-              <span style={{ color: ACCENT }}>06.</span> Crypto (ETH)
+              <span style={{ color: ACCENT }}>03.</span> Cripto (ETH)
             </p>
             <div className="mt-4 flex items-center gap-3">
               <code className="break-all text-[9px] text-muted normal-case sm:text-xs">
@@ -220,24 +169,24 @@ function SupportContent() {
                   backgroundColor: copied ? ACCENT : "transparent",
                 }}
               >
-                {copied ? "Copied!" : "Copy"}
+                {copied ? "Copiado!" : "Copiar"}
               </button>
             </div>
           </div>
 
-          {/* $GITC Community Token */}
+          {/* Community Token */}
           <div className="border-[3px] border-border bg-bg-raised p-5 sm:p-6">
             <p className="text-sm text-cream">
-              <span style={{ color: ACCENT }}>07.</span> $GITC Community Token
+              <span style={{ color: ACCENT }}>04.</span> Token da Comunidade
             </p>
             <p className="mt-2 text-xs text-muted normal-case">
-              The community created a token to support the project.
+              A comunidade criou um token para apoiar o projeto.
             </p>
             <Link
               href="/token"
               className="btn-press mt-4 inline-block border-2 border-border px-5 py-2 text-xs text-muted transition-colors hover:border-border-light hover:text-cream"
             >
-              Learn more & disclaimer
+              Saiba mais & disclaimer
             </Link>
           </div>
         </div>

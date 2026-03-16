@@ -70,8 +70,8 @@ export default async function ShopPage({ params, searchParams }: Props) {
   ).toLowerCase();
   const isOwner = !!user && authLogin === record.username.toLowerCase();
 
-  // Not the owner or not claimed — show message
-  if (!record.claimed || !isOwner) {
+  // Not claimed — show message
+  if (!record.claimed) {
     return (
       <main className="min-h-screen bg-bg font-pixel uppercase text-warm">
         <div className="mx-auto max-w-2xl px-3 py-6 sm:px-4 sm:py-10">
@@ -85,9 +85,7 @@ export default async function ShopPage({ params, searchParams }: Props) {
           <div className="border-[3px] border-border bg-bg-raised p-6 text-center sm:p-10">
             <h1 className="text-lg text-cream">Shop Locked</h1>
             <p className="mt-3 text-[10px] text-muted normal-case">
-              {!record.claimed
-                ? `@${record.username} needs to claim their planet before the shop is available.`
-                : "Only the planet owner can customize it. Sign in with the matching account."}
+              @{record.username} needs to claim their planet before the shop is available.
             </p>
             <Link
               href={`/dev/${record.username}`}
@@ -258,6 +256,7 @@ export default async function ShopPage({ params, searchParams }: Props) {
           popularItems={popularItems}
           purchaseCounts={weeklyPurchaseCounts}
           totalPurchaseCounts={purchaseCounts}
+          isOwner={isOwner}
         />
 
         {/* Back links */}

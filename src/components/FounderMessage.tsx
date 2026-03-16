@@ -20,9 +20,9 @@ const MESSAGES: Record<Lang, string[]> = {
   ],
   pt: [
     "Isso é uma transmissão. Você está recebendo porque encontrou a antena, e a antena só responde para quem está prestando atenção.",
-    "Por trás de cada prédio que você vê, existe um commit real. Por trás de cada janela acesa, um dev real. Eu construí isso para tornar o invisível visível. Um dev, alguns fins de semana, e um sinal que chegou em mais de dois milhões de pessoas em duas semanas. Cinquenta mil prédios. Zero ads. Só companies encontrando sua cidade e passando o sinal adiante.",
-    "Transmitir custa. Servidores, banco de dados, API calls. Cada prédio que sobe, o custo sobe junto. Por enquanto, sou eu que mantenho essa antena ligada.",
-    "Se essa cidade significa algo pra você, me ajuda a manter o sinal vivo.",
+    "Por trás de cada planeta que você vê, existe um commit real. Por trás de cada janela acesa, um dev real. Eu construí isso para tornar o invisível visível. Um dev, alguns fins de semana, e um sinal que chegou em mais de dois milhões de pessoas em duas semanas. Cinquenta mil planetas. Zero ads. Só empresas encontrando seu Universo e passando o sinal adiante.",
+    "Transmitir custa. Servidores, banco de dados, API calls. Cada planeta que sobe, o custo sobe junto. Por enquanto, sou eu que mantenho essa antena ligada.",
+    "Se esse Universo significa algo pra você, me ajuda a manter o sinal vivo.",
   ],
 };
 
@@ -315,33 +315,13 @@ export default function FounderMessage({ onClose, session, hasClaimed, onSignIn 
                 onMouseEnter={(e) => { e.currentTarget.style.background = "#00cc33"; e.currentTarget.style.borderColor = "#00cc33"; }}
                 onMouseLeave={(e) => { e.currentTarget.style.background = "#00ff41"; e.currentTarget.style.borderColor = "#00ff41"; }}
               >
-                {lang === "en" ? "Sign in — get your planet" : "Entrar — resgatar seu prédio"}
+                {lang === "en" ? "Sign in — get your planet" : "Entrar — resgatar seu planeta"}
               </button>
             ) : (
               <a
-                href="https://discord.gg/2bTjFAkny7"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-block font-pixel text-[10px] sm:text-[11px] px-4 py-2 uppercase tracking-wider transition-all duration-300"
-                style={{
-                  color: "#0d0d0f",
-                  background: "#00ff41",
-                  border: "2px solid #00ff41",
-                  boxShadow: "3px 3px 0px rgba(0, 255, 65, 0.3)",
-                }}
-                onMouseEnter={(e) => { e.currentTarget.style.background = "#00cc33"; e.currentTarget.style.borderColor = "#00cc33"; }}
-                onMouseLeave={(e) => { e.currentTarget.style.background = "#00ff41"; e.currentTarget.style.borderColor = "#00ff41"; }}
-              >
-                {lang === "en" ? "Join the Discord" : "Entrar no Discord"}
-              </a>
-            )}
-
-            {/* Secondary CTA */}
-            {session && hasClaimed ? (
-              <a
                 href={`/?user=${session.user.user_metadata?.user_name ?? session.user.user_metadata?.preferred_username}`}
                 onClick={onClose}
-                className="inline-block font-pixel text-[10px] sm:text-[11px] px-4 py-2 uppercase tracking-wider transition-all duration-300"
+                className="inline-block font-pixel text-[10px] sm:text-[11px] px-4 py-2 uppercase tracking-wider transition-all duration-300 text-center"
                 style={{
                   color: "#00ff41",
                   border: "2px solid rgba(0, 255, 65, 0.4)",
@@ -351,24 +331,7 @@ export default function FounderMessage({ onClose, session, hasClaimed, onSignIn 
                 onMouseEnter={(e) => { e.currentTarget.style.background = "rgba(0, 255, 65, 0.15)"; e.currentTarget.style.borderColor = "#00ff41"; }}
                 onMouseLeave={(e) => { e.currentTarget.style.background = "rgba(0, 255, 65, 0.05)"; e.currentTarget.style.borderColor = "rgba(0, 255, 65, 0.4)"; }}
               >
-                {lang === "en" ? "See your planet" : "Ver seu prédio"}
-              </a>
-            ) : (
-              <a
-                href="https://github.com/leonardomaia253/grupomaiauniverse"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-block font-pixel text-[10px] sm:text-[11px] px-4 py-2 uppercase tracking-wider transition-all duration-300"
-                style={{
-                  color: "#00ff41",
-                  border: "2px solid rgba(0, 255, 65, 0.4)",
-                  background: "rgba(0, 255, 65, 0.05)",
-                  boxShadow: "3px 3px 0px rgba(0, 255, 65, 0.15)",
-                }}
-                onMouseEnter={(e) => { e.currentTarget.style.background = "rgba(0, 255, 65, 0.15)"; e.currentTarget.style.borderColor = "#00ff41"; }}
-                onMouseLeave={(e) => { e.currentTarget.style.background = "rgba(0, 255, 65, 0.05)"; e.currentTarget.style.borderColor = "rgba(0, 255, 65, 0.4)"; }}
-              >
-                {lang === "en" ? "View Source" : "Ver Código Fonte"}
+                {lang === "en" ? "See your planet" : "Ver seu planeta"}
               </a>
             )}
 
