@@ -68,37 +68,25 @@ export default async function ShopLanding() {
             <h2 className="text-xs" style={{ color: ACCENT }}>
               How it works
             </h2>
-            <div className="space-y-2 text-[10px] text-muted normal-case">
-              <div className="flex gap-3 border-2 border-border bg-bg-card px-4 py-3">
-                <span style={{ color: ACCENT }}>1.</span>
-                <span>
-                  <span className="text-cream">Sign in</span> to
-                  connect your account
-                </span>
-              </div>
-              <div className="flex gap-3 border-2 border-border bg-bg-card px-4 py-3">
-                <span style={{ color: ACCENT }}>2.</span>
-                <span>
-                  Search your username and{" "}
-                  <span className="text-cream">claim</span> your planet
-                </span>
-              </div>
-              <div className="flex gap-3 border-2 border-border bg-bg-card px-4 py-3">
-                <span style={{ color: ACCENT }}>3.</span>
-                <span>
-                  Browse the shop and buy items to{" "}
-                  <span className="text-cream">customize</span> your planet
-                </span>
-              </div>
+            <div className="space-y-4 text-xs text-muted normal-case italic text-center">
+              <p>Sign-in is no longer required for regular users.</p>
+              <p>Explore all planets and constellations freely.</p>
             </div>
           </div>
 
-          {/* Sign in */}
-          <div className="mt-8 flex flex-col items-center gap-3">
-            <SignInButton accent={ACCENT} />
-            <p className="text-[8px] text-dim normal-case">
-              We only read your public profile info
+          {/* Free Universe Message */}
+          <div className="mt-8 flex flex-col items-center gap-3 text-center">
+            <p className="text-xs text-cream normal-case">
+              The Universe is now free and open to explore.
             </p>
+            {!user && (
+              <Link
+                href="/auth"
+                className="mt-2 text-[10px] text-muted hover:text-cream underline"
+              >
+                Admin Login
+              </Link>
+            )}
           </div>
         </div>
 

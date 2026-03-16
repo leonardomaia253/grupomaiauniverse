@@ -53,6 +53,8 @@ import {
   trackDisabledButtonClicked,
 } from "@/lib/himetrica";
 
+import { isAdmin } from "@/lib/admin";
+
 const UniverseCanvas = dynamic(() => import("@/components/UniverseCanvas"), {
   ssr: false,
 });
@@ -1010,8 +1012,9 @@ function HomeContent() {
     localStorage.setItem("gitUniverse_rabbit_progress", String(newProgress));
 
     if (sighting >= 5) {
-      // Final sighting: need login to save achievement
-      handleSignInWithRef();
+      // Final sighting: rabbit is free
+      setRabbitHintFlash("The rabbit is free, and so is the Universe.");
+      setRabbitCompletion(true);
       return;
     }
 
@@ -2397,7 +2400,7 @@ function HomeContent() {
                         {!session ? (
                           <div className="px-5 py-5 text-center">
                             <p className="mb-3 text-xs normal-case text-muted">
-                              Keep your Universe alive while you code
+                              Welcome to the Universe
                             </p>
                             <Link
                               href="/auth"
@@ -2405,81 +2408,23 @@ function HomeContent() {
                               className="btn-press inline-block w-full py-2.5 text-center text-xs text-bg"
                               style={{ backgroundColor: "#4ade80", boxShadow: "2px 2px 0 0 #16a34a" }}
                             >
-                              Entrar com Maia
+                              Admin Login
                             </Link>
                           </div>
-                        ) : liveByLogin.has(authLogin) ? (
-                          <div className="px-5 py-3.5 text-center text-xs normal-case text-[#4ade80]">
-                            Your planet is powering the Universe
-                          </div>
-                        ) : vsCodeKey ? (
-                          <div className="px-5 py-5">
-                            <p className="mb-3 text-sm font-bold text-cream">Your API Key</p>
-                            <div className="mb-3 flex items-center gap-2">
-                              <code className="flex-1 truncate bg-white/5 px-3 py-2 text-[11px] normal-case text-cream">
-                                {vsCodeKey}
-                              </code>
-                              <button
-                                onClick={() => {
-                                  navigator.clipboard.writeText(vsCodeKey);
-                                  setVsCodeKeyCopied(true);
-                                  setTimeout(() => setVsCodeKeyCopied(false), 2000);
-                                }}
-                                className="btn-press shrink-0 border border-border px-3 py-2 text-[11px] text-cream transition-colors hover:border-border-light"
-                              >
-                                {vsCodeKeyCopied ? "Copied!" : "Copy"}
-                              </button>
-                            </div>
-                            <div className="space-y-2.5 text-xs normal-case text-muted">
-                              <p><span className="text-cream">1.</span> Install <a href="https://marketplace.visualstudio.com/items?itemName=git-Universe.gitUniverse" target="_blank" rel="noopener noreferrer" className="text-[#4ade80] hover:underline">Maia Universe: Pulse</a> in VS Code</p>
-                              <p><span className="text-cream">2.</span> Cmd+Shift+P &rarr; &ldquo;Pulse: Connect&rdquo;</p>
-                              <p><span className="text-cream">3.</span> Paste your key and start coding</p>
-                            </div>
-                            <p className="mt-3 text-[10px] normal-case text-muted/50">
-                              Your planet lights up in ~30s
-                            </p>
-                            <p className="mt-1.5 text-[10px] normal-case text-muted/50">
-                              Only your username and language are shared publicly. Control what&apos;s sent in VS Code Settings &gt; Maia Universe &gt; Privacy.
-                            </p>
+                        ) : isAdmin(session.user?.email) ? (
+                          <div className="px-5 py-5 text-center">
+                            <Link
+                              href="/admin/ads"
+                              onClick={() => setCodingPanelOpen(false)}
+                              className="btn-press inline-block w-full py-2.5 text-center text-xs text-bg"
+                              style={{ backgroundColor: theme.accent, boxShadow: `2px 2px 0 0 ${theme.shadow}` }}
+                            >
+                              Admin Dashboard
+                            </Link>
                           </div>
                         ) : (
-                          <div className="px-5 py-5">
-                            <p className="mb-3 text-sm normal-case text-cream font-bold">
-                              Keep your Universe alive
-                            </p>
-                            <p className="mb-3 text-[11px] normal-case text-muted">
-                              When you code, your planet glows and the Universe stays lit. Every active dev powers the signal.
-                            </p>
-                            <div className="mb-4 space-y-2.5 text-xs normal-case text-muted">
-                              <p><span className="text-cream">1.</span> Generate your key below</p>
-                              <p><span className="text-cream">2.</span> Install <a href="https://marketplace.visualstudio.com/items?itemName=git-Universe.gitUniverse" target="_blank" rel="noopener noreferrer" className="text-[#4ade80] hover:underline">Maia Universe: Pulse</a> in VS Code</p>
-                              <p><span className="text-cream">3.</span> Paste key in VS Code, start coding</p>
-                            </div>
-                            <button
-                              onClick={async () => {
-                                setVsCodeKeyLoading(true);
-                                try {
-                                  const res = await fetch("/api/vscode-key", { method: "POST" });
-                                  const data = await res.json();
-                                  if (data.key) {
-                                    setVsCodeKey(data.key);
-                                    navigator.clipboard.writeText(data.key);
-                                    setVsCodeKeyCopied(true);
-                                    setTimeout(() => setVsCodeKeyCopied(false), 2000);
-                                  }
-                                } finally {
-                                  setVsCodeKeyLoading(false);
-                                }
-                              }}
-                              disabled={vsCodeKeyLoading}
-                              className="btn-press w-full py-2.5 text-center text-xs text-bg"
-                              style={{ backgroundColor: "#4ade80", boxShadow: "2px 2px 0 0 #16a34a" }}
-                            >
-                              {vsCodeKeyLoading ? "Generating..." : vsCodeKeyCopied ? "Key copied to clipboard!" : "Generate API Key"}
-                            </button>
-                            <p className="mt-3 text-[10px] normal-case text-muted/50">
-                              Only your username and language are shared publicly. You can control this in VS Code Settings &gt; Maia Universe &gt; Privacy.
-                            </p>
+                          <div className="px-5 py-5 text-center text-xs normal-case text-muted italic">
+                            The Universe is free and open to explore.
                           </div>
                         )}
                       </div>
@@ -2587,24 +2532,18 @@ function HomeContent() {
               )}
             </div>
           ) : (
-            <div className="px-5 pt-6 pb-5 border-b border-border">
-              <div className="flex items-center justify-between mb-4">
-                <span className="text-xs text-muted">MAIA Universe</span>
-                <button
+            <div className="px-5 pt-6 pb-5 border-b border-border text-center">
+              <span className="text-xs text-muted">MAIA Universe</span>
+              <p className="mt-3 text-xs text-muted normal-case leading-relaxed">The Universe is free and open to everyone.</p>
+              {!session && (
+                <Link
+                  href="/auth"
                   onClick={() => setMobileMenuOpen(false)}
-                  className="flex h-8 w-8 items-center justify-center border-2 border-border text-muted"
+                  className="mt-4 block text-[10px] text-muted hover:text-cream underline"
                 >
-                  <X size={14} />
-                </button>
-              </div>
-              <p className="mb-3 text-xs text-muted normal-case leading-relaxed">Your GitHub commits build a real 3D Universe. Sign in to claim your planet.</p>
-              <button
-                onClick={() => { handleSignIn(); setMobileMenuOpen(false); }}
-                className="btn-press w-full py-3 text-xs text-bg"
-                style={{ backgroundColor: theme.accent, boxShadow: `2px 2px 0 0 ${theme.shadow}` }}
-              >
-                Entrar com Maia
-              </button>
+                  Admin Login
+                </Link>
+              )}
             </div>
           )}
 
@@ -3254,36 +3193,7 @@ function HomeContent() {
         </div>
       )}
 
-      {/* ─── A1: Sign-in prompt after planet exploration ─── */}
-      {signInPromptVisible && !session && (
-        <div className="fixed top-20 left-1/2 z-50 -translate-x-1/2 w-[calc(100%-1.5rem)] max-w-xs animate-[slide-up_0.2s_ease-out]">
-          <div className="border-[3px] border-border bg-bg-raised/95 px-4 py-3 backdrop-blur-sm">
-            <p className="text-[10px] text-cream normal-case mb-2.5 leading-relaxed">
-              Sign in to give Kudos, battle planets, and claim yours
-            </p>
-            <button
-              onClick={() => {
-                trackSignInPromptClicked();
-                setSignInPromptVisible(false);
-                handleSignIn();
-              }}
-              className="btn-press w-full py-2 text-[10px] text-bg"
-              style={{
-                backgroundColor: theme.accent,
-                boxShadow: `2px 2px 0 0 ${theme.shadow}`,
-              }}
-            >
-              Entrar com Maia
-            </button>
-            <button
-              onClick={() => setSignInPromptVisible(false)}
-              className="mt-1.5 w-full py-1 text-[8px] text-dim transition-colors hover:text-muted"
-            >
-              Maybe later
-            </button>
-          </div>
-        </div>
-      )}
+      {/* Sign-in prompt removed - Free Universe */}
 
       {/* ─── A5: Ad redirect toast ─── */}
       {adToast && (

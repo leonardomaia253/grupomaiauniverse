@@ -1,11 +1,8 @@
 "use client";
 
-import { useCallback, useOptimistic, useState, useTransition } from "react";
 import Link from "next/link";
-import { createBrowserSupabase } from "@/lib/supabase";
-import { ROADMAP_PHASES, VOTABLE_ITEM_IDS } from "@/lib/roadmap-data";
+import { ROADMAP_PHASES } from "@/lib/roadmap-data";
 import type { RoadmapPhase, RoadmapItem, ItemStatus } from "@/lib/roadmap-data";
-import { toggleVote } from "./actions";
 
 const ACCENT = "#c8e64a";
 const CREAM = "#e8dcc8";
@@ -63,15 +60,6 @@ export default function RoadmapClient({
   const total = totalItems();
   const done = doneItems();
   const pct = Math.round((done / total) * 100);
-  const [showSignIn, setShowSignIn] = useState(false);
-
-  const handleSignIn = useCallback(async () => {
-    const supabase = createBrowserSupabase();
-    await supabase.auth.signInWithOAuth({
-      provider: "github",
-      options: { redirectTo: `${window.location.origin}/auth/callback` },
-    });
-  }, []);
 
   return (
     <main className="min-h-screen bg-bg font-pixel uppercase text-warm">
@@ -128,21 +116,9 @@ export default function RoadmapClient({
               key={phase.id}
               phase={phase}
               isLast={phaseIdx === ROADMAP_PHASES.length - 1}
-              voteCounts={voteCounts}
-              userVotes={userVotes}
-              isLoggedIn={isLoggedIn}
-              onSignInPrompt={() => setShowSignIn(true)}
             />
           ))}
         </div>
-
-        {/* Sign-in modal */}
-        {showSignIn && (
-          <SignInPrompt
-            onClose={() => setShowSignIn(false)}
-            onSignIn={handleSignIn}
-          />
-        )}
 
         {/* Footer */}
         <div className="mt-10 text-center">
@@ -176,17 +152,9 @@ export default function RoadmapClient({
 function PhaseBlock({
   phase,
   isLast,
-  voteCounts,
-  userVotes,
-  isLoggedIn,
-  onSignInPrompt,
 }: {
   phase: RoadmapPhase;
   isLast: boolean;
-  voteCounts: Record<string, number>;
-  userVotes: string[];
-  isLoggedIn: boolean;
-  onSignInPrompt: () => void;
 }) {
   const cfg = STATUS_CONFIG[phase.status];
   const isplanet = phase.status === "planet";
@@ -231,10 +199,6 @@ function PhaseBlock({
             <ItemRow
               key={item.id}
               item={item}
-              votes={voteCounts[item.id] ?? 0}
-              hasVoted={userVotes.includes(item.id)}
-              isLoggedIn={isLoggedIn}
-              onSignInPrompt={onSignInPrompt}
             />
           ))}
         </div>
@@ -246,41 +210,11 @@ function PhaseBlock({
 /* ─── Item Row ─── */
 function ItemRow({
   item,
-  votes: initialVotes,
-  hasVoted: initialHasVoted,
-  isLoggedIn,
-  onSignInPrompt,
 }: {
   item: RoadmapItem;
-  votes: number;
-  hasVoted: boolean;
-  isLoggedIn: boolean;
-  onSignInPrompt: () => void;
 }) {
-  const [isPending, startTransition] = useTransition();
-
-  const [optimistic, setOptimistic] = useOptimistic(
-    { votes: initialVotes, hasVoted: initialHasVoted },
-    (state, _action: "toggle") => ({
-      votes: state.hasVoted ? state.votes - 1 : state.votes + 1,
-      hasVoted: !state.hasVoted,
-    })
-  );
-
-  function handleVote() {
-    if (!isLoggedIn) {
-      onSignInPrompt();
-      return;
-    }
-    startTransition(async () => {
-      setOptimistic("toggle");
-      await toggleVote(item.id);
-    });
-  }
-
   const isDone = item.status === "done";
   const isMystery = item.mystery;
-  const showVoteButton = VOTABLE_ITEM_IDS.has(item.id);
 
   return (
     <div
@@ -312,56 +246,6 @@ function ItemRow({
             {item.description}
           </p>
         )}
-      </div>
-
-      {/* Vote button */}
-      {showVoteButton && (
-        <button
-          onClick={handleVote}
-          disabled={isPending}
-          className="flex shrink-0 items-center gap-1.5 border-2 px-2 py-1 text-[10px] transition-all"
-          style={{
-            borderColor: optimistic.hasVoted ? ACCENT : "#2a2a30",
-            color: optimistic.hasVoted ? ACCENT : MUTED,
-            backgroundColor: optimistic.hasVoted
-              ? "rgba(200, 230, 74, 0.08)"
-              : "transparent",
-            opacity: isPending ? 0.6 : 1,
-            cursor: isPending ? "wait" : "pointer",
-          }}
-        >
-          <span style={{ fontSize: "8px" }}>&#9650;</span>
-          <span>{optimistic.votes}</span>
-        </button>
-      )}
-    </div>
-  );
-}
-
-/* ─── Sign In Prompt ─── */
-function SignInPrompt({ onClose, onSignIn }: { onClose: () => void; onSignIn: () => void }) {
-  return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 p-4">
-      <div className="w-full max-w-xs border-[3px] border-border bg-bg-raised p-6 text-center">
-        <p className="text-sm text-cream">Sign in to vote</p>
-        <p className="mt-2 text-[10px] text-muted normal-case">
-          Your vote helps us decide what to build next
-        </p>
-        <div className="mt-5 flex gap-2">
-          <button
-            onClick={onClose}
-            className="flex-1 border-2 border-border px-3 py-2 text-[10px] text-muted transition-colors hover:border-border-light hover:text-warm"
-          >
-            Cancel
-          </button>
-          <button
-            onClick={onSignIn}
-            className="btn-press pixel-shadow-lime flex-1 px-3 py-2 text-[10px] text-bg"
-            style={{ backgroundColor: ACCENT }}
-          >
-            Entrar com Maia
-          </button>
-        </div>
       </div>
     </div>
   );

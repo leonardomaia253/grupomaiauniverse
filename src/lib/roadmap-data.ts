@@ -31,8 +31,8 @@ export const ROADMAP_PHASES: RoadmapPhase[] = [
       },
       {
         id: "github-oauth",
-        name: "Autenticação Maia & Perfis de Empresas",
-        description: "Entrar com Maia, páginas personalizadas de empresas",
+        name: "Company Profiles & Discovery",
+        description: "Public profiles for all companies in the Universe",
         status: "done",
       },
       {
