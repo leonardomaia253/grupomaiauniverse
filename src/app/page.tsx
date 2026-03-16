@@ -397,7 +397,7 @@ function HomeContent() {
   const [loadError, setLoadError] = useState<string | null>(null);
   const [feedback, setFeedback] = useState<{
     type: "loading" | "error";
-    code?: "not-found" | "org" | "no-activity" | "rate-limit" | "github-rate-limit" | "timeout" | "network" | "generic";
+    code?: "not-found" | "org" | "no-activity" | "rate-limit" | "api-rate-limit" | "timeout" | "network" | "generic";
     username?: string;
     raw?: string;
   } | null>(null);
@@ -1716,7 +1716,7 @@ function HomeContent() {
     searchUser();
   };
 
-  const handleSignIn = handleSignInWithRef;
+  const handleSignIn = () => handleSignInWithRef();
 
   const handleSignOut = async () => {
     await fetch("/api/auth/signout", { method: "POST" });

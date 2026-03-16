@@ -50,7 +50,7 @@ export function generateSolarSystem(companies: CompanyRecord[]): SolarSystem {
   const sorted = [...companies].sort((a, b) => b.contributions - a.contributions);
   
   const planets: UniversePlanet[] = sorted.map((dev, i) => {
-    const seed = hashStr(dev.github_login);
+    const seed = hashStr(dev.username);
     const rand = (s: number) => seededRandom(seed + s);
     
     // Orbital path
@@ -69,7 +69,7 @@ export function generateSolarSystem(companies: CompanyRecord[]): SolarSystem {
     const color = colors[seed % colors.length];
     
     return {
-      handle: dev.github_login,
+      handle: dev.username,
       name: dev.name,
       avatar_url: dev.avatar_url,
       score: dev.contributions,
