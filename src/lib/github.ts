@@ -43,8 +43,12 @@ export interface CompanyRecord {
   loadout?: { crown: string | null; roof: string | null; aura: string | null } | null;
   app_streak?: number;
   raid_xp?: number;
+  xp_total?: number;
   active_raid_tag?: { attacker_login: string; tag_style: string; expires_at: string } | null;
   rabbit_completed?: boolean;
+  yield_percent?: number;
+  custom_color?: string | null;
+  billboard_images?: string[];
 }
 
 export interface TopRepo {
@@ -92,6 +96,8 @@ export interface UniversePlanet {
   sideWindowsPerFloor: number;
   litPercentage: number;
   yield_percent: number;
+  custom_color?: string | null;
+  billboard_images?: string[];
 }
 
 export interface SpacePlaza {
@@ -199,7 +205,7 @@ function calcHeightV2(
   const cNorm = contribs / Math.max(1, Math.min(maxContribV2, 50_000));
   const sNorm = dev.total_stars / Math.max(1, Math.min(maxStars, 200_000));
   const prNorm = ((dev.total_prs ?? 0) + (dev.total_reviews ?? 0)) / 5_000;
-  const extNorm = (dev.repos_contributed_to ?? 0) / 100;
+  const extNorm = (dev.repos_contributed_to?.length ?? 0) / 100;
   const fNorm = Math.log10(Math.max(1, dev.followers ?? 0)) / Math.log10(50_000);
 
   // Consistency: years active / account age
@@ -526,7 +532,7 @@ export function generateUniverseLayout(companies: CompanyRecord[]): {
         achievements: Array.isArray(dev.achievements) ? dev.achievements as string[] : [],
         kudos_count: (dev as unknown as Record<string, unknown>).kudos_count as number ?? 0,
         visit_count: (dev as unknown as Record<string, unknown>).visit_count as number ?? 0,
-        loadout: (dev as unknown as Record<string, unknown>).loadout as CompanyPlanet["loadout"] ?? null,
+        loadout: (dev as unknown as Record<string, unknown>).loadout as UniversePlanet["loadout"] ?? null,
         app_streak: (dev as unknown as Record<string, unknown>).app_streak as number ?? 0,
         raid_xp: (dev as unknown as Record<string, unknown>).raid_xp as number ?? 0,
         current_week_contributions: (dev as unknown as Record<string, unknown>).current_week_contributions as number ?? 0,

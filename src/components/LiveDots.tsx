@@ -3,7 +3,7 @@
 import { useRef, useMemo, useEffect } from "react";
 import { useFrame } from "@react-three/fiber";
 import * as THREE from "three";
-import type { Universeplanet } from "@/lib/github";
+import type { UniversePlanet } from "@/lib/github";
 import type { LiveSession } from "@/lib/useCodingPresence";
 
 const DOT_SIZE = 4;
@@ -15,7 +15,7 @@ const _quat = new THREE.Quaternion();
 const _scale = new THREE.Vector3(1, 1, 1);
 
 interface LiveDotsProps {
-  planets: Universeplanet[];
+  planets: UniversePlanet[];
   liveByLogin: Map<string, LiveSession>;
 }
 

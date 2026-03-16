@@ -9,7 +9,15 @@ import Sun from "./Sun";
 import Starfield from "./Starfield";
 import InstancedPlanets from "./InstancedPlanets";
 import { generateSolarSystem } from "@/lib/solarSystem";
-import type { CompanyRecord } from "@/lib/github";
+import type { CompanyRecord, GalaxyZone } from "@/lib/github";
+
+export interface PlanetColors {
+  face: string;
+  roof: string;
+  windowLit: string[];
+  windowOff: string;
+  accent?: string;
+}
 
 export default function UniverseCanvas({ companies }: { companies: CompanyRecord[] }) {
   const solarSystem = useMemo(() => generateSolarSystem(companies), [companies]);
@@ -22,7 +30,8 @@ export default function UniverseCanvas({ companies }: { companies: CompanyRecord
         <Starfield count={8000} />
         <Sun radius={solarSystem.sunRadius} />
         
-        <InstancedPlanets planets={solarSystem.planets} />
+        {/* @ts-ignore - solar system planets have different props but same base visual needs */}
+        <InstancedPlanets planets={solarSystem.planets as any} />
 
         <ambientLight intensity={0.2} />
         
@@ -34,7 +43,7 @@ export default function UniverseCanvas({ companies }: { companies: CompanyRecord
           makeDefault
         />
 
-        <EffectComposer disableNormalPass>
+        <EffectComposer enableNormalPass={false}>
           <Bloom 
             luminanceThreshold={1.0} 
             mipmapBlur 

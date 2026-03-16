@@ -5,14 +5,14 @@ import { useSearchParams } from "next/navigation";
 import dynamic from "next/dynamic";
 import {
   generateUniverseLayout,
-  type Universeplanet,
-  type UniversePlaza,
-  type UniverseDecoration,
-  type UniverseRiver,
-  type UniverseBridge,
+  type UniversePlanet,
+  type SpacePlaza,
+  type SpaceDecoration,
+  type SpaceRiver,
+  type SpaceBridge,
 } from "@/lib/github";
 
-const UniverseCanvas = dynamic(() => import("@/components/UniverseCanvas"), { ssr: false });
+const CityCanvas = dynamic(() => import("@/components/CityCanvas"), { ssr: false });
 
 const THEME_MAP: Record<string, number> = {
   midnight: 0,
@@ -30,11 +30,11 @@ function WallpaperInner() {
   const speedParam = params.get("speed");
   const speed = speedParam ? Math.min(0.5, Math.max(0.05, parseFloat(speedParam) || 0.08)) : 0.08;
 
-  const [planets, setplanets] = useState<Universeplanet[]>([]);
-  const [plazas, setPlazas] = useState<UniversePlaza[]>([]);
-  const [decorations, setDecorations] = useState<UniverseDecoration[]>([]);
-  const [river, setRiver] = useState<UniverseRiver | null>(null);
-  const [bridges, setBridges] = useState<UniverseBridge[]>([]);
+  const [planets, setplanets] = useState<UniversePlanet[]>([]);
+  const [plazas, setPlazas] = useState<SpacePlaza[]>([]);
+  const [decorations, setDecorations] = useState<SpaceDecoration[]>([]);
+  const [river, setRiver] = useState<SpaceRiver | null>(null);
+  const [bridges, setBridges] = useState<SpaceBridge[]>([]);
   const [ready, setReady] = useState(false);
 
   const fetchUniverse = useCallback(async () => {
@@ -97,7 +97,7 @@ function WallpaperInner() {
   if (!ready) return null;
 
   return (
-    <UniverseCanvas
+    <CityCanvas
       planets={planets}
       plazas={plazas}
       decorations={decorations}

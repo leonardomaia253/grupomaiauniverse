@@ -1,10 +1,10 @@
 "use client";
 
 import { useRef, useEffect, useLayoutEffect, useMemo, useCallback } from "react";
-import type { Universeplanet } from "@/lib/github";
+import type { UniversePlanet } from "@/lib/github";
 
 interface MiniMapProps {
-  planets: Universeplanet[];
+  planets: UniversePlanet[];
   playerX: number;
   playerZ: number;
   visible: boolean;

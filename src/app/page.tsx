@@ -10,7 +10,7 @@ import {
   generateUniverseLayout,
   CONSTELLATION_NAMES,
   CONSTELLATION_COLORS,
-  type CompanyPlanet,
+  type UniversePlanet,
   type SpacePlaza,
   type SpaceDecoration,
   type SpaceRiver,
@@ -64,7 +64,7 @@ const RaidOverlay = dynamic(() => import("@/components/RaidOverlay"), { ssr: fal
 const PillModal = dynamic(() => import("@/components/PillModal"), { ssr: false });
 const FounderMessage = dynamic(() => import("@/components/FounderMessage"), { ssr: false });
 const RabbitCompletion = dynamic(() => import("@/components/RabbitCompletion"), { ssr: false });
-const constellationChooser = dynamic(() => import("@/components/constellationChooser"), { ssr: false });
+const ConstellationChooser = dynamic(() => import("@/components/ConstellationChooser"), { ssr: false });
 const LevelUpToast = dynamic(() => import("@/components/LevelUpToast"), { ssr: false });
 const MiniMap = dynamic(() => import("@/components/MiniMap"), { ssr: false });
 
@@ -298,7 +298,7 @@ const LEADERBOARD_CATEGORIES = [
   { label: "Repos", key: "public_repos" as const, tab: "architects" },
 ] as const;
 
-function MiniLeaderboard({ planets, accent }: { planets: CompanyPlanet[]; accent: string }) {
+function MiniLeaderboard({ planets, accent }: { planets: UniversePlanet[]; accent: string }) {
   const [catIndex, setCatIndex] = useState(0);
 
   // Auto-rotate every 10s
@@ -382,14 +382,14 @@ function HomeContent() {
 
   const [username, setUsername] = useState("");
   const failedUsernamesRef = useRef<Map<string, string>>(new Map()); // username -> error code
-  const [planets, setPlanets] = useState<CompanyPlanet[]>([]);
+  const [planets, setPlanets] = useState<UniversePlanet[]>([]);
   // Keep raw dev records so we can inject new companies and regenerate layout locally
   const rawCompaniesRef = useRef<CompanyRecord[]>([]);
   const [plazas, setPlazas] = useState<SpacePlaza[]>([]);
   const [decorations, setDecorations] = useState<SpaceDecoration[]>([]);
   const [river, setRiver] = useState<SpaceRiver | null>(null);
   const [bridges, setBridges] = useState<SpaceBridge[]>([]);
-  const [GalaxyZones, setGalaxyZones] = useState<GalaxyZone[]>([]);
+  const [galaxyZones, setGalaxyZones] = useState<GalaxyZone[]>([]);
   const [loading, setLoading] = useState(false);
   // Loading state machine — skip on return visits that still have cached data
   const [loadStage, setLoadStage] = useState<LoadingStage>("init");
@@ -420,8 +420,8 @@ function HomeContent() {
 
   const [hud, setHud] = useState({ speed: 0, altitude: 0 });
   const [playerPos, setPlayerPos] = useState<{ x: number; z: number }>({ x: 0, z: 0 });
-  const [constellationAnnouncement, setconstellationAnnouncement] = useState<{ name: string; color: string; population: number } | null>(null);
-  const lastconstellationRef = useRef<string | null>(null);
+  const [constellationAnnouncement, setConstellationAnnouncement] = useState<{ name: string; color: string; population: number } | null>(null);
+  const lastConstellationRef = useRef<string | null>(null);
   const announceTimerRef = useRef<ReturnType<typeof setTimeout>>(undefined);
   const announceCooldownRef = useRef(0);
   const [flyPaused, setFlyPaused] = useState(false);
@@ -452,7 +452,7 @@ function HomeContent() {
   const [session, setSession] = useState<Session | null>(null);
   const [claiming, setClaiming] = useState(false);
   const [purchasedItem, setPurchasedItem] = useState<string | null>(null);
-  const [selectedPlanet, setselectedPlanet] = useState<CompanyPlanet | null>(null);
+  const [selectedPlanet, setselectedPlanet] = useState<UniversePlanet | null>(null);
   const [giftClaimed, setGiftClaimed] = useState(false);
   const [claimingGift, setClaimingGift] = useState(false);
   const [feedEvents, setFeedEvents] = useState<FeedEvent[]>([]);
@@ -461,8 +461,8 @@ function HomeContent() {
   const [kudosSent, setKudosSent] = useState(false);
   const [kudosError, setKudosError] = useState<string | null>(null);
   const visitTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
-  const [comparePlanet, setcomparePlanet] = useState<CompanyPlanet | null>(null);
-  const [comparePair, setComparePair] = useState<[CompanyPlanet, CompanyPlanet] | null>(null);
+  const [comparePlanet, setcomparePlanet] = useState<UniversePlanet | null>(null);
+  const [comparePair, setComparePair] = useState<[UniversePlanet, UniversePlanet] | null>(null);
   const [compareSelfHint, setCompareSelfHint] = useState(false);
   const [giftModalOpen, setGiftModalOpen] = useState(false);
   const [giftItems, setGiftItems] = useState<{ id: string; price_usd_cents: number; owned: boolean }[] | null>(null);
@@ -475,7 +475,7 @@ function HomeContent() {
   const [discordMembers, setDiscordMembers] = useState<number | null>(null);
   const [pillModalOpen, setPillModalOpen] = useState(false);
   const [founderMessageOpen, setFounderMessageOpen] = useState(false);
-  const [constellationChooserOpen, setconstellationChooserOpen] = useState(false);
+  const [constellationChooserOpen, setConstellationChooserOpen] = useState(false);
   const [rabbitCinematic, setRabbitCinematic] = useState(false);
   const [rabbitCinematicPhase, setRabbitCinematicPhase] = useState(-1);
   const [rabbitProgress, setRabbitProgress] = useState(0);
@@ -1359,7 +1359,7 @@ function HomeContent() {
           if (devData.exists === false) return;
 
           // Dedup: another effect may have already injected this dev
-          if (rawCompaniesRef.current.some((d: companyRecord) => d.github_login.toLowerCase() === userParam.toLowerCase())) return;
+          if (rawCompaniesRef.current.some((d: CompanyRecord) => d.github_login.toLowerCase() === userParam.toLowerCase())) return;
 
           const newDev = {
             ...devData,
@@ -1431,7 +1431,7 @@ function HomeContent() {
         if (devData.exists === false) return;
 
         // Dedup: another effect or search may have already injected this dev
-        if (rawCompaniesRef.current.some((d: companyRecord) => d.github_login.toLowerCase() === authLogin)) return;
+        if (rawCompaniesRef.current.some((d: CompanyRecord) => d.github_login.toLowerCase() === authLogin)) return;
 
         const newDev = {
           ...devData,
@@ -1493,8 +1493,8 @@ function HomeContent() {
       );
       const updated = await reloadUniverse(true);
       if (!updated) return;
-      const foundA = updated.find((b: CompanyPlanet) => b.login.toLowerCase() === parts[0]);
-      const foundB = updated.find((b: CompanyPlanet) => b.login.toLowerCase() === parts[1]);
+      const foundA = updated.find((b: UniversePlanet) => b.login.toLowerCase() === parts[0]);
+      const foundB = updated.find((b: UniversePlanet) => b.login.toLowerCase() === parts[1]);
       if (foundA && foundB) {
         setComparePair([foundA, foundB]);
         setfocusedPlanet(foundA.login);
@@ -1606,7 +1606,7 @@ function HomeContent() {
       }
 
       // Merge the refreshed dev back into the live Universe so searches update stats immediately
-      let updatedplanets: CompanyPlanet[] | null = null;
+      let updatedPlanets: UniversePlanet[] | null = null;
       const refreshedLogin = (devData.github_login ?? trimmed).toLowerCase();
       const existingDev = rawCompaniesRef.current.find(
         (d) => d.github_login?.toLowerCase() === refreshedLogin
@@ -1643,7 +1643,7 @@ function HomeContent() {
       setBridges(layout.bridges);
       setGalaxyZones(layout.GalaxyZones);
       setUniverseCache({ ...layout, stats: stats ?? { total_companies: 0, total_contributions: 0 }, rawcompanies: rawCompaniesRef.current });
-      updatedplanets = layout.planets;
+      updatedPlanets = layout.planets;
 
       // Focus camera on the searched planet
       setfocusedPlanet(devData.github_login);
@@ -1660,9 +1660,9 @@ function HomeContent() {
       }
 
       // Find the planet in the current or updated Universe
-      const searchPool = updatedplanets ?? planets;
+      const searchPool = updatedPlanets ?? planets;
       const foundplanet = searchPool.find(
-        (b: CompanyPlanet) => b.login.toLowerCase() === refreshedLogin
+        (b: UniversePlanet) => b.login.toLowerCase() === refreshedLogin
       );
 
       // Compare pick mode: use snapshot so ESC mid-search doesn't cause stale state
@@ -1743,51 +1743,51 @@ function HomeContent() {
   };
 
   // Determine if the logged-in user can claim their planet
-  const myplanet = authLogin
+  const myPlanet = authLogin
     ? planets.find((b) => b.login.toLowerCase() === authLogin)
     : null;
-  const canClaim = !!session && !!myplanet && !myplanet.claimed;
+  const canClaim = !!session && !!myPlanet && !myPlanet.claimed;
 
   // Shop link: logged in + claimed → own shop, otherwise → /shop landing
   const shopHref =
-    session && myplanet?.claimed
-      ? `/shop/${myplanet.login}`
+    session && myPlanet?.claimed
+      ? `/shop/${myPlanet.login}`
       : "/shop";
 
   // Show free gift CTA when user claimed but hasn't picked up the free item
   const hasFreeGift =
     !!session &&
-    !!myplanet?.claimed &&
-    !myplanet.owned_items.includes("flag");
+    !!myPlanet?.claimed &&
+    !myPlanet.owned_items.includes("flag");
 
   // Show constellation chooser once per session when user hasn't chosen yet
-  const shouldShowconstellationChooser =
-    !!session && !!myplanet?.claimed && !myplanet.constellation_chosen;
+  const shouldShowConstellationChooser =
+    !!session && !!myPlanet?.claimed && !myPlanet.constellation_chosen;
 
   useEffect(() => {
-    if (shouldShowconstellationChooser && !sessionStorage.getItem("constellation_dismissed")) {
-      setconstellationChooserOpen(true);
+    if (shouldShowConstellationChooser && !sessionStorage.getItem("constellation_dismissed")) {
+      setConstellationChooserOpen(true);
     }
-  }, [shouldShowconstellationChooser]);
+  }, [shouldShowConstellationChooser]);
 
   // Streak auto check-in (1x per browser session)
-  const { streakData } = useStreakCheckin(session, !!myplanet?.claimed);
+  const { streakData } = useStreakCheckin(session, !!myPlanet?.claimed);
 
   // Daily missions
-  const { data: dailiesData, trackClientMission, claim: claimDailies, refresh: refreshDailies, toasts: dailyToasts } = useDailies(session, !!myplanet?.claimed);
+  const { data: dailiesData, trackClientMission, claim: claimDailies, refresh: refreshDailies, toasts: dailyToasts } = useDailies(session, !!myPlanet?.claimed);
   // Stable ref so closures (visit useEffect, kudos callback) always use latest
   const trackMissionRef = useRef(trackClientMission);
   trackMissionRef.current = trackClientMission;
 
   // Detect level-up from check-in XP result
   useEffect(() => {
-    if (!streakData?.xp || !myplanet) return;
+    if (!streakData?.xp || !myPlanet) return;
     const newLevel = streakData.xp.new_level;
-    const currentLevel = myplanet.xp_level ?? 1;
+    const currentLevel = myPlanet.xp_level ?? 1;
     if (newLevel > currentLevel) {
       setLevelUpLevel(newLevel);
     }
-  }, [streakData?.xp, myplanet]);
+  }, [streakData?.xp, myPlanet]);
 
   // Live users presence
   const { count: liveUsers } = useLiveUsers();
@@ -1895,7 +1895,7 @@ function HomeContent() {
   return (
     <main className="relative min-h-screen overflow-hidden bg-bg font-pixel uppercase text-warm">
       {/* 3D Canvas */}
-      <UniverseCanvas companies={companies} />
+      <UniverseCanvas companies={rawCompaniesRef.current} />
 
       {/* Loading screen overlay */}
       {loadStage !== "done" && (
@@ -2174,7 +2174,7 @@ function HomeContent() {
         playerX={playerPos.x}
         playerZ={playerPos.z}
         visible={flyMode}
-        currentconstellation={lastconstellationRef.current}
+        currentconstellation={lastConstellationRef.current}
       />
 
       {/* ─── Explore Mode: minimal UI ─── */}
@@ -2532,8 +2532,8 @@ function HomeContent() {
             <div className="px-5 pt-6 pb-5 border-b border-border" style={{ background: theme.accent + "0d" }}>
               <div className="flex items-start justify-between">
                 <Link href={`/dev/${authLogin}`} onClick={() => setMobileMenuOpen(false)} className="flex items-center gap-3">
-                  {myplanet?.avatar_url && (
-                    <Image src={myplanet.avatar_url} alt="" width={48} height={48} unoptimized={true} className="h-12 w-12 rounded-full border-2" style={{ borderColor: theme.accent }} />
+                  {myPlanet?.avatar_url && (
+                    <Image src={myPlanet.avatar_url} alt="" width={48} height={48} unoptimized={true} className="h-12 w-12 rounded-full border-2" style={{ borderColor: theme.accent }} />
                   )}
                   <div>
                     <div className="flex items-center gap-2">
@@ -2544,10 +2544,10 @@ function HomeContent() {
                         </span>
                       )}
                     </div>
-                    {myplanet && (
+                    {myPlanet && (
                       <div className="mt-0.5 text-[10px] text-muted normal-case">
-                        {myplanet.constellation} constellation
-                        {myplanet.claimed && <span className="ml-1.5 text-[#4ade80]">claimed</span>}
+                        {myPlanet.constellation} constellation
+                        {myPlanet.claimed && <span className="ml-1.5 text-[#4ade80]">claimed</span>}
                       </div>
                     )}
                     {liveByLogin.has(authLogin) && (
@@ -3131,10 +3131,10 @@ function HomeContent() {
                         </span>
                       )}
                     </Link>
-                    {myplanet?.claimed && (
+                    {myPlanet?.claimed && (
                       <XpBar
-                        xpTotal={myplanet.xp_total ?? 0}
-                        xpLevel={myplanet.xp_level ?? 1}
+                        xpTotal={myPlanet.xp_total ?? 0}
+                        xpLevel={myPlanet.xp_level ?? 1}
                         accent={theme.accent}
                       />
                     )}
@@ -3318,7 +3318,7 @@ function HomeContent() {
               Neon Outline, Particle Aura, Spotlight, and more
             </p>
             <Link
-              href={myplanet?.claimed ? `/shop/${ghostPreviewLogin}` : `/dev/${ghostPreviewLogin}`}
+              href={myPlanet?.claimed ? `/shop/${ghostPreviewLogin}` : `/dev/${ghostPreviewLogin}`}
               onClick={() => setGhostPreviewLogin(null)}
               className="btn-press block w-full py-2 text-center text-[10px] text-bg"
               style={{
@@ -3326,7 +3326,7 @@ function HomeContent() {
                 boxShadow: `2px 2px 0 0 ${theme.shadow}`,
               }}
             >
-              {myplanet?.claimed ? "Customize" : "Claim & Customize"} &rarr;
+              {myPlanet?.claimed ? "Customize" : "Claim & Customize"} &rarr;
             </Link>
             <button
               onClick={() => setGhostPreviewLogin(null)}
@@ -3843,7 +3843,7 @@ function HomeContent() {
 
       {/* ─── Comparison Panel ─── */}
       {comparePair && (() => {
-        const compareStatDefs: { label: string; key: keyof CompanyPlanet; invert?: boolean }[] = [
+        const compareStatDefs: { label: string; key: keyof UniversePlanet; invert?: boolean }[] = [
           { label: "Rank", key: "rank", invert: true },
           { label: "Contributions", key: "contributions" },
           { label: "Stars", key: "total_stars" },
@@ -4312,7 +4312,7 @@ function HomeContent() {
 
 
       {/* ─── Daily Missions (quest tracker, right side) ─── */}
-      {session && myplanet?.claimed && !flyMode && !introMode && !exploreMode && !rabbitCinematic && (
+      {session && myPlanet?.claimed && !flyMode && !introMode && !exploreMode && !rabbitCinematic && (
         <DailiesWidget
           data={dailiesData}
           accent={theme.accent}
@@ -4631,9 +4631,9 @@ function HomeContent() {
               <button
                 onClick={() => {
                   setGiftClaimed(false);
-                  if (myplanet) {
-                    setfocusedPlanet(myplanet.login);
-                    setselectedPlanet(myplanet);
+                  if (myPlanet) {
+                    setfocusedPlanet(myPlanet.login);
+                    setselectedPlanet(myPlanet);
                     setExploreMode(true);
                   }
                 }}
@@ -4681,18 +4681,18 @@ function HomeContent() {
       )}
 
       {/* constellation chooser modal */}
-      {constellationChooserOpen && myplanet && (
-        <constellationChooser
-          currentconstellation={myplanet.constellation ?? null}
-          inferredconstellation={myplanet.constellation ?? null}
-          onClose={() => { sessionStorage.setItem("constellation_dismissed", "1"); setconstellationChooserOpen(false); }}
+      {constellationChooserOpen && myPlanet && (
+        <ConstellationChooser
+          currentconstellation={myPlanet.constellation ?? null}
+          inferredconstellation={myPlanet.constellation ?? null}
+          onClose={() => { sessionStorage.setItem("constellation_dismissed", "1"); setConstellationChooserOpen(false); }}
           onChosen={(constellationId) => {
             sessionStorage.setItem("constellation_dismissed", "1");
-            setconstellationChooserOpen(false);
+            setConstellationChooserOpen(false);
             // Update the planet in local state
             setPlanets((prev) =>
               prev.map((b) =>
-                b.login === myplanet.login
+                b.login === myPlanet.login
                   ? { ...b, constellation: constellationId, constellation_chosen: true }
                   : b
               )
@@ -4722,7 +4722,7 @@ function HomeContent() {
         <FounderMessage
           onClose={() => setFounderMessageOpen(false)}
           session={session}
-          hasClaimed={!!myplanet?.claimed}
+          hasClaimed={!!myPlanet?.claimed}
           onSignIn={handleSignInWithRef}
         />
       )}

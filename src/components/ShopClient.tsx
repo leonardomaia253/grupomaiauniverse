@@ -30,7 +30,7 @@ const FREE_CLAIM_ITEM = "flag";
 const ShopPreview = dynamic(() => import("./ShopPreview"), { ssr: false });
 const RaidVehiclePreview = dynamic(() => import("./RaidVehiclePreview"), { ssr: false });
 
-export interface planetDims {
+export interface PlanetDims {
   width: number;
   height: number;
   depth: number;
@@ -42,11 +42,11 @@ interface Loadout {
   aura: string | null;
 }
 
-// A11: ScarUniverse helpers
-function getScarUniverseInfo(item: ShopItem, soldCount: number) {
+// A11: Scarcity helpers
+function getScarcityInfo(item: ShopItem, soldCount: number) {
   const now = Date.now();
 
-  // Temporal scarUniverse
+  // Temporal Scarcity
   if (item.available_until) {
     const deadline = new Date(item.available_until).getTime();
     if (deadline <= now) return { expired: true, label: "Ended", color: "#666" };
@@ -57,7 +57,7 @@ function getScarUniverseInfo(item: ShopItem, soldCount: number) {
     return { expired: false, label, color: days <= 3 ? "#ff6b6b" : "#f0a030", urgency: days <= 3 };
   }
 
-  // Quantity scarUniverse
+  // Quantity Scarcity
   if (item.max_quantity != null) {
     const remaining = Math.max(0, item.max_quantity - soldCount);
     if (remaining === 0) return { expired: true, label: "Sold out", color: "#666" };
@@ -80,7 +80,7 @@ interface Props {
   initialCustomColor: string | null;
   initialBillboardImages: string[];
   billboardSlots: number;
-  planetDims: planetDims;
+  planetDims: PlanetDims;
   achievements?: string[];
   initialLoadout?: Loadout | null;
   initialRaidLoadout?: { vehicle: string; tag: string } | null;
@@ -1283,26 +1283,26 @@ export default function ShopClient({
                     };
 
                     const isPopular = popularItems.includes(itemId);
-                    const scarUniverse = shopItem ? getScarUniverseInfo(shopItem, totalPurchaseCounts[itemId] ?? 0) : null;
-                    const isSoldOut = scarUniverse?.expired === true;
+                    const Scarcity = shopItem ? getScarcityInfo(shopItem, totalPurchaseCounts[itemId] ?? 0) : null;
+                    const isSoldOut = Scarcity?.expired === true;
 
                     return (
                       <div key={itemId} className="relative" data-buy-popover>
-                        {/* A11: ScarUniverse badge (takes priority over popularity) */}
-                        {scarUniverse && !isOwned && !isEquipped && (
+                        {/* A11: Scarcity badge (takes priority over popularity) */}
+                        {Scarcity && !isOwned && !isEquipped && (
                           <span
                             className="absolute top-1 right-1 z-10 px-1 py-px text-[7px] font-bold"
                             style={{
-                              backgroundColor: `${scarUniverse.color}20`,
-                              color: scarUniverse.color,
-                              border: `1px solid ${scarUniverse.color}40`,
+                              backgroundColor: `${Scarcity.color}20`,
+                              color: Scarcity.color,
+                              border: `1px solid ${Scarcity.color}40`,
                             }}
                           >
-                            {shopItem?.is_exclusive && "💎 "}{scarUniverse.label}
+                            {shopItem?.is_exclusive && "💎 "}{Scarcity.label}
                           </span>
                         )}
-                        {/* A10: Popularity badge (only if no scarUniverse badge) */}
-                        {!scarUniverse && isPopular && !isOwned && !isEquipped && (
+                        {/* A10: Popularity badge (only if no Scarcity badge) */}
+                        {!Scarcity && isPopular && !isOwned && !isEquipped && (
                           <span
                             className="absolute top-1 right-1 z-10 px-1 py-px text-[7px] font-bold"
                             style={{
@@ -1458,22 +1458,22 @@ export default function ShopClient({
                   }
                 };
 
-                const facesScarUniverse = shopItem ? getScarUniverseInfo(shopItem, totalPurchaseCounts[itemId] ?? 0) : null;
-                const facesSoldOut = facesScarUniverse?.expired === true;
+                const facesScarcity = shopItem ? getScarcityInfo(shopItem, totalPurchaseCounts[itemId] ?? 0) : null;
+                const facesSoldOut = facesScarcity?.expired === true;
 
                 return (
                   <div key={itemId} className="relative" data-buy-popover>
-                    {/* A11: ScarUniverse badge */}
-                    {facesScarUniverse && !isFacesOwned && (
+                    {/* A11: Scarcity badge */}
+                    {facesScarcity && !isFacesOwned && (
                       <span
                         className="absolute top-1 right-1 z-10 px-1 py-px text-[7px] font-bold"
                         style={{
-                          backgroundColor: `${facesScarUniverse.color}20`,
-                          color: facesScarUniverse.color,
-                          border: `1px solid ${facesScarUniverse.color}40`,
+                          backgroundColor: `${facesScarcity.color}20`,
+                          color: facesScarcity.color,
+                          border: `1px solid ${facesScarcity.color}40`,
                         }}
                       >
-                        {shopItem?.is_exclusive && "💎 "}{facesScarUniverse.label}
+                        {shopItem?.is_exclusive && "💎 "}{facesScarcity.label}
                       </span>
                     )}
                     <button

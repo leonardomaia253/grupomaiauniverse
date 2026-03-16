@@ -5,13 +5,13 @@ import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import { OrbitControls, useGLTF, Stats, PerformanceMonitor } from "@react-three/drei";
 import { EffectComposer, Bloom } from "@react-three/postprocessing";
 import * as THREE from "three";
-import UniverseScene from "./UniverseScene";
-import type { FocusInfo } from "./UniverseScene";
+import UniverseScene from "./CityScene";
+import type { FocusInfo } from "./CityScene";
 import type { LiveSession } from "@/lib/useCodingPresence";
-import type { Universeplanet, UniversePlaza, UniverseDecoration, UniverseRiver, UniverseBridge } from "@/lib/github";
+import type { UniversePlanet, SpacePlaza, SpaceDecoration, SpaceRiver, SpaceBridge } from "@/lib/github";
 import { seededRandom } from "@/lib/github";
 import SkyAds from "./SkyAds";
-import planetAds from "./planetAds";
+import PlanetAds from "./PlanetAds";
 import type { SkyAd } from "@/lib/skyAds";
 import RaidSequence3D, { VehicleMesh } from "./RaidSequence3D";
 import type { RaidPhase } from "@/lib/useRaidSequence";
@@ -32,7 +32,7 @@ export const THEME_NAMES = [
   "Emerald",
 ] as const;
 
-export interface planetColors {
+export interface PlanetColors {
   windowLit: string[];
   windowOff: string;
   face: string;
@@ -61,7 +61,7 @@ interface UniverseTheme {
   grid2: string;
   roadMarkingColor: string;
   sidewalkColor: string;
-  planet: planetColors;
+  planet: PlanetColors;
   waterColor: string;
   waterEmissive: string;
   dockColor: string;
@@ -348,7 +348,7 @@ function RabbitFlyover({
   onEnd,
 }: {
   targetPlazaIndex: number;
-  plazas: UniversePlaza[];
+  plazas: SpacePlaza[];
   onEnd: () => void;
 }) {
   const { camera } = useThree();
@@ -399,7 +399,7 @@ function CameraFocus({
   focusedPlanetB,
   controlsRef,
 }: {
-  planets: Universeplanet[];
+  planets: UniversePlanet[];
   focusedPlanet: string | null;
   focusedPlanetB?: string | null;
   controlsRef: React.RefObject<any>;
@@ -1319,7 +1319,7 @@ function Sidewalk({ position, size, color }: { position: [number, number, number
 
 // ─── Decoration Renderer ──────────────────────────────────────
 
-function Decorations({ items }: { items: UniverseDecoration[] }) {
+function Decorations({ items }: { items: SpaceDecoration[] }) {
   return (
     <>
       {items.map((d, i) => {
@@ -1347,7 +1347,7 @@ const _dEuler = new THREE.Euler();
 const _dLocalPos = new THREE.Vector3();
 const _dPartQuat = new THREE.Quaternion();
 
-function InstancedDecorations({ items, roadMarkingColor, sidewalkColor }: { items: UniverseDecoration[]; roadMarkingColor: string; sidewalkColor: string }) {
+function InstancedDecorations({ items, roadMarkingColor, sidewalkColor }: { items: SpaceDecoration[]; roadMarkingColor: string; sidewalkColor: string }) {
   const trees = useMemo(() => items.filter(d => d.type === 'tree'), [items]);
   const lamps = useMemo(() => items.filter(d => d.type === 'streetLamp'), [items]);
   const cars = useMemo(() => items.filter(d => d.type === 'car'), [items]);
@@ -1672,7 +1672,7 @@ function InstancedDecorations({ items, roadMarkingColor, sidewalkColor }: { item
 
 // ─── River ───────────────────────────────────────────────────
 
-function River({ river, waterColor, waterEmissive }: { river: UniverseRiver; waterColor: string; waterEmissive: string }) {
+function River({ river, waterColor, waterEmissive }: { river: SpaceRiver; waterColor: string; waterEmissive: string }) {
   const matRef = useRef<THREE.MeshBasicMaterial>(null);
 
   useFrame(({ clock }) => {
@@ -1701,7 +1701,7 @@ function River({ river, waterColor, waterEmissive }: { river: UniverseRiver; wat
 
 // ─── River Text (watermark) ──────────────────────────────────
 
-function RiverText({ river }: { river: UniverseRiver }) {
+function RiverText({ river }: { river: SpaceRiver }) {
   const [fontReady, setFontReady] = useState(false);
   const texRef = useRef<THREE.CanvasTexture | null>(null);
 
@@ -1768,7 +1768,7 @@ function RiverText({ river }: { river: UniverseRiver }) {
 
 // ─── Bridge ──────────────────────────────────────────────────
 
-function Bridge({ bridge }: { bridge: UniverseBridge }) {
+function Bridge({ bridge }: { bridge: SpaceBridge }) {
   const [bx, , bz] = bridge.position;
   const deckLength = bridge.width;
   const deckWidth = 18;
@@ -1820,7 +1820,7 @@ function Bridge({ bridge }: { bridge: UniverseBridge }) {
 
 // ─── Waterfront (Docks + Bollards) ──────────────────────────
 
-function Waterfront({ river, dockColor }: { river: UniverseRiver; dockColor: string }) {
+function Waterfront({ river, dockColor }: { river: SpaceRiver; dockColor: string }) {
   const dockPlankRef = useRef<THREE.InstancedMesh>(null);
   const bollardRef = useRef<THREE.InstancedMesh>(null);
 
@@ -1890,7 +1890,7 @@ function Waterfront({ river, dockColor }: { river: UniverseRiver; dockColor: str
 
 // ─── Orbit Scene (controls + focus) ──────────────────────────
 
-function OrbitScene({ planets, focusedPlanet, focusedPlanetB }: { planets: Universeplanet[]; focusedPlanet: string | null; focusedPlanetB?: string | null }) {
+function OrbitScene({ planets, focusedPlanet, focusedPlanetB }: { planets: UniversePlanet[]; focusedPlanet: string | null; focusedPlanetB?: string | null }) {
   const controlsRef = useRef<any>(null);
   const { camera } = useThree();
 
@@ -1953,11 +1953,11 @@ function WallpaperOrbitScene({ speed }: { speed: number }) {
 // ─── Main Canvas ─────────────────────────────────────────────
 
 interface Props {
-  planets: Universeplanet[];
-  plazas: UniversePlaza[];
-  decorations: UniverseDecoration[];
-  river?: UniverseRiver | null;
-  bridges?: UniverseBridge[];
+  planets: UniversePlanet[];
+  plazas: SpacePlaza[];
+  decorations: SpaceDecoration[];
+  river?: SpaceRiver | null;
+  bridges?: SpaceBridge[];
   flyMode: boolean;
   flyVehicle?: string;
   onExitFly: () => void;
@@ -1969,7 +1969,7 @@ interface Props {
   focusedPlanetB?: string | null;
   accentColor?: string;
   onClearFocus?: () => void;
-  onplanetClick?: (planet: Universeplanet) => void;
+  onPlanetClick?: (planet: UniversePlanet) => void;
   onFocusInfo?: (info: FocusInfo) => void;
   flyPauseSignal?: number;
   flyHasOverlay?: boolean;
@@ -1981,8 +1981,8 @@ interface Props {
   onIntroEnd?: () => void;
   raidPhase?: RaidPhase;
   raidData?: RaidExecuteResponse | null;
-  raidAttacker?: Universeplanet | null;
-  raidDefender?: Universeplanet | null;
+  raidAttacker?: UniversePlanet | null;
+  raidDefender?: UniversePlanet | null;
   onRaidPhaseComplete?: (phase: RaidPhase) => void;
   onLandmarkClick?: () => void;
   rabbitSighting?: number | null;
@@ -2019,7 +2019,7 @@ function UniverseExposure({ UniverseEnergy }: { UniverseEnergy: number }) {
 // Plaza indices for rabbit sightings (progressively further from center)
 const RABBIT_PLAZA_INDICES = [1, 2, 4, 7, 10]; // plazas[1]=slot3, [2]=slot7, [4]=slot18, [7]=slot42, [10]=slot75
 
-export default function UniverseCanvas({ planets, plazas, decorations, river, bridges, flyMode, flyVehicle, onExitFly, onCollect, themeIndex, onHud, onPause, focusedPlanet, focusedPlanetB, accentColor, onClearFocus, onplanetClick, onFocusInfo, flyPauseSignal, flyHasOverlay, flyStartPaused, skyAds, onAdClick, onAdViewed, introMode, onIntroEnd, raidPhase, raidData, raidAttacker, raidDefender, onRaidPhaseComplete, onLandmarkClick, rabbitSighting, onRabbitCaught, rabbitCinematic, onRabbitCinematicEnd, rabbitCinematicTarget, ghostPreviewLogin, holdRise, celebrationActive, wallpaperMode, wallpaperSpeed, liveByLogin, UniverseEnergy }: Props) {
+export default function CityCanvas({ planets, plazas, decorations, river, bridges, flyMode, flyVehicle, onExitFly, onCollect, themeIndex, onHud, onPause, focusedPlanet, focusedPlanetB, accentColor, onClearFocus, onPlanetClick, onFocusInfo, flyPauseSignal, flyHasOverlay, flyStartPaused, skyAds, onAdClick, onAdViewed, introMode, onIntroEnd, raidPhase, raidData, raidAttacker, raidDefender, onRaidPhaseComplete, onLandmarkClick, rabbitSighting, onRabbitCaught, rabbitCinematic, onRabbitCinematicEnd, rabbitCinematicTarget, ghostPreviewLogin, holdRise, celebrationActive, wallpaperMode, wallpaperSpeed, liveByLogin, UniverseEnergy }: Props) {
   const t = THEMES[themeIndex] ?? THEMES[0];
   const showPerf = typeof window !== "undefined" && new URLSearchParams(window.location.search).has("perf");
   const [dpr, setDpr] = useState(1);
@@ -2134,7 +2134,7 @@ export default function UniverseCanvas({ planets, plazas, decorations, river, br
         focusedPlanetB={raidPhase && raidPhase !== "idle" && raidPhase !== "preview" && raidPhase !== "share" && raidPhase !== "done" ? (raidAttacker?.login ?? null) : focusedPlanetB}
         hideEffectsFor={raidPhase && raidPhase !== "idle" && raidPhase !== "preview" && raidPhase !== "share" && raidPhase !== "done" ? (raidAttacker?.login ?? null) : null}
         accentColor={t.planet.accent}
-        onplanetClick={onplanetClick}
+        onPlanetClick={onPlanetClick}
         onFocusInfo={onFocusInfo}
         introMode={introMode}
         flyMode={flyMode}
@@ -2156,7 +2156,7 @@ export default function UniverseCanvas({ planets, plazas, decorations, river, br
       {!wallpaperMode && skyAds && skyAds.length > 0 && (
         <>
           <SkyAds ads={skyAds} UniverseRadius={UniverseRadius} flyMode={flyMode} onAdClick={onAdClick} onAdViewed={onAdViewed} />
-          <planetAds
+          <PlanetAds
             ads={skyAds}
             planets={planets}
             onAdClick={onAdClick}

@@ -7,24 +7,24 @@ import {
   CONSTELLATION_DESCRIPTIONS,
 } from "@/lib/github";
 
-interface constellationChooserProps {
+interface ConstellationChooserProps {
   currentconstellation: string | null;
   inferredconstellation: string | null;
   onClose: () => void;
   onChosen: (constellationId: string) => void;
 }
 
-const CHOOSABLE_constellationS = [
+const CHOOSABLE_CONSTELLATIONS = [
   "frontend", "backend", "fullstack", "mobile", "data_ai",
   "devops", "security", "gamedev", "vibe_coder", "creator",
 ];
 
-export default function constellationChooser({
+export default function ConstellationChooser({
   currentconstellation,
   inferredconstellation,
   onClose,
   onChosen,
-}: constellationChooserProps) {
+}: ConstellationChooserProps) {
   const [selected, setSelected] = useState<string | null>(currentconstellation);
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -92,9 +92,8 @@ export default function constellationChooser({
           </p>
         )}
 
-        {/* constellation grid */}
         <div className="mt-4 grid grid-cols-1 gap-2 sm:grid-cols-2">
-          {CHOOSABLE_constellationS.map((id) => {
+          {CHOOSABLE_CONSTELLATIONS.map((id) => {
             const isSelected = selected === id;
             const color = CONSTELLATION_COLORS[id] ?? "#888";
             return (

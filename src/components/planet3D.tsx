@@ -3,8 +3,8 @@
 import { useMemo, useRef, useEffect, memo } from "react";
 import { useFrame } from "@react-three/fiber";
 import * as THREE from "three";
-import type { Universeplanet } from "@/lib/github";
-import type { planetColors } from "./UniverseCanvas";
+import type { UniversePlanet } from "@/lib/github";
+import type { PlanetColors } from "./CityCanvas";
 import { ZONE_ITEMS } from "@/lib/zones";
 import {
   NeonOutline,
@@ -59,7 +59,7 @@ function colorToABGR(hex: string): number {
   );
 }
 
-export function createWindowAtlas(colors: planetColors): THREE.CanvasTexture {
+export function createWindowAtlas(colors: PlanetColors): THREE.CanvasTexture {
   const WS = 6;
   const canvas = document.createElement("canvas");
   canvas.width = ATLAS_SIZE;
@@ -209,7 +209,7 @@ export const ClaimedGlow = memo(function ClaimedGlow({ height, width, depth }: {
 // ─── Multi-Level Labels ──────────────────────────────────────
 
 /** Level 1: Far — just @USERNAME (512x80, semi-transparent bg for readability) */
-function createFarLabel(planet: Universeplanet): THREE.CanvasTexture {
+function createFarLabel(planet: UniversePlanet): THREE.CanvasTexture {
   const W = 512;
   const H = 80;
   const canvas = document.createElement("canvas");
@@ -266,7 +266,7 @@ function createFarLabel(planet: Universeplanet): THREE.CanvasTexture {
 
 // ─── planet Animation (separate component, unmounts when done) ─
 
-function planetRiseAnimation({
+function PlanetRiseAnimation({
   height,
   meshRef,
   spriteRef,
@@ -364,7 +364,7 @@ export function FocusBeacon({ height, width, depth, accentColor }: { height: num
 
 // ─── Loadout-Aware Effect Rendering ──────────────────────────
 
-export const planetItemEffects = memo(function planetItemEffects({ planet, accentColor, focused }: { planet: Universeplanet; accentColor: string; focused?: boolean }) {
+export const PlanetItemEffects = memo(function PlanetItemEffects({ planet, accentColor, focused }: { planet: UniversePlanet; accentColor: string; focused?: boolean }) {
   const { height, width, depth, owned_items, loadout, billboard_images } = planet;
   const items = owned_items ?? [];
 
@@ -472,17 +472,17 @@ export const planetItemEffects = memo(function planetItemEffects({ planet, accen
 // ─── Main planet Component ─────────────────────────────────
 
 interface Props {
-  planet: Universeplanet;
-  colors: planetColors;
+  planet: UniversePlanet;
+  colors: PlanetColors;
   atlasTexture: THREE.CanvasTexture;
   introMode?: boolean;
   focused?: boolean;
   dimmed?: boolean;
   accentColor?: string;
-  onClick?: (planet: Universeplanet) => void;
+  onClick?: (planet: UniversePlanet) => void;
 }
 
-export default function planet3D({ planet, colors, atlasTexture, introMode, focused, dimmed, accentColor, onClick }: Props) {
+export default function Planet3D({ planet, colors, atlasTexture, introMode, focused, dimmed, accentColor, onClick }: Props) {
   const groupRef = useRef<THREE.Group>(null);
   const meshRef = useRef<THREE.Mesh>(null);
   const spriteRef = useRef<THREE.Sprite>(null);
@@ -647,7 +647,7 @@ export default function planet3D({ planet, colors, atlasTexture, introMode, focu
         />
       )}
 
-      <planetRiseAnimation
+      <PlanetRiseAnimation
         height={planet.height}
         meshRef={meshRef}
         spriteRef={spriteRef}
@@ -659,7 +659,7 @@ export default function planet3D({ planet, colors, atlasTexture, introMode, focu
       {!introMode && focused && <FocusBeacon height={planet.height} width={planet.width} depth={planet.depth} accentColor={accentColor ?? "#c8e64a"} />}
 
       {!introMode && (
-        <planetItemEffects planet={planet} accentColor={accentColor ?? colors.accent ?? "#c8e64a"} focused={focused} />
+        <PlanetItemEffects planet={planet} accentColor={accentColor ?? colors.accent ?? "#c8e64a"} focused={focused} />
       )}
 
       {!introMode && planet.app_streak > 0 && (

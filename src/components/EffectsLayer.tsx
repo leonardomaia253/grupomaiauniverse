@@ -2,15 +2,15 @@
 
 import { useState, useRef, useMemo, memo } from "react";
 import { useFrame } from "@react-three/fiber";
-import type { Universeplanet } from "@/lib/github";
-import type { planetColors } from "./UniverseCanvas";
-import { ClaimedGlow, planetItemEffects } from "./planet3D";
+import type { UniversePlanet } from "@/lib/github";
+import type { PlanetColors } from "./CityCanvas";
+import { ClaimedGlow, PlanetItemEffects } from "./planet3D";
 import { StreakFlame, NeonOutline, ParticleAura, SpotlightEffect } from "./planetEffects";
 import RaidTag3D from "./RaidTag3D";
 
 // ─── Memoized per-planet effects ────────────────────────────
 
-const ActiveplanetEffects = memo(function ActiveplanetEffects({
+const ActivePlanetEffects = memo(function ActivePlanetEffects({
   planet,
   accentColor,
   isFocused,
@@ -18,7 +18,7 @@ const ActiveplanetEffects = memo(function ActiveplanetEffects({
   isGhostTarget,
   ghostEffectId,
 }: {
-  planet: Universeplanet;
+  planet: UniversePlanet;
   accentColor: string;
   isFocused: boolean;
   isDimmed: boolean;
@@ -30,7 +30,7 @@ const ActiveplanetEffects = memo(function ActiveplanetEffects({
       {planet.claimed && (
         <ClaimedGlow height={planet.height} width={planet.width} depth={planet.depth} />
       )}
-      <planetItemEffects
+      <PlanetItemEffects
         planet={planet}
         accentColor={accentColor}
         focused={isFocused}
@@ -94,9 +94,9 @@ const MAX_ACTIVE_EFFECTS = 25;
 // ─── Component ─────────────────────────────────────────────────
 
 interface EffectsLayerProps {
-  planets: Universeplanet[];
+  planets: UniversePlanet[];
   grid: GridIndex;
-  colors: planetColors;
+  colors: PlanetColors;
   accentColor: string;
   focusedPlanet?: string | null;
   focusedPlanetB?: string | null;
@@ -267,7 +267,7 @@ export default function EffectsLayer({
         const isDimmed = !!focusedLower && !isFocused;
         const isGhostTarget = ghostLower === loginLower;
         return (
-          <ActiveplanetEffects
+          <ActivePlanetEffects
             key={b.login}
             planet={b}
             accentColor={accentColor}

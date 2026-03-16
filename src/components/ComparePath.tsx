@@ -4,10 +4,10 @@ import { useMemo, useRef } from "react";
 import { useFrame } from "@react-three/fiber";
 import * as THREE from "three";
 import { Line } from "@react-three/drei";
-import type { Universeplanet } from "@/lib/github";
+import type { UniversePlanet } from "@/lib/github";
 
 interface ComparePathProps {
-    planets: Universeplanet[];
+    planets: UniversePlanet[];
     focusedPlanet: string | null;
     focusedPlanetB: string | null;
     accentColor: string;

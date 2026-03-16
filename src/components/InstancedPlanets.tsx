@@ -3,8 +3,8 @@
 import { useRef, useMemo, useEffect, memo } from "react";
 import { useFrame, useThree } from "@react-three/fiber";
 import * as THREE from "three";
-import type { Universeplanet } from "@/lib/github";
-import type { planetColors } from "./UniverseCanvas";
+import type { UniversePlanet } from "@/lib/github";
+import type { PlanetColors } from "./CityCanvas";
 import { wasAdPointerConsumed } from "./SkyAds";
 
 // ─── Atlas Constants (must match planet3D.tsx) ───────────────
@@ -168,14 +168,14 @@ const _scale = new THREE.Vector3(1, 1, 1);
 
 // ─── Types ─────────────────────────────────────────────────────
 
-interface InstancedplanetsProps {
-  planets: Universeplanet[];
-  colors: planetColors;
+interface InstancedPlanetsProps {
+  planets: UniversePlanet[];
+  colors: PlanetColors;
   atlasTexture: THREE.CanvasTexture;
   focusedPlanet?: string | null;
   focusedPlanetB?: string | null;
   introMode?: boolean;
-  onplanetClick?: (planet: Universeplanet) => void;
+  onPlanetClick?: (planet: UniversePlanet) => void;
   dimopacity?: number;
   dimEmissive?: number;
   holdRise?: boolean;
@@ -196,20 +196,20 @@ const MAX_RISE_TOTAL = 4; // cap total stagger to 4s regardless of planet count
 // surviving component remounts caused by Next.js navigation.
 let hasPlayedRiseGlobal = false;
 
-export default memo(function Instancedplanets({
+export default memo(function InstancedPlanets({
   planets,
   colors,
   atlasTexture,
   focusedPlanet,
   focusedPlanetB,
   introMode,
-  onplanetClick,
+  onPlanetClick,
   dimopacity,
   dimEmissive,
   holdRise,
   liveByLogin,
   UniverseEnergy = 1.0,
-}: InstancedplanetsProps) {
+}: InstancedPlanetsProps) {
   const meshRef = useRef<THREE.InstancedMesh>(null);
   const count = planets.length;
 
@@ -501,8 +501,8 @@ export default memo(function Instancedplanets({
   // Stable refs so listeners always access latest values
   const planetsRef = useRef(planets);
   planetsRef.current = planets;
-  const onClickRef = useRef(onplanetClick);
-  onClickRef.current = onplanetClick;
+  const onClickRef = useRef(onPlanetClick);
+  onClickRef.current = onPlanetClick;
   const introRef = useRef(introMode);
   introRef.current = introMode;
 
@@ -555,7 +555,7 @@ export default memo(function Instancedplanets({
       if (dx * dx + dy * dy > 625) return;
 
       if (tap.id < planetsRef.current.length) {
-        onClickRef.current?.(planetsRef.current[tap.id]);
+        onPlanetClick?.(planetsRef.current[tap.id]);
       }
     };
 

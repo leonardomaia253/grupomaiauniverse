@@ -1,19 +1,19 @@
 import type {
-  Universeplanet,
-  UniversePlaza,
-  UniverseDecoration,
-  UniverseRiver,
-  UniverseBridge,
-  constellationZone,
+  UniversePlanet,
+  SpacePlaza,
+  SpaceDecoration,
+  SpaceRiver,
+  SpaceBridge,
+  GalaxyZone,
 } from "@/lib/github";
 
-interface UniverseCache {
-  planets: Universeplanet[];
-  plazas: UniversePlaza[];
-  decorations: UniverseDecoration[];
-  river: UniverseRiver | null;
-  bridges: UniverseBridge[];
-  constellationZones: constellationZone[];
+export interface UniverseCache {
+  planets: UniversePlanet[];
+  plazas: SpacePlaza[];
+  decorations: SpaceDecoration[];
+  river: SpaceRiver | null;
+  bridges: SpaceBridge[];
+  GalaxyZones: GalaxyZone[];
   stats: { total_companies: number; total_contributions: number };
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   rawcompanies: any[];

@@ -25,13 +25,13 @@ import {
   GitHubStar,
 } from "./planetEffects";
 import { ClaimedGlow } from "./planet3D";
-import type { planetDims } from "./ShopClient";
+import type { PlanetDims } from "./ShopClient";
 import { ZONE_ITEMS } from "@/lib/zones";
 
 const ACCENT = "#c8e64a";
 
 // Fallback dims if none provided
-const DEFAULT_DIMS: planetDims = { width: 20, height: 40, depth: 16 };
+const DEFAULT_DIMS: PlanetDims = { width: 20, height: 40, depth: 16 };
 
 // ─── Universe-matching theme colors (Midnight) ───────────────────
 const THEME = {
@@ -106,7 +106,7 @@ function EffectForItem({
   billboardImages,
 }: {
   itemId: string;
-  dims: planetDims;
+  dims: PlanetDims;
   billboardImages?: string[];
 }) {
   switch (itemId) {
@@ -182,7 +182,7 @@ function ShopPreviewScene({
   ownedFacesItems: string[];
   customColor: string | null;
   billboardImages: string[];
-  dims: planetDims;
+  dims: PlanetDims;
   highlightItemId?: string | null;
 }) {
   const { width: W, height: H, depth: D } = dims;
@@ -314,12 +314,12 @@ export default function ShopPreview({
   ownedFacesItems: string[];
   customColor: string | null;
   billboardImages: string[];
-  planetDims?: planetDims;
+  planetDims?: PlanetDims;
   highlightItemId?: string | null;
 }) {
   // Clamp planet dims for preview (cap height, ensure min width/depth)
   const raw = planetDims ?? DEFAULT_DIMS;
-  const dims: planetDims = {
+  const dims: PlanetDims = {
     width: Math.max(18, raw.width),
     height: Math.min(55, Math.max(30, raw.height)),
     depth: Math.max(14, raw.depth),

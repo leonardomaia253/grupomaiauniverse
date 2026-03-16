@@ -5,15 +5,15 @@ import { useFrame, useThree } from "@react-three/fiber";
 import * as THREE from "three";
 import type { RaidPhase } from "@/lib/useRaidSequence";
 import type { RaidExecuteResponse } from "@/lib/raid";
-import type { Universeplanet } from "@/lib/github";
+import type { UniversePlanet } from "@/lib/github";
 import { playRaidSound } from "@/lib/raidAudio";
 
 // ─── Types ────────────────────────────────────────────────────
 
 interface Props {
   phase: RaidPhase;
-  attacker: Universeplanet | null;
-  defender: Universeplanet | null;
+  attacker: UniversePlanet | null;
+  defender: UniversePlanet | null;
   raidData: RaidExecuteResponse | null;
   onPhaseComplete: (phase: RaidPhase) => void;
 }

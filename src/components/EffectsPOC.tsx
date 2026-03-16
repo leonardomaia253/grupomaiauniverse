@@ -860,7 +860,7 @@ function createPreviewWindowTexture(
 
 // ─── Effect Router (existing + new) ─────────────────────────
 
-interface planetDims {
+interface PlanetDims {
   width: number;
   height: number;
   depth: number;
@@ -871,7 +871,7 @@ function EffectForItem({
   dims,
 }: {
   itemId: string;
-  dims: planetDims;
+  dims: PlanetDims;
 }) {
   switch (itemId) {
     // Existing effects
@@ -932,7 +932,7 @@ function PreviewScene({
   dims,
 }: {
   loadout: { crown: string | null; roof: string | null; aura: string | null };
-  dims: planetDims;
+  dims: PlanetDims;
 }) {
   const { width: W, height: H, depth: D } = dims;
   const groupRef = useRef<THREE.Group>(null);
@@ -1116,7 +1116,7 @@ export default function EffectsPOC() {
     aura: "star_orbit",
   });
 
-  const dims: planetDims = { width: 24, height: 42, depth: 18 };
+  const dims: PlanetDims = { width: 24, height: 42, depth: 18 };
   const camDist = Math.max(80, dims.height * 2.5);
 
   const setZone = (zone: "crown" | "roof" | "aura") => (id: string | null) => {

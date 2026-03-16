@@ -4,7 +4,7 @@ import { useRef, useMemo, useEffect } from "react";
 import { useFrame, useThree } from "@react-three/fiber";
 import * as THREE from "three";
 import { isPlanetAd, type SkyAd } from "@/lib/skyAds";
-import type { Universeplanet } from "@/lib/github";
+import type { UniversePlanet } from "@/lib/github";
 import { createLedTexture, ViewabilityTracker, SCROLL_SPEED, markAdPointerConsumed, registerAdMesh, unregisterAdMesh } from "./SkyAds";
 
 // Shared geometries — prevents GPU leaks on mount/unmount
@@ -50,7 +50,7 @@ function AdBillboard({
   onAdClick,
 }: {
   ad: SkyAd;
-  planet: Universeplanet;
+  planet: UniversePlanet;
   meshRef?: (el: THREE.Mesh | null) => void;
   onAdClick?: (ad: SkyAd) => void;
 }) {
@@ -130,7 +130,7 @@ function AdRooftopSign({
   onAdClick,
 }: {
   ad: SkyAd;
-  planet: Universeplanet;
+  planet: UniversePlanet;
   meshRef?: (el: THREE.Mesh | null) => void;
   onAdClick?: (ad: SkyAd) => void;
 }) {
@@ -228,7 +228,7 @@ function AdLedWrap({
   onAdClick,
 }: {
   ad: SkyAd;
-  planet: Universeplanet;
+  planet: UniversePlanet;
   meshRef?: (el: THREE.Mesh | null) => void;
   onAdClick?: (ad: SkyAd) => void;
 }) {
@@ -351,9 +351,9 @@ function AdLedWrap({
 
 // ─── planetAds — Main wrapper ────────────────────────────────
 
-interface planetAdsProps {
+interface PlanetAdsProps {
   ads: SkyAd[];
-  planets: Universeplanet[];
+  planets: UniversePlanet[];
   onAdClick?: (ad: SkyAd) => void;
   onAdViewed?: (adId: string) => void;
   focusedPlanet?: string | null;
@@ -363,7 +363,7 @@ interface planetAdsProps {
 // Pre-allocated vector for distance culling
 const _adCamPos = new THREE.Vector3();
 
-export default function planetAds({ ads, planets, onAdClick, onAdViewed, focusedPlanet, focusedPlanetB }: planetAdsProps) {
+export default function PlanetAds({ ads, planets, onAdClick, onAdViewed, focusedPlanet, focusedPlanetB }: PlanetAdsProps) {
   const meshRefs = useRef<Map<string, THREE.Mesh>>(new Map());
   const groupRef = useRef<THREE.Group>(null);
   const { camera } = useThree();
@@ -384,11 +384,11 @@ export default function planetAds({ ads, planets, onAdClick, onAdViewed, focused
   );
 
   const { billboardAds, rooftopSignAds, ledWrapAds } = useMemo(() => {
-    const planetAds = ads.filter((a) => isPlanetAd(a.vehicle));
+    const planetAds = ads.filter((a: SkyAd) => isPlanetAd(a.vehicle));
     return {
-      billboardAds: planetAds.filter((a) => a.vehicle === "billboard"),
-      rooftopSignAds: planetAds.filter((a) => a.vehicle === "rooftop_sign"),
-      ledWrapAds: planetAds.filter((a) => a.vehicle === "led_wrap"),
+      billboardAds: planetAds.filter((a: SkyAd) => a.vehicle === "billboard"),
+      rooftopSignAds: planetAds.filter((a: SkyAd) => a.vehicle === "rooftop_sign"),
+      ledWrapAds: planetAds.filter((a: SkyAd) => a.vehicle === "led_wrap"),
     };
   }, [ads]);
 

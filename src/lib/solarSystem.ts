@@ -1,6 +1,6 @@
 import type { CompanyRecord } from "@/lib/github";
 
-export interface CompanyPlanet {
+export interface UniversePlanet {
   handle: string;
   name: string | null;
   avatar_url: string | null;
@@ -26,7 +26,7 @@ export interface CompanyPlanet {
 }
 
 export interface SolarSystem {
-  planets: CompanyPlanet[];
+  planets: UniversePlanet[];
   sunRadius: number;
 }
 
@@ -49,7 +49,7 @@ export function generateSolarSystem(companies: CompanyRecord[]): SolarSystem {
   // Sort by some metric to determine orbital distance (inner = higher rank)
   const sorted = [...companies].sort((a, b) => b.contributions - a.contributions);
   
-  const planets: CompanyPlanet[] = sorted.map((dev, i) => {
+  const planets: UniversePlanet[] = sorted.map((dev, i) => {
     const seed = hashStr(dev.github_login);
     const rand = (s: number) => seededRandom(seed + s);
     

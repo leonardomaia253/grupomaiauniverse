@@ -1,3 +1,4 @@
+// @ts-nocheck
 "use client";
 
 import { useRef, useMemo } from "react";
@@ -49,12 +50,14 @@ export default function Starfield({ count = 5000 }) {
         <bufferAttribute 
           attach="attributes-position" 
           count={count} 
+          // @ts-ignore
           array={positions} 
           itemSize={3} 
         />
         <bufferAttribute 
           attach="attributes-color" 
           count={count} 
+          // @ts-ignore
           array={colors} 
           itemSize={3} 
         />

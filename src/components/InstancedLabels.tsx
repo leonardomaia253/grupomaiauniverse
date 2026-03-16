@@ -3,7 +3,7 @@
 import { useRef, useMemo, useEffect, memo } from "react";
 import { useFrame } from "@react-three/fiber";
 import * as THREE from "three";
-import type { Universeplanet } from "@/lib/github";
+import type { UniversePlanet } from "@/lib/github";
 
 // ─── Atlas Config ──────────────────────────────────────────────
 
@@ -19,7 +19,7 @@ const LABEL_VISIBLE_RADIUS_SQ = LABEL_VISIBLE_RADIUS * LABEL_VISIBLE_RADIUS;
 
 // ─── Text Atlas Builder ────────────────────────────────────────
 
-function createTextAtlas(planets: Universeplanet[]): THREE.CanvasTexture {
+function createTextAtlas(planets: UniversePlanet[]): THREE.CanvasTexture {
   const canvas = document.createElement("canvas");
   canvas.width = ATLAS_SIZE;
   canvas.height = ATLAS_SIZE;
@@ -151,7 +151,7 @@ const GRID_CELL_SIZE = 100;
 class SpatialGrid2D {
   private cells: Map<string, number[]> = new Map();
 
-  constructor(planets: Universeplanet[], count: number) {
+  constructor(planets: UniversePlanet[], count: number) {
     for (let i = 0; i < count; i++) {
       const b = planets[i];
       const key = `${Math.floor(b.position[0] / GRID_CELL_SIZE)},${Math.floor(b.position[2] / GRID_CELL_SIZE)}`;
@@ -184,25 +184,25 @@ class SpatialGrid2D {
 // ─── Component ─────────────────────────────────────────────────
 
 interface InstancedLabelsProps {
-  planets: Universeplanet[];
+  planets: UniversePlanet[];
   introMode?: boolean;
   flyMode?: boolean;
-  focusedplanet?: string | null;
-  focusedplanetB?: string | null;
+  focusedPlanet?: string | null;
+  focusedPlanetB?: string | null;
 }
 
 export default memo(function InstancedLabels({
   planets,
   introMode,
   flyMode,
-  focusedplanet,
-  focusedplanetB,
+  focusedPlanet,
+  focusedPlanetB,
 }: InstancedLabelsProps) {
   const meshRef = useRef<THREE.InstancedMesh>(null);
   const count = Math.min(planets.length, MAX_LABELS);
 
-  const focusedLower = focusedplanet?.toLowerCase() ?? null;
-  const focusedBLower = focusedplanetB?.toLowerCase() ?? null;
+  const focusedLower = focusedPlanet?.toLowerCase() ?? null;
+  const focusedBLower = focusedPlanetB?.toLowerCase() ?? null;
 
   // Create atlas texture
   const atlas = useMemo(() => {

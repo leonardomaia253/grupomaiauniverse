@@ -4,13 +4,13 @@ import { useRef, useMemo, useEffect } from "react";
 import { useFrame } from "@react-three/fiber";
 import * as THREE from "three";
 import { createWindowAtlas, FocusBeacon } from "./planet3D";
-import Instancedplanets from "./Instancedplanets";
+import InstancedPlanets from "./InstancedPlanets";
 import InstancedLabels from "./InstancedLabels";
 import EffectsLayer from "./EffectsLayer";
 import LiveDots from "./LiveDots";
 import type { LiveSession } from "@/lib/useCodingPresence";
-import type { Universeplanet } from "@/lib/github";
-import type { planetColors } from "./UniverseCanvas";
+import type { UniversePlanet } from "@/lib/github";
+import type { PlanetColors } from "./CityCanvas";
 
 const GRID_CELL_SIZE = 200;
 
@@ -30,7 +30,7 @@ interface GridIndex {
   cellSize: number;
 }
 
-function buildSpatialGrid(planets: Universeplanet[], cellSize: number): GridIndex {
+function buildSpatialGrid(planets: UniversePlanet[], cellSize: number): GridIndex {
   const cells = new Map<string, number[]>();
   for (let i = 0; i < planets.length; i++) {
     const b = planets[i];
@@ -49,11 +49,11 @@ function buildSpatialGrid(planets: Universeplanet[], cellSize: number): GridInde
 
 // ─── Pre-computed planet data ─────────────────────────────────
 
-interface planetLookup {
+interface PlanetLookup {
   indexByLogin: Map<string, number>;
 }
 
-function buildLookup(planets: Universeplanet[]): planetLookup {
+function buildLookup(planets: UniversePlanet[]): PlanetLookup {
   const indexByLogin = new Map<string, number>();
   for (let i = 0; i < planets.length; i++) {
     indexByLogin.set(planets[i].login.toLowerCase(), i);
@@ -64,13 +64,13 @@ function buildLookup(planets: Universeplanet[]): planetLookup {
 // ─── Component ──────────────────────────────────────────────────
 
 interface UniverseSceneProps {
-  planets: Universeplanet[];
-  colors: planetColors;
-  focusedplanet?: string | null;
-  focusedplanetB?: string | null;
+  planets: UniversePlanet[];
+  colors: PlanetColors;
+  focusedPlanet?: string | null;
+  focusedPlanetB?: string | null;
   hideEffectsFor?: string | null;
   accentColor?: string;
-  onplanetClick?: (planet: Universeplanet) => void;
+  onPlanetClick?: (planet: UniversePlanet) => void;
   onFocusInfo?: (info: FocusInfo) => void;
   introMode?: boolean;
   flyMode?: boolean;
@@ -83,11 +83,11 @@ interface UniverseSceneProps {
 export default function UniverseScene({
   planets,
   colors,
-  focusedplanet,
-  focusedplanetB,
+  focusedPlanet,
+  focusedPlanetB,
   hideEffectsFor,
   accentColor,
-  onplanetClick,
+  onPlanetClick,
   onFocusInfo,
   introMode,
   flyMode,
@@ -106,18 +106,18 @@ export default function UniverseScene({
   const lookup = useMemo(() => buildLookup(planets), [planets]);
 
   // Cache focus names
-  const focusedLower = focusedplanet?.toLowerCase() ?? null;
-  const focusedBLower = focusedplanetB?.toLowerCase() ?? null;
+  const focusedLower = focusedPlanet?.toLowerCase() ?? null;
+  const focusedBLower = focusedPlanetB?.toLowerCase() ?? null;
 
   // Focused planet data (for FocusBeacon positioning)
-  const focusedplanetData = useMemo(() => {
+  const focusedPlanetData = useMemo(() => {
     if (!focusedLower) return null;
     const idx = lookup.indexByLogin.get(focusedLower);
     if (idx === undefined) return null;
     return planets[idx];
   }, [focusedLower, lookup, planets]);
 
-  const focusedplanetBData = useMemo(() => {
+  const focusedPlanetBData = useMemo(() => {
     if (!focusedBLower) return null;
     const idx = lookup.indexByLogin.get(focusedBLower);
     if (idx === undefined) return null;
@@ -158,14 +158,14 @@ export default function UniverseScene({
   return (
     <>
       {/* All planets: single instanced draw call with custom shader */}
-      <Instancedplanets
+      <InstancedPlanets
         planets={planets}
         colors={colors}
         atlasTexture={atlasTexture}
-        focusedplanet={focusedplanet}
-        focusedplanetB={focusedplanetB}
+        focusedPlanet={focusedPlanet}
+        focusedPlanetB={focusedPlanetB}
         introMode={introMode}
-        onplanetClick={onplanetClick}
+        onPlanetClick={onPlanetClick}
         holdRise={holdRise}
         liveByLogin={liveByLogin}
         UniverseEnergy={UniverseEnergy}
@@ -181,8 +181,8 @@ export default function UniverseScene({
         planets={planets}
         introMode={introMode}
         flyMode={flyMode}
-        focusedplanet={focusedplanet}
-        focusedplanetB={focusedplanetB}
+        focusedPlanet={focusedPlanet}
+        focusedPlanetB={focusedPlanetB}
       />
 
       {/* Effects: React components only for nearby planets with items */}
@@ -191,8 +191,8 @@ export default function UniverseScene({
         grid={grid}
         colors={colors}
         accentColor={accentColor ?? colors.accent ?? "#c8e64a"}
-        focusedplanet={focusedplanet}
-        focusedplanetB={focusedplanetB}
+        focusedPlanet={focusedPlanet}
+        focusedPlanetB={focusedPlanetB}
         hideEffectsFor={hideEffectsFor}
         introMode={introMode}
         flyMode={flyMode}
@@ -200,23 +200,23 @@ export default function UniverseScene({
       />
 
       {/* FocusBeacon: standalone, only when a planet is focused */}
-      {!introMode && focusedplanetData && (
-        <group position={[focusedplanetData.position[0], 0, focusedplanetData.position[2]]}>
+      {!introMode && focusedPlanetData && (
+        <group position={[focusedPlanetData.position[0], 0, focusedPlanetData.position[2]]}>
           <FocusBeacon
-            height={focusedplanetData.height}
-            width={focusedplanetData.width}
-            depth={focusedplanetData.depth}
+            height={focusedPlanetData.height}
+            width={focusedPlanetData.width}
+            depth={focusedPlanetData.depth}
             accentColor={accentColor ?? "#c8e64a"}
           />
         </group>
       )}
 
-      {!introMode && focusedplanetBData && focusedplanetBData !== focusedplanetData && (
-        <group position={[focusedplanetBData.position[0], 0, focusedplanetBData.position[2]]}>
+      {!introMode && focusedPlanetBData && focusedPlanetBData !== focusedPlanetData && (
+        <group position={[focusedPlanetBData.position[0], 0, focusedPlanetBData.position[2]]}>
           <FocusBeacon
-            height={focusedplanetBData.height}
-            width={focusedplanetBData.width}
-            depth={focusedplanetBData.depth}
+            height={focusedPlanetBData.height}
+            width={focusedPlanetBData.width}
+            depth={focusedPlanetBData.depth}
             accentColor={accentColor ?? "#c8e64a"}
           />
         </group>
