@@ -1,0 +1,330 @@
+﻿diff --git a/src/app/api/raid/execute/route.ts b/src/app/api/raid/execute/route.ts
+index e7acbe2..7a696de 100644
+--- a/src/app/api/raid/execute/route.ts
++++ b/src/app/api/raid/execute/route.ts
+@@ -186,14 +186,14 @@ export async function POST(request: Request) {
+   const savedLoadout = (raidLoadoutRow?.config as { vehicle?: string; tag?: string } | null) ?? {};
+ 
+   // Vehicle: use request override > saved loadout > default
+-  let vehicle = "airplane";
++  let vehicle = "spaceship";
+   if (vehicle_id) {
+-    if (vehicle_id === "airplane" || ownedSet.has(vehicle_id)) {
++    if (vehicle_id === "spaceship" || ownedSet.has(vehicle_id)) {
+       vehicle = vehicle_id;
+     }
+   } else {
+-    const saved = savedLoadout.vehicle ?? "airplane";
+-    vehicle = saved === "airplane" || ownedSet.has(saved) ? saved : "airplane";
++    const saved = savedLoadout.vehicle ?? "spaceship";
++    vehicle = saved === "spaceship" || ownedSet.has(saved) ? saved : "spaceship";
+   }
+ 
+   // Tag: use saved loadout
+diff --git a/src/app/api/raid/loadout/route.ts b/src/app/api/raid/loadout/route.ts
+index 26e15a6..cfcdee0 100644
+--- a/src/app/api/raid/loadout/route.ts
++++ b/src/app/api/raid/loadout/route.ts
+@@ -35,7 +35,7 @@ export async function GET(request: Request) {
+   }
+ 
+   if (!companyId) {
+-    return NextResponse.json({ vehicle: "airplane", tag: "default" });
++    return NextResponse.json({ vehicle: "spaceship", tag: "default" });
+   }
+ 
+   const { data } = await admin
+@@ -48,7 +48,7 @@ export async function GET(request: Request) {
+   const config = (data?.config as { vehicle?: string; tag?: string }) ?? {};
+ 
+   return NextResponse.json({
+-    vehicle: config.vehicle ?? "airplane",
++    vehicle: config.vehicle ?? "spaceship",
+     tag: config.tag ?? "default",
+   });
+ }
+@@ -102,14 +102,14 @@ export async function POST(request: Request) {
+ 
+   const current = (currentData?.config as { vehicle?: string; tag?: string }) ?? {};
+   const config: { vehicle: string; tag: string } = {
+-    vehicle: current.vehicle ?? "airplane",
++    vehicle: current.vehicle ?? "spaceship",
+     tag: current.tag ?? "default",
+   };
+ 
+   // Validate vehicle
+   if (vehicle !== undefined) {
+-    if (vehicle === "airplane") {
+-      config.vehicle = "airplane";
++    if (vehicle === "spaceship") {
++      config.vehicle = "spaceship";
+     } else if (RAID_VEHICLE_ITEMS.includes(vehicle) && ownedSet.has(vehicle)) {
+       config.vehicle = vehicle;
+     } else {
+diff --git a/src/app/api/raid/preview/route.ts b/src/app/api/raid/preview/route.ts
+index c0df8a3..ef55246 100644
+--- a/src/app/api/raid/preview/route.ts
++++ b/src/app/api/raid/preview/route.ts
+@@ -161,7 +161,7 @@ export async function POST(request: Request) {
+ 
+   // Build available vehicles list (always includes default airplane)
+   const VEHICLE_META: Record<string, { name: string; emoji: string }> = {
+-    airplane: { name: "Airplane", emoji: "Γ£ê∩╕Å" },
++    spaceship: { name: "Spaceship", emoji: "≡ƒÜÇ" },
+     raid_helicopter: { name: "Helicopter", emoji: "≡ƒÜü" },
+     raid_drone: { name: "Stealth Drone", emoji: "≡ƒ¢╕" },
+     raid_rocket: { name: "Rocket", emoji: "≡ƒÜÇ" },
+@@ -169,18 +169,18 @@ export async function POST(request: Request) {
+ 
+   const ownedVehicleIds = new Set((vehiclePurchases ?? []).map((p) => p.item_id));
+   const available_vehicles = [
+-    { item_id: "airplane", name: "Airplane", emoji: "Γ£ê∩╕Å" },
++    { item_id: "spaceship", name: "Spaceship", emoji: "≡ƒÜÇ" },
+     ...Array.from(ownedVehicleIds)
+       .filter((id) => VEHICLE_META[id])
+       .map((id) => ({ item_id: id, ...VEHICLE_META[id] })),
+   ];
+ 
+-  // Use saved selection, fallback to airplane
++  // Use saved selection, fallback to spaceship
+   const savedLoadout = (raidLoadoutRow?.config as { vehicle?: string } | null) ?? {};
+-  let vehicle = savedLoadout.vehicle ?? "airplane";
++  let vehicle = savedLoadout.vehicle ?? "spaceship";
+   // Validate saved vehicle is still owned
+-  if (vehicle !== "airplane" && !ownedVehicleIds.has(vehicle)) {
+-    vehicle = "airplane";
++  if (vehicle !== "spaceship" && !ownedVehicleIds.has(vehicle)) {
++    vehicle = "spaceship";
+   }
+ 
+   // Estimate planet height from contributions
+diff --git a/src/app/page.tsx b/src/app/page.tsx
+index 10b7c25..fc6eb97 100644
+--- a/src/app/page.tsx
++++ b/src/app/page.tsx
+@@ -402,7 +402,7 @@ function HomeContent() {
+     raw?: string;
+   } | null>(null);
+   const [flyMode, setFlyMode] = useState(false);
+-  const [flyVehicle, setFlyVehicle] = useState<string>("airplane");
++  const [flyVehicle, setFlyVehicle] = useState<string>("spaceship");
+   const [introMode, setIntroMode] = useState(false);
+   const [introPhase, setIntroPhase] = useState(-1); // -1 = not started, 0-3 = text phases, 4 = done
+   const [exploreMode, setExploreMode] = useState(false);
+diff --git a/src/components/CityCanvas.tsx b/src/components/CityCanvas.tsx
+index e97d14c..5cad7b4 100644
+--- a/src/components/CityCanvas.tsx
++++ b/src/components/CityCanvas.tsx
+@@ -555,7 +555,7 @@ const _idealLook = new THREE.Vector3();
+ const _blendedPos = new THREE.Vector3();
+ const _yAxis = new THREE.Vector3(0, 1, 0);
+ 
+-function AirplaneFlight({ onExit, onHud, onPause, pauseSignal = 0, hasOverlay = false, startPaused = false, vehicleType = "airplane", posRef, UniverseRadius = 3500 }: { onExit: () => void; onHud: (s: number, a: number, x: number, z: number, yaw: number) => void; onPause: (paused: boolean) => void; pauseSignal?: number; hasOverlay?: boolean; startPaused?: boolean; vehicleType?: string; posRef?: React.MutableRefObject<THREE.Vector3>; UniverseRadius?: number }) {
++function SpaceshipFlight({ onExit, onHud, onPause, pauseSignal = 0, hasOverlay = false, startPaused = false, vehicleType = "spaceship", posRef, UniverseRadius = 3500 }: { onExit: () => void; onHud: (s: number, a: number, x: number, z: number, yaw: number) => void; onPause: (paused: boolean) => void; pauseSignal?: number; hasOverlay?: boolean; startPaused?: boolean; vehicleType?: string; posRef?: React.MutableRefObject<THREE.Vector3>; UniverseRadius?: number }) {
+   const { camera } = useThree();
+   const ref = useRef<THREE.Group>(null);
+   const orbitRef = useRef<any>(null);
+@@ -605,13 +605,13 @@ function AirplaneFlight({ onExit, onHud, onPause, pauseSignal = 0, hasOverlay =
+     const initialYaw = Math.atan2(-camDir.x, -camDir.z);
+     yaw.current = initialYaw;
+ 
+-    // Place airplane ahead of camera in the look direction
++    // Place spaceship ahead of camera in the look direction
+     const startPos = camera.position.clone();
+     // Clamp altitude to flight range
+     startPos.y = Math.max(MIN_ALT, Math.min(MAX_ALT, startPos.y));
+     pos.current.copy(startPos);
+ 
+-    // Camera follow position: behind and above the airplane
++    // Camera follow position: behind and above the spaceship
+     const behindOffset = new THREE.Vector3(
+       Math.sin(initialYaw) * 50,
+       20,
+@@ -2088,7 +2088,7 @@ export default function CityCanvas({ planets, plazas, decorations, river, bridge
+ 
+           {!introMode && flyMode && (
+             <>
+-              <AirplaneFlight onExit={onExitFly} onHud={onHud ?? (() => { })} onPause={onPause ?? (() => { })} pauseSignal={flyPauseSignal} hasOverlay={flyHasOverlay} startPaused={flyStartPaused} vehicleType={flyVehicle} posRef={flyPosRef} UniverseRadius={UniverseRadius} />
++              <SpaceshipFlight onExit={onExitFly} onHud={onHud ?? (() => { })} onPause={onPause ?? (() => { })} pauseSignal={flyPauseSignal} hasOverlay={flyHasOverlay} startPaused={flyStartPaused} vehicleType={flyVehicle} posRef={flyPosRef} UniverseRadius={UniverseRadius} />
+               <SkyCollectibles playerPosRef={flyPosRef} accentColor={accentColor ?? "#6090e0"} onCollect={onCollect ?? (() => { })} UniverseRadius={UniverseRadius} />
+             </>
+           )}
+diff --git a/src/components/RaidSequence3D.tsx b/src/components/RaidSequence3D.tsx
+index e9bb5f5..db98735 100644
+--- a/src/components/RaidSequence3D.tsx
++++ b/src/components/RaidSequence3D.tsx
+@@ -39,77 +39,76 @@ const easeOutBack = (t: number) => {
+ 
+ // ΓöÇΓöÇΓöÇ Vehicle Components (all face -Z for correct lookAt) ΓöÇΓöÇΓöÇΓöÇΓöÇ
+ 
+-function AirplaneMesh() {
+-  const propRef = useRef<THREE.Group>(null);
++function SpaceshipMesh() {
++  const engineRef = useRef<THREE.Group>(null);
+ 
+-  useFrame((_, delta) => {
+-    if (propRef.current) propRef.current.rotation.z += delta * 30;
++  useFrame(({ clock }) => {
++    if (engineRef.current) {
++      const scale = 1 + Math.sin(clock.elapsedTime * 20) * 0.2;
++      engineRef.current.scale.set(scale, scale, scale);
++    }
+   });
+ 
+   return (
+     <group>
+-      {/* Fuselage */}
++      {/* Main Fuselage */}
+       <mesh>
+-        <boxGeometry args={[1.2, 0.9, 5]} />
++        <boxGeometry args={[1.5, 1, 5]} />
+         <meshStandardMaterial color="#e0e0e0" emissive="#aaa" emissiveIntensity={0.4} />
+       </mesh>
+-      {/* Nose taper */}
+-      <mesh position={[0, 0, -3]}>
+-        <boxGeometry args={[0.8, 0.6, 1.2]} />
++      {/* Nose cone */}
++      <mesh position={[0, 0, -3.5]}>
++        <boxGeometry args={[1.2, 0.8, 2]} />
+         <meshStandardMaterial color="#ccc" emissive="#999" emissiveIntensity={0.3} />
+       </mesh>
+-      {/* Nose tip */}
+-      <mesh position={[0, 0, -3.7]}>
+-        <boxGeometry args={[0.5, 0.4, 0.5]} />
++      <mesh position={[0, -0.1, -4.8]}>
++        <boxGeometry args={[0.6, 0.4, 1.2]} />
+         <meshStandardMaterial color="#bbb" emissive="#888" emissiveIntensity={0.3} />
+       </mesh>
+       {/* Cockpit glass */}
+-      <mesh position={[0, 0.55, -1.2]}>
+-        <boxGeometry args={[0.7, 0.35, 1]} />
+-        <meshStandardMaterial color="#3399dd" emissive="#2277bb" emissiveIntensity={0.8} />
++      <mesh position={[0, 0.6, -1.5]}>
++        <boxGeometry args={[1, 0.4, 2]} />
++        <meshStandardMaterial color="#00ffff" emissive="#00aaaa" emissiveIntensity={0.8} />
+       </mesh>
+-      {/* Main wings */}
+-      <mesh position={[0, -0.1, 0]}>
+-        <boxGeometry args={[8, 0.12, 2]} />
++      {/* Swept Wings */}
++      <mesh position={[0, 0, 0]} rotation={[0, Math.PI / 6, 0]}>
++        <boxGeometry args={[7, 0.2, 2]} />
+         <meshStandardMaterial color="#d8d8d8" emissive="#999" emissiveIntensity={0.3} />
+       </mesh>
+-      {/* Wing tips */}
+-      <mesh position={[-4.2, 0.15, 0.3]}>
+-        <boxGeometry args={[0.6, 0.5, 0.8]} />
+-        <meshStandardMaterial color="#cc4444" emissive="#993333" emissiveIntensity={0.5} />
+-      </mesh>
+-      <mesh position={[4.2, 0.15, 0.3]}>
+-        <boxGeometry args={[0.6, 0.5, 0.8]} />
+-        <meshStandardMaterial color="#cc4444" emissive="#993333" emissiveIntensity={0.5} />
++      <mesh position={[0, 0, 0]} rotation={[0, -Math.PI / 6, 0]}>
++        <boxGeometry args={[7, 0.2, 2]} />
++        <meshStandardMaterial color="#d8d8d8" emissive="#999" emissiveIntensity={0.3} />
+       </mesh>
+-      {/* Tail vertical stabilizer */}
+-      <mesh position={[0, 0.9, 2.4]}>
+-        <boxGeometry args={[0.12, 1.3, 1]} />
+-        <meshStandardMaterial color="#cc4444" emissive="#993333" emissiveIntensity={0.5} />
++      {/* Thrusters */}
++      <mesh position={[-2.5, 0, 2]}>
++        <boxGeometry args={[0.8, 0.8, 1.5]} />
++        <meshStandardMaterial color="#444" emissive="#222" emissiveIntensity={0.5} />
+       </mesh>
+-      {/* Tail horizontal stabilizers */}
+-      <mesh position={[0, 0.35, 2.4]}>
+-        <boxGeometry args={[3, 0.1, 0.8]} />
+-        <meshStandardMaterial color="#d8d8d8" emissive="#999" emissiveIntensity={0.3} />
++      <mesh position={[2.5, 0, 2]}>
++        <boxGeometry args={[0.8, 0.8, 1.5]} />
++        <meshStandardMaterial color="#444" emissive="#222" emissiveIntensity={0.5} />
+       </mesh>
+-      {/* Propeller hub */}
+-      <mesh position={[0, 0, -4]}>
+-        <boxGeometry args={[0.3, 0.3, 0.2]} />
+-        <meshStandardMaterial color="#555" emissive="#333" emissiveIntensity={0.3} />
++      <mesh position={[0, 0, 2.5]}>
++        <boxGeometry args={[1.2, 0.8, 1]} />
++        <meshStandardMaterial color="#333" emissive="#111" emissiveIntensity={0.5} />
+       </mesh>
+-      {/* Spinning propeller */}
+-      <group ref={propRef} position={[0, 0, -4.1]}>
+-        <mesh>
+-          <boxGeometry args={[3, 0.25, 0.06]} />
+-          <meshStandardMaterial color="#666" emissive="#555" emissiveIntensity={0.4} />
++      
++      {/* Engine Glows */}
++      <group ref={engineRef} position={[0, 0, 2.8]}>
++        <mesh position={[-2.5, 0, 0]}>
++          <boxGeometry args={[0.6, 0.6, 0.2]} />
++          <meshBasicMaterial color="#00ffff" toneMapped={false} />
++        </mesh>
++        <mesh position={[2.5, 0, 0]}>
++          <boxGeometry args={[0.6, 0.6, 0.2]} />
++          <meshBasicMaterial color="#00ffff" toneMapped={false} />
+         </mesh>
+-        <mesh rotation={[0, 0, Math.PI / 2]}>
+-          <boxGeometry args={[3, 0.25, 0.06]} />
+-          <meshStandardMaterial color="#666" emissive="#555" emissiveIntensity={0.4} />
++        <mesh position={[0, 0, 0.2]}>
++          <boxGeometry args={[1, 0.6, 0.2]} />
++          <meshBasicMaterial color="#00ffff" toneMapped={false} />
+         </mesh>
+       </group>
+-      {/* Engine glow */}
+-      <pointLight position={[0, 0, 2.8]} color="#ff8844" intensity={3} distance={10} />
++      <pointLight position={[0, 0, 3.5]} color="#00ffff" intensity={8} distance={15} />
+     </group>
+   );
+ }
+@@ -322,7 +321,7 @@ export function VehicleMesh({ type }: { type: string }) {
+     case "raid_helicopter": return <HelicopterMesh />;
+     case "raid_drone": return <DroneMesh />;
+     case "raid_rocket": return <RocketMesh />;
+-    default: return <AirplaneMesh />;
++    default: return <SpaceshipMesh />;
+   }
+ }
+ 
+diff --git a/src/components/ShopClient.tsx b/src/components/ShopClient.tsx
+index e2d7f49..7fd26c3 100644
+--- a/src/components/ShopClient.tsx
++++ b/src/components/ShopClient.tsx
+@@ -642,7 +642,7 @@ export default function ShopClient({
+ 
+   // Raid loadout state
+   const [raidLoadout, setRaidLoadout] = useState<{ vehicle: string; tag: string }>(
+-    initialRaidLoadout ?? { vehicle: "airplane", tag: "default" }
++    initialRaidLoadout ?? { vehicle: "spaceship", tag: "default" }
+   );
+ 
+   const [owned, setOwned] = useState<string[]>(ownedItems);
+@@ -1741,22 +1741,22 @@ export default function ShopClient({
+             <div className="grid grid-cols-2 gap-3 mb-0">
+               {/* Airplane - free default */}
+               <button
+-                onClick={() => handleSetRaidVehicle("airplane")}
++                onClick={() => handleSetRaidVehicle("spaceship")}
+                 className={[
+                   "w-full overflow-hidden transition-colors border-2",
+-                  raidLoadout.vehicle === "airplane"
++                  raidLoadout.vehicle === "spaceship"
+                     ? "border-[#39d353] bg-[rgba(57,211,83,0.05)]"
+                     : "border-[#39d353]/40 bg-[rgba(57,211,83,0.02)] hover:border-[#39d353]/70",
+                 ].join(" ")}
+               >
+                 <div className="h-24 bg-black/20 relative">
+-                  <RaidVehiclePreview vehicleType="airplane" />
+-                  {raidLoadout.vehicle === "airplane" && (
++                  <RaidVehiclePreview vehicleType="spaceship" />
++                  {raidLoadout.vehicle === "spaceship" && (
+                     <span className="absolute top-1 right-1 text-[8px] font-bold px-1 bg-[#39d353]/20 text-[#39d353] border border-[#39d353]/30">ACTIVE</span>
+                   )}
+                 </div>
+                 <div className="flex items-center justify-between px-2 py-1.5">
+-                  <span className="text-[10px] text-cream">Γ£ê∩╕Å Airplane</span>
++                  <span className="text-[10px] text-cream">≡ƒÜÇ Spaceship</span>
+                   <span className="text-[10px]" style={{ color: ACCENT }}>Γ£ô</span>
+                 </div>
+               </button>

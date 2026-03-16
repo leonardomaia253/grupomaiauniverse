@@ -186,14 +186,14 @@ export async function POST(request: Request) {
   const savedLoadout = (raidLoadoutRow?.config as { vehicle?: string; tag?: string } | null) ?? {};
 
   // Vehicle: use request override > saved loadout > default
-  let vehicle = "airplane";
+  let vehicle = "spaceship";
   if (vehicle_id) {
-    if (vehicle_id === "airplane" || ownedSet.has(vehicle_id)) {
+    if (vehicle_id === "spaceship" || ownedSet.has(vehicle_id)) {
       vehicle = vehicle_id;
     }
   } else {
-    const saved = savedLoadout.vehicle ?? "airplane";
-    vehicle = saved === "airplane" || ownedSet.has(saved) ? saved : "airplane";
+    const saved = savedLoadout.vehicle ?? "spaceship";
+    vehicle = saved === "spaceship" || ownedSet.has(saved) ? saved : "spaceship";
   }
 
   // Tag: use saved loadout

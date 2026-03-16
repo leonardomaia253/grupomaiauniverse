@@ -642,7 +642,7 @@ export default function ShopClient({
 
   // Raid loadout state
   const [raidLoadout, setRaidLoadout] = useState<{ vehicle: string; tag: string }>(
-    initialRaidLoadout ?? { vehicle: "airplane", tag: "default" }
+    initialRaidLoadout ?? { vehicle: "spaceship", tag: "default" }
   );
 
   const [owned, setOwned] = useState<string[]>(ownedItems);
@@ -1741,22 +1741,22 @@ export default function ShopClient({
             <div className="grid grid-cols-2 gap-3 mb-0">
               {/* Airplane - free default */}
               <button
-                onClick={() => handleSetRaidVehicle("airplane")}
+                onClick={() => handleSetRaidVehicle("spaceship")}
                 className={[
                   "w-full overflow-hidden transition-colors border-2",
-                  raidLoadout.vehicle === "airplane"
+                  raidLoadout.vehicle === "spaceship"
                     ? "border-[#39d353] bg-[rgba(57,211,83,0.05)]"
                     : "border-[#39d353]/40 bg-[rgba(57,211,83,0.02)] hover:border-[#39d353]/70",
                 ].join(" ")}
               >
                 <div className="h-24 bg-black/20 relative">
-                  <RaidVehiclePreview vehicleType="airplane" />
-                  {raidLoadout.vehicle === "airplane" && (
+                  <RaidVehiclePreview vehicleType="spaceship" />
+                  {raidLoadout.vehicle === "spaceship" && (
                     <span className="absolute top-1 right-1 text-[8px] font-bold px-1 bg-[#39d353]/20 text-[#39d353] border border-[#39d353]/30">ACTIVE</span>
                   )}
                 </div>
                 <div className="flex items-center justify-between px-2 py-1.5">
-                  <span className="text-[10px] text-cream">✈️ Airplane</span>
+                  <span className="text-[10px] text-cream">🚀 Spaceship</span>
                   <span className="text-[10px]" style={{ color: ACCENT }}>✓</span>
                 </div>
               </button>

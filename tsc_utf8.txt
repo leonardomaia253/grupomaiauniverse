@@ -1,0 +1,4 @@
+﻿src/components/UniverseCanvas.tsx(78,13): error TS2322: Type 'import("C:/Users/Administrator/grupomaiauniverse/src/components/UniverseCanvas").PlanetColors' is not assignable to type 'import("C:/Users/Administrator/grupomaiauniverse/src/components/CityCanvas").PlanetColors'.
+  Types of property 'accent' are incompatible.
+    Type 'string | undefined' is not assignable to type 'string'.
+      Type 'undefined' is not assignable to type 'string'.

@@ -196,20 +196,6 @@ function SkyDome({ stops }: { stops: [number, string][] }) {
   );
 }
 
-// ─── Paper Plane (GLB model) ─────────────────────────────────
-
-function PlaneModel() {
-  const { scene } = useGLTF("/models/paper-plane.glb");
-
-  return (
-    <group scale={[3, 3, 3]} rotation={[0, Math.PI / 2, 0]}>
-      <primitive object={scene} />
-    </group>
-  );
-}
-
-useGLTF.preload("/models/paper-plane.glb");
-
 // ─── Intro Flyover ──────────────────────────────────────────
 
 const INTRO_DURATION = 14; // seconds
@@ -526,17 +512,17 @@ function CameraFocus({
 
 // ─── Mouse-Driven Flight ─────────────────────────────────────
 
-const DEFAULT_FLY_SPEED = 55;
-const MIN_FLY_SPEED = 30;
-const MAX_FLY_SPEED = 200;
+const DEFAULT_FLY_SPEED = 120;
+const MIN_FLY_SPEED = 50;
+const MAX_FLY_SPEED = 350;
 const MIN_ALT = 25;
 const MAX_ALT = 900;
-const TURN_RATE = 2.0;
-const CLIMB_RATE = 55;
-const MAX_BANK = 0.55;
-const MAX_PITCH = 0.7;
+const TURN_RATE = 2.5;
+const CLIMB_RATE = 80;
+const MAX_BANK = 0.65;
+const MAX_PITCH = 0.8;
 const DEADZONE = 0.08;
-const FREE_CAM_BASE_SPEED = 100;
+const FREE_CAM_BASE_SPEED = 150;
 
 function deadzoneCurve(v: number): number {
   const abs = Math.abs(v);
@@ -555,7 +541,7 @@ const _idealLook = new THREE.Vector3();
 const _blendedPos = new THREE.Vector3();
 const _yAxis = new THREE.Vector3(0, 1, 0);
 
-function AirplaneFlight({ onExit, onHud, onPause, pauseSignal = 0, hasOverlay = false, startPaused = false, vehicleType = "airplane", posRef, UniverseRadius = 3500 }: { onExit: () => void; onHud: (s: number, a: number, x: number, z: number, yaw: number) => void; onPause: (paused: boolean) => void; pauseSignal?: number; hasOverlay?: boolean; startPaused?: boolean; vehicleType?: string; posRef?: React.MutableRefObject<THREE.Vector3>; UniverseRadius?: number }) {
+function SpaceshipFlight({ onExit, onHud, onPause, pauseSignal = 0, hasOverlay = false, startPaused = false, vehicleType = "spaceship", posRef, UniverseRadius = 3500 }: { onExit: () => void; onHud: (s: number, a: number, x: number, z: number, yaw: number) => void; onPause: (paused: boolean) => void; pauseSignal?: number; hasOverlay?: boolean; startPaused?: boolean; vehicleType?: string; posRef?: React.MutableRefObject<THREE.Vector3>; UniverseRadius?: number }) {
   const { camera } = useThree();
   const ref = useRef<THREE.Group>(null);
   const orbitRef = useRef<any>(null);
@@ -605,13 +591,13 @@ function AirplaneFlight({ onExit, onHud, onPause, pauseSignal = 0, hasOverlay = 
     const initialYaw = Math.atan2(-camDir.x, -camDir.z);
     yaw.current = initialYaw;
 
-    // Place airplane ahead of camera in the look direction
+    // Place spaceship ahead of camera in the look direction
     const startPos = camera.position.clone();
     // Clamp altitude to flight range
     startPos.y = Math.max(MIN_ALT, Math.min(MAX_ALT, startPos.y));
     pos.current.copy(startPos);
 
-    // Camera follow position: behind and above the airplane
+    // Camera follow position: behind and above the spaceship
     const behindOffset = new THREE.Vector3(
       Math.sin(initialYaw) * 50,
       20,
@@ -2088,7 +2074,7 @@ export default function CityCanvas({ planets, plazas, decorations, river, bridge
 
           {!introMode && flyMode && (
             <>
-              <AirplaneFlight onExit={onExitFly} onHud={onHud ?? (() => { })} onPause={onPause ?? (() => { })} pauseSignal={flyPauseSignal} hasOverlay={flyHasOverlay} startPaused={flyStartPaused} vehicleType={flyVehicle} posRef={flyPosRef} UniverseRadius={UniverseRadius} />
+              <SpaceshipFlight onExit={onExitFly} onHud={onHud ?? (() => { })} onPause={onPause ?? (() => { })} pauseSignal={flyPauseSignal} hasOverlay={flyHasOverlay} startPaused={flyStartPaused} vehicleType={flyVehicle} posRef={flyPosRef} UniverseRadius={UniverseRadius} />
               <SkyCollectibles playerPosRef={flyPosRef} accentColor={accentColor ?? "#6090e0"} onCollect={onCollect ?? (() => { })} UniverseRadius={UniverseRadius} />
             </>
           )}

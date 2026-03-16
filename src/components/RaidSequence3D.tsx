@@ -39,77 +39,76 @@ const easeOutBack = (t: number) => {
 
 // ─── Vehicle Components (all face -Z for correct lookAt) ─────
 
-function AirplaneMesh() {
-  const propRef = useRef<THREE.Group>(null);
+function SpaceshipMesh() {
+  const engineRef = useRef<THREE.Group>(null);
 
-  useFrame((_, delta) => {
-    if (propRef.current) propRef.current.rotation.z += delta * 30;
+  useFrame(({ clock }) => {
+    if (engineRef.current) {
+      const scale = 1 + Math.sin(clock.elapsedTime * 20) * 0.2;
+      engineRef.current.scale.set(scale, scale, scale);
+    }
   });
 
   return (
     <group>
-      {/* Fuselage */}
+      {/* Main Fuselage */}
       <mesh>
-        <boxGeometry args={[1.2, 0.9, 5]} />
+        <boxGeometry args={[1.5, 1, 5]} />
         <meshStandardMaterial color="#e0e0e0" emissive="#aaa" emissiveIntensity={0.4} />
       </mesh>
-      {/* Nose taper */}
-      <mesh position={[0, 0, -3]}>
-        <boxGeometry args={[0.8, 0.6, 1.2]} />
+      {/* Nose cone */}
+      <mesh position={[0, 0, -3.5]}>
+        <boxGeometry args={[1.2, 0.8, 2]} />
         <meshStandardMaterial color="#ccc" emissive="#999" emissiveIntensity={0.3} />
       </mesh>
-      {/* Nose tip */}
-      <mesh position={[0, 0, -3.7]}>
-        <boxGeometry args={[0.5, 0.4, 0.5]} />
+      <mesh position={[0, -0.1, -4.8]}>
+        <boxGeometry args={[0.6, 0.4, 1.2]} />
         <meshStandardMaterial color="#bbb" emissive="#888" emissiveIntensity={0.3} />
       </mesh>
       {/* Cockpit glass */}
-      <mesh position={[0, 0.55, -1.2]}>
-        <boxGeometry args={[0.7, 0.35, 1]} />
-        <meshStandardMaterial color="#3399dd" emissive="#2277bb" emissiveIntensity={0.8} />
+      <mesh position={[0, 0.6, -1.5]}>
+        <boxGeometry args={[1, 0.4, 2]} />
+        <meshStandardMaterial color="#00ffff" emissive="#00aaaa" emissiveIntensity={0.8} />
       </mesh>
-      {/* Main wings */}
-      <mesh position={[0, -0.1, 0]}>
-        <boxGeometry args={[8, 0.12, 2]} />
+      {/* Swept Wings */}
+      <mesh position={[0, 0, 0]} rotation={[0, Math.PI / 6, 0]}>
+        <boxGeometry args={[7, 0.2, 2]} />
         <meshStandardMaterial color="#d8d8d8" emissive="#999" emissiveIntensity={0.3} />
       </mesh>
-      {/* Wing tips */}
-      <mesh position={[-4.2, 0.15, 0.3]}>
-        <boxGeometry args={[0.6, 0.5, 0.8]} />
-        <meshStandardMaterial color="#cc4444" emissive="#993333" emissiveIntensity={0.5} />
-      </mesh>
-      <mesh position={[4.2, 0.15, 0.3]}>
-        <boxGeometry args={[0.6, 0.5, 0.8]} />
-        <meshStandardMaterial color="#cc4444" emissive="#993333" emissiveIntensity={0.5} />
-      </mesh>
-      {/* Tail vertical stabilizer */}
-      <mesh position={[0, 0.9, 2.4]}>
-        <boxGeometry args={[0.12, 1.3, 1]} />
-        <meshStandardMaterial color="#cc4444" emissive="#993333" emissiveIntensity={0.5} />
-      </mesh>
-      {/* Tail horizontal stabilizers */}
-      <mesh position={[0, 0.35, 2.4]}>
-        <boxGeometry args={[3, 0.1, 0.8]} />
+      <mesh position={[0, 0, 0]} rotation={[0, -Math.PI / 6, 0]}>
+        <boxGeometry args={[7, 0.2, 2]} />
         <meshStandardMaterial color="#d8d8d8" emissive="#999" emissiveIntensity={0.3} />
       </mesh>
-      {/* Propeller hub */}
-      <mesh position={[0, 0, -4]}>
-        <boxGeometry args={[0.3, 0.3, 0.2]} />
-        <meshStandardMaterial color="#555" emissive="#333" emissiveIntensity={0.3} />
+      {/* Thrusters */}
+      <mesh position={[-2.5, 0, 2]}>
+        <boxGeometry args={[0.8, 0.8, 1.5]} />
+        <meshStandardMaterial color="#444" emissive="#222" emissiveIntensity={0.5} />
       </mesh>
-      {/* Spinning propeller */}
-      <group ref={propRef} position={[0, 0, -4.1]}>
-        <mesh>
-          <boxGeometry args={[3, 0.25, 0.06]} />
-          <meshStandardMaterial color="#666" emissive="#555" emissiveIntensity={0.4} />
+      <mesh position={[2.5, 0, 2]}>
+        <boxGeometry args={[0.8, 0.8, 1.5]} />
+        <meshStandardMaterial color="#444" emissive="#222" emissiveIntensity={0.5} />
+      </mesh>
+      <mesh position={[0, 0, 2.5]}>
+        <boxGeometry args={[1.2, 0.8, 1]} />
+        <meshStandardMaterial color="#333" emissive="#111" emissiveIntensity={0.5} />
+      </mesh>
+      
+      {/* Engine Glows */}
+      <group ref={engineRef} position={[0, 0, 2.8]}>
+        <mesh position={[-2.5, 0, 0]}>
+          <boxGeometry args={[0.6, 0.6, 0.2]} />
+          <meshBasicMaterial color="#00ffff" toneMapped={false} />
         </mesh>
-        <mesh rotation={[0, 0, Math.PI / 2]}>
-          <boxGeometry args={[3, 0.25, 0.06]} />
-          <meshStandardMaterial color="#666" emissive="#555" emissiveIntensity={0.4} />
+        <mesh position={[2.5, 0, 0]}>
+          <boxGeometry args={[0.6, 0.6, 0.2]} />
+          <meshBasicMaterial color="#00ffff" toneMapped={false} />
+        </mesh>
+        <mesh position={[0, 0, 0.2]}>
+          <boxGeometry args={[1, 0.6, 0.2]} />
+          <meshBasicMaterial color="#00ffff" toneMapped={false} />
         </mesh>
       </group>
-      {/* Engine glow */}
-      <pointLight position={[0, 0, 2.8]} color="#ff8844" intensity={3} distance={10} />
+      <pointLight position={[0, 0, 3.5]} color="#00ffff" intensity={8} distance={15} />
     </group>
   );
 }
@@ -322,7 +321,7 @@ export function VehicleMesh({ type }: { type: string }) {
     case "raid_helicopter": return <HelicopterMesh />;
     case "raid_drone": return <DroneMesh />;
     case "raid_rocket": return <RocketMesh />;
-    default: return <AirplaneMesh />;
+    default: return <SpaceshipMesh />;
   }
 }
 

@@ -8,20 +8,20 @@ const BASE_URL =
     : "http://universe.grupomaia.me");
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  let companies: { username: string; updated_at: string | null }[] = [];
+  let companies: { username: string; last_active_at: string | null }[] = [];
 
   if (process.env.NEXT_PUBLIC_SUPABASE_URL) {
     const supabase = getSupabaseAdmin();
     const { data } = await supabase
       .from("companies")
-      .select("username, updated_at")
+      .select("username, last_active_at")
       .order("rank", { ascending: true, nullsFirst: false });
     companies = data ?? [];
   }
 
   const devEntries: MetadataRoute.Sitemap = (companies ?? []).map((dev) => ({
     url: `${BASE_URL}/dev/${dev.username}`,
-    lastModified: dev.updated_at ?? undefined,
+    lastModified: dev.last_active_at ?? undefined,
     changeFrequency: "daily",
     priority: 0.7,
   }));

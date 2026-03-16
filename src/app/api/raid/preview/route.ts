@@ -161,7 +161,7 @@ export async function POST(request: Request) {
 
   // Build available vehicles list (always includes default airplane)
   const VEHICLE_META: Record<string, { name: string; emoji: string }> = {
-    airplane: { name: "Airplane", emoji: "✈️" },
+    spaceship: { name: "Spaceship", emoji: "🚀" },
     raid_helicopter: { name: "Helicopter", emoji: "🚁" },
     raid_drone: { name: "Stealth Drone", emoji: "🛸" },
     raid_rocket: { name: "Rocket", emoji: "🚀" },
@@ -169,18 +169,18 @@ export async function POST(request: Request) {
 
   const ownedVehicleIds = new Set((vehiclePurchases ?? []).map((p) => p.item_id));
   const available_vehicles = [
-    { item_id: "airplane", name: "Airplane", emoji: "✈️" },
+    { item_id: "spaceship", name: "Spaceship", emoji: "🚀" },
     ...Array.from(ownedVehicleIds)
       .filter((id) => VEHICLE_META[id])
       .map((id) => ({ item_id: id, ...VEHICLE_META[id] })),
   ];
 
-  // Use saved selection, fallback to airplane
+  // Use saved selection, fallback to spaceship
   const savedLoadout = (raidLoadoutRow?.config as { vehicle?: string } | null) ?? {};
-  let vehicle = savedLoadout.vehicle ?? "airplane";
+  let vehicle = savedLoadout.vehicle ?? "spaceship";
   // Validate saved vehicle is still owned
-  if (vehicle !== "airplane" && !ownedVehicleIds.has(vehicle)) {
-    vehicle = "airplane";
+  if (vehicle !== "spaceship" && !ownedVehicleIds.has(vehicle)) {
+    vehicle = "spaceship";
   }
 
   // Estimate planet height from contributions

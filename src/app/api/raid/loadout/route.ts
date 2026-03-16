@@ -35,7 +35,7 @@ export async function GET(request: Request) {
   }
 
   if (!companyId) {
-    return NextResponse.json({ vehicle: "airplane", tag: "default" });
+    return NextResponse.json({ vehicle: "spaceship", tag: "default" });
   }
 
   const { data } = await admin
@@ -48,7 +48,7 @@ export async function GET(request: Request) {
   const config = (data?.config as { vehicle?: string; tag?: string }) ?? {};
 
   return NextResponse.json({
-    vehicle: config.vehicle ?? "airplane",
+    vehicle: config.vehicle ?? "spaceship",
     tag: config.tag ?? "default",
   });
 }
@@ -102,14 +102,14 @@ export async function POST(request: Request) {
 
   const current = (currentData?.config as { vehicle?: string; tag?: string }) ?? {};
   const config: { vehicle: string; tag: string } = {
-    vehicle: current.vehicle ?? "airplane",
+    vehicle: current.vehicle ?? "spaceship",
     tag: current.tag ?? "default",
   };
 
   // Validate vehicle
   if (vehicle !== undefined) {
-    if (vehicle === "airplane") {
-      config.vehicle = "airplane";
+    if (vehicle === "spaceship") {
+      config.vehicle = "spaceship";
     } else if (RAID_VEHICLE_ITEMS.includes(vehicle) && ownedSet.has(vehicle)) {
       config.vehicle = vehicle;
     } else {

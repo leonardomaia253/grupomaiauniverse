@@ -40,7 +40,7 @@ function makeFallbackAtlas(): THREE.CanvasTexture {
 export default function UniverseCanvas({ companies }: { companies: CompanyRecord[] }) {
   const solarSystem = useMemo(() => generateSolarSystem(companies), [companies]);
 
-  const defaultColors: PlanetColors = {
+  const defaultColors: import("./CityCanvas").PlanetColors = {
     windowLit: ["#f8d880"],
     windowOff:  "#1a1018",
     face:       "#281828",
