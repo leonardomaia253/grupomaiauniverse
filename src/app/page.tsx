@@ -1905,7 +1905,20 @@ function HomeContent() {
   return (
     <main className="relative min-h-screen overflow-hidden bg-bg font-pixel uppercase text-warm">
       {/* 3D Canvas */}
-      <UniverseCanvas companies={rawCompaniesRef.current} />
+      <UniverseCanvas 
+        companies={rawCompaniesRef.current} 
+        flyMode={flyMode}
+        flyVehicle={flyVehicle}
+        onExitFly={() => setFlyMode(false)}
+        onHud={(speed, alt, x, z, yaw) => {
+          setHud({ speed, altitude: alt });
+          setPlayerPos({ x, z });
+        }}
+        onPause={(paused) => setFlyPaused(paused)}
+        flyPauseSignal={flyPauseSignal}
+        flyHasOverlay={flyControlsOpen || showFlyControls || showFlyResults || Boolean(feedback)}
+        flyStartPaused={flyPaused}
+      />
 
       {/* Loading screen overlay */}
       {loadStage !== "done" && (
@@ -2554,6 +2567,26 @@ function HomeContent() {
                 </span>
                 <span className="text-xs" style={{ color: theme.accent }}>&#8594;</span>
               </Link>
+              <button
+                onClick={() => {
+                  setMobileMenuOpen(false);
+                  setfocusedPlanet(null);
+                  setFlyMode(true);
+                  setFlyScore({ score: 0, earned: 0, combo: 0, collected: 0, maxCombo: 1 });
+                  flyStartTime.current = Date.now();
+                  flyPausedAt.current = 0;
+                  flyTotalPauseMs.current = 0;
+                  setFlyElapsedSec(0);
+                  try { setFlyPersonalBest(parseInt(localStorage.getItem("gitUniverse_fly_pb") || "0", 10) || 0); } catch { setFlyPersonalBest(0); }
+                  if (!localStorage.getItem("gitUniverse_fly_controls_seen")) {
+                    setShowFlyControls(true);
+                  }
+                }}
+                className="flex w-full items-center justify-between px-5 py-4 active:bg-white/5"
+              >
+                <span className="text-sm text-cream">&#9992; Voar <span className="text-[10px] text-muted normal-case ml-2">(Explorar o Sistema Sideral)</span></span>
+                <span className="text-xs" style={{ color: theme.accent }}>&#8594;</span>
+              </button>
               <Link
                 href="/leaderboard"
                 onClick={() => setMobileMenuOpen(false)}

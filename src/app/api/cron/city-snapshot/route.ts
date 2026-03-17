@@ -86,7 +86,7 @@ export async function GET(request: NextRequest) {
         "planet_id, attacker_login, tag_style, expires_at",
         (q) => q.eq("active", true),
       ),
-      sb.from("Universe_stats").select("*").eq("id", 1).single(),
+      sb.from("universe_stats").select("*").eq("id", 1).single(),
     ]);
 
   // Build owned items map
