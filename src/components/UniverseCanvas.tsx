@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useMemo } from "react";
+import { useRef, useMemo, useState, useEffect, useCallback } from "react";
 import { Canvas } from "@react-three/fiber";
 import { OrbitControls, PerspectiveCamera } from "@react-three/drei";
 import { EffectComposer, Bloom, ChromaticAberration, Vignette } from "@react-three/postprocessing";
@@ -53,9 +53,45 @@ export default function UniverseCanvas({ companies }: { companies: CompanyRecord
     return makeFallbackAtlas();
   }, []);
 
+  const [contextLost, setContextLost] = useState(false);
+  const [canvasKey, setCanvasKey] = useState(0);
+
+  const handleCreated = useCallback(({ gl }: { gl: THREE.WebGLRenderer }) => {
+    const canvas = gl.domElement;
+    canvas.addEventListener("webglcontextlost", (e) => {
+      e.preventDefault();
+      setContextLost(true);
+    });
+    canvas.addEventListener("webglcontextrestored", () => {
+      setContextLost(false);
+    });
+  }, []);
+
+  // If context was lost, remount the Canvas after a short delay
+  useEffect(() => {
+    if (!contextLost) return;
+    const timer = setTimeout(() => {
+      setCanvasKey((k) => k + 1);
+      setContextLost(false);
+    }, 1000);
+    return () => clearTimeout(timer);
+  }, [contextLost]);
+
+  if (contextLost) {
+    return (
+      <div style={{ width: "100%", height: "100vh", background: "#000", display: "flex", alignItems: "center", justifyContent: "center" }}>
+        <div style={{ color: "rgba(255,255,255,0.7)", fontFamily: "monospace", fontSize: "12px", textAlign: "center" }}>
+          RESTAURANDO CONEXÃO VISUAL...
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div style={{ width: "100%", height: "100vh", background: "#000" }}>
       <Canvas
+        key={canvasKey}
+        onCreated={handleCreated}
         shadows
         gl={{
           antialias:    true,

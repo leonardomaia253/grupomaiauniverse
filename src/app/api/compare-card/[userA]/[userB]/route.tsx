@@ -129,10 +129,10 @@ export async function GET(
   const fontData = await readFile(join(process.cwd(), "public/fonts/Silkscreen-Regular.ttf"));
   const supabase = createClient(process.env.NEXT_PUBLIC_SUPABASE_URL!, process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!);
 
-  const fields = "github_login, name, avatar_url, contributions, contributions_total, public_repos, total_stars, rank, kudos_count";
+  const fields = "username, name, avatar_url, contributions, contributions_total, public_repos, total_stars, rank, kudos_count";
   const [{ data: devA }, { data: devB }] = await Promise.all([
-    supabase.from("companies").select(fields).eq("github_login", userA.toLowerCase()).single(),
-    supabase.from("companies").select(fields).eq("github_login", userB.toLowerCase()).single(),
+    supabase.from("companies").select(fields).eq("username", userA.toLowerCase()).single(),
+    supabase.from("companies").select(fields).eq("username", userB.toLowerCase()).single(),
   ]);
 
   if (!devA || !devB) {
@@ -171,7 +171,7 @@ export async function GET(
   });
 
   const isTie = aWins === bWins;
-  const winnerLogin = aWins > bWins ? devA.github_login : devB.github_login;
+  const winnerLogin = aWins > bWins ? devA.username : devB.username;
   const summary = isTie
     ? `${t.tie} ${aWins}-${bWins}`
     : `@${winnerLogin} ${t.wins} ${Math.max(aWins, bWins)}-${Math.min(aWins, bWins)}`;
@@ -212,8 +212,8 @@ function renderLandscape(
         <div style={{ position: "absolute", left: 30, top: 28, display: "flex", alignItems: "center", gap: 12 }}>
           {devA.avatar_url ? <img src={devA.avatar_url as string} width={64} height={64} style={{ border: `3px solid ${aColor}` }} /> : null}
           <div style={{ display: "flex", flexDirection: "column" }}>
-            <div style={{ display: "flex", fontSize: 22, color: cream, textTransform: "uppercase" }}>{((devA.name ?? devA.github_login) as string).slice(0, 14)}</div>
-            <div style={{ display: "flex", fontSize: 14, color: muted }}>@{devA.github_login as string}</div>
+            <div style={{ display: "flex", fontSize: 22, color: cream, textTransform: "uppercase" }}>{((devA.name ?? devA.username) as string).slice(0, 14)}</div>
+            <div style={{ display: "flex", fontSize: 14, color: muted }}>@{devA.username as string}</div>
           </div>
         </div>
 
@@ -225,8 +225,8 @@ function renderLandscape(
         {/* ── Right side: Dev B avatar + planet ── */}
         <div style={{ position: "absolute", right: 30, top: 28, display: "flex", alignItems: "center", gap: 12 }}>
           <div style={{ display: "flex", flexDirection: "column", alignItems: "flex-end" }}>
-            <div style={{ display: "flex", fontSize: 22, color: cream, textTransform: "uppercase" }}>{((devB.name ?? devB.github_login) as string).slice(0, 14)}</div>
-            <div style={{ display: "flex", fontSize: 14, color: muted }}>@{devB.github_login as string}</div>
+            <div style={{ display: "flex", fontSize: 22, color: cream, textTransform: "uppercase" }}>{((devB.name ?? devB.username) as string).slice(0, 14)}</div>
+            <div style={{ display: "flex", fontSize: 14, color: muted }}>@{devB.username as string}</div>
           </div>
           {devB.avatar_url ? <img src={devB.avatar_url as string} width={64} height={64} style={{ border: `3px solid ${bColor}` }} /> : null}
         </div>
@@ -307,16 +307,16 @@ function renderStories(
           {/* Dev A */}
           <div style={{ display: "flex", flexDirection: "column", alignItems: "center", width: 320 }}>
             {devA.avatar_url ? <img src={devA.avatar_url as string} width={100} height={100} style={{ border: `3px solid ${aColor}` }} /> : null}
-            <div style={{ display: "flex", fontSize: 22, color: cream, textTransform: "uppercase", marginTop: 8 }}>{((devA.name ?? devA.github_login) as string).slice(0, 14)}</div>
-            <div style={{ display: "flex", fontSize: 16, color: muted }}>@{devA.github_login as string}</div>
+            <div style={{ display: "flex", fontSize: 22, color: cream, textTransform: "uppercase", marginTop: 8 }}>{((devA.name ?? devA.username) as string).slice(0, 14)}</div>
+            <div style={{ display: "flex", fontSize: 16, color: muted }}>@{devA.username as string}</div>
           </div>
           {/* VS */}
           <div style={{ display: "flex", fontSize: 44, color: accent, border: `3px solid ${accent}`, padding: "4px 22px" }}>VS</div>
           {/* Dev B */}
           <div style={{ display: "flex", flexDirection: "column", alignItems: "center", width: 320 }}>
             {devB.avatar_url ? <img src={devB.avatar_url as string} width={100} height={100} style={{ border: `3px solid ${bColor}` }} /> : null}
-            <div style={{ display: "flex", fontSize: 22, color: cream, textTransform: "uppercase", marginTop: 8 }}>{((devB.name ?? devB.github_login) as string).slice(0, 14)}</div>
-            <div style={{ display: "flex", fontSize: 16, color: muted }}>@{devB.github_login as string}</div>
+            <div style={{ display: "flex", fontSize: 22, color: cream, textTransform: "uppercase", marginTop: 8 }}>{((devB.name ?? devB.username) as string).slice(0, 14)}</div>
+            <div style={{ display: "flex", fontSize: 16, color: muted }}>@{devB.username as string}</div>
           </div>
         </div>
 

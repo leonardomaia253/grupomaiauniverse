@@ -13,7 +13,7 @@ export async function GET() {
     return NextResponse.json({ error: "Not authenticated" }, { status: 401 });
   }
 
-  const githubLogin = (
+  const companyLogin = (
     user.user_metadata?.user_name ??
     user.user_metadata?.preferred_username ??
     ""
@@ -24,7 +24,7 @@ export async function GET() {
   const { data: dev } = await admin
     .from("companies")
     .select("id, claimed, dailies_completed, dailies_streak, last_dailies_date, last_checkin_date")
-    .eq("username", githubLogin)
+    .eq("username", companyLogin)
     .single();
 
   if (!dev || !dev.claimed) {
@@ -67,12 +67,12 @@ export async function GET() {
   const allCompleted = completedCount === 3;
   const alreadyClaimedToday = dev.last_dailies_date === today;
 
-  // Check if user owns github_star item
+  // Check if user owns universe_star item
   const { data: starPurchase } = await admin
     .from("purchases")
     .select("id")
     .eq("company_id", dev.id)
-    .eq("item_id", "github_star")
+    .eq("item_id", "universe_star")
     .eq("status", "completed")
     .maybeSingle();
 
@@ -83,6 +83,7 @@ export async function GET() {
     reward_claimed: alreadyClaimedToday,
     dailies_streak: dev.dailies_streak ?? 0,
     dailies_completed: dev.dailies_completed ?? 0,
-    has_github_star: !!starPurchase,
+    has_universe_star: !!starPurchase,
   });
 }
+

@@ -26,7 +26,7 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: "Invalid mission_id" }, { status: 400 });
   }
 
-  const githubLogin = (
+  const companyLogin = (
     user.user_metadata?.user_name ??
     user.user_metadata?.preferred_username ??
     ""
@@ -37,7 +37,7 @@ export async function POST(request: Request) {
   const { data: dev } = await admin
     .from("companies")
     .select("id, claimed")
-    .eq("username", githubLogin)
+    .eq("username", companyLogin)
     .single();
 
   if (!dev || !dev.claimed) {
@@ -66,3 +66,4 @@ export async function POST(request: Request) {
 
   return NextResponse.json(result);
 }
+

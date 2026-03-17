@@ -125,7 +125,7 @@ export async function GET(request: Request) {
             });
             if (xp > 0) {
               await admin.rpc("grant_xp", { p_company_id: created.id, p_source: "github", p_amount: xp });
-              await admin.from("companies").update({ xp_github: xp }).eq("id", created.id);
+              await admin.from("companies").update({ xp_universe: xp }).eq("id", created.id);
             }
           }
 

@@ -17,7 +17,7 @@ export async function GET() {
   }
 
   const sb = getSupabaseAdmin();
-  const githubLogin = (
+  const companyLogin = (
     user.user_metadata?.user_name ??
     user.user_metadata?.preferred_username ??
     ""
@@ -26,7 +26,7 @@ export async function GET() {
   const { data: dev } = await sb
     .from("companies")
     .select("Universe_theme")
-    .eq("username", githubLogin)
+    .eq("username", companyLogin)
     .single();
 
   if (!dev) {
@@ -57,7 +57,7 @@ export async function PATCH(request: Request) {
   }
 
   const sb = getSupabaseAdmin();
-  const githubLogin = (
+  const companyLogin = (
     user.user_metadata?.user_name ??
     user.user_metadata?.preferred_username ??
     ""
@@ -66,7 +66,7 @@ export async function PATCH(request: Request) {
   const { error } = await sb
     .from("companies")
     .update({ Universe_theme: theme })
-    .eq("username", githubLogin);
+    .eq("username", companyLogin);
 
   if (error) {
     return NextResponse.json({ error: error.message }, { status: 500 });
@@ -74,3 +74,4 @@ export async function PATCH(request: Request) {
 
   return NextResponse.json({ Universe_theme: theme });
 }
+

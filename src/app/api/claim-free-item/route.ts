@@ -13,13 +13,13 @@ export async function POST() {
     return NextResponse.json({ error: "Not authenticated" }, { status: 401 });
   }
 
-  const githubLogin = (
+  const companyLogin = (
     user.user_metadata.user_name ??
     user.user_metadata.preferred_username ??
     ""
   ).toLowerCase();
 
-  if (!githubLogin) {
+  if (!companyLogin) {
     return NextResponse.json(
       { error: "No GitHub username" },
       { status: 400 }
@@ -32,7 +32,7 @@ export async function POST() {
   const { data: dev } = await admin
     .from("companies")
     .select("id, claimed, claimed_by")
-    .eq("username", githubLogin)
+    .eq("username", companyLogin)
     .single();
 
   if (!dev || !dev.claimed || dev.claimed_by !== user.id) {
@@ -54,3 +54,4 @@ export async function POST() {
     item_id: FREE_CLAIM_ITEM,
   });
 }
+

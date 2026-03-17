@@ -49,18 +49,18 @@ export async function POST() {
     return NextResponse.json({ error: "Not authenticated" }, { status: 401 });
   }
 
-  const { ok } = rateLimit(`github_star:${user.id}`, 1, 5000);
+  const { ok } = rateLimit(`universe_star:${user.id}`, 1, 5000);
   if (!ok) {
     return NextResponse.json({ error: "Too fast" }, { status: 429 });
   }
 
-  const githubLogin = (
+  const companyLogin = (
     user.user_metadata?.user_name ??
     user.user_metadata?.preferred_username ??
     ""
   ).toLowerCase();
 
-  if (!githubLogin) {
+  if (!companyLogin) {
     return NextResponse.json({ error: "No GitHub login" }, { status: 400 });
   }
 
@@ -69,7 +69,7 @@ export async function POST() {
   const { data: dev } = await sb
     .from("companies")
     .select("id, claimed")
-    .eq("username", githubLogin)
+    .eq("username", companyLogin)
     .single();
 
   if (!dev || !dev.claimed) {
@@ -81,7 +81,7 @@ export async function POST() {
     .from("purchases")
     .select("id")
     .eq("company_id", dev.id)
-    .eq("item_id", "github_star")
+    .eq("item_id", "universe_star")
     .eq("status", "completed")
     .maybeSingle();
 
@@ -90,7 +90,7 @@ export async function POST() {
   }
 
   // Check Estrela Maia
-  const starred = await isStargazer(githubLogin);
+  const starred = await isStargazer(companyLogin);
   if (!starred) {
     return NextResponse.json({ ok: true, verified: false });
   }
@@ -98,9 +98,9 @@ export async function POST() {
   // Grant the item
   await sb.from("purchases").insert({
     company_id: dev.id,
-    item_id: "github_star",
+    item_id: "universe_star",
     provider: "free",
-    provider_tx_id: `github_star_${dev.id}`,
+    provider_tx_id: `universe_star_${dev.id}`,
     amount_cents: 0,
     currency: "usd",
     status: "completed",
@@ -108,10 +108,11 @@ export async function POST() {
 
   // Activity feed event
   await sb.from("activity_feed").insert({
-    event_type: "github_star_verified",
+    event_type: "universe_star_verified",
     actor_id: dev.id,
-    metadata: { login: githubLogin },
+    metadata: { login: companyLogin },
   });
 
   return NextResponse.json({ ok: true, verified: true });
 }
+

@@ -33,13 +33,13 @@ export default async function Image({
   const [{ data: devA }, { data: devB }] = await Promise.all([
     supabase
       .from("companies")
-      .select("github_login, name, avatar_url, contributions, contributions_total, public_repos, total_stars, rank, kudos_count")
-      .eq("github_login", userA.toLowerCase())
+      .select("username, name, avatar_url, contributions, contributions_total, public_repos, total_stars, rank, kudos_count")
+      .eq("username", userA.toLowerCase())
       .single(),
     supabase
       .from("companies")
-      .select("github_login, name, avatar_url, contributions, contributions_total, public_repos, total_stars, rank, kudos_count")
-      .eq("github_login", userB.toLowerCase())
+      .select("username, name, avatar_url, contributions, contributions_total, public_repos, total_stars, rank, kudos_count")
+      .eq("username", userB.toLowerCase())
       .single(),
   ]);
 
@@ -109,7 +109,7 @@ export default async function Image({
   });
 
   const isTie = aWinsCount === bWinsCount;
-  const winnerLogin = aWinsCount > bWinsCount ? devA.github_login : devB.github_login;
+  const winnerLogin = aWinsCount > bWinsCount ? devA.username : devB.username;
   const summary = isTie
     ? `Tie ${aWinsCount}-${bWinsCount}`
     : `@${winnerLogin} wins ${Math.max(aWinsCount, bWinsCount)}-${Math.min(aWinsCount, bWinsCount)}`;
@@ -196,10 +196,10 @@ export default async function Image({
           )}
           <div style={{ display: "flex", flexDirection: "column" }}>
             <div style={{ display: "flex", fontSize: 32, color: cream, textTransform: "uppercase" }}>
-              {(devA.name ?? devA.github_login).slice(0, 12)}
+              {(devA.name ?? devA.username).slice(0, 12)}
             </div>
             <div style={{ display: "flex", fontSize: 22, color: muted }}>
-              @{devA.github_login}
+              @{devA.username}
             </div>
           </div>
         </div>
@@ -217,10 +217,10 @@ export default async function Image({
         >
           <div style={{ display: "flex", flexDirection: "column", alignItems: "flex-end" }}>
             <div style={{ display: "flex", fontSize: 32, color: cream, textTransform: "uppercase" }}>
-              {(devB.name ?? devB.github_login).slice(0, 12)}
+              {(devB.name ?? devB.username).slice(0, 12)}
             </div>
             <div style={{ display: "flex", fontSize: 22, color: muted }}>
-              @{devB.github_login}
+              @{devB.username}
             </div>
           </div>
           {devB.avatar_url && (

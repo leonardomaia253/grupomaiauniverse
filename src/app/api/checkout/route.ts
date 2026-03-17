@@ -31,13 +31,13 @@ export async function POST(request: Request) {
   }
   lastCheckout.set(user.id, now);
 
-  const githubLogin = (
+  const companyLogin = (
     user.user_metadata?.user_name ??
     user.user_metadata?.preferred_username ??
     ""
   ).toLowerCase();
 
-  if (!githubLogin) {
+  if (!companyLogin) {
     return NextResponse.json({ error: "No GitHub login found" }, { status: 400 });
   }
 
@@ -47,7 +47,7 @@ export async function POST(request: Request) {
   const { data: dev } = await sb
     .from("companies")
     .select("id, claimed, claimed_by")
-    .eq("username", githubLogin)
+    .eq("username", companyLogin)
     .single();
 
   if (!dev || !dev.claimed) {
@@ -90,7 +90,7 @@ export async function POST(request: Request) {
   // Gift validation
   let giftedToDevId: number | null = null;
   if (gifted_to_login) {
-    if (gifted_to_login.toLowerCase() === githubLogin) {
+    if (gifted_to_login.toLowerCase() === companyLogin) {
       return NextResponse.json({ error: "Cannot gift to yourself" }, { status: 400 });
     }
 
@@ -264,7 +264,7 @@ export async function POST(request: Request) {
         return NextResponse.json({ error: "Failed to create purchase" }, { status: 500 });
       }
 
-      const { url } = await createCheckoutSession(item_id, dev.id, githubLogin, stripeCurrency, user.email, giftedToDevId, gifted_to_login);
+      const { url } = await createCheckoutSession(item_id, dev.id, companyLogin, stripeCurrency, user.email, giftedToDevId, gifted_to_login);
       return NextResponse.json({ url, purchase_id: purchase.id });
     } else if (provider === "nowpayments") {
       // Crypto via NOWPayments
@@ -286,7 +286,7 @@ export async function POST(request: Request) {
         return NextResponse.json({ error: "Failed to create purchase" }, { status: 500 });
       }
 
-      const { invoiceUrl, invoiceId } = await createCryptoInvoice(item_id, dev.id, githubLogin);
+      const { invoiceUrl, invoiceId } = await createCryptoInvoice(item_id, dev.id, companyLogin);
 
       // Save invoice ID as provider_tx_id so webhook can find this purchase
       await sb
@@ -315,7 +315,7 @@ export async function POST(request: Request) {
         return NextResponse.json({ error: "Failed to create purchase" }, { status: 500 });
       }
 
-      const { brCode, brCodeBase64, pixId } = await createPixQrCode(item_id, dev.id, githubLogin);
+      const { brCode, brCodeBase64, pixId } = await createPixQrCode(item_id, dev.id, companyLogin);
 
       // Save PIX ID as provider_tx_id
       await sb
@@ -333,3 +333,4 @@ export async function POST(request: Request) {
     );
   }
 }
+

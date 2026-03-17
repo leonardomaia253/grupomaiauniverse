@@ -21,7 +21,7 @@ export async function GET(request: Request) {
     if (!user) {
       return NextResponse.json({ error: "Not authenticated" }, { status: 401 });
     }
-    const githubLogin = (
+    const companyLogin = (
       user.user_metadata.user_name ??
       user.user_metadata.preferred_username ??
       ""
@@ -29,7 +29,7 @@ export async function GET(request: Request) {
     const { data: dev } = await admin
       .from("companies")
       .select("id")
-      .eq("username", githubLogin)
+      .eq("username", companyLogin)
       .single();
     if (dev) companyId = dev.id;
   }
@@ -64,7 +64,7 @@ export async function POST(request: Request) {
   }
 
   const admin = getSupabaseAdmin();
-  const githubLogin = (
+  const companyLogin = (
     user.user_metadata.user_name ??
     user.user_metadata.preferred_username ??
     ""
@@ -73,7 +73,7 @@ export async function POST(request: Request) {
   const { data: dev } = await admin
     .from("companies")
     .select("id, claimed, claimed_by")
-    .eq("username", githubLogin)
+    .eq("username", companyLogin)
     .single();
 
   if (!dev || !dev.claimed || dev.claimed_by !== user.id) {
@@ -141,3 +141,4 @@ export async function POST(request: Request) {
 
   return NextResponse.json({ ok: true, vehicle: config.vehicle, tag: config.tag });
 }
+

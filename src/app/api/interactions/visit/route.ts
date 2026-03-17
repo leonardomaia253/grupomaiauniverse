@@ -28,7 +28,7 @@ export async function POST(request: Request) {
 
   const admin = getSupabaseAdmin();
 
-  const githubLogin = (
+  const companyLogin = (
     user.user_metadata.user_name ??
     user.user_metadata.preferred_username ??
     ""
@@ -38,7 +38,7 @@ export async function POST(request: Request) {
   const { data: visitor } = await admin
     .from("companies")
     .select("id")
-    .eq("username", githubLogin)
+    .eq("username", companyLogin)
     .single();
 
   if (!visitor) {
@@ -122,3 +122,4 @@ export async function POST(request: Request) {
 
   return NextResponse.json({ ok: true });
 }
+

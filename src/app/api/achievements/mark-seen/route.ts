@@ -12,13 +12,13 @@ export async function POST() {
     return NextResponse.json({ error: "Not authenticated" }, { status: 401 });
   }
 
-  const githubLogin = (
+  const companyLogin = (
     user.user_metadata?.user_name ??
     user.user_metadata?.preferred_username ??
     ""
   ).toLowerCase();
 
-  if (!githubLogin) {
+  if (!companyLogin) {
     return NextResponse.json({ error: "No GitHub login" }, { status: 400 });
   }
 
@@ -27,7 +27,7 @@ export async function POST() {
   const { data: dev } = await sb
     .from("companies")
     .select("id")
-    .eq("username", githubLogin)
+    .eq("username", companyLogin)
     .single();
 
   if (!dev) {
@@ -42,3 +42,4 @@ export async function POST() {
 
   return NextResponse.json({ ok: true });
 }
+

@@ -28,7 +28,7 @@ export async function GET() {
   }
 
   const sb = getSupabaseAdmin();
-  const githubLogin = (
+  const companyLogin = (
     user.user_metadata?.user_name ??
     user.user_metadata?.preferred_username ??
     ""
@@ -37,7 +37,7 @@ export async function GET() {
   const { data: dev } = await sb
     .from("companies")
     .select("id")
-    .eq("username", githubLogin)
+    .eq("username", companyLogin)
     .single();
 
   if (!dev) {
@@ -85,7 +85,7 @@ export async function PATCH(request: Request) {
 
   const body = await request.json();
   const sb = getSupabaseAdmin();
-  const githubLogin = (
+  const companyLogin = (
     user.user_metadata?.user_name ??
     user.user_metadata?.preferred_username ??
     ""
@@ -94,7 +94,7 @@ export async function PATCH(request: Request) {
   const { data: dev } = await sb
     .from("companies")
     .select("id")
-    .eq("username", githubLogin)
+    .eq("username", companyLogin)
     .single();
 
   if (!dev) {
@@ -154,3 +154,4 @@ export async function PATCH(request: Request) {
 
   return NextResponse.json(updated);
 }
+

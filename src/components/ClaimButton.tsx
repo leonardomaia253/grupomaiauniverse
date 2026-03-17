@@ -5,11 +5,11 @@ import type { User } from "@supabase/supabase-js";
 import { createBrowserSupabase } from "@/lib/supabase";
 
 interface Props {
-  githubLogin: string;
+  companyLogin: string;
   claimed: boolean;
 }
 
-export default function ClaimButton({ githubLogin, claimed }: Props) {
+export default function ClaimButton({ companyLogin, claimed }: Props) {
   const [isClaimed, setIsClaimed] = useState(claimed);
   const [loading, setLoading] = useState(false);
   const [isOwner, setIsOwner] = useState(false);
@@ -25,9 +25,9 @@ export default function ClaimButton({ githubLogin, claimed }: Props) {
         user.user_metadata.preferred_username ??
         ""
       ).toLowerCase();
-      setIsOwner(login === githubLogin.toLowerCase());
+      setIsOwner(login === companyLogin.toLowerCase());
     });
-  }, [githubLogin]);
+  }, [companyLogin]);
 
   if (isClaimed) {
     return (
@@ -66,3 +66,4 @@ export default function ClaimButton({ githubLogin, claimed }: Props) {
     </button>
   );
 }
+

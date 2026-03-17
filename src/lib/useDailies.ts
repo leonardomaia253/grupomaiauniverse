@@ -19,7 +19,7 @@ export interface DailiesData {
   reward_claimed: boolean;
   dailies_streak: number;
   dailies_completed: number;
-  has_github_star?: boolean;
+  has_universe_star?: boolean;
 }
 
 export function useDailies(session: Session | null, hasClaimed: boolean) {

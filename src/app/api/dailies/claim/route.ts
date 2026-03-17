@@ -20,7 +20,7 @@ export async function POST() {
     return NextResponse.json({ error: "Too fast" }, { status: 429 });
   }
 
-  const githubLogin = (
+  const companyLogin = (
     user.user_metadata?.user_name ??
     user.user_metadata?.preferred_username ??
     ""
@@ -31,7 +31,7 @@ export async function POST() {
   const { data: dev } = await admin
     .from("companies")
     .select("id, claimed, contributions, public_repos, total_stars, kudos_count, dailies_completed, dailies_streak, last_dailies_date")
-    .eq("username", githubLogin)
+    .eq("username", companyLogin)
     .single();
 
   if (!dev || !dev.claimed) {
@@ -109,7 +109,7 @@ export async function POST() {
     event_type: "dailies_completed",
     actor_id: dev.id,
     metadata: {
-      login: githubLogin,
+      login: companyLogin,
       streak: claimResult.streak,
       total: claimResult.total,
     },
@@ -128,7 +128,7 @@ export async function POST() {
       gifts_received: 0,
       dailies_completed: claimResult.total,
     },
-    githubLogin,
+    companyLogin,
   );
 
   return NextResponse.json({
@@ -138,3 +138,4 @@ export async function POST() {
     freeze_granted: freezeGranted,
   });
 }
+

@@ -21,13 +21,13 @@ export async function toggleVote(itemId: string) {
     throw new Error("Not authenticated");
   }
 
-  const githubLogin = (
+  const companyLogin = (
     user.user_metadata.user_name ??
     user.user_metadata.preferred_username ??
     ""
   ).toLowerCase();
 
-  if (!githubLogin) {
+  if (!companyLogin) {
     throw new Error("No GitHub login found");
   }
 
@@ -37,7 +37,7 @@ export async function toggleVote(itemId: string) {
   const { data: dev } = await admin
     .from("companies")
     .select("id")
-    .eq("username", githubLogin)
+    .eq("username", companyLogin)
     .single();
 
   if (!dev) {
@@ -65,3 +65,4 @@ export async function toggleVote(itemId: string) {
 
   revalidatePath("/roadmap");
 }
+

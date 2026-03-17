@@ -37,7 +37,7 @@ export interface CompanyRecord {
   current_streak: number;
   longest_streak?: number;
   xp_level?: number;
-  xp_github?: number;
+  xp_universe?: number;
   // Game fields
   achievements?: string[];
   loadout?: { crown: string | null; roof: string | null; aura: string | null } | null;

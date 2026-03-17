@@ -29,7 +29,7 @@ export async function POST(request: Request) {
 
   const admin = getSupabaseAdmin();
 
-  const githubLogin = (
+  const companyLogin = (
     user.user_metadata.user_name ??
     user.user_metadata.preferred_username ??
     ""
@@ -39,7 +39,7 @@ export async function POST(request: Request) {
   const { data: giver } = await admin
     .from("companies")
     .select("id, claimed, contributions, public_repos, total_stars, kudos_count, kudos_streak, last_kudos_given_date")
-    .eq("username", githubLogin)
+    .eq("username", companyLogin)
     .single();
 
   if (!giver || !giver.claimed) {
@@ -106,7 +106,7 @@ export async function POST(request: Request) {
       actor_id: giver.id,
       target_id: receiver.id,
       metadata: {
-        giver_login: githubLogin,
+        giver_login: companyLogin,
         receiver_login: receiver.username,
       },
     });
@@ -150,8 +150,9 @@ export async function POST(request: Request) {
       gifts_sent: 0,
       gifts_received: 0,
       kudos_streak: newKudosStreak,
-    }, githubLogin);
+    }, companyLogin);
   }
 
   return NextResponse.json({ ok: true });
 }
+

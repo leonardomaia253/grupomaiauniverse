@@ -12,19 +12,19 @@ async function getAuthenticatedDevId(): Promise<{ devId: number } | { error: str
   const { data: { user } } = await supabase.auth.getUser();
   if (!user) return { error: "Not authenticated", status: 401 };
 
-  const githubLogin = (
+  const companyLogin = (
     user.user_metadata.user_name ??
     user.user_metadata.preferred_username ??
     ""
   ).toLowerCase();
 
-  if (!githubLogin) return { error: "No GitHub login found", status: 400 };
+  if (!companyLogin) return { error: "No GitHub login found", status: 400 };
 
   const sb = getSupabaseAdmin();
   const { data: dev } = await sb
     .from("companies")
     .select("id")
-    .eq("username", githubLogin)
+    .eq("username", companyLogin)
     .single();
 
   if (!dev) return { error: "company not found", status: 404 };
@@ -82,3 +82,4 @@ export async function POST() {
 
   return NextResponse.json({ key: newKey });
 }
+

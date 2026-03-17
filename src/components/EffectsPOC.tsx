@@ -784,7 +784,7 @@ export const CommitStream = memo(function CommitStream({
 // ═══════════════════════════════════════════════════════════════
 
 const POC_ZONES: Record<string, string[]> = {
-  crown: [...ZONE_ITEMS.crown, "github_star"],
+  crown: [...ZONE_ITEMS.crown, "universe_star"],
   roof: [...ZONE_ITEMS.roof],
   aura: [...ZONE_ITEMS.aura, "shooting_star", "star_beam", "starfall", "star_orbit", "commit_stream"],
 };
@@ -794,7 +794,7 @@ const POC_NAMES: Record<string, string> = {
   shooting_star: "Shooting Star",
   star_beam: "Star Beam",
   starfall: "Starfall",
-  github_star: "Estrela Maia",
+  universe_star: "Estrela Maia",
   star_orbit: "Star Orbit",
   commit_stream: "Commit Stream",
 };
@@ -804,12 +804,12 @@ const POC_EMOJIS: Record<string, string> = {
   shooting_star: "☄️",
   star_beam: "🌟",
   starfall: "🌠",
-  github_star: "⭐",
+  universe_star: "⭐",
   star_orbit: "💫",
   commit_stream: "🟩",
 };
 
-const NEW_ITEMS = new Set(["shooting_star", "star_beam", "starfall", "github_star", "star_orbit", "commit_stream"]);
+const NEW_ITEMS = new Set(["shooting_star", "star_beam", "starfall", "universe_star", "star_orbit", "commit_stream"]);
 
 // ─── Window texture (from ShopPreview) ───────────────────────
 
@@ -914,7 +914,7 @@ function EffectForItem({
       return <StarBeam {...dims} />;
     case "starfall":
       return <Starfall {...dims} />;
-    case "github_star":
+    case "universe_star":
       return <GitHubStar {...dims} />;
     case "star_orbit":
       return <StarOrbit {...dims} />;
@@ -1111,7 +1111,7 @@ export default function EffectsPOC() {
     roof: string | null;
     aura: string | null;
   }>({
-    crown: "github_star",
+    crown: "universe_star",
     roof: null,
     aura: "star_orbit",
   });

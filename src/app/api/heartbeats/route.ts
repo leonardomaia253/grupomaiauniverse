@@ -172,7 +172,7 @@ export async function POST(request: NextRequest) {
     const isOffline = lastHb.status === "offline";
     if (shouldBroadcast(dev.id, isOffline)) {
       broadcastToChannel("coding-presence", "heartbeat", {
-        githubLogin: dev.username,
+        companyLogin: dev.username,
         avatarUrl: dev.avatar_url,
         status: isOffline ? "offline" : "active",
         language: lastHb.language,
@@ -182,3 +182,4 @@ export async function POST(request: NextRequest) {
 
   return NextResponse.json({ accepted, rejected });
 }
+

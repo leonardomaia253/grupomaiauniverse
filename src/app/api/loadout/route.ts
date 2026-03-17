@@ -35,7 +35,7 @@ export async function POST(request: Request) {
   }
 
   const admin = getSupabaseAdmin();
-  const githubLogin = (
+  const companyLogin = (
     user.user_metadata.user_name ??
     user.user_metadata.preferred_username ??
     ""
@@ -44,7 +44,7 @@ export async function POST(request: Request) {
   const { data: dev } = await admin
     .from("companies")
     .select("id, claimed, claimed_by")
-    .eq("username", githubLogin)
+    .eq("username", companyLogin)
     .single();
 
   if (!dev || !dev.claimed || dev.claimed_by !== user.id) {
@@ -120,7 +120,7 @@ export async function POST(request: Request) {
       await admin.from("activity_feed").insert({
         event_type: "item_equipped",
         actor_id: dev.id,
-        metadata: { login: githubLogin, item_id: config[zone], zone },
+        metadata: { login: companyLogin, item_id: config[zone], zone },
       });
       break; // One event per save to avoid spam
     }
@@ -128,3 +128,4 @@ export async function POST(request: Request) {
 
   return NextResponse.json({ ok: true, loadout: config });
 }
+

@@ -73,7 +73,7 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: "Invalid score" }, { status: 400 });
   }
 
-  const githubLogin = (
+  const companyLogin = (
     user.user_metadata.user_name ??
     user.user_metadata.preferred_username ??
     ""
@@ -84,7 +84,7 @@ export async function POST(request: Request) {
   const { data: dev } = await admin
     .from("companies")
     .select("id")
-    .eq("username", githubLogin)
+    .eq("username", companyLogin)
     .single();
 
   if (!dev) {
@@ -201,3 +201,4 @@ export async function GET(request: Request) {
     { headers: { "Cache-Control": "public, s-maxage=60" } },
   );
 }
+

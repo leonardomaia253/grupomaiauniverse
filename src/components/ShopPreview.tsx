@@ -144,7 +144,7 @@ function EffectForItem({
       return <LightningAura {...dims} color={ACCENT} />;
     case "led_banner":
       return <LEDBanner {...dims} color={ACCENT} />;
-    case "github_star":
+    case "universe_star":
       return <GitHubStar {...dims} />;
     default:
       return null;

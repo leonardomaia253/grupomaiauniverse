@@ -117,9 +117,9 @@ export async function GET(
   const { data: dev } = await supabase
     .from("companies")
     .select(
-      "id, github_login, name, avatar_url, contributions, contributions_total, public_repos, total_stars, rank, kudos_count"
+      "id, username, name, avatar_url, contributions, contributions_total, public_repos, total_stars, rank, kudos_count"
     )
-    .eq("github_login", username.toLowerCase())
+    .eq("username", username.toLowerCase())
     .single();
 
   if (!dev) {
@@ -293,7 +293,7 @@ function renderLandscape(
                   textTransform: "uppercase",
                 }}
               >
-                {`@${dev.github_login}`}
+                {`@${dev.username}`}
               </div>
               {dev.rank ? (
                 <div
@@ -471,7 +471,7 @@ function renderLandscape(
               textTransform: "uppercase",
             }}
           >
-            thegitcity.com/dev/{dev.github_login as string}
+            thegitcity.com/dev/{dev.username as string}
           </div>
         </div>
       </div>
@@ -668,7 +668,7 @@ function renderStories(
               marginTop: 6,
             }}
           >
-            @{dev.github_login as string}
+            @{dev.username as string}
           </div>
           <div
             style={{

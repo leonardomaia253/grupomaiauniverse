@@ -57,7 +57,7 @@ export async function createPixQrCodeRaw(opts: {
 export async function createPixQrCode(
   itemId: string,
   companyId: number,
-  githubLogin: string
+  companyLogin: string
 ): Promise<{ brCode: string; brCodeBase64: string; pixId: string }> {
   const sb = getSupabaseAdmin();
 
@@ -74,7 +74,8 @@ export async function createPixQrCode(
 
   return createPixQrCodeRaw({
     amountCents: item.price_brl_cents,
-    description: `${item.name} - ${githubLogin}`,
+    description: `${item.name} - ${companyLogin}`,
     externalId: `${companyId}:${itemId}`,
   });
 }
+

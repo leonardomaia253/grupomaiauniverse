@@ -13,7 +13,7 @@ export async function GET() {
       status,
       current_language,
       last_heartbeat_at,
-      companies!inner(username, avatar_url)
+      companies(username, avatar_url)
     `)
     .in("status", ["active", "idle"])
     .gte("last_heartbeat_at", cutoff);
@@ -26,7 +26,7 @@ export async function GET() {
   const byDev = new Map<number, (typeof sessions)[number]>();
   for (const s of sessions ?? []) {
     const existing = byDev.get(s.company_id);
-    if (!existing || s.last_heartbeat_at > existing.last_heartbeat_at) {
+    if (!existing || (s.last_heartbeat_at && existing.last_heartbeat_at && s.last_heartbeat_at > existing.last_heartbeat_at)) {
       byDev.set(s.company_id, s);
     }
   }
@@ -35,8 +35,8 @@ export async function GET() {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const dev = s.companies as any;
     return {
-      githubLogin: dev.username,
-      avatarUrl: dev.avatar_url,
+      companyLogin: dev?.username,
+      avatarUrl: dev?.avatar_url,
       status: s.status,
       language: s.current_language,
       // project and companyId intentionally excluded for privacy/security
@@ -52,3 +52,4 @@ export async function GET() {
     },
   );
 }
+

@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useEffect, useEffectEvent, useState, useMemo } from "react";
+import { useRef, useEffect, useEffectEvent, useState, useMemo, useCallback } from "react";
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import { OrbitControls, useGLTF, Stats, PerformanceMonitor } from "@react-three/drei";
 import { EffectComposer, Bloom } from "@react-three/postprocessing";
@@ -2038,8 +2038,47 @@ export default function CityCanvas({ planets, plazas, decorations, river, bridge
     return max;
   }, [planets]);
 
+  const [contextLost, setContextLost] = useState(false);
+  const [canvasKey, setCanvasKey] = useState(0);
+
+  const handleCreated = useCallback(({ gl }: { gl: THREE.WebGLRenderer }) => {
+    const canvas = gl.domElement;
+    canvas.addEventListener("webglcontextlost", (e) => {
+      e.preventDefault();
+      setContextLost(true);
+    });
+    canvas.addEventListener("webglcontextrestored", () => {
+      setContextLost(false);
+    });
+  }, []);
+
+  // If context was lost, remount the Canvas after a short delay
+  useEffect(() => {
+    if (!contextLost) return;
+    const timer = setTimeout(() => {
+      setCanvasKey((k) => k + 1);
+      setContextLost(false);
+    }, 1000);
+    return () => clearTimeout(timer);
+  }, [contextLost]);
+
+  if (contextLost) {
+    return (
+      <div className="fixed inset-0 flex items-center justify-center bg-black z-50">
+        <div className="flex flex-col items-center gap-4">
+          <div className="w-12 h-12 border-4 border-primary/30 border-t-primary rounded-full animate-spin" />
+          <span className="font-pixel text-[12px] text-white/70 uppercase tracking-widest">
+            Restaurando Conexão Visual...
+          </span>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <Canvas
+      key={canvasKey}
+      onCreated={handleCreated}
       camera={{ position: [400, 450, 600], fov: 55, near: 0.5, far: 4000 }}
       dpr={dpr}
       gl={{ antialias: false, powerPreference: "high-performance", toneMapping: THREE.ACESFilmicToneMapping, toneMappingExposure: 1.3 }}

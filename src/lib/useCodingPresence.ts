@@ -5,7 +5,7 @@ import { createBrowserSupabase } from "@/lib/supabase";
 import type { RealtimeChannel } from "@supabase/supabase-js";
 
 export interface LiveSession {
-  githubLogin: string;
+  companyLogin: string;
   avatarUrl: string;
   status: "active" | "idle";
   language?: string;
@@ -29,8 +29,8 @@ export function useCodingPresence() {
         if (data.companies) {
           const map = new Map<string, LiveSession>();
           for (const d of data.companies) {
-            map.set(d.githubLogin, {
-              githubLogin: d.githubLogin,
+            map.set(d.companyLogin, {
+              companyLogin: d.companyLogin,
               avatarUrl: d.avatarUrl,
               status: d.status,
               language: d.language,
@@ -50,17 +50,17 @@ export function useCodingPresence() {
     channel
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       .on("broadcast", { event: "heartbeat" }, ({ payload }: { payload: any }) => {
-        if (!payload?.githubLogin) return;
+        if (!payload?.companyLogin) return;
 
         // Offline signal: remove dev from live map immediately
         if (payload.status === "offline") {
-          mapRef.current.delete(payload.githubLogin);
+          mapRef.current.delete(payload.companyLogin);
           updateMap();
           return;
         }
 
-        mapRef.current.set(payload.githubLogin, {
-          githubLogin: payload.githubLogin,
+        mapRef.current.set(payload.companyLogin, {
+          companyLogin: payload.companyLogin,
           avatarUrl: payload.avatarUrl,
           status: payload.status ?? "active",
           language: payload.language,
@@ -77,8 +77,8 @@ export function useCodingPresence() {
           if (data.companies) {
             const map = new Map<string, LiveSession>();
             for (const d of data.companies) {
-              map.set(d.githubLogin, {
-                githubLogin: d.githubLogin,
+              map.set(d.companyLogin, {
+                companyLogin: d.companyLogin,
                 avatarUrl: d.avatarUrl,
                 status: d.status,
                 language: d.language,
@@ -100,8 +100,9 @@ export function useCodingPresence() {
 
   const liveCount = liveByLogin.size;
   const liveLogins = new Set(
-    Array.from(liveByLogin.values()).map((s) => s.githubLogin),
+    Array.from(liveByLogin.values()).map((s) => s.companyLogin),
   );
 
   return { liveCount, liveLogins, liveByLogin };
 }
+

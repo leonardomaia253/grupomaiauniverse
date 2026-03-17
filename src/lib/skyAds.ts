@@ -66,8 +66,8 @@ export function buildAdLink(ad: SkyAd): string | undefined {
 }
 
 /** Fire a tracking beacon to the sky-ads track API (non-blocking). */
-export function trackAdEvent(adId: string, eventType: "impression" | "click" | "cta_click", githubLogin?: string) {
-  const body = JSON.stringify({ ad_id: adId, event_type: eventType, ...(githubLogin && { username: githubLogin }) });
+export function trackAdEvent(adId: string, eventType: "impression" | "click" | "cta_click", companyLogin?: string) {
+  const body = JSON.stringify({ ad_id: adId, event_type: eventType, ...(companyLogin && { username: companyLogin }) });
   const url = `${process.env.NEXT_PUBLIC_SUPABASE_URL}/functions/v1/sky-ads-track`;
   if (typeof navigator !== "undefined" && navigator.sendBeacon) {
     navigator.sendBeacon(url, new Blob([body], { type: "application/json" }));
@@ -77,8 +77,8 @@ export function trackAdEvent(adId: string, eventType: "impression" | "click" | "
 }
 
 /** Fire multiple event types in a single beacon (saves rate limit budget). */
-export function trackAdEvents(adId: string, eventTypes: ("impression" | "click" | "cta_click")[], githubLogin?: string) {
-  const body = JSON.stringify({ ad_id: adId, event_types: eventTypes, ...(githubLogin && { username: githubLogin }) });
+export function trackAdEvents(adId: string, eventTypes: ("impression" | "click" | "cta_click")[], companyLogin?: string) {
+  const body = JSON.stringify({ ad_id: adId, event_types: eventTypes, ...(companyLogin && { username: companyLogin }) });
   const url = `${process.env.NEXT_PUBLIC_SUPABASE_URL}/functions/v1/sky-ads-track`;
   if (typeof navigator !== "undefined" && navigator.sendBeacon) {
     navigator.sendBeacon(url, new Blob([body], { type: "application/json" }));
@@ -111,3 +111,4 @@ export const DEFAULT_SKY_ADS: SkyAd[] = [
     priority: 10,
   },
 ];
+

@@ -28,7 +28,7 @@ const getCompany = cache(async (username: string) => {
   const { data } = await supabase
     .from("companies")
     .select("*")
-    .eq("github_login", username.toLowerCase())
+    .eq("username", username.toLowerCase())
     .single();
   return data;
 });
@@ -42,8 +42,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   }
 
   const contribs = (dev.contributions_total && dev.contributions_total > 0) ? dev.contributions_total : dev.contributions;
-  const title = `@${dev.github_login} - Maia Universe | ${contribs.toLocaleString()} contribuições`;
-  const description = `Veja o planeta de @${dev.github_login} no Maia Universe. ${contribs.toLocaleString()} contribuições, ${dev.public_repos.toLocaleString()} repositórios, ${dev.total_stars.toLocaleString()} estrelas. Rank #${dev.rank ?? "?"} no universo.`;
+  const title = `@${dev.username} - Maia Universe | ${contribs.toLocaleString()} contribuições`;
+  const description = `Veja o planeta de @${dev.username} no Maia Universe. ${contribs.toLocaleString()} contribuições, ${dev.public_repos.toLocaleString()} repositórios, ${dev.total_stars.toLocaleString()} estrelas. Rank #${dev.rank ?? "?"} no universo.`;
 
   return {
     title,
@@ -91,8 +91,8 @@ export default async function DevPage({ params }: Props) {
   // Fetch referred companies (who this dev brought to the city)
   const { data: referredDevs } = await sb
     .from("companies")
-    .select("github_login, avatar_url")
-    .eq("referred_by", dev.github_login)
+    .select("username, avatar_url")
+    .eq("referred_by", dev.username)
     .order("claimed_at", { ascending: false })
     .limit(20);
 
@@ -104,7 +104,7 @@ export default async function DevPage({ params }: Props) {
     user?.user_metadata?.preferred_username ??
     ""
   ).toLowerCase();
-  const isOwner = !!user && authLogin === dev.github_login.toLowerCase() && dev.claimed;
+  const isOwner = !!user && authLogin === dev.username.toLowerCase() && dev.claimed;
 
   const baseUrl =
     process.env.NEXT_PUBLIC_BASE_URL ??
@@ -117,11 +117,11 @@ export default async function DevPage({ params }: Props) {
     "@type": "ProfilePage",
     mainEntity: {
       "@type": "Person",
-      name: dev.name ?? dev.github_login,
-      alternateName: dev.github_login,
+      name: dev.name ?? dev.username,
+      alternateName: dev.username,
       image: dev.avatar_url,
-      url: `${baseUrl}/dev/${dev.github_login}`,
-      sameAs: `https://github.com/${dev.github_login}`,
+      url: `${baseUrl}/dev/${dev.username}`,
+      sameAs: `https://github.com/${dev.username}`,
     },
   };
 
@@ -133,15 +133,15 @@ export default async function DevPage({ params }: Props) {
       {
         "@type": "ListItem",
         position: 2,
-        name: `@${dev.github_login}`,
-        item: `${baseUrl}/dev/${dev.github_login}`,
+        name: `@${dev.username}`,
+        item: `${baseUrl}/dev/${dev.username}`,
       },
     ],
   };
 
   return (
     <main className="min-h-screen bg-bg font-pixel uppercase text-warm">
-      <ProfileTracker login={dev.github_login} />
+      <ProfileTracker login={dev.username} />
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(profileJsonLd) }}
@@ -166,7 +166,7 @@ export default async function DevPage({ params }: Props) {
             {dev.avatar_url && (
               <Image
                 src={dev.avatar_url}
-                alt={dev.github_login}
+                alt={dev.username}
                 width={100}
                 height={100}
                 className="border-[3px] border-border shrink-0"
@@ -178,7 +178,7 @@ export default async function DevPage({ params }: Props) {
               {dev.name && (
                 <h1 className="text-xl text-cream sm:text-2xl">{dev.name}</h1>
               )}
-              <p className="mt-1 text-sm text-muted">@{dev.github_login}</p>
+              <p className="mt-1 text-sm text-muted">@{dev.username}</p>
 
               {/* Rank Badge */}
               {dev.rank && (
@@ -201,7 +201,7 @@ export default async function DevPage({ params }: Props) {
 
               {/* Claim */}
               <div className="mt-3">
-                <ClaimButton githubLogin={dev.github_login} claimed={dev.claimed ?? false} />
+                <ClaimButton companyLogin={dev.username} claimed={dev.claimed ?? false} />
               </div>
             </div>
           </div>
@@ -270,7 +270,7 @@ export default async function DevPage({ params }: Props) {
         {/* View in City (prominent) */}
         <div className="mt-5">
           <Link
-            href={`/?user=${dev.github_login}`}
+            href={`/?user=${dev.username}`}
             className="btn-press flex w-full items-center justify-center gap-2 px-6 py-3.5 text-sm text-bg"
             style={{
               backgroundColor: accent,
@@ -285,7 +285,7 @@ export default async function DevPage({ params }: Props) {
         {isOwner && (
           <div className="mt-3">
             <Link
-              href={`/shop/${dev.github_login}`}
+              href={`/shop/${dev.username}`}
               className="btn-press flex w-full items-center justify-center gap-2 border-[3px] border-border px-6 py-3 text-sm text-cream transition-colors hover:border-border-light"
             >
               Personalizar Planeta
@@ -297,14 +297,14 @@ export default async function DevPage({ params }: Props) {
         <div className="mt-5 space-y-3">
           <div className="flex flex-wrap items-center justify-center gap-2">
             <ShareButtons
-              login={dev.github_login}
+              login={dev.username}
               contributions={(dev.contributions_total && dev.contributions_total > 0) ? dev.contributions_total : dev.contributions}
               rank={dev.rank}
               accent={accent}
               shadow={shadow}
             />
           </div>
-          <CompareChallenge login={dev.github_login} accent={accent} shadow={shadow} />
+          <CompareChallenge login={dev.username} accent={accent} shadow={shadow} />
         </div>
 
         {/* Stats Grid */}
@@ -385,7 +385,7 @@ export default async function DevPage({ params }: Props) {
         {/* Referral CTA — only for the logged-in owner */}
         {isOwner && (
           <div className="mt-5">
-            <ReferralCTA login={dev.github_login} accent={accent} />
+            <ReferralCTA login={dev.username} accent={accent} />
           </div>
         )}
 
@@ -399,21 +399,21 @@ export default async function DevPage({ params }: Props) {
             <div className="flex flex-wrap gap-2">
               {referredDevs.map((rd) => (
                 <Link
-                  key={rd.github_login}
-                  href={`/dev/${rd.github_login}`}
+                  key={rd.username}
+                  href={`/dev/${rd.username}`}
                   className="flex items-center gap-2 border-2 border-border px-3 py-1.5 text-[10px] text-muted transition-colors hover:border-border-light hover:text-cream"
                 >
                   {rd.avatar_url && (
                     <Image
                       src={rd.avatar_url}
-                      alt={rd.github_login}
+                      alt={rd.username}
                       width={16}
                       height={16}
                       className="border border-border"
                       style={{ imageRendering: "pixelated" }}
                     />
                   )}
-                  @{rd.github_login}
+                  @{rd.username}
                 </Link>
               ))}
             </div>

@@ -906,10 +906,10 @@ export default function ShopClient({
       }
 
       if (data.verified) {
-        setOwned((prev) => prev.includes("github_star") ? prev : [...prev, "github_star"]);
+        setOwned((prev) => prev.includes("universe_star") ? prev : [...prev, "universe_star"]);
         // Auto-equip in crown if nothing equipped
         if (!loadout.crown) {
-          setLoadout((prev) => ({ ...prev, crown: "github_star" }));
+          setLoadout((prev) => ({ ...prev, crown: "universe_star" }));
           setHasChanges(true);
         }
         setStarVerifyStep("idle");
@@ -1231,7 +1231,7 @@ export default function ShopClient({
                     const hasAchievement = achUnlock && achievements.includes(achUnlock.achievement);
                     const isBuying = buyingItem === itemId;
 
-                    const isGitHubStar = itemId === "github_star";
+                    const isGitHubStar = itemId === "universe_star";
 
                     // Badge text
                     let badge: string;

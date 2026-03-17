@@ -47,7 +47,7 @@ export async function POST(request: Request) {
 
   const admin = getSupabaseAdmin();
 
-  const githubLogin = (
+  const companyLogin = (
     user.user_metadata.user_name ??
     user.user_metadata.preferred_username ??
     ""
@@ -59,7 +59,7 @@ export async function POST(request: Request) {
     admin
       .from("companies")
       .select(raidColumns)
-      .eq("username", githubLogin)
+      .eq("username", companyLogin)
       .single(),
     admin
       .from("companies")
@@ -388,3 +388,4 @@ export async function POST(request: Request) {
   // If RPC succeeded (future-proofing)
   return NextResponse.json(raidRow);
 }
+

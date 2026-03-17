@@ -144,13 +144,13 @@ export async function POST() {
     return NextResponse.json({ error: "Too fast" }, { status: 429 });
   }
 
-  const githubLogin = (
+  const companyLogin = (
     user.user_metadata?.user_name ??
     user.user_metadata?.preferred_username ??
     ""
   ).toLowerCase();
 
-  if (!githubLogin) {
+  if (!companyLogin) {
     return NextResponse.json({ error: "No GitHub login" }, { status: 400 });
   }
 
@@ -160,7 +160,7 @@ export async function POST() {
   const { data: dev } = await sb
     .from("companies")
     .select("id, claimed, contributions, public_repos, total_stars, kudos_count, app_streak, streak_freeze_30d_claimed, last_checkin_date")
-    .eq("username", githubLogin)
+    .eq("username", companyLogin)
     .single();
 
   if (!dev || !dev.claimed) {
@@ -203,7 +203,7 @@ export async function POST() {
     !checkinResult.was_frozen
   ) {
     const today = new Date().toISOString().split("T")[0];
-    sendStreakBrokenNotification(dev.id, githubLogin, previousStreak, today);
+    sendStreakBrokenNotification(dev.id, companyLogin, previousStreak, today);
   }
 
   let newAchievements: string[] = [];
@@ -231,7 +231,7 @@ export async function POST() {
       gifts_sent: giftsSent,
       gifts_received: giftsReceived,
       app_streak: checkinResult.streak,
-    }, githubLogin);
+    }, companyLogin);
 
     // Grant 1 free freeze at 30-day streak milestone
     if (checkinResult.streak >= 30 && !dev.streak_freeze_30d_claimed) {
@@ -253,7 +253,7 @@ export async function POST() {
     if ([7, 30, 100, 365].includes(checkinResult.streak)) {
       sendStreakMilestoneNotification(
         dev.id,
-        githubLogin,
+        companyLogin,
         checkinResult.streak,
         checkinResult.longest,
         streakReward?.item_name,
@@ -265,7 +265,7 @@ export async function POST() {
       event_type: "streak_checkin",
       actor_id: dev.id,
       metadata: {
-        login: githubLogin,
+        login: companyLogin,
         streak: checkinResult.streak,
         was_frozen: checkinResult.was_frozen ?? false,
         reward: streakReward?.item_id ?? null,
@@ -274,7 +274,7 @@ export async function POST() {
   }
 
   // Refresh weekly contributions from GitHub (fire-and-forget, non-blocking)
-  fetchWeeklyContributions(githubLogin).then((weeklyContribs) => {
+  fetchWeeklyContributions(companyLogin).then((weeklyContribs) => {
     if (weeklyContribs !== null) {
       sb.from("companies")
         .update({ current_week_contributions: weeklyContribs })
@@ -333,3 +333,4 @@ export async function POST() {
     xp: xpResult,
   });
 }
+

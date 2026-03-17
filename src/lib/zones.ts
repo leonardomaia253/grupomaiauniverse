@@ -2,7 +2,7 @@
 // Single source of truth — imported by planet3D, ShopClient, loadout API, ShopPreview
 
 export const ZONE_ITEMS: Record<string, string[]> = {
-  crown: ["flag", "helipad", "spire", "satellite_dish", "crown_item", "github_star"],
+  crown: ["flag", "helipad", "spire", "satellite_dish", "crown_item", "universe_star"],
   roof: ["antenna_array", "rooftop_garden", "rooftop_fire", "pool_party"],
   aura: ["neon_trim", "spotlight", "hologram_ring", "lightning_aura", "neon_outline", "particle_aura"],
 };
@@ -46,7 +46,7 @@ export const ITEM_NAMES: Record<string, string> = {
   raid_boost_medium: "Battle Armor",
   raid_boost_large: "EMP Device",
   white_rabbit: "White Rabbit",
-  github_star: "Estrela Maia",
+  universe_star: "Estrela Maia",
 };
 
 // Correct mapping: item_id → achievement that unlocks it (from migration 007 seed)
@@ -79,7 +79,7 @@ export const ITEM_EMOJIS: Record<string, string> = {
   raid_boost_medium: "🛡️",
   raid_boost_large: "💣",
   white_rabbit: "🐇",
-  github_star: "⭐",
+  universe_star: "⭐",
 };
 
 export const FACES_ITEMS = ["custom_color", "billboard", "led_banner"];

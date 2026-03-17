@@ -7,7 +7,7 @@ import type { LiveSession } from "@/lib/useCodingPresence";
 const CREATOR_LOGIN = "srizzon";
 
 interface PresenceDev {
-  githubLogin: string;
+  companyLogin: string;
   avatarUrl: string;
   status: string;
   language: string | null;
@@ -25,9 +25,9 @@ export default function LivePage() {
           if (data.companies) {
             // Creator first, then alphabetical
             const sorted = [...data.companies].sort((a: PresenceDev, b: PresenceDev) => {
-              if (a.githubLogin.toLowerCase() === CREATOR_LOGIN) return -1;
-              if (b.githubLogin.toLowerCase() === CREATOR_LOGIN) return 1;
-              return a.githubLogin.localeCompare(b.githubLogin);
+              if (a.companyLogin.toLowerCase() === CREATOR_LOGIN) return -1;
+              if (b.companyLogin.toLowerCase() === CREATOR_LOGIN) return 1;
+              return a.companyLogin.localeCompare(b.companyLogin);
             });
             setcompanies(sorted);
           }
@@ -80,11 +80,11 @@ export default function LivePage() {
         ) : (
           <div className="space-y-2">
             {companies.map((dev) => {
-              const isCreator = dev.githubLogin.toLowerCase() === CREATOR_LOGIN;
+              const isCreator = dev.companyLogin.toLowerCase() === CREATOR_LOGIN;
               return (
                 <Link
-                  key={dev.githubLogin}
-                  href={`/?focus=${dev.githubLogin}`}
+                  key={dev.companyLogin}
+                  href={`/?focus=${dev.companyLogin}`}
                   className="flex items-center gap-4 border-[3px] border-border bg-bg/50 px-5 py-4 transition-colors hover:border-border-light"
                 >
                   <div className="relative shrink-0">
@@ -101,7 +101,7 @@ export default function LivePage() {
                   <div className="min-w-0 flex-1">
                     <div className="flex items-center gap-2">
                       <span className={`text-sm ${isCreator ? "text-[#fbbf24]" : "text-cream"}`}>
-                        {dev.githubLogin}
+                        {dev.companyLogin}
                       </span>
                       {isCreator && (
                         <span className="text-[9px] text-[#fbbf24]/70">CREATOR</span>
@@ -141,3 +141,4 @@ export default function LivePage() {
     </main>
   );
 }
+

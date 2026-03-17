@@ -175,39 +175,39 @@ const PERMANENT_ERROR_CODES = new Set(["not-found", "org", "no-activity"]);
 
 const ERROR_MESSAGES: Record<string, { primary: (u: string) => string; secondary: string; hasRetry?: boolean; hasLink?: boolean }> = {
   "not-found": {
-    primary: (u) => `"@${u}" doesn't exist`,
-    secondary: "Check the spelling — could be a typo. Usernames are case-insensitive.",
+    primary: (u) => `A empresa "@${u}" não existe`,
+    secondary: "Verifique a ortografia. A busca não diferencia maiúsculas e minúsculas.",
   },
   "org": {
-    primary: (u) => `"@${u}" is an organization, not a person`,
-    secondary: "Maia Universe is for individual profiles. Try searching for one of its contributors by their personal username.",
+    primary: (u) => `"@${u}" é uma organização, não uma empresa`,
+    secondary: "Maia Universe é focado em perfis empresariais.",
   },
   "no-activity": {
-    primary: (u) => `"@${u}" has no public activity yet`,
-    secondary: "Ensure your profile activity is public in your account settings and try again.",
+    primary: (u) => `A empresa "@${u}" não possui atividade pública ainda`,
+    secondary: "Verifique se a atividade está pública no GitHub e tente novamente.",
     hasLink: true,
   },
   "rate-limit": {
-    primary: () => "Search limit reached",
-    secondary: "You can look up 10 new profiles per hour. companies already in the Universe are unlimited.",
+    primary: () => "Limite de busca atingido",
+    secondary: "Você pode buscar 10 empresas novas por hora. O limite não se aplica a empresas já no Universo.",
   },
   "api-rate-limit": {
-    primary: () => "The external API is temporarily unavailable",
-    secondary: "Too many requests. Try again in a few minutes.",
+    primary: () => "A API externa está temporariamente indisponível",
+    secondary: "Muitas requisições. Tente novamente em alguns minutos.",
   },
   "timeout": {
-    primary: (u) => `Fetching "@${u}" took too long`,
-    secondary: "The external API was slow to respond. This usually resolves itself — try again in a moment.",
+    primary: (u) => `O carregamento da empresa "@${u}" demorou muito`,
+    secondary: "A API externa demorou a responder. Tente novamente em alguns instantes.",
     hasRetry: true,
   },
   "network": {
-    primary: () => "Couldn't reach the server",
-    secondary: "Check your internet connection and try again.",
+    primary: () => "Não foi possível conectar ao servidor",
+    secondary: "Verifique sua conexão com a internet e tente novamente.",
     hasRetry: true,
   },
   "generic": {
-    primary: () => "Something went wrong",
-    secondary: "An unexpected error occurred. Try again.",
+    primary: () => "Algo deu errado",
+    secondary: "Ocorreu um erro inesperado. Tente novamente.",
     hasRetry: true,
   },
 };
@@ -598,7 +598,7 @@ function HomeContent() {
 
   // Detect mobile/touch device
   useEffect(() => {
-    const check = () => setIsMobile(window.innerWidth < 640 || "ontouchstart" in window);
+    const check = () => setIsMobile(window.innerWidth < 640);
     check();
     window.addEventListener("resize", check);
     return () => window.removeEventListener("resize", check);
@@ -2308,8 +2308,8 @@ function HomeContent() {
                 {codingPanelOpen && (() => {
                   // Creator always first, then up to 4 others
                   const allcompanies = Array.from(liveByLogin.values());
-                  const creator = allcompanies.find((d) => d.githubLogin.toLowerCase() === "srizzon");
-                  const others = allcompanies.filter((d) => d.githubLogin.toLowerCase() !== "srizzon");
+                  const creator = allcompanies.find((d) => d.companyLogin.toLowerCase() === "srizzon");
+                  const others = allcompanies.filter((d) => d.companyLogin.toLowerCase() !== "srizzon");
                   const displaycompanies = [
                     ...(creator ? [creator] : []),
                     ...others.slice(0, creator ? 4 : 5),
@@ -2323,13 +2323,13 @@ function HomeContent() {
                       </div>
                       <div>
                         {displaycompanies.map((dev) => {
-                          const isCreator = dev.githubLogin.toLowerCase() === "srizzon";
+                          const isCreator = dev.companyLogin.toLowerCase() === "srizzon";
                           return (
                             <button
-                              key={dev.githubLogin}
+                              key={dev.companyLogin}
                               onClick={() => {
                                 const b = planets.find(
-                                  (b) => b.login.toLowerCase() === dev.githubLogin.toLowerCase(),
+                                  (b) => b.login.toLowerCase() === dev.companyLogin.toLowerCase(),
                                 );
                                 if (b) {
                                   setselectedPlanet(null);
@@ -2352,7 +2352,7 @@ function HomeContent() {
                               <div className="min-w-0 flex-1">
                                 <div className="flex items-center gap-1.5">
                                   <span className={`truncate text-[11px] ${isCreator ? "text-[#fbbf24]" : "text-cream"}`}>
-                                    {dev.githubLogin}
+                                    {dev.companyLogin}
                                   </span>
                                   {isCreator && (
                                     <span className="shrink-0 text-[8px] text-[#fbbf24]/70">CREATOR</span>
@@ -4565,3 +4565,4 @@ export default function Home() {
     </Suspense>
   );
 }
+

@@ -194,7 +194,7 @@ export async function POST(request: Request) {
           await autoEquipIfSolo(ownerId, itemId);
 
           // Insert feed event + send notifications
-          const githubLogin = session.metadata?.username;
+          const companyLogin = session.metadata?.username;
           if (giftedTo) {
             const { data: receiver } = await sb
               .from("companies")
@@ -206,24 +206,24 @@ export async function POST(request: Request) {
               actor_id: Number(companyId),
               target_id: Number(giftedTo),
               metadata: {
-                giver_login: githubLogin,
+                giver_login: companyLogin,
                 receiver_login: receiver?.username ?? "unknown",
                 item_id: itemId,
               },
             });
 
             // Gift notifications: receipt to buyer, alert to receiver
-            sendGiftSentNotification(Number(companyId), githubLogin ?? "", receiver?.username ?? "unknown", pending.id, itemId);
-            sendGiftReceivedNotification(Number(giftedTo), githubLogin ?? "someone", receiver?.username ?? "unknown", pending.id, itemId);
+            sendGiftSentNotification(Number(companyId), companyLogin ?? "", receiver?.username ?? "unknown", pending.id, itemId);
+            sendGiftReceivedNotification(Number(giftedTo), companyLogin ?? "someone", receiver?.username ?? "unknown", pending.id, itemId);
           } else {
             await sb.from("activity_feed").insert({
               event_type: "item_purchased",
               actor_id: Number(companyId),
-              metadata: { login: githubLogin, item_id: itemId },
+              metadata: { login: companyLogin, item_id: itemId },
             });
 
             // Purchase receipt notification
-            sendPurchaseNotification(Number(companyId), githubLogin ?? "", pending.id, itemId);
+            sendPurchaseNotification(Number(companyId), companyLogin ?? "", pending.id, itemId);
           }
         } else {
           // Check if already completed (webhook duplicate)
@@ -368,3 +368,4 @@ export async function POST(request: Request) {
   // Always return 200 to prevent Stripe retries
   return NextResponse.json({ received: true });
 }
+

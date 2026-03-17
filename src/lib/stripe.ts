@@ -23,7 +23,7 @@ export function getStripe(): Stripe {
 export async function createCheckoutSession(
   itemId: string,
   companyId: number,
-  githubLogin: string,
+  companyLogin: string,
   currency: "usd" | "brl" = "usd",
   customerEmail?: string,
   giftedToDevId?: number | null,
@@ -67,14 +67,15 @@ export async function createCheckoutSession(
     metadata: {
       company_id: String(companyId),
       item_id: itemId,
-      username: githubLogin,
+      username: companyLogin,
       ...(giftedToDevId ? { gifted_to: String(giftedToDevId) } : {}),
     },
     success_url: giftedToLogin
       ? `${getBaseUrl()}/?user=${giftedToLogin}&gifted=${itemId}`
-      : `${getBaseUrl()}/shop/${githubLogin}?purchased=${itemId}`,
-    cancel_url: `${getBaseUrl()}/shop/${githubLogin}`,
+      : `${getBaseUrl()}/shop/${companyLogin}?purchased=${itemId}`,
+    cancel_url: `${getBaseUrl()}/shop/${companyLogin}`,
   });
 
   return { url: session.url! };
 }
+

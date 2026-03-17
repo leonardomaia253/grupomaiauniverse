@@ -12,13 +12,13 @@ export async function POST() {
     return NextResponse.json({ error: "Not authenticated" }, { status: 401 });
   }
 
-  const githubLogin = (
+  const companyLogin = (
     user.user_metadata.user_name ??
     user.user_metadata.preferred_username ??
     ""
   ).toLowerCase();
 
-  if (!githubLogin) {
+  if (!companyLogin) {
     return NextResponse.json(
       { error: "No GitHub username in profile" },
       { status: 400 }
@@ -50,7 +50,7 @@ export async function POST() {
       claimed_at: new Date().toISOString(),
       fetch_priority: 1,
     })
-    .eq("username", githubLogin)
+    .eq("username", companyLogin)
     .eq("claimed", false)
     .is("claimed_by", null)
     .select("username")
@@ -67,16 +67,17 @@ export async function POST() {
   const { data: dev } = await admin
     .from("companies")
     .select("id")
-    .eq("username", githubLogin)
+    .eq("username", companyLogin)
     .single();
 
   if (dev) {
     await admin.from("activity_feed").insert({
       event_type: "planet_claimed",
       actor_id: dev.id,
-      metadata: { login: githubLogin },
+      metadata: { login: companyLogin },
     });
   }
 
   return NextResponse.json({ claimed: true, username: data.username });
 }
+

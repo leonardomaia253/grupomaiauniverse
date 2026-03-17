@@ -23,7 +23,7 @@ interface InvoiceResponse {
 export async function createCryptoInvoice(
   itemId: string,
   companyId: number,
-  githubLogin: string,
+  companyLogin: string,
 ): Promise<{ invoiceUrl: string; invoiceId: string }> {
   const sb = getSupabaseAdmin();
 
@@ -46,8 +46,8 @@ export async function createCryptoInvoice(
   const priceUsd = item.price_usd_cents / 100;
   const siteUrl = (process.env.NEXT_PUBLIC_SITE_URL || "https://www.maiauniverse.com.br").replace(/\/+$/, "");
 
-  const successUrl = `${siteUrl}/shop/${githubLogin}?purchased=${itemId}`;
-  const cancelUrl = `${siteUrl}/shop/${githubLogin}`;
+  const successUrl = `${siteUrl}/shop/${companyLogin}?purchased=${itemId}`;
+  const cancelUrl = `${siteUrl}/shop/${companyLogin}`;
 
   const res = await fetch(`${NOWPAYMENTS_API}/invoice`, {
     method: "POST",
@@ -59,7 +59,7 @@ export async function createCryptoInvoice(
       price_amount: priceUsd,
       price_currency: "usd",
       order_id: `${companyId}:${itemId}`,
-      order_description: `${item.name} - ${githubLogin}`,
+      order_description: `${item.name} - ${companyLogin}`,
       ipn_callback_url: `${siteUrl}/api/webhooks/nowpayments`,
       success_url: successUrl,
       cancel_url: cancelUrl,
@@ -116,3 +116,4 @@ function sortObject(obj: Record<string, unknown>): Record<string, unknown> {
       return result;
     }, {});
 }
+

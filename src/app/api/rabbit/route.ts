@@ -26,7 +26,7 @@ export async function POST(request: Request) {
 
   const admin = getSupabaseAdmin();
 
-  const githubLogin = (
+  const companyLogin = (
     user.user_metadata.user_name ??
     user.user_metadata.preferred_username ??
     ""
@@ -36,7 +36,7 @@ export async function POST(request: Request) {
   const { data: dev } = await admin
     .from("companies")
     .select("id, claimed, rabbit_progress, rabbit_completed")
-    .eq("username", githubLogin)
+    .eq("username", companyLogin)
     .single();
 
   if (!dev || !dev.claimed) {
@@ -133,7 +133,7 @@ export async function GET(request: Request) {
       return NextResponse.json({ progress: 0, completed: false });
     }
 
-    const githubLogin = (
+    const companyLogin = (
       user.user_metadata.user_name ??
       user.user_metadata.preferred_username ??
       ""
@@ -142,7 +142,7 @@ export async function GET(request: Request) {
     const { data: dev } = await admin
       .from("companies")
       .select("rabbit_progress, rabbit_completed, rabbit_completed_at")
-      .eq("username", githubLogin)
+      .eq("username", companyLogin)
       .single();
 
     return NextResponse.json({
@@ -172,3 +172,4 @@ export async function GET(request: Request) {
     headers: { "Cache-Control": "public, s-maxage=60, stale-while-revalidate=120" },
   });
 }
+

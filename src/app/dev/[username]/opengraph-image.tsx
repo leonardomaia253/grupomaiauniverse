@@ -25,8 +25,8 @@ export default async function Image({
 
   const { data: dev } = await supabase
     .from("companies")
-    .select("github_login, name, avatar_url, contributions, contributions_total, public_repos, total_stars, rank, kudos_count")
-    .eq("github_login", username.toLowerCase())
+    .select("username, name, avatar_url, contributions, contributions_total, public_repos, total_stars, rank, kudos_count")
+    .eq("username", username.toLowerCase())
     .single();
 
   const accent = "#c8e64a";
@@ -193,7 +193,7 @@ export default async function Image({
                   textTransform: "uppercase",
                 }}
               >
-                {`@${dev.github_login}`}
+                {`@${dev.username}`}
               </div>
               {dev.rank && (
                 <div

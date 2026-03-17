@@ -445,7 +445,7 @@ export const PlanetItemEffects = memo(function PlanetItemEffects({ planet, accen
       {shouldRenderZone("crown_item") && (
         <CrownItem height={height} color={accentColor} focused={focused} />
       )}
-      {shouldRenderZone("github_star") && (
+      {shouldRenderZone("universe_star") && (
         <GitHubStar height={height} width={width} depth={depth} color={accentColor} />
       )}
       {/* White rabbit: always renders for completers, not tied to loadout */}
