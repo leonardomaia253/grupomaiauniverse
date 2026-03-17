@@ -5,8 +5,7 @@ import { checkAchievements } from "@/lib/achievements";
 import { cacheEmailFromAuth, touchLastActive, ensurePreferences } from "@/lib/notification-helpers";
 import { sendWelcomeNotification } from "@/lib/notification-senders/welcome";
 import { sendReferralJoinedNotification } from "@/lib/notification-senders/referral";
-import { fetchGitHubcompanyData } from "@/lib/github-api";
-import { calculateGithubXp } from "@/lib/xp";
+
 
 import { isAdmin } from "@/lib/admin";
 
@@ -86,19 +85,7 @@ export async function GET(request: Request) {
           provider,
         };
 
-        // If GitHub, fetch additional data
-        if (provider === "github") {
-          try {
-            const ghData = await fetchGitHubcompanyData(username, { allowEmpty: true });
-            userData = {
-              ...userData,
-              ...ghData,
-            };
-            // ghData now contains external_id and username instead of external_id and username
-          } catch (ghErr) {
-            console.error("Failed to fetch dados do Grupo Maia for user:", username, ghErr);
-          }
-        }
+
 
         const { data: created, error: createErr } = await admin
           .from("companies")
@@ -115,19 +102,7 @@ export async function GET(request: Request) {
           .single();
 
         if (created && !createErr) {
-          // Grant initial XP if dados do Grupo Maia was fetched
-          if (provider === "github" && userData.contributions) {
-            const xp = calculateGithubXp({
-              contributions: userData.contributions_total ?? userData.contributions,
-              total_stars: userData.total_stars,
-              public_repos: userData.public_repos,
-              total_prs: userData.total_prs ?? 0,
-            });
-            if (xp > 0) {
-              await admin.rpc("grant_xp", { p_company_id: created.id, p_source: "github", p_amount: xp });
-              await admin.from("companies").update({ xp_universe: xp }).eq("id", created.id);
-            }
-          }
+
 
           // Rank
           await admin.rpc("assign_new_company_rank", { company_id: created.id });
