@@ -1916,7 +1916,7 @@ function HomeContent() {
         }}
         onPause={(paused) => setFlyPaused(paused)}
         flyPauseSignal={flyPauseSignal}
-        flyHasOverlay={showFlyControls || showFlyResults || Boolean(feedback) || searchBarOpen || codingPanelOpen || feedPanelOpen || mobileMenuOpen || giftModalOpen}
+        flyHasOverlay={showFlyControls || !!showFlyResults || Boolean(feedback) || searchBarOpen || codingPanelOpen || feedPanelOpen || mobileMenuOpen || giftModalOpen}
         flyStartPaused={flyPaused}
       />
 
