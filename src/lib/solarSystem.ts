@@ -1,18 +1,28 @@
 import type { CompanyRecord } from "@/lib/github";
 
 export interface UniversePlanet {
-  handle: string;
+  login: string;
   name: string | null;
   avatar_url: string | null;
   score: number;
   orbitIndex: number;
   
-  // 3D positioning
+  // 3D positioning (Solar System specific)
   distance: number;
   angle: number;
   speed: number;
   inclination: number;
   
+  // Instance rendering fields (Compat with InstancedPlanets)
+  position: [number, number, number];
+  width: number;
+  height: number;
+  depth: number;
+  floors: number;
+  windowsPerFloor: number;
+  sideWindowsPerFloor: number;
+  litPercentage: number;
+
   // Physical traits
   radius: number;
   color: string;
@@ -67,9 +77,15 @@ export function generateSolarSystem(companies: CompanyRecord[]): SolarSystem {
     // Color based on primary language (legacy from Universe constellations)
     const colors = ["#3b82f6", "#ef4444", "#a855f7", "#22c55e", "#06b6d4", "#f97316"];
     const color = colors[seed % colors.length];
+
+    // Position in 3D (will be updated every frame by the animation system, 
+    // but we need an initial one for the InstancedPlanets setup)
+    const x = Math.cos(angle) * distance;
+    const z = Math.sin(angle) * distance;
+    const y = Math.sin(inclination) * distance;
     
     return {
-      handle: dev.username,
+      login: dev.username,
       name: dev.name,
       avatar_url: dev.avatar_url,
       score: dev.contributions,
@@ -78,6 +94,16 @@ export function generateSolarSystem(companies: CompanyRecord[]): SolarSystem {
       angle,
       speed,
       inclination,
+      // Rendering fields
+      position: [x, y, z],
+      width: radius * 2,
+      height: radius * 2,
+      depth: radius * 2,
+      floors: 1,
+      windowsPerFloor: 0,
+      sideWindowsPerFloor: 0,
+      litPercentage: 0,
+      // Physical traits
       radius,
       color,
       hasRings: dev.total_stars > 1000,
@@ -93,3 +119,4 @@ export function generateSolarSystem(companies: CompanyRecord[]): SolarSystem {
     sunRadius: 60
   };
 }
+

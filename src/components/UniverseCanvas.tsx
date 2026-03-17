@@ -516,7 +516,6 @@ export default function UniverseCanvas({
         <Sun radius={solarSystem.sunRadius} />
 
         {atlasTexture && (
-          // @ts-ignore
           <InstancedPlanets
             planets={solarSystem.planets as any}
             colors={defaultColors}
