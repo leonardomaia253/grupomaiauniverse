@@ -386,6 +386,7 @@ function HomeContent() {
   const [planets, setPlanets] = useState<UniversePlanet[]>([]);
   // Keep raw dev records so we can inject new companies and regenerate layout locally
   const rawCompaniesRef = useRef<CompanyRecord[]>([]);
+  const [universeCompanies, setUniverseCompanies] = useState<CompanyRecord[]>([]);
   const [plazas, setPlazas] = useState<SpacePlaza[]>([]);
   const [decorations, setDecorations] = useState<SpaceDecoration[]>([]);
   const [river, setRiver] = useState<SpaceRiver | null>(null);
@@ -1089,6 +1090,7 @@ function HomeContent() {
     } catch { }
 
     rawCompaniesRef.current = allcompanies;
+    setUniverseCompanies(allcompanies);
     setStats(UniverseStats);
     const layout = generateUniverseLayout(allcompanies);
     setPlanets(layout.planets);
@@ -1127,6 +1129,7 @@ function HomeContent() {
     const cached = getUniverseCache();
     if (cached) {
       rawCompaniesRef.current = cached.rawcompanies ?? [];
+      setUniverseCompanies(rawCompaniesRef.current);
       setPlanets(cached.planets);
       setPlazas(cached.plazas);
       setDecorations(cached.decorations);
@@ -1227,6 +1230,7 @@ function HomeContent() {
         await new Promise((r) => setTimeout(r, 0)); // yield to browser
 
         rawCompaniesRef.current = allcompanies;
+        setUniverseCompanies(allcompanies);
         setStats(UniverseStats);
         const finalLayout = generateUniverseLayout(allcompanies);
         setPlanets(finalLayout.planets);
@@ -1372,6 +1376,7 @@ function HomeContent() {
             xp_level: devData.xp_level ?? 1,
           };
           rawCompaniesRef.current = [...rawCompaniesRef.current, newDev];
+          setUniverseCompanies(rawCompaniesRef.current);
           const layout = generateUniverseLayout(rawCompaniesRef.current);
           setPlanets(layout.planets);
           setPlazas(layout.plazas);
@@ -1444,6 +1449,7 @@ function HomeContent() {
           xp_level: devData.xp_level ?? 1,
         };
         rawCompaniesRef.current = [...rawCompaniesRef.current, newDev];
+        setUniverseCompanies(rawCompaniesRef.current);
         const layout = generateUniverseLayout(rawCompaniesRef.current);
         setPlanets(layout.planets);
         setPlazas(layout.plazas);
@@ -1637,6 +1643,7 @@ function HomeContent() {
           d.username?.toLowerCase() === refreshedLogin ? syncedDev : d
         )
         : [...rawCompaniesRef.current, syncedDev];
+      setUniverseCompanies(rawCompaniesRef.current);
 
       const layout = generateUniverseLayout(rawCompaniesRef.current);
       setPlanets(layout.planets);
@@ -1897,7 +1904,7 @@ function HomeContent() {
 
   return (
     <main className="relative min-h-screen overflow-hidden bg-bg font-pixel uppercase text-warm">
-      <UniverseCanvas companies={rawCompaniesRef.current} />
+      <UniverseCanvas companies={universeCompanies} />
 
       {/* Loading screen overlay */}
       {loadStage !== "done" && (

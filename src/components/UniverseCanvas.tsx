@@ -272,6 +272,7 @@ function drawGlobe(
 ) {
   const r = planet.radius * (active ? 1.48 : 1);
   const longitudeShift = (time * 0.00018 * planet.orbit + planet.phase) % TAU;
+  const markerCount = active ? 7 : 5;
 
   const glow = ctx.createRadialGradient(x - r * 0.35, y - r * 0.45, r * 0.1, x, y, r * 2.2);
   glow.addColorStop(0, "rgba(255,255,255,0.42)");
@@ -315,11 +316,11 @@ function drawGlobe(
     ctx.stroke();
   }
 
-  for (let i = 0; i < 3; i++) {
+  for (let i = 0; i < markerCount; i++) {
     const markerAngle = longitudeShift + planet.phase * 0.37 + i * 2.1;
-    const markerY = y + Math.sin(markerAngle * 0.74) * r * 0.42;
-    const markerX = x + Math.cos(markerAngle) * r * 0.46;
-    const markerSize = Math.max(1.4, r * 0.055);
+    const markerY = y + Math.sin(markerAngle * 0.74) * r * (0.2 + seededUnit(hashString(`${planet.login}:my:${i}`)) * 0.42);
+    const markerX = x + Math.cos(markerAngle) * r * (0.22 + seededUnit(hashString(`${planet.login}:mx:${i}`)) * 0.48);
+    const markerSize = Math.max(1.1, r * (0.026 + seededUnit(hashString(`${planet.login}:ms:${i}`)) * 0.035));
     ctx.beginPath();
     ctx.arc(markerX, markerY, markerSize, 0, TAU);
     ctx.fillStyle = "rgba(0,0,0,0.76)";
@@ -328,6 +329,18 @@ function drawGlobe(
     ctx.arc(markerX, markerY, markerSize * 2.1, 0, TAU);
     ctx.strokeStyle = "rgba(255,255,255,0.46)";
     ctx.lineWidth = 0.55;
+    ctx.stroke();
+  }
+
+  ctx.strokeStyle = active ? "rgba(0,0,0,0.36)" : "rgba(0,0,0,0.22)";
+  ctx.lineWidth = Math.max(0.42, r * 0.012);
+  for (let i = 0; i < (active ? 4 : 2); i++) {
+    const arcSeed = hashString(`${planet.login}:arc:${i}`);
+    const arcY = y + (seededUnit(arcSeed) - 0.5) * r * 0.86;
+    const arcW = r * (0.62 + seededUnit(arcSeed + 2) * 0.32);
+    const arcH = r * (0.12 + seededUnit(arcSeed + 4) * 0.18);
+    ctx.beginPath();
+    ctx.ellipse(x, arcY, arcW, arcH, longitudeShift * 0.4 + seededUnit(arcSeed + 6) * Math.PI, 0.15 * Math.PI, 0.85 * Math.PI);
     ctx.stroke();
   }
 
