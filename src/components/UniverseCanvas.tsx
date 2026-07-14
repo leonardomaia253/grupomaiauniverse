@@ -37,6 +37,8 @@ type ScreenPlanet = {
 
 const MAX_RENDER_LINKS = 560;
 const TAU = Math.PI * 2;
+const LAYOUT_WIDTH = 1280;
+const LAYOUT_HEIGHT = 760;
 const BRAND_COLORS: Array<{ match: string[]; color: string; scale?: number }> = [
   { match: ["bilheking"], color: "#7c3aed", scale: 1.55 },
   { match: ["spur"], color: "#ef233c" },
@@ -112,6 +114,36 @@ function damageForCompany(company: CompanyRecord): number {
   return Math.max(0, Math.min(0.86, (100 - company.health_score) / 100));
 }
 
+function relaxPlanetPositions(planets: PlanetNode[]): void {
+  const iterations = planets.length > 900 ? 10 : planets.length > 520 ? 14 : 20;
+  for (let pass = 0; pass < iterations; pass++) {
+    for (let i = 0; i < planets.length; i++) {
+      const a = planets[i];
+      for (let j = i + 1; j < planets.length; j++) {
+        const b = planets[j];
+        const dx = (b.x - a.x) * LAYOUT_WIDTH;
+        const dy = (b.y - a.y) * LAYOUT_HEIGHT;
+        const distance = Math.hypot(dx, dy) || 1;
+        const minDistance = (a.radius + b.radius) * 1.5 + 14;
+        if (distance >= minDistance) continue;
+
+        const push = (minDistance - distance) * 0.5;
+        const nx = dx / distance;
+        const ny = dy / distance;
+        a.x -= (nx * push) / LAYOUT_WIDTH;
+        a.y -= (ny * push) / LAYOUT_HEIGHT;
+        b.x += (nx * push) / LAYOUT_WIDTH;
+        b.y += (ny * push) / LAYOUT_HEIGHT;
+      }
+    }
+
+    for (const planet of planets) {
+      planet.x = Math.min(0.95, Math.max(0.05, planet.x));
+      planet.y = Math.min(0.9, Math.max(0.14, planet.y));
+    }
+  }
+}
+
 function formatMetric(value: number | null | undefined, empty = "Nao informado"): string {
   if (!value || value <= 0) return empty;
   if (value >= 1_000_000) return `${(value / 1_000_000).toFixed(1)}M`;
@@ -156,19 +188,19 @@ function buildPlanetarium(companies: CompanyRecord[]) {
   const groupCenters = new Map<string, { x: number; y: number; color: string }>();
   groupEntries.forEach(([sector], index) => {
     const angle = (index / Math.max(1, groupEntries.length)) * TAU - Math.PI / 2;
-    const orbit = 0.18 + Math.min(0.22, index / Math.max(1, groupEntries.length) * 0.12);
+    const orbit = 0.27 + Math.min(0.23, index / Math.max(1, groupEntries.length) * 0.16);
     const knownColor = CONSTELLATION_COLORS[sector] || CONSTELLATION_COLORS[sector.toLowerCase()] || undefined;
     const compact = ranked.length <= 12;
     groupCenters.set(sector, {
       x: compact ? 0.5 : 0.5 + Math.cos(angle) * orbit,
-      y: compact ? 0.5 : 0.5 + Math.sin(angle) * orbit,
+      y: compact ? 0.52 + Math.sin(angle) * 0.02 : 0.52 + Math.sin(angle) * orbit * 0.72,
       color: knownColor || `hsl(${(hashString(sector) % 240) + 24} 52% 64%)`,
     });
   });
 
   const planets: PlanetNode[] = [];
   const nodeIndex = new Map<string, number>();
-  const densityScale = ranked.length > 900 ? 0.68 : ranked.length > 520 ? 0.78 : ranked.length > 260 ? 0.88 : 1;
+  const densityScale = ranked.length > 900 ? 0.5 : ranked.length > 520 ? 0.58 : ranked.length > 260 ? 0.72 : 0.9;
 
   for (const [sector, sectorCompanies] of groupEntries) {
     const center = groupCenters.get(sector)!;
@@ -178,8 +210,8 @@ function buildPlanetarium(companies: CompanyRecord[]) {
       const angle = compact ? (index / Math.max(1, sectorCompanies.length)) * TAU - Math.PI / 2 : seededUnit(seed) * TAU;
       const ring = Math.sqrt((index + 1) / Math.max(1, sectorCompanies.length));
       const depth = 0.78 + seededUnit(seed + 29) * 0.58;
-      const spreadJitter = 0.82 + seededUnit(seed + 41) * 0.7;
-      const spread = (compact ? 0.03 + ring * 0.058 : 0.055 + ring * (0.11 + Math.min(0.08, sectorCompanies.length / 2200))) * spreadJitter;
+      const spreadJitter = 0.9 + seededUnit(seed + 41) * 0.62;
+      const spread = (compact ? 0.08 + ring * 0.12 : 0.085 + ring * (0.16 + Math.min(0.12, sectorCompanies.length / 1800))) * spreadJitter;
       const mass = (company.contributions_total || company.contributions || 0) + (company.total_stars || 0) * 2;
       const brandScale = sizeScaleForCompany(company);
       const planet: PlanetNode = {
@@ -188,9 +220,9 @@ function buildPlanetarium(companies: CompanyRecord[]) {
         sector,
         color: colorForCompany(company, center.color),
         accentColor: center.color,
-        x: Math.min(0.91, Math.max(0.09, center.x + Math.cos(angle) * spread)),
-        y: Math.min(0.83, Math.max(0.17, center.y + Math.sin(angle) * spread)),
-        radius: ((compact ? 26 : 6.5) + Math.pow(mass / maxMass, 0.5) * (compact ? 46 : 34)) * depth * brandScale * densityScale,
+        x: Math.min(0.95, Math.max(0.05, center.x + Math.cos(angle) * spread)),
+        y: Math.min(0.9, Math.max(0.14, center.y + Math.sin(angle) * spread * 0.72)),
+        radius: ((compact ? 28 : 5.8) + Math.pow(mass / maxMass, 0.5) * (compact ? 48 : 30)) * depth * brandScale * densityScale,
         depth,
         damage: damageForCompany(company),
         orbit: 0.8 + seededUnit(seed + 7) * 1.7,
@@ -204,6 +236,8 @@ function buildPlanetarium(companies: CompanyRecord[]) {
       planets.push(planet);
     });
   }
+
+  relaxPlanetPositions(planets);
 
   const links: PlanetLink[] = [];
   for (const [, sectorCompanies] of groupEntries) {
@@ -240,9 +274,9 @@ function drawGlobe(
   const longitudeShift = (time * 0.00018 * planet.orbit + planet.phase) % TAU;
 
   const glow = ctx.createRadialGradient(x - r * 0.35, y - r * 0.45, r * 0.1, x, y, r * 2.2);
-  glow.addColorStop(0, "rgba(255,255,255,0.34)");
-  glow.addColorStop(0.18, planet.color);
-  glow.addColorStop(0.42, active ? "rgba(255,255,255,0.16)" : "rgba(255,255,255,0.07)");
+  glow.addColorStop(0, "rgba(255,255,255,0.42)");
+  glow.addColorStop(0.18, active ? planet.color : "rgba(238,235,228,0.24)");
+  glow.addColorStop(0.46, active ? "rgba(255,255,255,0.18)" : "rgba(255,255,255,0.08)");
   glow.addColorStop(1, "rgba(0,0,0,0)");
   ctx.beginPath();
   ctx.arc(x, y, r * (active ? 2.35 : 1.95), 0, TAU);
@@ -251,11 +285,11 @@ function drawGlobe(
   ctx.fill();
 
   const body = ctx.createRadialGradient(x - r * 0.42, y - r * 0.48, r * 0.08, x + r * 0.32, y + r * 0.36, r * 1.2);
-  body.addColorStop(0, "rgba(255,255,255,0.98)");
-  body.addColorStop(0.18, "rgba(245,242,234,0.95)");
-  body.addColorStop(0.45, planet.color);
-  body.addColorStop(0.74, "rgba(74,76,78,0.92)");
-  body.addColorStop(1, "rgba(7,8,9,0.98)");
+  body.addColorStop(0, "#ffffff");
+  body.addColorStop(0.24, "#f7f4ed");
+  body.addColorStop(0.52, "#d8d1c2");
+  body.addColorStop(0.74, active ? planet.color : "#9a9284");
+  body.addColorStop(1, "#050607");
 
   ctx.save();
   ctx.beginPath();
@@ -265,17 +299,17 @@ function drawGlobe(
   ctx.fill();
   ctx.clip();
 
-  ctx.strokeStyle = active ? "rgba(12,14,16,0.34)" : "rgba(12,14,16,0.24)";
-  ctx.lineWidth = Math.max(0.5, r * 0.026);
-  for (let i = -2; i <= 2; i++) {
-    const yy = y + (i * r) / 3.2;
+  ctx.strokeStyle = active ? "rgba(0,0,0,0.38)" : "rgba(0,0,0,0.28)";
+  ctx.lineWidth = Math.max(0.45, r * 0.018);
+  for (let i = -3; i <= 3; i++) {
+    const yy = y + (i * r) / 4.2;
     const h = Math.sqrt(Math.max(0, r * r - (yy - y) * (yy - y)));
     ctx.beginPath();
-    ctx.ellipse(x, yy, h, Math.max(1, r * 0.1), 0, 0, TAU);
+    ctx.ellipse(x, yy, h, Math.max(0.8, r * 0.055), 0, 0, TAU);
     ctx.stroke();
   }
-  for (let i = 0; i < 4; i++) {
-    const angle = longitudeShift + (i * Math.PI) / 4;
+  for (let i = 0; i < 7; i++) {
+    const angle = longitudeShift + (i * Math.PI) / 7;
     ctx.beginPath();
     ctx.ellipse(x, y, Math.abs(Math.cos(angle)) * r, r, 0, 0, TAU);
     ctx.stroke();
@@ -288,32 +322,32 @@ function drawGlobe(
     const markerSize = Math.max(1.4, r * 0.055);
     ctx.beginPath();
     ctx.arc(markerX, markerY, markerSize, 0, TAU);
-    ctx.fillStyle = "rgba(0,0,0,0.7)";
+    ctx.fillStyle = "rgba(0,0,0,0.76)";
     ctx.fill();
     ctx.beginPath();
     ctx.arc(markerX, markerY, markerSize * 2.1, 0, TAU);
-    ctx.strokeStyle = "rgba(255,255,255,0.34)";
-    ctx.lineWidth = 0.65;
+    ctx.strokeStyle = "rgba(255,255,255,0.46)";
+    ctx.lineWidth = 0.55;
     ctx.stroke();
   }
 
-  const scarCount = Math.round(planet.damage * 7);
+  const scarCount = Math.round(planet.damage * 4);
   for (let i = 0; i < scarCount; i++) {
     const scarSeed = hashString(`${planet.login}:scar:${i}`);
     const scarAngle = longitudeShift * 0.45 + seededUnit(scarSeed) * TAU;
     const scarDistance = (0.12 + seededUnit(scarSeed + 3) * 0.62) * r;
     const scarX = x + Math.cos(scarAngle) * scarDistance;
     const scarY = y + Math.sin(scarAngle * 1.3) * scarDistance * 0.72;
-    const scarSize = r * (0.05 + seededUnit(scarSeed + 5) * 0.11);
+    const scarSize = r * (0.025 + seededUnit(scarSeed + 5) * 0.065);
     ctx.beginPath();
     ctx.ellipse(scarX, scarY, scarSize * 1.45, scarSize * 0.72, scarAngle, 0, TAU);
-    ctx.fillStyle = `rgba(0,0,0,${0.18 + planet.damage * 0.42})`;
+    ctx.fillStyle = `rgba(0,0,0,${0.1 + planet.damage * 0.24})`;
     ctx.fill();
     ctx.beginPath();
     ctx.moveTo(scarX - Math.cos(scarAngle) * scarSize * 1.7, scarY - Math.sin(scarAngle) * scarSize);
     ctx.lineTo(scarX + Math.cos(scarAngle) * scarSize * 1.9, scarY + Math.sin(scarAngle) * scarSize);
-    ctx.strokeStyle = `rgba(255,255,255,${0.08 + planet.damage * 0.18})`;
-    ctx.lineWidth = Math.max(0.7, r * 0.018);
+    ctx.strokeStyle = `rgba(255,255,255,${0.1 + planet.damage * 0.16})`;
+    ctx.lineWidth = Math.max(0.55, r * 0.012);
     ctx.stroke();
   }
 
@@ -327,7 +361,7 @@ function drawGlobe(
 
   ctx.beginPath();
   ctx.arc(x, y, r + 0.65, 0, TAU);
-  ctx.strokeStyle = active ? "rgba(255,255,255,0.9)" : "rgba(255,255,255,0.28)";
+  ctx.strokeStyle = active ? planet.color : "rgba(255,255,255,0.32)";
   ctx.lineWidth = active ? 1.4 : 0.7;
   ctx.stroke();
 
