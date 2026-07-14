@@ -1,10 +1,12 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { usePathname } from "next/navigation";
 import { createPortal } from "react-dom";
 import LofiRadio from "./LofiRadio";
 
 export default function GlobalRadio() {
+  const pathname = usePathname();
   const [mounted, setMounted] = useState(false);
   const [slot, setSlot] = useState<Element | null>(null);
 
@@ -14,23 +16,24 @@ export default function GlobalRadio() {
   // while the page is still hydrating — causing a mismatch.
   // Double rAF guarantees we're past all hydration passes.
   useEffect(() => {
-    const id = requestAnimationFrame(() => {
-      requestAnimationFrame(() => setMounted(true));
-    });
-    return () => cancelAnimationFrame(id);
+    const id = window.setTimeout(() => setMounted(true), 1200);
+    return () => window.clearTimeout(id);
   }, []);
 
   useEffect(() => {
     if (!mounted) return;
     const findSlot = () => document.getElementById("gc-radio-slot");
-    setSlot(findSlot());
+    const id = window.setTimeout(() => setSlot(findSlot()), 0);
 
     const observer = new MutationObserver(() => setSlot(findSlot()));
     observer.observe(document.body, { childList: true, subtree: true });
-    return () => observer.disconnect();
+    return () => {
+      window.clearTimeout(id);
+      observer.disconnect();
+    };
   }, [mounted]);
 
-  if (!mounted) return null;
+  if (pathname === "/" || !mounted) return null;
 
   // When the main page provides a slot, portal into it (inline with theme/intro buttons)
   if (slot) return createPortal(<LofiRadio />, slot);

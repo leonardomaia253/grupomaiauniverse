@@ -1,8 +1,6 @@
 "use client";
 
-import { useState, useEffect, useCallback, useMemo } from "react";
-
-// ─── Types ─────────────────────────────────────────────────────
+import { useCallback, useEffect, useRef, useState } from "react";
 
 export type LoadingStage =
   | "init"
@@ -22,55 +20,32 @@ interface LoadingScreenProps {
   onFadeComplete: () => void;
 }
 
-// ─── Constants ─────────────────────────────────────────────────
-
-const STAGE_MESSAGES: Record<string, string> = {
-  init:       "Initializing systems...",
-  fetching:   "Syncing company data...",
-  generating: "Mapping gravitational fields...",
-  rendering:  "Rendering planetary orbits...",
-  ready:      "Welcome to the Universe",
-};
-
-const TIPS = [
-  "Click any planet to see that company's profile",
-  "Use Fly Mode to cruise above the skyline",
-  "Larger planets = stronger KPIs",
-  "Try searching for a company by name",
-  "Planets glow brighter with recent activity",
-  "Customize your planet from the shop",
-  "Explore Mode shows the full Universe layout",
+const SCRIPT_LINES = [
+  "Olhe ao seu redor...",
+  "Bilhoes de mentes, conexoes e possibilidades...",
+  "Uma energia que transforma ideias em imperios.",
+  "Tecnologia em magia. Caos em sincronia.",
+  "Nos criamos o amanha.",
+  "Bem-vindo ao Grupo Maia.",
 ];
 
-// ─── Floating Particle (pure CSS) ──────────────────────────────
+const STAGE_MESSAGES: Record<string, string> = {
+  init: "Abrindo os portais...",
+  fetching: "Conectando empresas e possibilidades...",
+  generating: "Desenhando o grande grafo Maia...",
+  rendering: "Sincronizando energia coletiva...",
+  ready: "O proximo capitulo comeca agora",
+};
 
-interface Particle {
-  left: number;   // %
-  bottom: number; // %
-  size: number;   // px
-  duration: number; // s
-  delay: number;  // s
-  opacity: number;
+const BACKDROPS = [
+  "radial-gradient(circle at 25% 20%, rgba(54, 211, 255, 0.28), transparent 32%), radial-gradient(circle at 72% 34%, rgba(252, 211, 77, 0.22), transparent 34%), linear-gradient(135deg, #06111f 0%, #04050b 58%, #0b0712 100%)",
+  "radial-gradient(circle at 58% 28%, rgba(160, 116, 255, 0.26), transparent 34%), radial-gradient(circle at 32% 68%, rgba(41, 211, 157, 0.18), transparent 36%), linear-gradient(145deg, #070916 0%, #05050a 64%, #110913 100%)",
+  "radial-gradient(circle at 50% 18%, rgba(255, 255, 255, 0.14), transparent 28%), radial-gradient(circle at 70% 70%, rgba(255, 198, 87, 0.18), transparent 34%), linear-gradient(160deg, #07131d 0%, #030407 66%, #080910 100%)",
+];
+
+function useIntroLine(progress: number): number {
+  return Math.min(SCRIPT_LINES.length - 1, Math.floor((Math.max(0, progress) / 100) * SCRIPT_LINES.length));
 }
-
-function useParticles(count: number): Particle[] {
-  return useMemo(() => {
-    const result: Particle[] = [];
-    for (let i = 0; i < count; i++) {
-      result.push({
-        left:     Math.random() * 95,
-        bottom:   Math.random() * 20,
-        size:     2 + Math.random() * 3,
-        duration: 5 + Math.random() * 7,
-        delay:    Math.random() * 6,
-        opacity:  0.3 + Math.random() * 0.5,
-      });
-    }
-    return result;
-  }, [count]);
-}
-
-// ─── Component ─────────────────────────────────────────────────
 
 export default function LoadingScreen({
   stage,
@@ -80,179 +55,121 @@ export default function LoadingScreen({
   onRetry,
   onFadeComplete,
 }: LoadingScreenProps) {
-  const [tipIndex, setTipIndex] = useState(0);
   const [fading, setFading] = useState(false);
+  const [backdropIndex, setBackdropIndex] = useState(0);
+  const audioStarted = useRef(false);
+  const lineIndex = useIntroLine(progress);
+  const isError = stage === "error";
+  const clampedProgress = Math.min(100, progress);
+  const message = isError ? error : (STAGE_MESSAGES[stage] ?? "");
 
-  const particles = useParticles(18);
-
-  // Rotate tips every 4s
   useEffect(() => {
-    const interval = setInterval(() => {
-      setTipIndex((i) => (i + 1) % TIPS.length);
-    }, 4000);
-    return () => clearInterval(interval);
+    const timer = setInterval(() => setBackdropIndex((index) => (index + 1) % BACKDROPS.length), 5200);
+    return () => clearInterval(timer);
   }, []);
 
-  // Trigger fade-out when stage becomes "ready"
   useEffect(() => {
-    if (stage === "ready") {
-      setFading(true);
-    }
+    if (stage !== "ready") return;
+    const frame = requestAnimationFrame(() => setFading(true));
+    return () => cancelAnimationFrame(frame);
   }, [stage]);
+
+  useEffect(() => {
+    if (audioStarted.current || isError) return;
+    audioStarted.current = true;
+    const audio = new Audio("/audio/grupo-maia-intro.mp3");
+    audio.volume = 0.72;
+    audio.play().catch(() => {
+      const pad = new Audio("/audio/midnight-commit.mp3");
+      pad.volume = 0.22;
+      pad.play().catch(() => undefined);
+    });
+    return () => {
+      audio.pause();
+    };
+  }, [isError]);
 
   const handleTransitionEnd = useCallback(() => {
     if (fading) onFadeComplete();
   }, [fading, onFadeComplete]);
 
-  const isError = stage === "error";
-  const message = isError ? error : (STAGE_MESSAGES[stage] ?? "");
-  const clampedProgress = Math.min(100, progress);
-
   return (
     <div
-      className={`fixed inset-0 z-100 flex flex-col items-center justify-center transition-opacity duration-700 ${
-        fading ? "opacity-0" : "opacity-100"
-      }`}
-      style={{ background: "radial-gradient(ellipse at 50% 60%, #0d1420 0%, #060810 60%, #000002 100%)" }}
+      className={`fixed inset-0 z-100 overflow-hidden transition-opacity duration-1000 ${fading ? "opacity-0" : "opacity-100"}`}
+      style={{ background: "#030407" }}
       onTransitionEnd={handleTransitionEnd}
     >
-      {/* ── Hex grid background overlay ── */}
-      <div
-        className="pointer-events-none absolute inset-0 opacity-[0.04]"
-        style={{
-          backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='56' height='100'%3E%3Cpath d='M28 66L0 50V16L28 0l28 16v34z' fill='none' stroke='%23ffffff' strokeWidth='0.5'/%3E%3Cpath d='M28 100L0 84V50l28-16 28 16v34z' fill='none' stroke='%23ffffff' strokeWidth='0.5'/%3E%3C/svg%3E")`,
-          backgroundSize: "56px 100px",
-        }}
-      />
-
-      {/* ── Scanline sweep ── */}
-      <div className="pointer-events-none absolute inset-0 overflow-hidden">
+      {BACKDROPS.map((backdrop, index) => (
         <div
-          className="holo-scan absolute left-0 right-0 h-20"
+          key={backdrop}
+          className="absolute inset-0 scale-105 transition-opacity duration-[1800ms]"
           style={{
-            background: `linear-gradient(to bottom, transparent, ${accentColor}15, transparent)`,
+            background: backdrop,
+            filter: "blur(10px)",
+            opacity: index === backdropIndex ? 1 : 0,
           }}
         />
-      </div>
+      ))}
 
-      {/* ── Floating particles ── */}
-      <div className="pointer-events-none absolute bottom-0 left-0 right-0 h-64 overflow-hidden">
-        {particles.map((p, i) => (
-          <div
-            key={i}
-            className="absolute rounded-full"
-            style={{
-              left:   `${p.left}%`,
-              bottom: `${p.bottom}%`,
-              width:  p.size,
-              height: p.size,
-              backgroundColor: accentColor,
-              "--fp-opacity": p.opacity,
-              animation: `float-particle ${p.duration}s ease-in-out ${p.delay}s infinite`,
-            } as React.CSSProperties}
-          />
-        ))}
-      </div>
+      <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(0,0,0,0.2),rgba(0,0,0,0.55))]" />
+      <div className="absolute inset-0 opacity-20" style={{ backgroundImage: "radial-gradient(circle at center, transparent 0, transparent 42%, rgba(0,0,0,0.84) 100%)" }} />
 
-      {/* ── Main Content ── */}
-      <div className="relative z-10 flex flex-col items-center gap-0">
-        {/* Title */}
-        <h1
-          className="font-orbitron glitch-text select-none text-3xl font-black tracking-[0.3em] sm:text-5xl"
-          style={{ color: accentColor }}
-        >
-          MAIA
-          <span
-            className="neon-text ml-3 text-2xl font-light tracking-[0.5em] sm:text-4xl opacity-80"
-            style={{ color: accentColor }}
-          >
-            UNIVERSE
-          </span>
+      <div className="maia-motes pointer-events-none absolute inset-0" />
+
+      <div className="relative z-10 flex h-full flex-col items-center justify-center px-6 text-center">
+        <p className="font-space text-[10px] uppercase tracking-[0.32em] text-white/45">Grupo Maia Universe</p>
+        <h1 className="font-orbitron mt-4 max-w-4xl text-3xl font-semibold leading-tight text-white sm:text-6xl">
+          {SCRIPT_LINES[lineIndex]}
         </h1>
-
-        {/* Stage message */}
-        <p
-          className="font-space mt-5 text-xs tracking-[0.2em] uppercase sm:text-sm"
-          style={{ color: accentColor + "99" }}
-        >
+        <p className="mt-5 max-w-xl text-sm leading-relaxed text-white/55 sm:text-base">
           {message}
         </p>
 
-        {/* ── HUD Progress Bar ── */}
         {!isError && (
-          <div className="relative mt-8 w-64 sm:w-80">
-            {/* Track */}
-            <div
-              className="h-[2px] w-full opacity-30"
-              style={{ backgroundColor: accentColor }}
-            />
-            {/* Fill */}
-            <div
-              className="absolute left-0 top-0 h-[2px] transition-[width] duration-300"
-              style={{
-                width: `${clampedProgress}%`,
-                backgroundColor: accentColor,
-                boxShadow: `0 0 8px 2px ${accentColor}88`,
-              }}
-            />
-            {/* Glowing dot at progress edge */}
-            <div
-              className="hud-dot-glow absolute top-1/2 -translate-y-1/2 h-2 w-2 rounded-full transition-[left] duration-300"
-              style={{
-                left:            `calc(${clampedProgress}% - 4px)`,
-                backgroundColor: accentColor,
-                "--hud-color":   accentColor,
-              } as React.CSSProperties}
-            />
-            {/* Percentage label */}
-            <div
-              className="font-orbitron absolute right-0 mt-1 top-3 text-[10px] tabular-nums"
-              style={{ color: accentColor + "80" }}
-            >
-              {Math.round(clampedProgress)}%
+          <div className="mt-10 w-full max-w-md">
+            <div className="h-px w-full bg-white/15">
+              <div
+                className="h-px transition-[width] duration-500"
+                style={{
+                  width: `${clampedProgress}%`,
+                  backgroundColor: accentColor,
+                  boxShadow: `0 0 24px ${accentColor}`,
+                }}
+              />
+            </div>
+            <div className="mt-3 flex items-center justify-between text-[10px] uppercase tracking-[0.2em] text-white/38">
+              <span>Adscendo</span>
+              <span>{Math.round(clampedProgress)}%</span>
             </div>
           </div>
         )}
 
-        {/* Error retry */}
         {isError && (
           <button
             onClick={onRetry}
-            className="font-orbitron mt-8 px-8 py-2 text-xs tracking-widest uppercase transition-opacity hover:opacity-80"
-            style={{
-              backgroundColor: accentColor,
-              color:            "#000",
-              boxShadow:        `0 0 20px 4px ${accentColor}44`,
-            }}
+            className="mt-8 rounded-sm px-7 py-3 text-xs font-semibold uppercase tracking-[0.18em] text-black transition hover:brightness-110"
+            style={{ backgroundColor: accentColor }}
           >
-            Retry
+            Tentar novamente
           </button>
         )}
-
-        {/* Tips */}
-        {!isError && (
-          <p
-            className="font-space mt-10 max-w-xs text-center text-[11px] leading-relaxed tracking-wide sm:text-xs"
-            style={{ color: "#ffffff30" }}
-          >
-            {TIPS[tipIndex]}
-          </p>
-        )}
       </div>
 
-      {/* ── Bottom corner decorations ── */}
-      <div
-        className="pointer-events-none absolute bottom-4 left-4 font-orbitron text-[8px] tracking-widest opacity-20 uppercase"
-        style={{ color: accentColor }}
-      >
-        SYS V2.0 ◈ ONLINE
-      </div>
-      <div
-        className="pointer-events-none absolute bottom-4 right-4 font-orbitron text-[8px] tracking-widest opacity-20 uppercase"
-        style={{ color: accentColor }}
-      >
-        ◈ {new Date().getFullYear()}
-      </div>
+      <style>{`
+        .maia-motes {
+          background-image:
+            radial-gradient(circle at 18% 22%, rgba(255,255,255,0.42) 0 1px, transparent 2px),
+            radial-gradient(circle at 72% 18%, rgba(255,255,255,0.3) 0 1px, transparent 2px),
+            radial-gradient(circle at 38% 72%, rgba(255,255,255,0.34) 0 1px, transparent 2px),
+            radial-gradient(circle at 84% 68%, rgba(255,255,255,0.24) 0 1px, transparent 2px),
+            radial-gradient(circle at 54% 44%, rgba(255,255,255,0.18) 0 1px, transparent 2px);
+          animation: maia-mote-drift 8s ease-in-out infinite;
+        }
+        @keyframes maia-mote-drift {
+          0%, 100% { transform: translate3d(0, 0, 0); opacity: 0.45; }
+          50% { transform: translate3d(10px, -18px, 0); opacity: 0.82; }
+        }
+      `}</style>
     </div>
   );
 }
