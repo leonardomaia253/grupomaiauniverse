@@ -43,6 +43,9 @@ const BACKDROPS = [
   "radial-gradient(circle at 50% 18%, rgba(255, 255, 255, 0.14), transparent 28%), radial-gradient(circle at 70% 70%, rgba(255, 198, 87, 0.18), transparent 34%), linear-gradient(160deg, #07131d 0%, #030407 66%, #080910 100%)",
 ];
 
+let introAudio: HTMLAudioElement | null = null;
+let introHasPlayed = false;
+
 function useIntroLine(progress: number): number {
   return Math.min(SCRIPT_LINES.length - 1, Math.floor((Math.max(0, progress) / 100) * SCRIPT_LINES.length));
 }
@@ -57,11 +60,31 @@ export default function LoadingScreen({
 }: LoadingScreenProps) {
   const [fading, setFading] = useState(false);
   const [backdropIndex, setBackdropIndex] = useState(0);
-  const audioStarted = useRef(false);
+  const [audioBlocked, setAudioBlocked] = useState(false);
+  const audioAttempted = useRef(false);
   const lineIndex = useIntroLine(progress);
   const isError = stage === "error";
   const clampedProgress = Math.min(100, progress);
   const message = isError ? error : (STAGE_MESSAGES[stage] ?? "");
+
+  const startIntroAudio = useCallback(async () => {
+    if (isError || introHasPlayed) return;
+    if (!introAudio) {
+      introAudio = new Audio("/audio/grupo-maia-intro.mp3");
+      introAudio.preload = "auto";
+      introAudio.volume = 0.82;
+      introAudio.addEventListener("ended", () => {
+        introHasPlayed = true;
+      });
+    }
+
+    try {
+      await introAudio.play();
+      setAudioBlocked(false);
+    } catch {
+      setAudioBlocked(true);
+    }
+  }, [isError]);
 
   useEffect(() => {
     const timer = setInterval(() => setBackdropIndex((index) => (index + 1) % BACKDROPS.length), 5200);
@@ -75,19 +98,26 @@ export default function LoadingScreen({
   }, [stage]);
 
   useEffect(() => {
-    if (audioStarted.current || isError) return;
-    audioStarted.current = true;
-    const audio = new Audio("/audio/grupo-maia-intro.mp3");
-    audio.volume = 0.72;
-    audio.play().catch(() => {
-      const pad = new Audio("/audio/midnight-commit.mp3");
-      pad.volume = 0.22;
-      pad.play().catch(() => undefined);
-    });
-    return () => {
-      audio.pause();
+    if (audioAttempted.current || isError) return;
+    audioAttempted.current = true;
+    const timer = window.setTimeout(() => {
+      startIntroAudio();
+    }, 0);
+    return () => window.clearTimeout(timer);
+  }, [isError, startIntroAudio]);
+
+  useEffect(() => {
+    if (isError || introHasPlayed) return;
+    const unlock = () => {
+      startIntroAudio();
     };
-  }, [isError]);
+    window.addEventListener("pointerdown", unlock, { passive: true });
+    window.addEventListener("keydown", unlock);
+    return () => {
+      window.removeEventListener("pointerdown", unlock);
+      window.removeEventListener("keydown", unlock);
+    };
+  }, [isError, startIntroAudio]);
 
   const handleTransitionEnd = useCallback(() => {
     if (fading) onFadeComplete();
@@ -151,6 +181,15 @@ export default function LoadingScreen({
             style={{ backgroundColor: accentColor }}
           >
             Tentar novamente
+          </button>
+        )}
+
+        {!isError && audioBlocked && (
+          <button
+            onClick={startIntroAudio}
+            className="mt-5 border border-white/20 bg-white/[0.06] px-5 py-2 text-[10px] font-semibold uppercase tracking-[0.18em] text-white/72 transition hover:border-white/35 hover:bg-white/[0.1] hover:text-white"
+          >
+            Ativar voz
           </button>
         )}
       </div>
