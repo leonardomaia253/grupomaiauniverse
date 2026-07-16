@@ -3,13 +3,17 @@ import { createBrowserClient } from "@supabase/ssr";
 
 let browserClient: ReturnType<typeof createBrowserClient> | null = null;
 
+function getSupabaseAnonKey() {
+  return (process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || "").replace(/your-anon-key.*$/i, "");
+}
+
 /** Client-side Supabase client (anon key, respects RLS) — singleton for "use client" */
 export function createBrowserSupabase() {
   if (browserClient) return browserClient;
 
   browserClient = createBrowserClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+    getSupabaseAnonKey()
   );
   return browserClient;
 }
@@ -19,7 +23,7 @@ export function getSupabaseAdmin(): SupabaseClient {
   const adminSecret = process.env.ADMIN_PROXY_SECRET || "fallback-secret";
   return createClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!, // Use anon key to bypass local checks, proxy overrides it
+    getSupabaseAnonKey(), // Use anon key to bypass local checks, proxy overrides it
     {
       auth: { persistSession: false },
       global: {

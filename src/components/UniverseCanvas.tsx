@@ -1,56 +1,68 @@
 "use client";
 
+import createGlobe from "cobe";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { CONSTELLATION_COLORS, CONSTELLATION_NAMES, type CompanyRecord } from "@/lib/github";
+import { type CompanyRecord } from "@/lib/github";
+
+type BrandRule = {
+  login: string;
+  name: string;
+  match: string[];
+  color: string;
+  scale?: number;
+  forceFeatured?: boolean;
+};
 
 type PlanetNode = {
   login: string;
   name: string | null;
-  sector: string;
   color: string;
-  accentColor: string;
+  size: number;
   x: number;
   y: number;
-  radius: number;
-  depth: number;
-  damage: number;
-  orbit: number;
-  phase: number;
   mass: number;
-  contributions: number;
-  totalStars: number;
+  damage: number;
   company: CompanyRecord;
 };
 
-type PlanetLink = {
-  source: number;
-  target: number;
-  opacity: number;
-};
-
-type ScreenPlanet = {
-  planet: PlanetNode;
+type FieldDot = {
+  key: string;
   x: number;
   y: number;
-  radius: number;
+  size: number;
+  alpha: number;
+  color: string;
 };
 
-const MAX_RENDER_LINKS = 560;
 const TAU = Math.PI * 2;
-const LAYOUT_WIDTH = 1280;
-const LAYOUT_HEIGHT = 760;
-const BRAND_COLORS: Array<{ match: string[]; color: string; scale?: number }> = [
-  { match: ["bilheking"], color: "#7c3aed", scale: 1.55 },
-  { match: ["spur"], color: "#ef233c" },
-  { match: ["tosi"], color: "#2563eb" },
-  { match: ["jackitfit", "jack it fit", "jack-it-fit"], color: "#050505" },
-  { match: ["volupai", "volup ai", "volup-ai"], color: "#10b981", scale: 1.55 },
-  { match: ["seujornaleiro", "seu jornaleiro", "seu-jornaleiro"], color: "#f97316" },
-  { match: ["cattlecontrol", "cattle control", "cattle-control"], color: "#16a34a" },
-  { match: ["iris"], color: "#facc15" },
-  { match: ["kinkora"], color: "#ec4899" },
-  { match: ["avantyp"], color: "#7f1d1d" },
-  { match: ["boase"], color: "#38bdf8" },
+
+const BRAND_RULES: BrandRule[] = [
+  { login: "bilheking", name: "Bilheking", match: ["bilheking"], color: "#7c3aed", scale: 1.38, forceFeatured: true },
+  { login: "volup-ai", name: "Volup AI", match: ["volupai", "volup ai", "volup-ai"], color: "#10b981", scale: 1.38, forceFeatured: true },
+  { login: "spur", name: "Spur", match: ["spur"], color: "#ef233c", scale: 1.08, forceFeatured: true },
+  { login: "tosi", name: "Tosi", match: ["tosi"], color: "#2563eb", scale: 1.05, forceFeatured: true },
+  { login: "jack-it-fit", name: "Jack it fit", match: ["jackitfit", "jack it fit", "jack-it-fit"], color: "#111111", scale: 1.02, forceFeatured: true },
+  { login: "seu-jornaleiro", name: "Seu Jornaleiro", match: ["seujornaleiro", "seu jornaleiro", "seu-jornaleiro"], color: "#f97316", forceFeatured: true },
+  { login: "cattlecontrol", name: "CattleControl", match: ["cattlecontrol", "cattle control", "cattle-control"], color: "#16a34a", forceFeatured: true },
+  { login: "iris", name: "Iris", match: ["iris"], color: "#facc15", forceFeatured: true },
+  { login: "kinkora", name: "Kinkora", match: ["kinkora"], color: "#ec4899", forceFeatured: true },
+  { login: "avantyp", name: "Avantyp", match: ["avantyp"], color: "#7f1d1d", forceFeatured: true },
+  { login: "boase", name: "Boase", match: ["boase"], color: "#38bdf8", forceFeatured: true },
+];
+
+const FEATURED_LAYOUT = [
+  { x: 0.5, y: 0.47 },
+  { x: 0.2, y: 0.38 },
+  { x: 0.8, y: 0.38 },
+  { x: 0.16, y: 0.69 },
+  { x: 0.84, y: 0.69 },
+  { x: 0.36, y: 0.2 },
+  { x: 0.64, y: 0.2 },
+  { x: 0.34, y: 0.78 },
+  { x: 0.66, y: 0.78 },
+  { x: 0.09, y: 0.25 },
+  { x: 0.91, y: 0.25 },
+  { x: 0.5, y: 0.86 },
 ];
 
 function hashString(value: string): number {
@@ -67,7 +79,7 @@ function seededUnit(seed: number): number {
   return x - Math.floor(x);
 }
 
-function normalizeBrand(value: string | null | undefined): string {
+function normalize(value: string | null | undefined): string {
   return (value || "")
     .normalize("NFD")
     .replace(/[\u0300-\u036f]/g, "")
@@ -76,604 +88,409 @@ function normalizeBrand(value: string | null | undefined): string {
     .trim();
 }
 
-function sectorFor(company: CompanyRecord): string {
-  return company.primary_language || company.category || "Ecossistema";
-}
-
-function brandForCompany(company: CompanyRecord) {
+function brandForCompany(company: CompanyRecord): BrandRule | undefined {
   const candidates = [
-    normalizeBrand(company.username),
-    normalizeBrand(company.name),
-    normalizeBrand(`${company.username} ${company.name || ""}`).replace(/\s+/g, ""),
+    normalize(company.username),
+    normalize(company.name),
+    normalize(`${company.username} ${company.name || ""}`).replace(/\s+/g, ""),
   ];
-  return BRAND_COLORS.find((brand) =>
+
+  return BRAND_RULES.find((brand) =>
     brand.match.some((match) => {
-      const normalizedMatch = normalizeBrand(match);
+      const normalizedMatch = normalize(match);
       const compactMatch = normalizedMatch.replace(/\s+/g, "");
       return candidates.some((candidate) => candidate === normalizedMatch || candidate.includes(normalizedMatch) || candidate.includes(compactMatch));
     }),
   );
 }
 
-function colorForCompany(company: CompanyRecord, fallback: string): string {
+function colorForCompany(company: CompanyRecord): string {
   const brand = brandForCompany(company);
   if (brand) return brand.color;
   if (company.custom_color) return company.custom_color;
-  const hue = (hashString(`${company.username}:${company.primary_language || company.category || ""}`) + hashString(fallback)) % 360;
-  const saturation = 58 + Math.round(seededUnit(hue + 19) * 22);
-  const lightness = 52 + Math.round(seededUnit(hue + 31) * 16);
-  return `hsl(${hue} ${saturation}% ${lightness}%)`;
+  const seed = hashString(`${company.username}:${company.primary_language || company.category || ""}`);
+  return `hsl(${seed % 360} ${58 + Math.round(seededUnit(seed + 3) * 24)}% ${50 + Math.round(seededUnit(seed + 7) * 18)}%)`;
 }
 
-function sizeScaleForCompany(company: CompanyRecord): number {
-  return brandForCompany(company)?.scale || 1;
+function massForCompany(company: CompanyRecord): number {
+  return (company.contributions_total || company.contributions || 0) + (company.total_stars || 0) * 2 + (company.revenue || 0) / 30000;
 }
 
 function damageForCompany(company: CompanyRecord): number {
-  if (typeof company.health_score !== "number") return 0.18;
-  return Math.max(0, Math.min(0.86, (100 - company.health_score) / 100));
-}
-
-function relaxPlanetPositions(planets: PlanetNode[]): void {
-  const iterations = planets.length > 900 ? 10 : planets.length > 520 ? 14 : 20;
-  for (let pass = 0; pass < iterations; pass++) {
-    for (let i = 0; i < planets.length; i++) {
-      const a = planets[i];
-      for (let j = i + 1; j < planets.length; j++) {
-        const b = planets[j];
-        const dx = (b.x - a.x) * LAYOUT_WIDTH;
-        const dy = (b.y - a.y) * LAYOUT_HEIGHT;
-        const distance = Math.hypot(dx, dy) || 1;
-        const minDistance = (a.radius + b.radius) * 1.5 + 14;
-        if (distance >= minDistance) continue;
-
-        const push = (minDistance - distance) * 0.5;
-        const nx = dx / distance;
-        const ny = dy / distance;
-        a.x -= (nx * push) / LAYOUT_WIDTH;
-        a.y -= (ny * push) / LAYOUT_HEIGHT;
-        b.x += (nx * push) / LAYOUT_WIDTH;
-        b.y += (ny * push) / LAYOUT_HEIGHT;
-      }
-    }
-
-    for (const planet of planets) {
-      planet.x = Math.min(0.95, Math.max(0.05, planet.x));
-      planet.y = Math.min(0.9, Math.max(0.14, planet.y));
-    }
-  }
+  if (typeof company.health_score !== "number") return 0.12;
+  return Math.max(0, Math.min(0.8, (100 - company.health_score) / 100));
 }
 
 function formatMetric(value: number | null | undefined, empty = "Nao informado"): string {
   if (!value || value <= 0) return empty;
   if (value >= 1_000_000) return `${(value / 1_000_000).toFixed(1)}M`;
   if (value >= 1_000) return `${(value / 1_000).toFixed(1)}K`;
-  return `${value}`;
+  return `${Math.round(value)}`;
 }
 
-function formatDate(value: string | null | undefined): string {
-  if (!value) return "Sem atualizacao registrada";
-  const date = new Date(value);
-  if (Number.isNaN(date.getTime())) return "Sem atualizacao registrada";
-  return new Intl.DateTimeFormat("pt-BR", {
-    day: "2-digit",
-    month: "short",
-    year: "numeric",
-    hour: "2-digit",
-    minute: "2-digit",
-  }).format(date);
+function formatMoney(value: number | null | undefined): string {
+  if (!value || value <= 0) return "Nao informado";
+  return new Intl.NumberFormat("pt-BR", {
+    style: "currency",
+    currency: "BRL",
+    maximumFractionDigits: value >= 1000 ? 0 : 2,
+  }).format(value);
 }
 
-function buildPlanetarium(companies: CompanyRecord[]) {
-  const ranked = companies
-    .slice()
-    .sort((a, b) => {
-      const aMass = (a.contributions_total || a.contributions || 0) + (a.total_stars || 0) * 2;
-      const bMass = (b.contributions_total || b.contributions || 0) + (b.total_stars || 0) * 2;
-      return bMass - aMass;
-    });
+function hexToRgb01(color: string): [number, number, number] {
+  if (!color.startsWith("#")) return [0.08, 0.08, 0.08];
+  const hex = color.length === 4 ? `#${color[1]}${color[1]}${color[2]}${color[2]}${color[3]}${color[3]}` : color;
+  const value = Number.parseInt(hex.slice(1), 16);
+  return [((value >> 16) & 255) / 255, ((value >> 8) & 255) / 255, (value & 255) / 255];
+}
 
-  const maxMass = Math.max(
-    1,
-    ...ranked.map((company) => (company.contributions_total || company.contributions || 0) + (company.total_stars || 0) * 2),
-  );
-
-  const groups = new Map<string, CompanyRecord[]>();
-  for (const company of ranked) {
-    const sector = sectorFor(company);
-    groups.set(sector, [...(groups.get(sector) || []), company]);
-  }
-
-  const groupEntries = Array.from(groups.entries()).sort((a, b) => b[1].length - a[1].length);
-  const groupCenters = new Map<string, { x: number; y: number; color: string }>();
-  groupEntries.forEach(([sector], index) => {
-    const angle = (index / Math.max(1, groupEntries.length)) * TAU - Math.PI / 2;
-    const orbit = 0.27 + Math.min(0.23, index / Math.max(1, groupEntries.length) * 0.16);
-    const knownColor = CONSTELLATION_COLORS[sector] || CONSTELLATION_COLORS[sector.toLowerCase()] || undefined;
-    const compact = ranked.length <= 12;
-    groupCenters.set(sector, {
-      x: compact ? 0.5 : 0.5 + Math.cos(angle) * orbit,
-      y: compact ? 0.52 + Math.sin(angle) * 0.02 : 0.52 + Math.sin(angle) * orbit * 0.72,
-      color: knownColor || `hsl(${(hashString(sector) % 240) + 24} 52% 64%)`,
-    });
-  });
-
-  const planets: PlanetNode[] = [];
-  const nodeIndex = new Map<string, number>();
-  const densityScale = ranked.length > 900 ? 0.5 : ranked.length > 520 ? 0.58 : ranked.length > 260 ? 0.72 : 0.9;
-
-  for (const [sector, sectorCompanies] of groupEntries) {
-    const center = groupCenters.get(sector)!;
-    sectorCompanies.forEach((company, index) => {
-      const seed = hashString(company.username);
-      const compact = ranked.length <= 12;
-      const angle = compact ? (index / Math.max(1, sectorCompanies.length)) * TAU - Math.PI / 2 : seededUnit(seed) * TAU;
-      const ring = Math.sqrt((index + 1) / Math.max(1, sectorCompanies.length));
-      const depth = 0.78 + seededUnit(seed + 29) * 0.58;
-      const spreadJitter = 0.9 + seededUnit(seed + 41) * 0.62;
-      const spread = (compact ? 0.08 + ring * 0.12 : 0.085 + ring * (0.16 + Math.min(0.12, sectorCompanies.length / 1800))) * spreadJitter;
-      const mass = (company.contributions_total || company.contributions || 0) + (company.total_stars || 0) * 2;
-      const brandScale = sizeScaleForCompany(company);
-      const planet: PlanetNode = {
-        login: company.username,
-        name: company.name,
-        sector,
-        color: colorForCompany(company, center.color),
-        accentColor: center.color,
-        x: Math.min(0.95, Math.max(0.05, center.x + Math.cos(angle) * spread)),
-        y: Math.min(0.9, Math.max(0.14, center.y + Math.sin(angle) * spread * 0.72)),
-        radius: ((compact ? 28 : 5.8) + Math.pow(mass / maxMass, 0.5) * (compact ? 48 : 30)) * depth * brandScale * densityScale,
-        depth,
-        damage: damageForCompany(company),
-        orbit: 0.8 + seededUnit(seed + 7) * 1.7,
-        phase: seededUnit(seed + 13) * TAU,
-        mass,
-        contributions: company.contributions_total || company.contributions || 0,
-        totalStars: company.total_stars || 0,
-        company,
-      };
-      nodeIndex.set(planet.login.toLowerCase(), planets.length);
-      planets.push(planet);
-    });
-  }
-
-  relaxPlanetPositions(planets);
-
-  const links: PlanetLink[] = [];
-  for (const [, sectorCompanies] of groupEntries) {
-    const visible = sectorCompanies
-      .map((company) => nodeIndex.get(company.username.toLowerCase()))
-      .filter((index): index is number => typeof index === "number");
-    const hub = visible[0];
-    if (hub === undefined) continue;
-    for (let i = 1; i < visible.length && links.length < MAX_RENDER_LINKS; i += 2) {
-      links.push({ source: hub, target: visible[i], opacity: Math.max(0.05, 0.22 - i / visible.length * 0.16) });
-    }
-  }
-
+function makeBrandShell(brand: BrandRule, index: number): CompanyRecord {
   return {
-    planets,
-    links,
-    sectors: groupEntries.map(([id, items]) => ({
-      id,
-      count: items.length,
-      color: groupCenters.get(id)!.color,
-    })),
+    id: -1000 - index,
+    username: brand.login,
+    external_id: null,
+    name: brand.name,
+    avatar_url: null,
+    bio: "Dados operacionais aguardando sincronizacao. O planeta permanece fixo no mapa para preservar a arquitetura visual do Grupo Maia.",
+    contributions: 0,
+    public_repos: 0,
+    total_stars: 0,
+    primary_language: null,
+    rank: null,
+    fetched_at: "",
+    created_at: "",
+    claimed: false,
+    fetch_priority: 0,
+    claimed_at: null,
+    owned_items: [],
+    category: null,
+    employee_count: 0,
+    applications_count: 0,
+    kudos_count: 0,
+    visit_count: 0,
+    contributions_total: 0,
+    contribution_years: [],
+    total_prs: 0,
+    total_reviews: 0,
+    repos_contributed_to: [],
+    followers: 0,
+    following: 0,
+    organizations_count: 0,
+    account_created_at: null,
+    current_streak: 0,
+    custom_color: brand.color,
+    share_capital: 0,
+    revenue: 0,
+    health_score: 100,
   };
 }
 
-function drawGlobe(
-  ctx: CanvasRenderingContext2D,
-  planet: PlanetNode,
-  x: number,
-  y: number,
-  time: number,
-  active: boolean,
-) {
-  const r = planet.radius * (active ? 1.48 : 1);
-  const longitudeShift = (time * 0.00018 * planet.orbit + planet.phase) % TAU;
-  const markerCount = active ? 7 : 5;
-
-  const glow = ctx.createRadialGradient(x - r * 0.35, y - r * 0.45, r * 0.1, x, y, r * 2.2);
-  glow.addColorStop(0, "rgba(255,255,255,0.42)");
-  glow.addColorStop(0.18, active ? planet.color : "rgba(238,235,228,0.24)");
-  glow.addColorStop(0.46, active ? "rgba(255,255,255,0.18)" : "rgba(255,255,255,0.08)");
-  glow.addColorStop(1, "rgba(0,0,0,0)");
-  ctx.beginPath();
-  ctx.arc(x, y, r * (active ? 2.35 : 1.95), 0, TAU);
-  ctx.fillStyle = glow;
-  ctx.globalAlpha = active ? 0.95 : 0.62;
-  ctx.fill();
-
-  const body = ctx.createRadialGradient(x - r * 0.42, y - r * 0.48, r * 0.08, x + r * 0.32, y + r * 0.36, r * 1.2);
-  body.addColorStop(0, "#ffffff");
-  body.addColorStop(0.24, "#f7f4ed");
-  body.addColorStop(0.52, "#d8d1c2");
-  body.addColorStop(0.74, active ? planet.color : "#9a9284");
-  body.addColorStop(1, "#050607");
-
-  ctx.save();
-  ctx.beginPath();
-  ctx.arc(x, y, r, 0, TAU);
-  ctx.fillStyle = body;
-  ctx.globalAlpha = 1;
-  ctx.fill();
-  ctx.clip();
-
-  ctx.strokeStyle = active ? "rgba(0,0,0,0.38)" : "rgba(0,0,0,0.28)";
-  ctx.lineWidth = Math.max(0.45, r * 0.018);
-  for (let i = -3; i <= 3; i++) {
-    const yy = y + (i * r) / 4.2;
-    const h = Math.sqrt(Math.max(0, r * r - (yy - y) * (yy - y)));
-    ctx.beginPath();
-    ctx.ellipse(x, yy, h, Math.max(0.8, r * 0.055), 0, 0, TAU);
-    ctx.stroke();
+function mergeRequiredBrands(companies: CompanyRecord[]): CompanyRecord[] {
+  const merged = [...companies];
+  for (const [index, brand] of BRAND_RULES.entries()) {
+    const exists = merged.some((company) => brandForCompany(company) === brand);
+    if (!exists) merged.push(makeBrandShell(brand, index));
   }
-  for (let i = 0; i < 7; i++) {
-    const angle = longitudeShift + (i * Math.PI) / 7;
-    ctx.beginPath();
-    ctx.ellipse(x, y, Math.abs(Math.cos(angle)) * r, r, 0, 0, TAU);
-    ctx.stroke();
-  }
-
-  for (let i = 0; i < markerCount; i++) {
-    const markerAngle = longitudeShift + planet.phase * 0.37 + i * 2.1;
-    const markerY = y + Math.sin(markerAngle * 0.74) * r * (0.2 + seededUnit(hashString(`${planet.login}:my:${i}`)) * 0.42);
-    const markerX = x + Math.cos(markerAngle) * r * (0.22 + seededUnit(hashString(`${planet.login}:mx:${i}`)) * 0.48);
-    const markerSize = Math.max(1.1, r * (0.026 + seededUnit(hashString(`${planet.login}:ms:${i}`)) * 0.035));
-    ctx.beginPath();
-    ctx.arc(markerX, markerY, markerSize, 0, TAU);
-    ctx.fillStyle = "rgba(0,0,0,0.76)";
-    ctx.fill();
-    ctx.beginPath();
-    ctx.arc(markerX, markerY, markerSize * 2.1, 0, TAU);
-    ctx.strokeStyle = "rgba(255,255,255,0.46)";
-    ctx.lineWidth = 0.55;
-    ctx.stroke();
-  }
-
-  ctx.strokeStyle = active ? "rgba(0,0,0,0.36)" : "rgba(0,0,0,0.22)";
-  ctx.lineWidth = Math.max(0.42, r * 0.012);
-  for (let i = 0; i < (active ? 4 : 2); i++) {
-    const arcSeed = hashString(`${planet.login}:arc:${i}`);
-    const arcY = y + (seededUnit(arcSeed) - 0.5) * r * 0.86;
-    const arcW = r * (0.62 + seededUnit(arcSeed + 2) * 0.32);
-    const arcH = r * (0.12 + seededUnit(arcSeed + 4) * 0.18);
-    ctx.beginPath();
-    ctx.ellipse(x, arcY, arcW, arcH, longitudeShift * 0.4 + seededUnit(arcSeed + 6) * Math.PI, 0.15 * Math.PI, 0.85 * Math.PI);
-    ctx.stroke();
-  }
-
-  const scarCount = Math.round(planet.damage * 4);
-  for (let i = 0; i < scarCount; i++) {
-    const scarSeed = hashString(`${planet.login}:scar:${i}`);
-    const scarAngle = longitudeShift * 0.45 + seededUnit(scarSeed) * TAU;
-    const scarDistance = (0.12 + seededUnit(scarSeed + 3) * 0.62) * r;
-    const scarX = x + Math.cos(scarAngle) * scarDistance;
-    const scarY = y + Math.sin(scarAngle * 1.3) * scarDistance * 0.72;
-    const scarSize = r * (0.025 + seededUnit(scarSeed + 5) * 0.065);
-    ctx.beginPath();
-    ctx.ellipse(scarX, scarY, scarSize * 1.45, scarSize * 0.72, scarAngle, 0, TAU);
-    ctx.fillStyle = `rgba(0,0,0,${0.1 + planet.damage * 0.24})`;
-    ctx.fill();
-    ctx.beginPath();
-    ctx.moveTo(scarX - Math.cos(scarAngle) * scarSize * 1.7, scarY - Math.sin(scarAngle) * scarSize);
-    ctx.lineTo(scarX + Math.cos(scarAngle) * scarSize * 1.9, scarY + Math.sin(scarAngle) * scarSize);
-    ctx.strokeStyle = `rgba(255,255,255,${0.1 + planet.damage * 0.16})`;
-    ctx.lineWidth = Math.max(0.55, r * 0.012);
-    ctx.stroke();
-  }
-
-  const shade = ctx.createLinearGradient(x - r, y - r, x + r, y + r);
-  shade.addColorStop(0, "rgba(255,255,255,0)");
-  shade.addColorStop(0.54, "rgba(0,0,0,0.08)");
-  shade.addColorStop(1, "rgba(0,0,0,0.56)");
-  ctx.fillStyle = shade;
-  ctx.fillRect(x - r, y - r, r * 2, r * 2);
-  ctx.restore();
-
-  ctx.beginPath();
-  ctx.arc(x, y, r + 0.65, 0, TAU);
-  ctx.strokeStyle = active ? planet.color : "rgba(255,255,255,0.32)";
-  ctx.lineWidth = active ? 1.4 : 0.7;
-  ctx.stroke();
-
-  if (active) {
-    ctx.beginPath();
-    ctx.arc(x, y, r + 5, 0, TAU);
-    ctx.strokeStyle = planet.accentColor;
-    ctx.globalAlpha = 0.45;
-    ctx.lineWidth = 1;
-    ctx.stroke();
-    ctx.globalAlpha = 1;
-  }
+  return merged;
 }
 
-export default function UniverseCanvas({
-  companies,
-}: {
-  companies: CompanyRecord[];
-  flyMode?: boolean;
-  flyVehicle?: string;
-  onExitFly?: () => void;
-  onHud?: (speed: number, alt: number, x: number, z: number, yaw: number) => void;
-  onPause?: (paused: boolean) => void;
-  flyPauseSignal?: number;
-  flyHasOverlay?: boolean;
-  flyStartPaused?: boolean;
-}) {
+function buildUniverse(companies: CompanyRecord[]) {
+  const completeCompanies = mergeRequiredBrands(companies);
+  const ranked = completeCompanies.slice().sort((a, b) => massForCompany(b) - massForCompany(a));
+  const maxMass = Math.max(1, ...ranked.map(massForCompany));
+  const forced = ranked.filter((company) => brandForCompany(company)?.forceFeatured);
+  const top = ranked.filter((company) => !brandForCompany(company)?.forceFeatured).slice(0, Math.max(0, 12 - forced.length));
+  const featuredCompanies = [...forced, ...top].slice(0, 12);
+
+  const featured = featuredCompanies.map((company, index): PlanetNode => {
+    const brand = brandForCompany(company);
+    const mass = massForCompany(company);
+    const layout = FEATURED_LAYOUT[index] || { x: 0.5, y: 0.5 };
+    const scale = brand?.scale || 1;
+    return {
+      login: company.username,
+      name: company.name,
+      color: colorForCompany(company),
+      size: (136 + Math.sqrt(mass / maxMass) * 96) * scale,
+      x: layout.x,
+      y: layout.y,
+      mass,
+      damage: damageForCompany(company),
+      company,
+    };
+  });
+
+  const featuredLogins = new Set(featured.map((planet) => planet.login.toLowerCase()));
+  const fieldDots = ranked
+    .filter((company) => !featuredLogins.has(company.username.toLowerCase()))
+    .map((company): FieldDot => {
+      const seed = hashString(company.username);
+      const ring = 0.25 + Math.sqrt(seededUnit(seed + 4)) * 0.75;
+      const angle = seededUnit(seed + 8) * TAU;
+      const massRatio = Math.sqrt(massForCompany(company) / maxMass);
+      return {
+        key: company.username,
+        x: 0.5 + Math.cos(angle) * ring * 0.49,
+        y: 0.53 + Math.sin(angle) * ring * 0.42,
+        size: 1.4 + massRatio * 5.4,
+        alpha: 0.22 + seededUnit(seed + 12) * 0.48,
+        color: colorForCompany(company),
+      };
+    });
+
+  return { featured, fieldDots, totalCompanies: completeCompanies.length };
+}
+
+function StarField({ dots }: { dots: FieldDot[] }) {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
-  const containerRef = useRef<HTMLDivElement | null>(null);
-  const pointerRef = useRef({ x: -1, y: -1 });
-  const hoverRef = useRef<PlanetNode | null>(null);
-  const screenPlanetsRef = useRef<ScreenPlanet[]>([]);
-  const [hovered, setHovered] = useState<PlanetNode | null>(null);
-  const [selected, setSelected] = useState<PlanetNode | null>(null);
-  const planetarium = useMemo(() => buildPlanetarium(companies), [companies]);
 
-  const findPlanetAt = useCallback((x: number, y: number) => {
-    let nearest: PlanetNode | null = null;
-    let nearestDistance = Infinity;
-    for (const item of screenPlanetsRef.current) {
-      const distance = Math.hypot(x - item.x, y - item.y);
-      if (distance <= item.radius + 18 && distance < nearestDistance) {
-        nearest = item.planet;
-        nearestDistance = distance;
-      }
-    }
-    return nearest;
-  }, []);
-
-  const draw = useCallback(() => {
+  useEffect(() => {
     const canvas = canvasRef.current;
-    const container = containerRef.current;
-    if (!canvas || !container) return;
+    if (!canvas) return;
 
-    const rect = container.getBoundingClientRect();
-    const dpr = Math.min(window.devicePixelRatio || 1, 1.35);
-    const width = Math.max(1, Math.floor(rect.width));
-    const height = Math.max(1, Math.floor(rect.height));
-    if (canvas.width !== Math.floor(width * dpr) || canvas.height !== Math.floor(height * dpr)) {
+    const draw = () => {
+      const parent = canvas.parentElement;
+      if (!parent) return;
+      const rect = parent.getBoundingClientRect();
+      const dpr = Math.min(window.devicePixelRatio || 1, 1.5);
+      const width = Math.max(1, Math.floor(rect.width));
+      const height = Math.max(1, Math.floor(rect.height));
       canvas.width = Math.floor(width * dpr);
       canvas.height = Math.floor(height * dpr);
       canvas.style.width = `${width}px`;
       canvas.style.height = `${height}px`;
-    }
 
-    const ctx = canvas.getContext("2d");
-    if (!ctx) return;
-    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-    ctx.clearRect(0, 0, width, height);
+      const ctx = canvas.getContext("2d");
+      if (!ctx) return;
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      ctx.clearRect(0, 0, width, height);
+      const gradient = ctx.createRadialGradient(width * 0.5, height * 0.48, 0, width * 0.5, height * 0.5, Math.max(width, height) * 0.78);
+      gradient.addColorStop(0, "#151d23");
+      gradient.addColorStop(0.55, "#05080b");
+      gradient.addColorStop(1, "#010203");
+      ctx.fillStyle = gradient;
+      ctx.fillRect(0, 0, width, height);
 
-    const background = ctx.createRadialGradient(width * 0.52, height * 0.45, 0, width * 0.52, height * 0.48, Math.max(width, height) * 0.82);
-    background.addColorStop(0, "#172432");
-    background.addColorStop(0.48, "#071018");
-    background.addColorStop(1, "#020305");
-    ctx.fillStyle = background;
-    ctx.fillRect(0, 0, width, height);
-
-    ctx.save();
-    ctx.globalAlpha = 0.42;
-    const starCount = width < 640 ? 48 : 90;
-    for (let i = 0; i < starCount; i++) {
-      const seed = i * 173;
-      const x = seededUnit(seed + 1) * width;
-      const y = seededUnit(seed + 2) * height;
-      const size = 0.55 + seededUnit(seed + 3) * 1.25;
-      ctx.beginPath();
-      ctx.arc(x, y, size, 0, TAU);
-      ctx.fillStyle = `rgba(255,255,255,${0.12 + seededUnit(seed + 4) * 0.38})`;
-      ctx.fill();
-    }
-    ctx.restore();
-
-    const time = performance.now();
-    for (const link of planetarium.links) {
-      const source = planetarium.planets[link.source];
-      const target = planetarium.planets[link.target];
-      if (!source || !target) continue;
-      ctx.beginPath();
-      ctx.moveTo(source.x * width, source.y * height);
-      ctx.quadraticCurveTo(
-        (source.x + target.x) * width * 0.5,
-        (source.y + target.y) * height * 0.5 - 18,
-        target.x * width,
-        target.y * height,
-      );
-      ctx.strokeStyle = "rgba(255,255,255,0.22)";
-      ctx.globalAlpha = link.opacity;
-      ctx.lineWidth = 0.55;
-      ctx.stroke();
-    }
-    ctx.globalAlpha = 1;
-
-    let nearest: PlanetNode | null = null;
-    let nearestDistance = Infinity;
-    const pointer = pointerRef.current;
-    const sorted = planetarium.planets.slice().sort((a, b) => a.radius - b.radius);
-    const screenPlanets: ScreenPlanet[] = [];
-    for (const planet of sorted) {
-      const driftX = Math.sin(time * 0.00008 * planet.orbit + planet.phase) * 3.5;
-      const driftY = Math.cos(time * 0.00007 * planet.orbit + planet.phase) * 2.5;
-      const baseX = planet.x * width + driftX;
-      const baseY = planet.y * height + driftY;
-      const isSelected = selected?.login === planet.login;
-      const isActive = isSelected || nearest?.login === planet.login;
-      const focus = isActive ? (isSelected ? 0.18 : 0.12) : 0;
-      const x = baseX + (width * 0.5 - baseX) * focus;
-      const y = baseY + (height * 0.5 - baseY) * focus;
-      screenPlanets.push({ planet, x, y, radius: planet.radius * (isActive ? 1.48 : 1) });
-      const distance = Math.hypot(pointer.x - x, pointer.y - y);
-      if (distance < planet.radius + 10 && distance < nearestDistance) {
-        nearest = planet;
-        nearestDistance = distance;
+      for (const dot of dots) {
+        const x = dot.x * width;
+        const y = dot.y * height;
+        const r = dot.size;
+        ctx.beginPath();
+        ctx.arc(x, y, r, 0, TAU);
+        ctx.fillStyle = dot.color;
+        ctx.globalAlpha = dot.alpha;
+        ctx.fill();
+        ctx.beginPath();
+        ctx.arc(x, y, r * 3.4, 0, TAU);
+        ctx.globalAlpha = dot.alpha * 0.14;
+        ctx.fill();
       }
-      drawGlobe(ctx, planet, x, y, time, isActive);
-    }
-    screenPlanetsRef.current = screenPlanets;
-
-    if (hoverRef.current?.login !== nearest?.login) {
-      hoverRef.current = nearest;
-      setHovered(nearest);
-    }
-  }, [planetarium, selected]);
-
-  useEffect(() => {
-    let frame = 0;
-    const loop = () => {
-      draw();
-      frame = window.requestAnimationFrame(loop);
+      ctx.globalAlpha = 1;
     };
-    loop();
-    return () => window.cancelAnimationFrame(frame);
-  }, [draw]);
+
+    draw();
+    window.addEventListener("resize", draw);
+    return () => window.removeEventListener("resize", draw);
+  }, [dots]);
+
+  return <canvas ref={canvasRef} className="absolute inset-0" />;
+}
+
+function CobePlanet({
+  planet,
+  active,
+  onHover,
+  onSelect,
+}: {
+  planet: PlanetNode;
+  active: boolean;
+  onHover: (planet: PlanetNode | null) => void;
+  onSelect: (planet: PlanetNode) => void;
+}) {
+  const canvasRef = useRef<HTMLCanvasElement | null>(null);
+  const phiRef = useRef(0);
+  const color = hexToRgb01(planet.color);
+  const markerCount = active ? 10 : 7;
+  const markers = useMemo(() => {
+    return Array.from({ length: markerCount }, (_, index) => {
+      const seed = hashString(`${planet.login}:marker:${index}`);
+      return {
+        location: [-58 + seededUnit(seed + 1) * 116, -170 + seededUnit(seed + 2) * 340] as [number, number],
+        size: 0.024 + seededUnit(seed + 3) * 0.04,
+      };
+    });
+  }, [markerCount, planet.login]);
 
   useEffect(() => {
-    const onResize = () => draw();
-    window.addEventListener("resize", onResize);
-    return () => window.removeEventListener("resize", onResize);
-  }, [draw]);
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    let globe: ReturnType<typeof createGlobe> | null = null;
+    let frame = 0;
+
+    const resize = () => {
+      const width = Math.max(1, canvas.offsetWidth);
+      if (globe) globe.destroy();
+      globe = createGlobe(canvas, {
+        devicePixelRatio: Math.min(window.devicePixelRatio || 1, 2),
+        width,
+        height: width,
+        phi: phiRef.current,
+        theta: 0.18,
+        dark: 0,
+        diffuse: 1.6,
+        mapSamples: active ? 20000 : 11000,
+        mapBrightness: 10,
+        baseColor: [1, 1, 1],
+        markerColor: [0, 0, 0],
+        glowColor: [Math.max(0.66, color[0]), Math.max(0.66, color[1]), Math.max(0.66, color[2])],
+        markerElevation: 0.025,
+        markers,
+        opacity: 0.9,
+      });
+    };
+
+    const animate = () => {
+      phiRef.current += active ? 0.0048 : 0.0023;
+      globe?.update({ phi: phiRef.current, theta: active ? 0.25 : 0.18 });
+      frame = requestAnimationFrame(animate);
+    };
+
+    resize();
+    animate();
+    window.addEventListener("resize", resize);
+    return () => {
+      window.removeEventListener("resize", resize);
+      cancelAnimationFrame(frame);
+      globe?.destroy();
+    };
+  }, [active, color, markers]);
+
+  const size = planet.size * (active ? 1.14 : 1);
+  const damageLabel = planet.damage > 0.55 ? "critico" : planet.damage > 0.28 ? "instavel" : "integro";
+  const damageMask = planet.damage > 0.28
+    ? `radial-gradient(circle at ${28 + planet.damage * 42}% ${22 + planet.damage * 36}%, transparent 0 19%, rgba(0,0,0,${0.25 + planet.damage * 0.55}) 20% 29%, transparent 30%),
+       linear-gradient(${115 + planet.damage * 80}deg, transparent 0 43%, rgba(255,255,255,${0.08 + planet.damage * 0.12}) 44% 45%, rgba(0,0,0,${0.25 + planet.damage * 0.38}) 46% 48%, transparent 49%)`
+    : "none";
 
   return (
-    <div ref={containerRef} className="relative h-screen w-full overflow-hidden bg-[#020305]">
-      <canvas
-        ref={canvasRef}
-        className="absolute inset-0 touch-none"
-        onPointerMove={(event) => {
-          const rect = event.currentTarget.getBoundingClientRect();
-          const x = event.clientX - rect.left;
-          const y = event.clientY - rect.top;
-          pointerRef.current = { x, y };
-          event.currentTarget.style.cursor = findPlanetAt(x, y) ? "pointer" : "default";
-        }}
-        onPointerDown={(event) => {
-          const rect = event.currentTarget.getBoundingClientRect();
-          const x = event.clientX - rect.left;
-          const y = event.clientY - rect.top;
-          pointerRef.current = { x, y };
-          const planet = findPlanetAt(x, y);
-          if (planet) {
-            hoverRef.current = planet;
-            setHovered(planet);
-            setSelected(planet);
-          }
-        }}
-        onPointerLeave={() => {
-          pointerRef.current = { x: -1, y: -1 };
-          if (canvasRef.current) canvasRef.current.style.cursor = "default";
-          hoverRef.current = null;
-          setHovered(null);
-        }}
-        onClick={() => {
-          if (hoverRef.current) setSelected(hoverRef.current);
-        }}
-      />
+    <button
+      type="button"
+      className="absolute isolate -translate-x-1/2 -translate-y-1/2 text-left outline-none transition-transform duration-500 hover:z-20 focus-visible:z-20"
+      style={{
+        left: `${planet.x * 100}%`,
+        top: `${planet.y * 100}%`,
+        width: size,
+        transform: `translate(-50%, -50%) scale(${active ? 1.06 : 1})`,
+      }}
+      onPointerEnter={() => onHover(planet)}
+      onPointerLeave={() => onHover(null)}
+      onClick={() => onSelect(planet)}
+      aria-label={`Abrir ${planet.name || planet.login}`}
+    >
+      <span className="absolute inset-0 rounded-full blur-2xl" style={{ backgroundColor: planet.color, opacity: active ? 0.33 : 0.13 }} />
+      <span className="absolute inset-[7%] rounded-full border border-white/10" style={{ boxShadow: `inset 0 0 36px rgba(0,0,0,0.38), 0 0 34px ${planet.color}55` }} />
+      <span className="pointer-events-none absolute inset-[7%] z-10 rounded-full mix-blend-multiply" style={{ background: damageMask, opacity: planet.damage > 0.28 ? 1 : 0 }} />
+      <canvas ref={canvasRef} className="relative aspect-square w-full rounded-full opacity-95 saturate-[1.08] transition-opacity duration-700" />
+      <span className="pointer-events-none absolute left-1/2 top-[82%] flex -translate-x-1/2 flex-col items-center gap-1 whitespace-nowrap">
+        <span className="bg-white px-2 py-1 font-mono text-[10px] leading-none text-black shadow-[0_2px_10px_rgba(0,0,0,0.25)]">
+          {planet.name || planet.login}
+        </span>
+        <span className="bg-black px-2 py-1 font-mono text-[9px] leading-none text-white/85">
+          @{planet.login} - {damageLabel}
+        </span>
+      </span>
+    </button>
+  );
+}
 
-      <div className="pointer-events-none absolute inset-x-0 top-0 h-48 bg-gradient-to-b from-black/65 to-transparent" />
-      <div className="pointer-events-none absolute inset-x-0 bottom-0 h-44 bg-gradient-to-t from-black/70 to-transparent" />
+function CompanyHud({ planet, onClose }: { planet: PlanetNode; onClose: () => void }) {
+  const company = planet.company;
+  const health = typeof company.health_score === "number" ? company.health_score : 100;
+  const details = [
+    ["Tracao", formatMetric(planet.mass)],
+    ["Estrelas", formatMetric(company.total_stars)],
+    ["Repositorios", formatMetric(company.public_repos)],
+    ["Receita", formatMoney(company.revenue)],
+    ["Capital", formatMoney(company.share_capital)],
+    ["Saude", `${health}%`],
+  ];
 
-      <div className="pointer-events-none absolute left-5 top-5 max-w-[calc(100vw-2.5rem)] font-space sm:left-8 sm:top-7">
+  return (
+    <aside className="pointer-events-auto absolute bottom-4 left-4 right-4 z-40 overflow-hidden border border-white/12 bg-[#070808]/90 font-space shadow-2xl shadow-black/50 backdrop-blur-2xl sm:bottom-6 sm:left-auto sm:right-6 sm:w-[430px]">
+      <div className="h-1.5 w-full" style={{ background: `linear-gradient(90deg, ${planet.color}, rgba(255,255,255,0.18))` }} />
+      <div className="p-4">
+        <div className="flex items-start gap-4">
+          <div className="h-14 w-14 shrink-0 rounded-full border border-white/20 shadow-lg" style={{ background: `radial-gradient(circle at 30% 25%, white, ${planet.color} 52%, #020202 100%)`, boxShadow: `0 0 34px ${planet.color}66` }} />
+          <div className="min-w-0 flex-1">
+            <p className="text-[10px] uppercase tracking-[0.24em] text-white/42">Empresa orbital</p>
+            <h3 className="mt-1 truncate text-xl font-semibold normal-case text-white">{planet.name || planet.login}</h3>
+            <p className="mt-1 text-sm normal-case text-white/50">@{planet.login} - dados em tempo real quando disponiveis</p>
+          </div>
+          <button className="grid h-8 w-8 place-items-center border border-white/12 bg-white/[0.03] text-white/55 transition hover:border-white/30 hover:text-white" onClick={onClose} aria-label="Fechar painel">
+            x
+          </button>
+        </div>
+
+        <div className="mt-4">
+          <div className="mb-2 flex items-center justify-between text-[10px] uppercase tracking-[0.22em] text-white/40">
+            <span>Saude do negocio</span>
+            <span>{health}%</span>
+          </div>
+          <div className="h-2 overflow-hidden bg-white/10">
+            <div className="h-full" style={{ width: `${Math.max(0, Math.min(100, health))}%`, backgroundColor: planet.color }} />
+          </div>
+        </div>
+
+        <div className="mt-4 grid grid-cols-2 gap-px overflow-hidden border border-white/10 bg-white/10 text-xs sm:grid-cols-3">
+          {details.map(([label, value]) => (
+            <div key={label} className="bg-[#080a0b] p-3">
+              <p className="text-white/36">{label}</p>
+              <p className="mt-2 text-[15px] font-semibold normal-case text-white/86">{value}</p>
+            </div>
+          ))}
+        </div>
+        {company.bio && <p className="mt-4 border-t border-white/10 pt-3 text-xs leading-relaxed normal-case text-white/54">{company.bio}</p>}
+      </div>
+    </aside>
+  );
+}
+
+export default function UniverseCanvas({ companies }: { companies: CompanyRecord[] }) {
+  const { featured, fieldDots, totalCompanies } = useMemo(() => buildUniverse(companies), [companies]);
+  const [hovered, setHovered] = useState<PlanetNode | null>(null);
+  const [selected, setSelected] = useState<PlanetNode | null>(null);
+  const active = selected || hovered;
+
+  const handleHover = useCallback((planet: PlanetNode | null) => {
+    setHovered(planet);
+  }, []);
+
+  return (
+    <div className="relative h-screen w-full overflow-hidden bg-[#020305]">
+      <StarField dots={fieldDots} />
+      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_0%,transparent_57%,rgba(0,0,0,0.78)_100%)]" />
+      <div className="pointer-events-none absolute inset-x-0 top-0 h-44 bg-gradient-to-b from-black/80 to-transparent" />
+      <div className="pointer-events-none absolute inset-x-0 bottom-0 h-48 bg-gradient-to-t from-black/80 to-transparent" />
+
+      <div className="pointer-events-none absolute left-5 top-5 z-30 max-w-[calc(100vw-2.5rem)] font-space sm:left-8 sm:top-7">
         <p className="text-[10px] uppercase tracking-[0.34em] text-white/38">Grupo Maia Universe</p>
-        <h2 className="mt-2 text-xl font-semibold normal-case text-white/88 sm:text-3xl">Mapa de empresas</h2>
-        <p className="mt-3 max-w-sm text-xs leading-relaxed normal-case text-white/44 sm:text-sm">
-          {planetarium.planets.length} globes conectados por presenca, tracao e capital relacional.
+        <h2 className="mt-2 text-xl font-semibold normal-case text-white/90 sm:text-3xl">Mapa de empresas</h2>
+        <p className="mt-3 max-w-sm text-xs leading-relaxed normal-case text-white/48 sm:text-sm">
+          {totalCompanies} empresas no campo orbital - {featured.length} globes em alta definicao.
         </p>
       </div>
 
-      <div className="pointer-events-none absolute right-5 top-6 hidden max-w-xs flex-wrap justify-end gap-2 sm:flex">
-        {planetarium.sectors.slice(0, 6).map((sector) => (
-          <div key={sector.id} className="flex items-center gap-2 border border-white/10 bg-white/[0.035] px-2.5 py-1 backdrop-blur-md">
-            <span className="h-1.5 w-1.5 rounded-full" style={{ backgroundColor: sector.color }} />
-            <span className="text-[10px] normal-case text-white/46">{CONSTELLATION_NAMES[sector.id] || sector.id}</span>
-          </div>
-        ))}
-      </div>
+      {featured.map((planet) => (
+        <CobePlanet
+          key={planet.login}
+          planet={planet}
+          active={active?.login === planet.login}
+          onHover={handleHover}
+          onSelect={setSelected}
+        />
+      ))}
 
-      {(hovered || selected) && (
-        <div className="pointer-events-auto absolute bottom-4 left-4 right-4 max-h-[72vh] overflow-auto border border-white/12 bg-[#070808]/82 p-4 text-left font-space shadow-2xl shadow-black/40 backdrop-blur-2xl sm:bottom-6 sm:left-auto sm:right-6 sm:w-[410px] sm:p-5">
-          {(() => {
-            const planet = selected || hovered!;
-            const company = planet.company;
-            const updatedAt = company.fetched_at || company.created_at;
-            const details = [
-              { label: "Contribuicoes", value: formatMetric(planet.contributions) },
-              { label: "Estrelas", value: formatMetric(planet.totalStars) },
-              { label: "Repositorios", value: formatMetric(company.public_repos) },
-              { label: "Funcionarios", value: formatMetric(company.employee_count) },
-              { label: "Aplicacoes", value: formatMetric(company.applications_count) },
-              { label: "Saude", value: typeof company.health_score === "number" ? `${company.health_score}%` : "Nao informado" },
-              { label: "Superficie", value: planet.damage > 0.55 ? "Critica" : planet.damage > 0.28 ? "Instavel" : "Integra" },
-            ];
-            const secondary = [
-              { label: "Setor", value: CONSTELLATION_NAMES[planet.sector] || planet.sector },
-              { label: "Linguagem", value: company.primary_language || "Nao informado" },
-              { label: "Receita", value: formatMetric(company.revenue) },
-              { label: "Capital social", value: formatMetric(company.share_capital) },
-            ];
-            return (
-              <>
-                <div className="flex items-start gap-4">
-                  <div
-                    className="mt-0.5 h-12 w-12 shrink-0 rounded-full border border-white/18 shadow-[0_0_28px_rgba(255,255,255,0.16)]"
-                    style={{
-                      background:
-                        `radial-gradient(circle at 30% 22%, #fff 0%, #f3efe5 24%, ${planet.color} 54%, #050607 100%)`,
-                    }}
-                  />
-                  <div className="min-w-0 flex-1">
-                    <div className="flex items-center gap-2">
-                      <span className="h-1.5 w-1.5 shrink-0 rounded-full" style={{ backgroundColor: planet.color }} />
-                      <p className="truncate text-[11px] uppercase tracking-[0.22em] text-white/42">Empresa</p>
-                    </div>
-                    <h3 className="mt-2 truncate text-lg font-semibold leading-tight normal-case text-white sm:text-xl">
-                      {planet.name || planet.login}
-                    </h3>
-                    <p className="mt-1 truncate text-sm normal-case text-white/52">@{planet.login}</p>
-                  </div>
-                  <button
-                    className="pointer-events-auto grid h-8 w-8 shrink-0 place-items-center border border-white/10 bg-white/[0.04] text-sm text-white/46 transition hover:border-white/20 hover:bg-white/[0.08] hover:text-white"
-                    onClick={() => {
-                      setSelected(null);
-                      setHovered(null);
-                      hoverRef.current = null;
-                    }}
-                    aria-label="Fechar detalhes"
-                  >
-                    x
-                  </button>
-                </div>
-                <div className="mt-4 flex items-center justify-between gap-3 border-y border-white/10 py-3 text-xs normal-case">
-                  <span className="text-white/40">Dados</span>
-                  <span className="text-right text-white/68">{formatDate(updatedAt)}</span>
-                </div>
-
-                <div className="mt-4 grid grid-cols-2 gap-px overflow-hidden border border-white/10 bg-white/10 text-xs normal-case sm:grid-cols-3">
-                  {details.map((item) => (
-                    <div key={item.label} className="min-h-[68px] bg-[#080a0b]/95 p-3">
-                      <p className="text-white/36">{item.label}</p>
-                      <p className="mt-2 text-[15px] font-semibold text-white/86">{item.value}</p>
-                    </div>
-                  ))}
-                </div>
-                <div className="mt-4 space-y-2 text-xs normal-case">
-                  {secondary.map((item) => (
-                    <div key={item.label} className="flex items-center justify-between gap-4">
-                      <span className="text-white/36">{item.label}</span>
-                      <span className="max-w-[62%] truncate text-right text-white/72">{item.value}</span>
-                    </div>
-                  ))}
-                </div>
-
-                {company.bio && (
-                  <div className="mt-4 border-t border-white/10 pt-3 text-xs leading-relaxed normal-case text-white/54">
-                    {company.bio}
-                  </div>
-                )}
-              </>
-            );
-          })()}
-        </div>
-      )}
+      {selected && <CompanyHud planet={selected} onClose={() => setSelected(null)} />}
     </div>
   );
 }

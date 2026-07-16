@@ -64,6 +64,10 @@ function getClientIp(request: NextRequest): string {
   );
 }
 
+function getSupabaseAnonKey() {
+  return (process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || "").replace(/your-anon-key.*$/i, "");
+}
+
 // ---------------------------------------------------------------------------
 // Middleware
 // ---------------------------------------------------------------------------
@@ -105,7 +109,7 @@ export async function middleware(request: NextRequest) {
   if (hasSession) {
     const supabase = createServerClient(
       process.env.NEXT_PUBLIC_SUPABASE_URL!,
-      process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+      getSupabaseAnonKey(),
       {
         cookies: {
           getAll() {
