@@ -341,3 +341,383 @@
 [ 1204170ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3002/_next/static/chunks/bb6753b686a550d1.js:0
 [ 1204220ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3002/_next/static/chunks/bb6753b686a550d1.js:0
 [ 1205091ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:3002/api/presence:0
+[ 1230665ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:3002/api/online:0
+[ 1231150ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:3002/api/presence:0
+[ 1262648ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:3002/api/online:0
+[ 1264044ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:3002/api/presence:0
+[ 1290869ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:3002/api/online:0
+[ 1291518ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:3002/api/presence:0
+[ 1320650ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3002/_next/static/chunks/bb6753b686a550d1.js:0
+[ 1320707ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3002/_next/static/chunks/bb6753b686a550d1.js:0
+[ 1320767ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3002/_next/static/chunks/bb6753b686a550d1.js:0
+[ 1320822ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3002/_next/static/chunks/bb6753b686a550d1.js:0
+[ 1320882ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3002/_next/static/chunks/bb6753b686a550d1.js:0
+[ 1320941ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3002/_next/static/chunks/bb6753b686a550d1.js:0
+[ 1321003ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3002/_next/static/chunks/bb6753b686a550d1.js:0
+[ 1321060ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3002/_next/static/chunks/bb6753b686a550d1.js:0
+[ 1321116ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3002/_next/static/chunks/bb6753b686a550d1.js:0
+[ 1321173ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3002/_next/static/chunks/bb6753b686a550d1.js:0
+[ 1321229ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3002/_next/static/chunks/bb6753b686a550d1.js:0
+[ 1322111ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:3002/api/online:0
+[ 1322111ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:3002/api/presence:0
+[ 1350622ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:3002/api/online:0
+[ 1350623ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:3002/api/presence:0
+[ 1381535ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:3002/api/presence:0
+[ 1381561ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:3002/api/online:0
+[ 1410638ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:3002/api/online:0
+[ 1410736ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:3002/api/presence:0
+[ 1440637ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:3002/api/online:0
+[ 1441282ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:3002/api/presence:0
+[ 1441649ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3002/_next/static/chunks/bb6753b686a550d1.js:0
+[ 1441656ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3002/_next/static/chunks/bb6753b686a550d1.js:0
+[ 1441662ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3002/_next/static/chunks/bb6753b686a550d1.js:0
+[ 1441668ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3002/_next/static/chunks/bb6753b686a550d1.js:0
+[ 1441674ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3002/_next/static/chunks/bb6753b686a550d1.js:0
+[ 1441679ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3002/_next/static/chunks/bb6753b686a550d1.js:0
+[ 1441685ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3002/_next/static/chunks/bb6753b686a550d1.js:0
+[ 1441691ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3002/_next/static/chunks/bb6753b686a550d1.js:0
+[ 1441697ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3002/_next/static/chunks/bb6753b686a550d1.js:0
+[ 1441703ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3002/_next/static/chunks/bb6753b686a550d1.js:0
+[ 1441709ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3002/_next/static/chunks/bb6753b686a550d1.js:0
+[ 1470912ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:3002/api/online:0
+[ 1470937ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:3002/api/presence:0
+[ 1500676ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:3002/api/online:0
+[ 1500702ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:3002/api/presence:0
+[ 1532259ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:3002/api/presence:0
+[ 1532261ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:3002/api/online:0
+[ 1560637ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3002/_next/static/chunks/bb6753b686a550d1.js:0
+[ 1560643ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3002/_next/static/chunks/bb6753b686a550d1.js:0
+[ 1560648ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3002/_next/static/chunks/bb6753b686a550d1.js:0
+[ 1560653ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3002/_next/static/chunks/bb6753b686a550d1.js:0
+[ 1560659ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3002/_next/static/chunks/bb6753b686a550d1.js:0
+[ 1560665ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3002/_next/static/chunks/bb6753b686a550d1.js:0
+[ 1560671ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3002/_next/static/chunks/bb6753b686a550d1.js:0
+[ 1560677ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3002/_next/static/chunks/bb6753b686a550d1.js:0
+[ 1560682ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3002/_next/static/chunks/bb6753b686a550d1.js:0
+[ 1560689ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3002/_next/static/chunks/bb6753b686a550d1.js:0
+[ 1560695ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3002/_next/static/chunks/bb6753b686a550d1.js:0
+[ 1562147ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:3002/api/presence:0
+[ 1562148ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:3002/api/online:0
+[ 1590987ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:3002/api/presence:0
+[ 1590988ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:3002/api/online:0
+[ 1620914ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:3002/api/online:0
+[ 1621331ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:3002/api/presence:0
+[ 1651734ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:3002/api/presence:0
+[ 1655135ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:3002/api/online:0
+[ 1680713ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:3002/api/online:0
+[ 1680714ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:3002/api/presence:0
+[ 1680985ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3002/_next/static/chunks/bb6753b686a550d1.js:0
+[ 1681002ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3002/_next/static/chunks/bb6753b686a550d1.js:0
+[ 1681018ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3002/_next/static/chunks/bb6753b686a550d1.js:0
+[ 1681034ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3002/_next/static/chunks/bb6753b686a550d1.js:0
+[ 1681049ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3002/_next/static/chunks/bb6753b686a550d1.js:0
+[ 1681065ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3002/_next/static/chunks/bb6753b686a550d1.js:0
+[ 1681081ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3002/_next/static/chunks/bb6753b686a550d1.js:0
+[ 1681097ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3002/_next/static/chunks/bb6753b686a550d1.js:0
+[ 1681112ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3002/_next/static/chunks/bb6753b686a550d1.js:0
+[ 1681129ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3002/_next/static/chunks/bb6753b686a550d1.js:0
+[ 1681146ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3002/_next/static/chunks/bb6753b686a550d1.js:0
+[ 1710781ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:3002/api/presence:0
+[ 1710781ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:3002/api/online:0
+[ 1740745ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:3002/api/online:0
+[ 1740769ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:3002/api/presence:0
+[ 1770858ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:3002/api/online:0
+[ 1771129ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:3002/api/presence:0
+[ 1801410ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:3002/api/presence:0
+[ 1802110ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:3002/api/online:0
+[ 1803575ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3002/_next/static/chunks/bb6753b686a550d1.js:0
+[ 1803581ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3002/_next/static/chunks/bb6753b686a550d1.js:0
+[ 1803587ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3002/_next/static/chunks/bb6753b686a550d1.js:0
+[ 1803593ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3002/_next/static/chunks/bb6753b686a550d1.js:0
+[ 1803599ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3002/_next/static/chunks/bb6753b686a550d1.js:0
+[ 1803604ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3002/_next/static/chunks/bb6753b686a550d1.js:0
+[ 1803610ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3002/_next/static/chunks/bb6753b686a550d1.js:0
+[ 1803615ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3002/_next/static/chunks/bb6753b686a550d1.js:0
+[ 1803620ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3002/_next/static/chunks/bb6753b686a550d1.js:0
+[ 1803626ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3002/_next/static/chunks/bb6753b686a550d1.js:0
+[ 1803632ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3002/_next/static/chunks/bb6753b686a550d1.js:0
+[ 1830806ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:3002/api/online:0
+[ 1830831ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:3002/api/presence:0
+[ 1861090ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:3002/api/online:0
+[ 1861508ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:3002/api/presence:0
+[ 1890861ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:3002/api/presence:0
+[ 1890862ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:3002/api/online:0
+[ 1920596ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3002/_next/static/chunks/bb6753b686a550d1.js:0
+[ 1920602ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3002/_next/static/chunks/bb6753b686a550d1.js:0
+[ 1920608ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3002/_next/static/chunks/bb6753b686a550d1.js:0
+[ 1920613ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3002/_next/static/chunks/bb6753b686a550d1.js:0
+[ 1920619ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3002/_next/static/chunks/bb6753b686a550d1.js:0
+[ 1920627ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3002/_next/static/chunks/bb6753b686a550d1.js:0
+[ 1920633ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3002/_next/static/chunks/bb6753b686a550d1.js:0
+[ 1920639ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3002/_next/static/chunks/bb6753b686a550d1.js:0
+[ 1920644ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3002/_next/static/chunks/bb6753b686a550d1.js:0
+[ 1920650ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3002/_next/static/chunks/bb6753b686a550d1.js:0
+[ 1920656ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3002/_next/static/chunks/bb6753b686a550d1.js:0
+[ 1922139ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:3002/api/online:0
+[ 1922139ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:3002/api/presence:0
+[ 1951087ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:3002/api/online:0
+[ 1951088ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:3002/api/presence:0
+[ 1981254ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:3002/api/online:0
+[ 1981771ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:3002/api/presence:0
+[ 2010694ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:3002/api/presence:0
+[ 2010720ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:3002/api/online:0
+[ 2041265ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:3002/api/online:0
+[ 2041456ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:3002/api/presence:0
+[ 2041566ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3002/_next/static/chunks/bb6753b686a550d1.js:0
+[ 2041616ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3002/_next/static/chunks/bb6753b686a550d1.js:0
+[ 2041632ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3002/_next/static/chunks/bb6753b686a550d1.js:0
+[ 2041687ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3002/_next/static/chunks/bb6753b686a550d1.js:0
+[ 2041743ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3002/_next/static/chunks/bb6753b686a550d1.js:0
+[ 2041759ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3002/_next/static/chunks/bb6753b686a550d1.js:0
+[ 2041816ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3002/_next/static/chunks/bb6753b686a550d1.js:0
+[ 2041873ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3002/_next/static/chunks/bb6753b686a550d1.js:0
+[ 2041926ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3002/_next/static/chunks/bb6753b686a550d1.js:0
+[ 2041980ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3002/_next/static/chunks/bb6753b686a550d1.js:0
+[ 2042034ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3002/_next/static/chunks/bb6753b686a550d1.js:0
+[ 2070634ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:3002/api/online:0
+[ 2070900ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:3002/api/presence:0
+[ 2100658ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:3002/api/online:0
+[ 2100684ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:3002/api/presence:0
+[ 2132620ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:3002/api/online:0
+[ 2134470ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:3002/api/presence:0
+[ 2160590ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3002/_next/static/chunks/bb6753b686a550d1.js:0
+[ 2160645ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3002/_next/static/chunks/bb6753b686a550d1.js:0
+[ 2160702ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3002/_next/static/chunks/bb6753b686a550d1.js:0
+[ 2160758ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3002/_next/static/chunks/bb6753b686a550d1.js:0
+[ 2160815ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3002/_next/static/chunks/bb6753b686a550d1.js:0
+[ 2160866ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3002/_next/static/chunks/bb6753b686a550d1.js:0
+[ 2160924ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3002/_next/static/chunks/bb6753b686a550d1.js:0
+[ 2160979ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3002/_next/static/chunks/bb6753b686a550d1.js:0
+[ 2161035ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3002/_next/static/chunks/bb6753b686a550d1.js:0
+[ 2161090ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3002/_next/static/chunks/bb6753b686a550d1.js:0
+[ 2161147ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3002/_next/static/chunks/bb6753b686a550d1.js:0
+[ 2162014ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:3002/api/online:0
+[ 2162015ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:3002/api/presence:0
+[ 2192652ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:3002/api/online:0
+[ 2193080ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:3002/api/presence:0
+[ 2220659ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:3002/api/presence:0
+[ 2220719ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:3002/api/online:0
+[ 2250677ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:3002/api/online:0
+[ 2250752ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:3002/api/presence:0
+[ 2282741ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:3002/api/online:0
+[ 2282866ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:3002/api/presence:0
+[ 2283239ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3002/_next/static/chunks/bb6753b686a550d1.js:0
+[ 2283246ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3002/_next/static/chunks/bb6753b686a550d1.js:0
+[ 2283298ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3002/_next/static/chunks/bb6753b686a550d1.js:0
+[ 2283305ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3002/_next/static/chunks/bb6753b686a550d1.js:0
+[ 2283311ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3002/_next/static/chunks/bb6753b686a550d1.js:0
+[ 2283375ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3002/_next/static/chunks/bb6753b686a550d1.js:0
+[ 2283381ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3002/_next/static/chunks/bb6753b686a550d1.js:0
+[ 2283387ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3002/_next/static/chunks/bb6753b686a550d1.js:0
+[ 2283393ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3002/_next/static/chunks/bb6753b686a550d1.js:0
+[ 2283398ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3002/_next/static/chunks/bb6753b686a550d1.js:0
+[ 2283404ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3002/_next/static/chunks/bb6753b686a550d1.js:0
+[ 2310981ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:3002/api/online:0
+[ 2311006ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:3002/api/presence:0
+[ 2340872ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:3002/api/online:0
+[ 2340872ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:3002/api/presence:0
+[ 2370849ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:3002/api/online:0
+[ 2370850ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:3002/api/presence:0
+[ 2400584ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3002/_next/static/chunks/bb6753b686a550d1.js:0
+[ 2400598ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3002/_next/static/chunks/bb6753b686a550d1.js:0
+[ 2400614ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3002/_next/static/chunks/bb6753b686a550d1.js:0
+[ 2400628ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3002/_next/static/chunks/bb6753b686a550d1.js:0
+[ 2400643ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3002/_next/static/chunks/bb6753b686a550d1.js:0
+[ 2400659ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3002/_next/static/chunks/bb6753b686a550d1.js:0
+[ 2400675ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3002/_next/static/chunks/bb6753b686a550d1.js:0
+[ 2400690ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3002/_next/static/chunks/bb6753b686a550d1.js:0
+[ 2400707ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3002/_next/static/chunks/bb6753b686a550d1.js:0
+[ 2400723ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3002/_next/static/chunks/bb6753b686a550d1.js:0
+[ 2400739ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3002/_next/static/chunks/bb6753b686a550d1.js:0
+[ 2402385ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:3002/api/online:0
+[ 2402391ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:3002/api/presence:0
+[ 2430662ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:3002/api/online:0
+[ 2430807ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:3002/api/presence:0
+[ 2460735ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:3002/api/online:0
+[ 2460888ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:3002/api/presence:0
+[ 2490785ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:3002/api/online:0
+[ 2490786ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:3002/api/presence:0
+[ 2520894ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:3002/api/online:0
+[ 2520894ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:3002/api/presence:0
+[ 2521053ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3002/_next/static/chunks/bb6753b686a550d1.js:0
+[ 2521059ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3002/_next/static/chunks/bb6753b686a550d1.js:0
+[ 2521065ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3002/_next/static/chunks/bb6753b686a550d1.js:0
+[ 2521070ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3002/_next/static/chunks/bb6753b686a550d1.js:0
+[ 2521076ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3002/_next/static/chunks/bb6753b686a550d1.js:0
+[ 2521082ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3002/_next/static/chunks/bb6753b686a550d1.js:0
+[ 2521088ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3002/_next/static/chunks/bb6753b686a550d1.js:0
+[ 2521093ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3002/_next/static/chunks/bb6753b686a550d1.js:0
+[ 2521098ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3002/_next/static/chunks/bb6753b686a550d1.js:0
+[ 2521110ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3002/_next/static/chunks/bb6753b686a550d1.js:0
+[ 2521116ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3002/_next/static/chunks/bb6753b686a550d1.js:0
+[ 2551230ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:3002/api/presence:0
+[ 2551279ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:3002/api/online:0
+[ 2580725ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:3002/api/online:0
+[ 2580726ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:3002/api/presence:0
+[ 2610914ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:3002/api/presence:0
+[ 2611010ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:3002/api/online:0
+[ 2640664ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:3002/api/online:0
+[ 2640816ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:3002/api/presence:0
+[ 2641234ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3002/_next/static/chunks/bb6753b686a550d1.js:0
+[ 2641251ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3002/_next/static/chunks/bb6753b686a550d1.js:0
+[ 2641266ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3002/_next/static/chunks/bb6753b686a550d1.js:0
+[ 2641283ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3002/_next/static/chunks/bb6753b686a550d1.js:0
+[ 2641299ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3002/_next/static/chunks/bb6753b686a550d1.js:0
+[ 2641316ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3002/_next/static/chunks/bb6753b686a550d1.js:0
+[ 2641332ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3002/_next/static/chunks/bb6753b686a550d1.js:0
+[ 2641348ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3002/_next/static/chunks/bb6753b686a550d1.js:0
+[ 2641364ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3002/_next/static/chunks/bb6753b686a550d1.js:0
+[ 2641380ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3002/_next/static/chunks/bb6753b686a550d1.js:0
+[ 2641397ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3002/_next/static/chunks/bb6753b686a550d1.js:0
+[ 2670683ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:3002/api/presence:0
+[ 2671309ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:3002/api/online:0
+[ 2700663ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:3002/api/online:0
+[ 2700762ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:3002/api/presence:0
+[ 2730745ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:3002/api/online:0
+[ 2731092ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:3002/api/presence:0
+[ 2761114ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:3002/api/online:0
+[ 2761216ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3002/_next/static/chunks/bb6753b686a550d1.js:0
+[ 2761231ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3002/_next/static/chunks/bb6753b686a550d1.js:0
+[ 2761247ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3002/_next/static/chunks/bb6753b686a550d1.js:0
+[ 2761262ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3002/_next/static/chunks/bb6753b686a550d1.js:0
+[ 2761278ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3002/_next/static/chunks/bb6753b686a550d1.js:0
+[ 2761294ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3002/_next/static/chunks/bb6753b686a550d1.js:0
+[ 2761310ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3002/_next/static/chunks/bb6753b686a550d1.js:0
+[ 2761326ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3002/_next/static/chunks/bb6753b686a550d1.js:0
+[ 2761342ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3002/_next/static/chunks/bb6753b686a550d1.js:0
+[ 2761358ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3002/_next/static/chunks/bb6753b686a550d1.js:0
+[ 2761373ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3002/_next/static/chunks/bb6753b686a550d1.js:0
+[ 2763092ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:3002/api/presence:0
+[ 2791180ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:3002/api/online:0
+[ 2791204ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:3002/api/presence:0
+[ 2821542ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:3002/api/online:0
+[ 2821543ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:3002/api/presence:0
+[ 2850637ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:3002/api/online:0
+[ 2850663ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:3002/api/presence:0
+[ 2880624ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:3002/api/online:0
+[ 2895531ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:3002/api/presence:0
+[ 2895612ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3002/_next/static/chunks/bb6753b686a550d1.js:0
+[ 2895628ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3002/_next/static/chunks/bb6753b686a550d1.js:0
+[ 2895644ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3002/_next/static/chunks/bb6753b686a550d1.js:0
+[ 2895661ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3002/_next/static/chunks/bb6753b686a550d1.js:0
+[ 2895678ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3002/_next/static/chunks/bb6753b686a550d1.js:0
+[ 2895695ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3002/_next/static/chunks/bb6753b686a550d1.js:0
+[ 2895711ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3002/_next/static/chunks/bb6753b686a550d1.js:0
+[ 2895728ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3002/_next/static/chunks/bb6753b686a550d1.js:0
+[ 2895744ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3002/_next/static/chunks/bb6753b686a550d1.js:0
+[ 2895760ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3002/_next/static/chunks/bb6753b686a550d1.js:0
+[ 2895776ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3002/_next/static/chunks/bb6753b686a550d1.js:0
+[ 2912543ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:3002/api/online:0
+[ 2913031ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:3002/api/presence:0
+[ 2940744ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:3002/api/online:0
+[ 2944543ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:3002/api/presence:0
+[ 2970922ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:3002/api/online:0
+[ 2970946ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:3002/api/presence:0
+[ 3000580ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3002/_next/static/chunks/bb6753b686a550d1.js:0
+[ 3000637ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3002/_next/static/chunks/bb6753b686a550d1.js:0
+[ 3000696ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3002/_next/static/chunks/bb6753b686a550d1.js:0
+[ 3000752ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3002/_next/static/chunks/bb6753b686a550d1.js:0
+[ 3000812ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3002/_next/static/chunks/bb6753b686a550d1.js:0
+[ 3000868ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3002/_next/static/chunks/bb6753b686a550d1.js:0
+[ 3000924ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3002/_next/static/chunks/bb6753b686a550d1.js:0
+[ 3000992ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3002/_next/static/chunks/bb6753b686a550d1.js:0
+[ 3001055ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3002/_next/static/chunks/bb6753b686a550d1.js:0
+[ 3001120ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3002/_next/static/chunks/bb6753b686a550d1.js:0
+[ 3001180ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3002/_next/static/chunks/bb6753b686a550d1.js:0
+[ 3002070ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:3002/api/online:0
+[ 3002071ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:3002/api/presence:0
+[ 3030683ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:3002/api/online:0
+[ 3030683ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:3002/api/presence:0
+[ 3061213ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:3002/api/presence:0
+[ 3061218ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:3002/api/online:0
+[ 3090685ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:3002/api/presence:0
+[ 3090685ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:3002/api/online:0
+[ 3120681ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:3002/api/online:0
+[ 3120682ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:3002/api/presence:0
+[ 3121115ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3002/_next/static/chunks/bb6753b686a550d1.js:0
+[ 3121172ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3002/_next/static/chunks/bb6753b686a550d1.js:0
+[ 3121231ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3002/_next/static/chunks/bb6753b686a550d1.js:0
+[ 3121290ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3002/_next/static/chunks/bb6753b686a550d1.js:0
+[ 3121349ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3002/_next/static/chunks/bb6753b686a550d1.js:0
+[ 3121406ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3002/_next/static/chunks/bb6753b686a550d1.js:0
+[ 3121473ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3002/_next/static/chunks/bb6753b686a550d1.js:0
+[ 3121530ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3002/_next/static/chunks/bb6753b686a550d1.js:0
+[ 3121589ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3002/_next/static/chunks/bb6753b686a550d1.js:0
+[ 3121648ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3002/_next/static/chunks/bb6753b686a550d1.js:0
+[ 3121707ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3002/_next/static/chunks/bb6753b686a550d1.js:0
+[ 3150891ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:3002/api/presence:0
+[ 3150892ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:3002/api/online:0
+[ 3180949ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:3002/api/presence:0
+[ 3181241ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:3002/api/online:0
+[ 3210639ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:3002/api/online:0
+[ 3210640ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:3002/api/presence:0
+[ 3240634ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:3002/api/online:0
+[ 3240689ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:3002/api/presence:0
+[ 3241129ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3002/_next/static/chunks/bb6753b686a550d1.js:0
+[ 3241146ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3002/_next/static/chunks/bb6753b686a550d1.js:0
+[ 3241161ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3002/_next/static/chunks/bb6753b686a550d1.js:0
+[ 3241177ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3002/_next/static/chunks/bb6753b686a550d1.js:0
+[ 3241193ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3002/_next/static/chunks/bb6753b686a550d1.js:0
+[ 3241209ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3002/_next/static/chunks/bb6753b686a550d1.js:0
+[ 3241226ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3002/_next/static/chunks/bb6753b686a550d1.js:0
+[ 3241243ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3002/_next/static/chunks/bb6753b686a550d1.js:0
+[ 3241259ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3002/_next/static/chunks/bb6753b686a550d1.js:0
+[ 3241277ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3002/_next/static/chunks/bb6753b686a550d1.js:0
+[ 3241293ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3002/_next/static/chunks/bb6753b686a550d1.js:0
+[ 3272071ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:3002/api/online:0
+[ 3272120ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:3002/api/presence:0
+[ 3307734ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:3002/api/online:0
+[ 3307735ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:3002/api/presence:0
+[ 3331564ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:3002/api/online:0
+[ 3331592ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:3002/api/presence:0
+[ 3361930ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:3002/api/online:0
+[ 3389035ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:3002/api/presence:0
+[ 3389141ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3002/_next/static/chunks/bb6753b686a550d1.js:0
+[ 3389199ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3002/_next/static/chunks/bb6753b686a550d1.js:0
+[ 3389256ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3002/_next/static/chunks/bb6753b686a550d1.js:0
+[ 3389313ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3002/_next/static/chunks/bb6753b686a550d1.js:0
+[ 3389371ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3002/_next/static/chunks/bb6753b686a550d1.js:0
+[ 3389427ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3002/_next/static/chunks/bb6753b686a550d1.js:0
+[ 3389488ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3002/_next/static/chunks/bb6753b686a550d1.js:0
+[ 3389545ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3002/_next/static/chunks/bb6753b686a550d1.js:0
+[ 3389602ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3002/_next/static/chunks/bb6753b686a550d1.js:0
+[ 3389659ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3002/_next/static/chunks/bb6753b686a550d1.js:0
+[ 3389718ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3002/_next/static/chunks/bb6753b686a550d1.js:0
+[ 3390954ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:3002/api/online:0
+[ 3390955ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:3002/api/presence:0
+[ 3421562ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:3002/api/online:0
+[ 3422081ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:3002/api/presence:0
+[ 3451709ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:3002/api/online:0
+[ 3451709ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:3002/api/presence:0
+[ 3480863ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3002/_next/static/chunks/bb6753b686a550d1.js:0
+[ 3480880ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3002/_next/static/chunks/bb6753b686a550d1.js:0
+[ 3480897ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3002/_next/static/chunks/bb6753b686a550d1.js:0
+[ 3480914ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3002/_next/static/chunks/bb6753b686a550d1.js:0
+[ 3480930ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3002/_next/static/chunks/bb6753b686a550d1.js:0
+[ 3480946ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3002/_next/static/chunks/bb6753b686a550d1.js:0
+[ 3480961ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3002/_next/static/chunks/bb6753b686a550d1.js:0
+[ 3480978ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3002/_next/static/chunks/bb6753b686a550d1.js:0
+[ 3480995ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3002/_next/static/chunks/bb6753b686a550d1.js:0
+[ 3481012ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3002/_next/static/chunks/bb6753b686a550d1.js:0
+[ 3481028ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3002/_next/static/chunks/bb6753b686a550d1.js:0
+[ 3482889ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:3002/api/online:0
+[ 3482896ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:3002/api/presence:0
+[ 3510641ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:3002/api/online:0
+[ 3510666ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:3002/api/presence:0
+[ 3540746ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:3002/api/online:0
+[ 3545756ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:3002/api/presence:0
+[ 3572368ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:3002/api/online:0
+[ 3572371ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:3002/api/presence:0
+[ 3600730ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3002/_next/static/chunks/bb6753b686a550d1.js:0
+[ 3600746ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3002/_next/static/chunks/bb6753b686a550d1.js:0
+[ 3600760ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3002/_next/static/chunks/bb6753b686a550d1.js:0
+[ 3600776ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3002/_next/static/chunks/bb6753b686a550d1.js:0
+[ 3600792ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3002/_next/static/chunks/bb6753b686a550d1.js:0
+[ 3600808ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3002/_next/static/chunks/bb6753b686a550d1.js:0
+[ 3600825ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3002/_next/static/chunks/bb6753b686a550d1.js:0
+[ 3600842ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3002/_next/static/chunks/bb6753b686a550d1.js:0
+[ 3600857ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3002/_next/static/chunks/bb6753b686a550d1.js:0
+[ 3600872ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3002/_next/static/chunks/bb6753b686a550d1.js:0
+[ 3600889ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3002/_next/static/chunks/bb6753b686a550d1.js:0
+[ 3602766ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:3002/api/presence:0
+[ 3602767ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:3002/api/online:0
