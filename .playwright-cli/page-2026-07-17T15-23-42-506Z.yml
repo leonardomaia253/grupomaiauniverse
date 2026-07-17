@@ -1,0 +1,60 @@
+- generic [active] [ref=e1]:
+  - main [ref=e2]:
+    - generic [ref=e5]:
+      - generic:
+        - paragraph: Grupo Maia Universe
+        - heading "Mapa de empresas" [level=2]
+        - paragraph: 11 empresas no campo orbital - 11 globes em alta definicao.
+      - button "Abrir Bilheking" [ref=e7]:
+        - generic:
+          - generic: Bilheking
+          - generic: "@bilheking - integro"
+      - button "Abrir Volup AI" [ref=e11]:
+        - generic:
+          - generic: Volup AI
+          - generic: "@volup-ai - integro"
+      - button "Abrir Spur" [ref=e15]:
+        - generic:
+          - generic: Spur
+          - generic: "@spur - integro"
+      - button "Abrir Tosi" [ref=e19]:
+        - generic:
+          - generic: Tosi
+          - generic: "@tosi - integro"
+      - button "Abrir Jack it fit" [ref=e23]:
+        - generic:
+          - generic: Jack it fit
+          - generic: "@jack-it-fit - integro"
+      - button "Abrir Seu Jornaleiro" [ref=e27]:
+        - generic:
+          - generic: Seu Jornaleiro
+          - generic: "@seu-jornaleiro - integro"
+      - button "Abrir CattleControl" [ref=e31]:
+        - generic:
+          - generic: CattleControl
+          - generic: "@cattlecontrol - integro"
+      - button "Abrir Iris" [ref=e35]:
+        - generic:
+          - generic: Iris
+          - generic: "@iris - integro"
+      - button "Abrir Kinkora" [ref=e39]:
+        - generic:
+          - generic: Kinkora
+          - generic: "@kinkora - integro"
+      - button "Abrir Avantyp" [ref=e43]:
+        - generic:
+          - generic: Avantyp
+          - generic: "@avantyp - integro"
+      - button "Abrir Boase" [ref=e47]:
+        - generic:
+          - generic: Boase
+          - generic: "@boase - integro"
+    - generic [ref=e57]:
+      - paragraph [ref=e58]: Grupo Maia Universe
+      - heading "Olhe ao seu redor..." [level=1] [ref=e59]
+      - paragraph [ref=e60]: Conectando empresas e possibilidades...
+      - generic [ref=e64]:
+        - generic [ref=e65]: Adscendo
+        - generic [ref=e66]: 10%
+      - button "Ativar voz" [ref=e67]
+  - alert [ref=e68]

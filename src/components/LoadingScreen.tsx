@@ -125,7 +125,7 @@ export default function LoadingScreen({
 
   return (
     <div
-      className={`fixed inset-0 z-100 overflow-hidden transition-opacity duration-1000 ${fading ? "opacity-0" : "opacity-100"}`}
+      className={`fixed inset-0 z-100 min-h-[100svh] overflow-hidden transition-opacity duration-1000 ${fading ? "opacity-0" : "opacity-100"}`}
       style={{ background: "#030407" }}
       onTransitionEnd={handleTransitionEnd}
     >
@@ -146,17 +146,17 @@ export default function LoadingScreen({
 
       <div className="maia-motes pointer-events-none absolute inset-0" />
 
-      <div className="relative z-10 flex h-full flex-col items-center justify-center px-6 text-center">
-        <p className="font-space text-[10px] uppercase tracking-[0.32em] text-white/45">Grupo Maia Universe</p>
-        <h1 className="font-orbitron mt-4 max-w-4xl text-3xl font-semibold leading-tight text-white sm:text-6xl">
+      <div className="relative z-10 flex min-h-[100svh] flex-col items-center justify-center px-4 py-8 text-center sm:px-6">
+        <p className="font-space text-[9px] uppercase tracking-[0.26em] text-white/45 sm:text-[10px] sm:tracking-[0.32em]">Grupo Maia Universe</p>
+        <h1 className="font-orbitron mt-4 max-w-[22rem] text-2xl font-semibold leading-tight text-white sm:max-w-4xl sm:text-6xl">
           {SCRIPT_LINES[lineIndex]}
         </h1>
-        <p className="mt-5 max-w-xl text-sm leading-relaxed text-white/55 sm:text-base">
+        <p className="mt-5 max-w-[20rem] text-xs leading-relaxed text-white/55 sm:max-w-xl sm:text-base">
           {message}
         </p>
 
         {!isError && (
-          <div className="mt-10 w-full max-w-md">
+          <div className="mt-8 w-full max-w-[20rem] sm:mt-10 sm:max-w-md">
             <div className="h-px w-full bg-white/15">
               <div
                 className="h-px transition-[width] duration-500"
@@ -167,7 +167,7 @@ export default function LoadingScreen({
                 }}
               />
             </div>
-            <div className="mt-3 flex items-center justify-between text-[10px] uppercase tracking-[0.2em] text-white/38">
+            <div className="mt-3 flex items-center justify-between text-[9px] uppercase tracking-[0.16em] text-white/38 sm:text-[10px] sm:tracking-[0.2em]">
               <span>Adscendo</span>
               <span>{Math.round(clampedProgress)}%</span>
             </div>
@@ -177,7 +177,7 @@ export default function LoadingScreen({
         {isError && (
           <button
             onClick={onRetry}
-            className="mt-8 rounded-sm px-7 py-3 text-xs font-semibold uppercase tracking-[0.18em] text-black transition hover:brightness-110"
+            className="mt-8 px-6 py-3 text-[11px] font-semibold uppercase tracking-[0.16em] text-black transition hover:brightness-110 sm:px-7 sm:text-xs sm:tracking-[0.18em]"
             style={{ backgroundColor: accentColor }}
           >
             Tentar novamente
@@ -187,7 +187,7 @@ export default function LoadingScreen({
         {!isError && audioBlocked && (
           <button
             onClick={startIntroAudio}
-            className="mt-5 border border-white/20 bg-white/[0.06] px-5 py-2 text-[10px] font-semibold uppercase tracking-[0.18em] text-white/72 transition hover:border-white/35 hover:bg-white/[0.1] hover:text-white"
+            className="mt-5 border border-white/20 bg-white/[0.06] px-4 py-2 text-[9px] font-semibold uppercase tracking-[0.16em] text-white/72 transition hover:border-white/35 hover:bg-white/[0.1] hover:text-white sm:px-5 sm:text-[10px] sm:tracking-[0.18em]"
           >
             Ativar voz
           </button>

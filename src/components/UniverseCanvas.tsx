@@ -34,6 +34,8 @@ type FieldDot = {
   color: string;
 };
 
+type ViewMode = "mobile" | "desktop";
+
 const TAU = Math.PI * 2;
 
 const BRAND_RULES: BrandRule[] = [
@@ -63,6 +65,21 @@ const FEATURED_LAYOUT = [
   { x: 0.09, y: 0.25 },
   { x: 0.91, y: 0.25 },
   { x: 0.5, y: 0.86 },
+];
+
+const MOBILE_LAYOUT = [
+  { x: 0.5, y: 0.12 },
+  { x: 0.28, y: 0.25 },
+  { x: 0.72, y: 0.25 },
+  { x: 0.32, y: 0.39 },
+  { x: 0.7, y: 0.42 },
+  { x: 0.26, y: 0.56 },
+  { x: 0.74, y: 0.58 },
+  { x: 0.34, y: 0.72 },
+  { x: 0.68, y: 0.75 },
+  { x: 0.28, y: 0.88 },
+  { x: 0.72, y: 0.9 },
+  { x: 0.5, y: 1.04 },
 ];
 
 function hashString(value: string): number {
@@ -194,7 +211,8 @@ function mergeRequiredBrands(companies: CompanyRecord[]): CompanyRecord[] {
   return merged;
 }
 
-function buildUniverse(companies: CompanyRecord[]) {
+function buildUniverse(companies: CompanyRecord[], mode: ViewMode) {
+  const isMobile = mode === "mobile";
   const completeCompanies = mergeRequiredBrands(companies);
   const ranked = completeCompanies.slice().sort((a, b) => massForCompany(b) - massForCompany(a));
   const maxMass = Math.max(1, ...ranked.map(massForCompany));
@@ -205,13 +223,15 @@ function buildUniverse(companies: CompanyRecord[]) {
   const featured = featuredCompanies.map((company, index): PlanetNode => {
     const brand = brandForCompany(company);
     const mass = massForCompany(company);
-    const layout = FEATURED_LAYOUT[index] || { x: 0.5, y: 0.5 };
-    const scale = brand?.scale || 1;
+    const layout = (isMobile ? MOBILE_LAYOUT : FEATURED_LAYOUT)[index] || { x: 0.5, y: 0.5 };
+    const scale = (brand?.scale || 1) * (isMobile ? 0.72 : 1);
+    const base = isMobile ? 96 : 136;
+    const range = isMobile ? 58 : 96;
     return {
       login: company.username,
       name: company.name,
       color: colorForCompany(company),
-      size: (136 + Math.sqrt(mass / maxMass) * 96) * scale,
+      size: (base + Math.sqrt(mass / maxMass) * range) * scale,
       x: layout.x,
       y: layout.y,
       mass,
@@ -230,15 +250,28 @@ function buildUniverse(companies: CompanyRecord[]) {
       const massRatio = Math.sqrt(massForCompany(company) / maxMass);
       return {
         key: company.username,
-        x: 0.5 + Math.cos(angle) * ring * 0.49,
-        y: 0.53 + Math.sin(angle) * ring * 0.42,
-        size: 1.4 + massRatio * 5.4,
-        alpha: 0.22 + seededUnit(seed + 12) * 0.48,
+        x: 0.5 + Math.cos(angle) * ring * (isMobile ? 0.43 : 0.49),
+        y: 0.53 + Math.sin(angle) * ring * (isMobile ? 0.52 : 0.42),
+        size: (isMobile ? 1.1 : 1.4) + massRatio * (isMobile ? 4.4 : 5.4),
+        alpha: 0.2 + seededUnit(seed + 12) * 0.44,
         color: colorForCompany(company),
       };
     });
 
   return { featured, fieldDots, totalCompanies: completeCompanies.length };
+}
+
+function useViewMode(): ViewMode {
+  const [mode, setMode] = useState<ViewMode>("desktop");
+
+  useEffect(() => {
+    const update = () => setMode(window.innerWidth < 720 ? "mobile" : "desktop");
+    update();
+    window.addEventListener("resize", update);
+    return () => window.removeEventListener("resize", update);
+  }, []);
+
+  return mode;
 }
 
 function StarField({ dots }: { dots: FieldDot[] }) {
@@ -299,11 +332,13 @@ function StarField({ dots }: { dots: FieldDot[] }) {
 function CobePlanet({
   planet,
   active,
+  mode,
   onHover,
   onSelect,
 }: {
   planet: PlanetNode;
   active: boolean;
+  mode: ViewMode;
   onHover: (planet: PlanetNode | null) => void;
   onSelect: (planet: PlanetNode) => void;
 }) {
@@ -365,7 +400,8 @@ function CobePlanet({
     };
   }, [active, color, markers]);
 
-  const size = planet.size * (active ? 1.14 : 1);
+  const isMobile = mode === "mobile";
+  const size = planet.size * (active ? (isMobile ? 1.08 : 1.14) : 1);
   const damageLabel = planet.damage > 0.55 ? "critico" : planet.damage > 0.28 ? "instavel" : "integro";
   const damageMask = planet.damage > 0.28
     ? `radial-gradient(circle at ${28 + planet.damage * 42}% ${22 + planet.damage * 36}%, transparent 0 19%, rgba(0,0,0,${0.25 + planet.damage * 0.55}) 20% 29%, transparent 30%),
@@ -391,11 +427,11 @@ function CobePlanet({
       <span className="absolute inset-[7%] rounded-full border border-white/10" style={{ boxShadow: `inset 0 0 36px rgba(0,0,0,0.38), 0 0 34px ${planet.color}55` }} />
       <span className="pointer-events-none absolute inset-[7%] z-10 rounded-full mix-blend-multiply" style={{ background: damageMask, opacity: planet.damage > 0.28 ? 1 : 0 }} />
       <canvas ref={canvasRef} className="relative aspect-square w-full rounded-full opacity-95 saturate-[1.08] transition-opacity duration-700" />
-      <span className="pointer-events-none absolute left-1/2 top-[82%] flex -translate-x-1/2 flex-col items-center gap-1 whitespace-nowrap">
-        <span className="bg-white px-2 py-1 font-mono text-[10px] leading-none text-black shadow-[0_2px_10px_rgba(0,0,0,0.25)]">
+      <span className="pointer-events-none absolute left-1/2 top-[82%] flex max-w-[132px] -translate-x-1/2 flex-col items-center gap-1 whitespace-nowrap sm:max-w-none">
+        <span className="max-w-full truncate bg-white px-2 py-1 font-mono text-[9px] leading-none text-black shadow-[0_2px_10px_rgba(0,0,0,0.25)] sm:text-[10px]">
           {planet.name || planet.login}
         </span>
-        <span className="bg-black px-2 py-1 font-mono text-[9px] leading-none text-white/85">
+        <span className="max-w-full truncate bg-black px-2 py-1 font-mono text-[8px] leading-none text-white/85 sm:text-[9px]">
           @{planet.login} - {damageLabel}
         </span>
       </span>
@@ -403,8 +439,9 @@ function CobePlanet({
   );
 }
 
-function CompanyHud({ planet, onClose }: { planet: PlanetNode; onClose: () => void }) {
+function CompanyHud({ planet, mode, onClose }: { planet: PlanetNode; mode: ViewMode; onClose: () => void }) {
   const company = planet.company;
+  const isMobile = mode === "mobile";
   const health = typeof company.health_score === "number" ? company.health_score : 100;
   const details = [
     ["Tracao", formatMetric(planet.mass)],
@@ -416,15 +453,15 @@ function CompanyHud({ planet, onClose }: { planet: PlanetNode; onClose: () => vo
   ];
 
   return (
-    <aside className="pointer-events-auto absolute bottom-4 left-4 right-4 z-40 overflow-hidden border border-white/12 bg-[#070808]/90 font-space shadow-2xl shadow-black/50 backdrop-blur-2xl sm:bottom-6 sm:left-auto sm:right-6 sm:w-[430px]">
+    <aside className={`pointer-events-auto ${isMobile ? "fixed bottom-3 left-3 right-3 max-h-[52svh]" : "absolute bottom-6 right-6 w-[430px]"} z-40 overflow-y-auto border border-white/12 bg-[#070808]/92 font-space shadow-2xl shadow-black/50 backdrop-blur-2xl`}>
       <div className="h-1.5 w-full" style={{ background: `linear-gradient(90deg, ${planet.color}, rgba(255,255,255,0.18))` }} />
       <div className="p-4">
-        <div className="flex items-start gap-4">
-          <div className="h-14 w-14 shrink-0 rounded-full border border-white/20 shadow-lg" style={{ background: `radial-gradient(circle at 30% 25%, white, ${planet.color} 52%, #020202 100%)`, boxShadow: `0 0 34px ${planet.color}66` }} />
+        <div className="flex items-start gap-3 sm:gap-4">
+          <div className="h-11 w-11 shrink-0 rounded-full border border-white/20 shadow-lg sm:h-14 sm:w-14" style={{ background: `radial-gradient(circle at 30% 25%, white, ${planet.color} 52%, #020202 100%)`, boxShadow: `0 0 34px ${planet.color}66` }} />
           <div className="min-w-0 flex-1">
             <p className="text-[10px] uppercase tracking-[0.24em] text-white/42">Empresa orbital</p>
-            <h3 className="mt-1 truncate text-xl font-semibold normal-case text-white">{planet.name || planet.login}</h3>
-            <p className="mt-1 text-sm normal-case text-white/50">@{planet.login} - dados em tempo real quando disponiveis</p>
+            <h3 className="mt-1 truncate text-lg font-semibold normal-case text-white sm:text-xl">{planet.name || planet.login}</h3>
+            <p className="mt-1 text-xs normal-case text-white/50 sm:text-sm">@{planet.login} - dados em tempo real quando disponiveis</p>
           </div>
           <button className="grid h-8 w-8 place-items-center border border-white/12 bg-white/[0.03] text-white/55 transition hover:border-white/30 hover:text-white" onClick={onClose} aria-label="Fechar painel">
             x
@@ -445,7 +482,7 @@ function CompanyHud({ planet, onClose }: { planet: PlanetNode; onClose: () => vo
           {details.map(([label, value]) => (
             <div key={label} className="bg-[#080a0b] p-3">
               <p className="text-white/36">{label}</p>
-              <p className="mt-2 text-[15px] font-semibold normal-case text-white/86">{value}</p>
+              <p className="mt-2 break-words text-sm font-semibold normal-case text-white/86 sm:text-[15px]">{value}</p>
             </div>
           ))}
         </div>
@@ -456,7 +493,9 @@ function CompanyHud({ planet, onClose }: { planet: PlanetNode; onClose: () => vo
 }
 
 export default function UniverseCanvas({ companies }: { companies: CompanyRecord[] }) {
-  const { featured, fieldDots, totalCompanies } = useMemo(() => buildUniverse(companies), [companies]);
+  const mode = useViewMode();
+  const isMobile = mode === "mobile";
+  const { featured, fieldDots, totalCompanies } = useMemo(() => buildUniverse(companies, mode), [companies, mode]);
   const [hovered, setHovered] = useState<PlanetNode | null>(null);
   const [selected, setSelected] = useState<PlanetNode | null>(null);
   const active = selected || hovered;
@@ -466,31 +505,42 @@ export default function UniverseCanvas({ companies }: { companies: CompanyRecord
   }, []);
 
   return (
-    <div className="relative h-screen w-full overflow-hidden bg-[#020305]">
-      <StarField dots={fieldDots} />
-      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_0%,transparent_57%,rgba(0,0,0,0.78)_100%)]" />
-      <div className="pointer-events-none absolute inset-x-0 top-0 h-44 bg-gradient-to-b from-black/80 to-transparent" />
-      <div className="pointer-events-none absolute inset-x-0 bottom-0 h-48 bg-gradient-to-t from-black/80 to-transparent" />
+    <div className="relative h-[100svh] w-full overflow-hidden bg-[#020305]">
+      <div className={`relative h-full w-full ${isMobile ? "overflow-y-auto overscroll-contain scroll-smooth" : "overflow-hidden"}`}>
+        <div className={`relative w-full ${isMobile ? "min-h-[1450px] pb-[42svh]" : "h-full"}`}>
+          <StarField dots={fieldDots} />
+          <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_0%,transparent_57%,rgba(0,0,0,0.78)_100%)]" />
+          <div className="pointer-events-none sticky top-0 z-20 h-44 bg-gradient-to-b from-black/80 to-transparent" />
+          <div className="pointer-events-none absolute inset-x-0 bottom-0 h-48 bg-gradient-to-t from-black/80 to-transparent" />
 
-      <div className="pointer-events-none absolute left-5 top-5 z-30 max-w-[calc(100vw-2.5rem)] font-space sm:left-8 sm:top-7">
-        <p className="text-[10px] uppercase tracking-[0.34em] text-white/38">Grupo Maia Universe</p>
-        <h2 className="mt-2 text-xl font-semibold normal-case text-white/90 sm:text-3xl">Mapa de empresas</h2>
-        <p className="mt-3 max-w-sm text-xs leading-relaxed normal-case text-white/48 sm:text-sm">
-          {totalCompanies} empresas no campo orbital - {featured.length} globes em alta definicao.
-        </p>
+          <div className="pointer-events-none fixed left-4 right-4 top-4 z-30 max-w-[calc(100vw-2rem)] font-space sm:absolute sm:left-8 sm:right-auto sm:top-7 sm:max-w-sm">
+            <p className="text-[9px] uppercase tracking-[0.3em] text-white/38 sm:text-[10px] sm:tracking-[0.34em]">Grupo Maia Universe</p>
+            <h2 className="mt-2 text-lg font-semibold normal-case text-white/90 sm:text-3xl">Mapa de empresas</h2>
+            <p className="mt-2 max-w-[19rem] text-[11px] leading-relaxed normal-case text-white/48 sm:mt-3 sm:text-sm">
+              {totalCompanies} empresas no campo orbital - {featured.length} globes em alta definicao.
+            </p>
+          </div>
+
+          {isMobile && !selected && (
+            <div className="pointer-events-none fixed bottom-3 left-1/2 z-30 -translate-x-1/2 border border-white/10 bg-black/45 px-3 py-2 font-space text-[10px] uppercase tracking-[0.18em] text-white/44 backdrop-blur-xl">
+              toque para abrir
+            </div>
+          )}
+
+          {featured.map((planet) => (
+            <CobePlanet
+              key={planet.login}
+              planet={planet}
+              mode={mode}
+              active={active?.login === planet.login}
+              onHover={handleHover}
+              onSelect={setSelected}
+            />
+          ))}
+        </div>
       </div>
 
-      {featured.map((planet) => (
-        <CobePlanet
-          key={planet.login}
-          planet={planet}
-          active={active?.login === planet.login}
-          onHover={handleHover}
-          onSelect={setSelected}
-        />
-      ))}
-
-      {selected && <CompanyHud planet={selected} onClose={() => setSelected(null)} />}
+      {selected && <CompanyHud planet={selected} mode={mode} onClose={() => setSelected(null)} />}
     </div>
   );
 }
