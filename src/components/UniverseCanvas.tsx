@@ -408,6 +408,35 @@ function CobePlanet({
        linear-gradient(${115 + planet.damage * 80}deg, transparent 0 43%, rgba(255,255,255,${0.08 + planet.damage * 0.12}) 44% 45%, rgba(0,0,0,${0.25 + planet.damage * 0.38}) 46% 48%, transparent 49%)`
     : "none";
 
+  if (isMobile) {
+    return (
+      <button
+        type="button"
+        className="relative isolate block text-left outline-none transition-transform duration-500 active:scale-[0.98] focus-visible:z-20"
+        style={{
+          width: size,
+          height: size + 46,
+          transform: `scale(${active ? 1.03 : 1})`,
+        }}
+        onClick={() => onSelect(planet)}
+        aria-label={`Abrir ${planet.name || planet.login}`}
+      >
+        <span className="absolute inset-x-0 top-0 aspect-square rounded-full blur-2xl" style={{ backgroundColor: planet.color, opacity: active ? 0.34 : 0.16 }} />
+        <span className="absolute inset-x-[7%] top-[7%] aspect-square rounded-full border border-white/10" style={{ boxShadow: `inset 0 0 34px rgba(0,0,0,0.38), 0 0 30px ${planet.color}55` }} />
+        <span className="pointer-events-none absolute inset-x-[7%] top-[7%] z-10 aspect-square rounded-full mix-blend-multiply" style={{ background: damageMask, opacity: planet.damage > 0.28 ? 1 : 0 }} />
+        <canvas ref={canvasRef} className="relative aspect-square w-full rounded-full opacity-95 saturate-[1.08] transition-opacity duration-700" />
+        <span className="pointer-events-none absolute left-1/2 top-[76%] flex max-w-[142px] -translate-x-1/2 flex-col items-center gap-1 whitespace-nowrap">
+          <span className="max-w-full truncate bg-white px-2 py-1 font-mono text-[9px] leading-none text-black shadow-[0_2px_10px_rgba(0,0,0,0.25)]">
+            {planet.name || planet.login}
+          </span>
+          <span className="max-w-full truncate bg-black px-2 py-1 font-mono text-[8px] leading-none text-white/85">
+            @{planet.login} - {damageLabel}
+          </span>
+        </span>
+      </button>
+    );
+  }
+
   return (
     <button
       type="button"
@@ -504,10 +533,48 @@ export default function UniverseCanvas({ companies }: { companies: CompanyRecord
     setHovered(planet);
   }, []);
 
+  const renderPlanets = () => {
+    if (isMobile) {
+      return (
+        <div className="relative z-10 flex min-h-[1280px] flex-col gap-7 px-4 pb-[58svh] pt-36">
+          {featured.map((planet, index) => {
+            const alignment = index % 3 === 0 ? "self-center" : index % 3 === 1 ? "self-start ml-2" : "self-end mr-2";
+            return (
+              <div key={planet.login} className={`${alignment} max-w-[58vw]`}>
+                <CobePlanet
+                  planet={planet}
+                  mode={mode}
+                  active={active?.login === planet.login}
+                  onHover={handleHover}
+                  onSelect={setSelected}
+                />
+              </div>
+            );
+          })}
+        </div>
+      );
+    }
+
+    return (
+      <>
+        {featured.map((planet) => (
+          <CobePlanet
+            key={planet.login}
+            planet={planet}
+            mode={mode}
+            active={active?.login === planet.login}
+            onHover={handleHover}
+            onSelect={setSelected}
+          />
+        ))}
+      </>
+    );
+  };
+
   return (
     <div className="relative h-[100svh] w-full overflow-hidden bg-[#020305]">
       <div className={`relative h-full w-full ${isMobile ? "overflow-y-auto overscroll-contain scroll-smooth" : "overflow-hidden"}`}>
-        <div className={`relative w-full ${isMobile ? "min-h-[1450px] pb-[42svh]" : "h-full"}`}>
+        <div className={`relative w-full ${isMobile ? "min-h-[1500px]" : "h-full"}`}>
           <StarField dots={fieldDots} />
           <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_0%,transparent_57%,rgba(0,0,0,0.78)_100%)]" />
           <div className="pointer-events-none sticky top-0 z-20 h-44 bg-gradient-to-b from-black/80 to-transparent" />
@@ -527,16 +594,7 @@ export default function UniverseCanvas({ companies }: { companies: CompanyRecord
             </div>
           )}
 
-          {featured.map((planet) => (
-            <CobePlanet
-              key={planet.login}
-              planet={planet}
-              mode={mode}
-              active={active?.login === planet.login}
-              onHover={handleHover}
-              onSelect={setSelected}
-            />
-          ))}
+          {renderPlanets()}
         </div>
       </div>
 

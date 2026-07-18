@@ -22,10 +22,10 @@ interface LoadingScreenProps {
 
 const SCRIPT_LINES = [
   "Olhe ao seu redor...",
-  "Bilhoes de mentes, conexoes e possibilidades...",
-  "Uma energia que transforma ideias em imperios.",
+  "Bilhões de mentes, conexões e possibilidades...",
+  "Uma energia que transforma ideias em impérios.",
   "Tecnologia em magia. Caos em sincronia.",
-  "Nos criamos o amanha.",
+  "Nós criamos o amanhã.",
   "Bem-vindo ao Grupo Maia.",
 ];
 
@@ -34,7 +34,7 @@ const STAGE_MESSAGES: Record<string, string> = {
   fetching: "Conectando empresas e possibilidades...",
   generating: "Desenhando o grande grafo Maia...",
   rendering: "Sincronizando energia coletiva...",
-  ready: "O proximo capitulo comeca agora",
+  ready: "O próximo capítulo começa agora",
 };
 
 const BACKDROPS = [
