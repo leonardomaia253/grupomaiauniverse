@@ -1,7 +1,7 @@
 <h1 align="center">Maia Universe</h1>
 
 <p align="center">
-  <strong>Company profiles as interactive 3D planets in Maia Universe.</strong>
+  <strong>Company and GitHub profiles as interactive 3D planets.</strong>
 </p>
 
 <p align="center">
@@ -9,83 +9,66 @@
 </p>
 
 <p align="center">
-  <img src="public/og-image.png" alt="Git City — Where Code Builds Cities" width="800" />
+  <img src="public/og-image.png" alt="Maia Universe — interactive 3D company planets" width="800" />
 </p>
 
 ---
 
 ## What is Maia Universe?
 
-Maia Universe transforms company and GitHub profiles into interactive 3D planets. Explore an orbital ecosystem, discover companies, compare activity, and connect product, community, ads, and profile identity in one visual layer.
+Maia Universe turns company and GitHub profiles into a living 3D universe. Each planet represents identity, traction, activity, health, and community presence. Visitors can explore planets, open profile panels, compare signals, customize identity, and place native ads inside the world.
 
-## Features
+## Product pillars
 
-- **3D Pixel Art Buildings** — Each GitHub user becomes a building with height based on contributions, width based on repos, and lit windows representing activity
-- **Free Flight Mode** — Fly through the city with smooth camera controls, visit any building, and explore the skyline
-- **Profile Pages** — Dedicated pages for each developer with stats, achievements, and top repositories
-- **Achievement System** — Unlock achievements based on contributions, stars, repos, referrals, and more
-- **Building Customization** — Claim your building and customize it with items from the shop (crowns, auras, roof effects, face decorations)
-- **Social Features** — Send kudos, gift items to other developers, refer friends, and see a live activity feed
-- **Compare Mode** — Put two developers side by side and compare their buildings and stats
-- **Share Cards** — Download shareable image cards of your profile in landscape or stories format
+- **Universe exploration** — browse highlighted planets, search companies, and understand visual signals through an in-app legend.
+- **Planet profiles** — each profile has metrics, activity, achievements, sharing, and contextual actions.
+- **Planet Studio** — customize identity with colors, auras, billboards, effects, crowns, and vehicles.
+- **Native advertising** — planes, blimps, billboards, and planet-side placements that live inside the visual world.
+- **Engagement systems** — achievements, dailies, streaks, kudos, referrals, raids, and live presence.
+- **VS Code presence** — optional extension support for live coding activity without collecting source code.
 
-<!-- TODO: Add screenshots -->
-<!-- ![City Overview](assets/screenshot-city.png) -->
-<!-- ![Profile Page](assets/screenshot-profile.png) -->
-<!-- ![Compare Mode](assets/screenshot-compare.png) -->
+## How planets work
 
-## How Buildings Work
+| Signal | Visual effect | Meaning |
+| --- | --- | --- |
+| Traction | Planet size and prominence | Composite of activity, stars, revenue, and profile strength |
+| Brand/sector | Color and texture | Custom identity or inferred category |
+| Health | Stability marks | Lower health creates visible stress/damage |
+| Activity | Freshness and live presence | Recent sync and real-time signals |
 
-| Metric         | Affects           | Example                                |
-|----------------|-------------------|----------------------------------------|
-| Contributions  | Building height   | 1,000 commits → taller building        |
-| Public repos   | Building width    | More repos → wider base                |
-| Stars          | Window brightness | More stars → more lit windows           |
-| Activity       | Window pattern    | Recent activity → distinct glow pattern |
+The core UX is intentionally simple: search or click a planet, read its context, then act — open profile, customize, compare, share, or advertise.
 
-Buildings are rendered with instanced meshes and a LOD (Level of Detail) system for performance. Close buildings show full detail with animated windows; distant buildings use simplified geometry.
+## Tech stack
 
-## Tech Stack
+- **Framework:** [Next.js](https://nextjs.org) 16, App Router, Turbopack
+- **3D/visuals:** [Three.js](https://threejs.org), [@react-three/fiber](https://github.com/pmndrs/react-three-fiber), [drei](https://github.com/pmndrs/drei), Cobe
+- **Database & Auth:** [Supabase](https://supabase.com), PostgreSQL, Auth, Row Level Security
+- **Payments:** Stripe, NOWPayments, AbacatePay
+- **Email:** Resend
+- **Styling:** Tailwind CSS v4 with pixel/space visual language
+- **Hosting:** Vercel
 
-- **Framework:** [Next.js](https://nextjs.org) 16 (App Router, Turbopack)
-- **3D Engine:** [Three.js](https://threejs.org) via [@react-three/fiber](https://github.com/pmndrs/react-three-fiber) + [drei](https://github.com/pmndrs/drei)
-- **Database & Auth:** [Supabase](https://supabase.com) (PostgreSQL, Autenticação Maia, Row Level Security)
-- **Payments:** [Stripe](https://stripe.com)
-- **Styling:** [Tailwind CSS](https://tailwindcss.com) v4 with pixel font (Silkscreen)
-- **Hosting:** [Vercel](https://vercel.com)
-
-## Getting Started
+## Getting started
 
 ```bash
-# Clone the repo
-git clone https://github.com/srizzon/git-city.git
-cd git-city
-
-# Install dependencies
 npm install
-
-# Set up environment variables
-
-# Linux / macOS
 cp .env.example .env.local
-
-# Windows (Command Prompt)
-copy .env.example .env.local
-
-# Windows (PowerShell)
-Copy-Item .env.example .env.local
-
-# Fill in Supabase and Stripe keys
-
-# Run the dev server
 npm run dev
 ```
 
-Open [http://localhost:3001](http://localhost:3001) to see the city.
+Open [http://localhost:3001](http://localhost:3001).
+
+## Quality gates
+
+```bash
+npm run typecheck
+npm run lint:ci
+npm run build
+```
 
 ## License
 
-[AGPL-3.0](LICENSE) — You can use and modify Git City, but any public deployment must share the source code.
+[AGPL-3.0](LICENSE) — public deployments must share the corresponding source code.
 
 ---
 

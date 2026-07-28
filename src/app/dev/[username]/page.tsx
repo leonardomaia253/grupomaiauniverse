@@ -90,7 +90,7 @@ export default async function DevPage({ params }: Props) {
     tier: (a.achievements as Record<string, unknown>)?.tier as string ?? "bronze",
   }));
 
-  // Fetch referred companies (who this dev brought to the city)
+  // Fetch referred companies (who this profile brought to the universe)
   const { data: referredDevs } = await sb
     .from("companies")
     .select("username, avatar_url")
@@ -163,7 +163,8 @@ export default async function DevPage({ params }: Props) {
 
         {/* Profile Card */}
         <div className="border-[3px] border-border bg-bg-raised p-4 sm:p-8">
-          <div className="flex flex-col items-center gap-4 sm:flex-row sm:items-start sm:gap-6">
+          <div className="grid gap-6 sm:grid-cols-[1fr_180px] sm:items-start">
+            <div className="flex flex-col items-center gap-4 sm:flex-row sm:items-start sm:gap-6">
             {/* Avatar */}
             {dev.avatar_url && (
               <Image
@@ -206,6 +207,23 @@ export default async function DevPage({ params }: Props) {
                 <ClaimButton companyLogin={dev.username} claimed={dev.claimed ?? false} />
               </div>
             </div>
+            </div>
+
+            <div className="mx-auto w-full max-w-[180px]">
+              <div
+                className="relative aspect-square rounded-full border border-white/10"
+                style={{
+                  background: `radial-gradient(circle at 30% 22%, white 0 8%, transparent 17%), radial-gradient(circle at 64% 70%, ${accent}66, transparent 34%), linear-gradient(145deg, ${accent}55, #05070b 72%)`,
+                  boxShadow: `0 0 52px ${accent}33, inset -22px -30px 42px rgba(0,0,0,0.74)`,
+                }}
+                aria-hidden
+              >
+                <div className="absolute inset-7 rounded-full border border-white/10" />
+              </div>
+              <p className="mt-3 text-center text-[9px] leading-relaxed text-muted normal-case">
+                Planeta gerado por tração, atividade, identidade e sinais públicos.
+              </p>
+            </div>
           </div>
 
           {/* Bio */}
@@ -214,6 +232,19 @@ export default async function DevPage({ params }: Props) {
               {dev.bio}
             </p>
           )}
+        </div>
+
+        <div className="mt-5 grid gap-3 sm:grid-cols-3">
+          {[
+            ["Tamanho", "atividade, estrelas e tração"],
+            ["Cor", "marca, setor ou customização"],
+            ["Saúde", "sinal de estabilidade operacional"],
+          ].map(([label, text]) => (
+            <div key={label} className="border-[3px] border-border bg-bg-raised p-4">
+              <p className="text-xs text-cream">{label}</p>
+              <p className="mt-2 text-[10px] leading-relaxed text-muted normal-case">{text}</p>
+            </div>
+          ))}
         </div>
 
         {/* XP & Level */}

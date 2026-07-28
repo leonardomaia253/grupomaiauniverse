@@ -34,7 +34,7 @@ function formatK(n: number): string {
 }
 
 async function getStats() {
-  if (!process.env.NEXT_PUBLIC_SUPABASE_URL) {
+  if (!process.env.NEXT_PUBLIC_SUPABASE_URL || !process.env.ADMIN_PROXY_SECRET) {
     return { devCount: 0, monthlyImpressions: 0, monthlyClicks: 0, ctr: 0 };
   }
   const supabase = getSupabaseAdmin();
@@ -107,7 +107,7 @@ export default async function AdvertisePage() {
           </h1>
           <p className="mx-auto mt-4 max-w-lg text-sm leading-relaxed text-muted normal-case">
             Planes fly across the sky. Blimps float between planets.
-            Billboards light up the tallest towers. {devCount.toLocaleString()}+ real
+            Billboards light up orbital placements. {devCount.toLocaleString()}+ real
             GitHub companies explore this Universe every week. Your ad lives inside it.
           </p>
         </div>
@@ -138,6 +138,42 @@ export default async function AdvertisePage() {
         </div>
 
         {/* ── Your audience ── */}
+        <div className="mt-8 grid gap-4 sm:grid-cols-[1fr_0.9fr]">
+          <div className="border-[3px] border-border p-5 sm:p-6">
+            <p className="text-base text-cream">Live placement preview</p>
+            <p className="mt-2 text-xs leading-relaxed text-muted normal-case">
+              Your ad is not a throwaway banner. It becomes scenery: plane, blimp, orbital billboard, or planet-side placement.
+            </p>
+            <div className="relative mt-5 h-44 overflow-hidden border border-border bg-[#05070b]">
+              <div className="absolute inset-0 opacity-70" style={{ background: "radial-gradient(circle at 22% 24%, rgba(200,230,74,0.28), transparent 25%), radial-gradient(circle at 74% 70%, rgba(96,144,224,0.22), transparent 30%)" }} />
+              <div className="absolute left-8 top-12 h-16 w-16 rounded-full" style={{ background: `radial-gradient(circle at 30% 22%, white, ${ACCENT} 45%, #071006 100%)`, boxShadow: `0 0 38px ${ACCENT}66` }} />
+              <div className="absolute right-8 top-7 border border-white/15 bg-black/70 px-4 py-2 text-[10px] text-cream backdrop-blur">
+                YOUR BRAND ✦ LAUNCH
+              </div>
+              <div className="absolute bottom-8 left-1/2 h-8 w-44 -translate-x-1/2 border border-white/15 bg-black/80 px-3 py-2 text-center text-[10px] text-muted">
+                planet billboard
+              </div>
+            </div>
+          </div>
+
+          <div className="border-[3px] border-border p-5 sm:p-6">
+            <p className="text-base text-cream">What you can track</p>
+            <div className="mt-4 space-y-3">
+              {[
+                ["Impressions", "how many times the creative appeared"],
+                ["Clicks", "planet, CTA, and vehicle clicks"],
+                ["CTR", "campaign click-through rate"],
+                ["Period", "start, end, and campaign status"],
+              ].map(([label, text]) => (
+                <div key={label} className="flex items-start justify-between gap-4 border-b border-border/60 pb-3">
+                  <span className="text-xs text-cream">{label}</span>
+                  <span className="max-w-[11rem] text-right text-[10px] leading-relaxed text-muted normal-case">{text}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+
         <div className="mt-8 border-[3px] border-border p-5 sm:p-6">
           <p className="text-base text-cream">Your audience</p>
           <div className="mt-4 grid gap-3 sm:grid-cols-2">
@@ -297,7 +333,7 @@ export default async function AdvertisePage() {
               {[
                 {
                   q: "How many people will see my ad?",
-                  a: `${formatK(monthlyImpressions)}+ monthly impressions across ${devCount.toLocaleString()}+ company planets. Sky ads fly across the entire skyline. planet ads sit on the tallest towers. There is no way to visit the Universe without seeing your ad.`,
+                  a: `${formatK(monthlyImpressions)}+ monthly impressions across ${devCount.toLocaleString()}+ company planets. Sky ads cross the orbital field. Planet ads sit directly beside high-attention planets. There is no way to visit the Universe without seeing your ad.`,
                 },
                 {
                   q: "What's the click-through rate?",
@@ -309,7 +345,7 @@ export default async function AdvertisePage() {
                 },
                 {
                   q: "What formats are available?",
-                  a: "Sky: planes trailing LED banners, blimps with scrolling LED screens. planet: billboards mounted on tower faces, rotating rooftop signs, full LED wraps. All rendered in dot-matrix pixel style.",
+                  a: "Sky: planes trailing LED banners, blimps with scrolling LED screens. Planet: orbital billboards, rotating signs, full LED wraps. All rendered in dot-matrix pixel style.",
                 },
                 {
                   q: "Do I get analytics?",

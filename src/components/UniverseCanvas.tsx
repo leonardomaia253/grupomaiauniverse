@@ -536,15 +536,15 @@ function CompanyHud({ planet, mode, onClose }: { planet: PlanetNode; mode: ViewM
   const updatedAt = company.fetched_at ? new Date(company.fetched_at).toLocaleDateString("pt-BR") : "sincronizacao pendente";
 
   return (
-    <aside className={`pointer-events-auto ${isMobile ? "fixed bottom-3 left-3 right-3 max-h-[58svh]" : "absolute bottom-6 right-6 w-[460px]"} z-40 overflow-y-auto border border-white/12 bg-[#070808]/92 font-space shadow-2xl shadow-black/50 backdrop-blur-2xl`}>
+    <aside className={`pointer-events-auto ${isMobile ? "fixed bottom-3 left-3 right-3 max-h-[68svh]" : "absolute bottom-6 right-6 w-[460px]"} z-40 overflow-y-auto border border-white/12 bg-[#070808]/92 font-space shadow-2xl shadow-black/50 backdrop-blur-2xl`}>
       <div className="h-1.5 w-full" style={{ background: `linear-gradient(90deg, ${planet.color}, rgba(255,255,255,0.18))` }} />
       <div className="p-4">
         <div className="flex items-start gap-3 sm:gap-4">
           <div className="h-11 w-11 shrink-0 rounded-full border border-white/20 shadow-lg sm:h-14 sm:w-14" style={{ background: `radial-gradient(circle at 30% 25%, white, ${planet.color} 52%, #020202 100%)`, boxShadow: `0 0 34px ${planet.color}66` }} />
           <div className="min-w-0 flex-1">
-            <p className="text-[10px] uppercase tracking-[0.24em] text-white/42">Empresa orbital</p>
+            <p className="text-[10px] uppercase tracking-[0.24em] text-white/42">Planeta selecionado</p>
             <h3 className="mt-1 truncate text-lg font-semibold normal-case text-white sm:text-xl">{planet.name || planet.login}</h3>
-            <p className="mt-1 text-xs normal-case text-white/50 sm:text-sm">@{planet.login} - dados em tempo real quando disponiveis</p>
+            <p className="mt-1 text-xs normal-case text-white/50 sm:text-sm">@{planet.login} - métricas sincronizadas quando disponíveis</p>
           </div>
           <button className="grid h-10 w-10 place-items-center border border-white/12 bg-white/[0.03] text-lg text-white/65 transition hover:border-white/30 hover:text-white" onClick={onClose} aria-label="Fechar painel">
             x
@@ -568,6 +568,16 @@ function CompanyHud({ planet, mode, onClose }: { planet: PlanetNode; mode: ViewM
           </div>
         </div>
 
+        <div className="mt-4 rounded-sm border border-white/10 bg-white/[0.03] p-3">
+          <p className="text-[10px] uppercase tracking-[0.22em] text-white/38">Como ler este planeta</p>
+          <div className="mt-3 grid gap-2 text-[11px] leading-relaxed normal-case text-white/56 sm:grid-cols-2">
+            <p><span style={{ color: planet.color }}>●</span> Tamanho combina tração, estrelas e receita.</p>
+            <p><span style={{ color: planet.color }}>●</span> Brilho indica força visual da marca.</p>
+            <p><span style={{ color: planet.color }}>●</span> Saúde baixa cria marcas de instabilidade.</p>
+            <p><span style={{ color: planet.color }}>●</span> Setor define a órbita narrativa.</p>
+          </div>
+        </div>
+
         <div className="mt-4 grid grid-cols-2 gap-px overflow-hidden border border-white/10 bg-white/10 text-xs sm:grid-cols-3">
           {details.map(({ label, value, state }) => (
             <div key={label} className="bg-[#080a0b] p-3">
@@ -576,12 +586,106 @@ function CompanyHud({ planet, mode, onClose }: { planet: PlanetNode; mode: ViewM
             </div>
           ))}
         </div>
-        <div className="mt-4 flex flex-wrap gap-2 text-[10px] uppercase tracking-[0.16em]">
-          <a className="border border-white/10 px-3 py-2 text-white/52 transition hover:border-white/25 hover:text-white" href={`/dev/${planet.login}`}>Perfil</a>
-          <a className="border border-white/10 px-3 py-2 text-white/52 transition hover:border-white/25 hover:text-white" href={`https://github.com/${planet.login}`} target="_blank" rel="noreferrer">GitHub</a>
+        <div className="mt-4 grid gap-2 text-[10px] uppercase tracking-[0.16em] sm:grid-cols-2">
+          <a className="border border-white/10 px-3 py-2 text-center text-white/72 transition hover:border-white/25 hover:text-white" href={`/dev/${planet.login}`}>Abrir perfil</a>
+          <a className="border border-white/10 px-3 py-2 text-center text-white/52 transition hover:border-white/25 hover:text-white" href={`/shop/${planet.login}`}>Estúdio do planeta</a>
+          <a className="border border-white/10 px-3 py-2 text-center text-white/52 transition hover:border-white/25 hover:text-white" href={`/advertise?planet=${planet.login}`}>Anunciar aqui</a>
+          <a className="border border-white/10 px-3 py-2 text-center text-white/52 transition hover:border-white/25 hover:text-white" href={`https://github.com/${planet.login}`} target="_blank" rel="noreferrer">GitHub</a>
         </div>
       </div>
     </aside>
+  );
+}
+
+function UniverseHero({
+  totalCompanies,
+  featuredCount,
+  isMobile,
+}: {
+  totalCompanies: number;
+  featuredCount: number;
+  isMobile: boolean;
+}) {
+  return (
+    <section className="pointer-events-auto fixed left-4 right-4 top-4 z-30 max-w-[calc(100vw-2rem)] font-space sm:absolute sm:left-8 sm:right-auto sm:top-7 sm:max-w-md">
+      <div className="border border-white/10 bg-black/42 p-3 shadow-2xl shadow-black/30 backdrop-blur-2xl sm:p-5">
+        <p className="text-[9px] uppercase tracking-[0.3em] text-white/38 sm:text-[10px] sm:tracking-[0.34em]">Maia Universe</p>
+        <h1 className="mt-2 text-xl font-semibold leading-tight normal-case text-white sm:text-4xl">
+          Transforme empresas em planetas vivos.
+        </h1>
+        <p className="mt-2 max-w-[24rem] text-[11px] leading-relaxed normal-case text-white/58 sm:mt-3 sm:text-sm">
+          Explore tração, presença, saúde e identidade em um universo 3D. Clique em um planeta para entender os dados e agir.
+        </p>
+        <div className="mt-3 grid grid-cols-3 gap-px overflow-hidden border border-white/10 bg-white/10 text-center sm:mt-4">
+          <div className="bg-[#070808]/95 px-2 py-3">
+            <p className="text-base font-semibold text-white">{totalCompanies}</p>
+            <p className="mt-1 text-[9px] uppercase tracking-[0.16em] text-white/36">empresas</p>
+          </div>
+          <div className="bg-[#070808]/95 px-2 py-3">
+            <p className="text-base font-semibold text-white">{featuredCount}</p>
+            <p className="mt-1 text-[9px] uppercase tracking-[0.16em] text-white/36">destaques</p>
+          </div>
+          <div className="bg-[#070808]/95 px-2 py-3">
+            <p className="text-base font-semibold text-white">3D</p>
+            <p className="mt-1 text-[9px] uppercase tracking-[0.16em] text-white/36">mapa vivo</p>
+          </div>
+        </div>
+        {!isMobile && (
+          <div className="mt-4 flex flex-wrap gap-2 text-[10px] uppercase tracking-[0.16em]">
+            <a className="border border-white/15 bg-white/[0.06] px-3 py-2 text-white/74 transition hover:border-white/30 hover:text-white" href="/shop">Meu planeta</a>
+            <a className="border border-white/15 bg-white/[0.03] px-3 py-2 text-white/54 transition hover:border-white/30 hover:text-white" href="/advertise">Anunciar</a>
+            <a className="border border-white/15 bg-white/[0.03] px-3 py-2 text-white/54 transition hover:border-white/30 hover:text-white" href="/leaderboard">Ranking</a>
+          </div>
+        )}
+      </div>
+    </section>
+  );
+}
+
+function UniverseLegend({ isMobile }: { isMobile: boolean }) {
+  if (isMobile) return null;
+  const rows = [
+    ["Tamanho", "tração + estrelas + receita"],
+    ["Cor", "marca, setor ou identidade customizada"],
+    ["Marcas", "saúde operacional baixa"],
+    ["Órbita", "posição narrativa no ecossistema"],
+  ];
+
+  return (
+    <aside className="pointer-events-none absolute bottom-6 left-8 z-30 w-80 border border-white/10 bg-black/38 p-4 font-space backdrop-blur-2xl">
+      <p className="text-[10px] uppercase tracking-[0.24em] text-white/38">Legenda do universo</p>
+      <div className="mt-3 space-y-2">
+        {rows.map(([label, value]) => (
+          <div key={label} className="flex items-start justify-between gap-4 text-[11px] leading-relaxed">
+            <span className="text-white/72">{label}</span>
+            <span className="max-w-[12rem] text-right normal-case text-white/44">{value}</span>
+          </div>
+        ))}
+      </div>
+    </aside>
+  );
+}
+
+function OnboardingRail({ isMobile }: { isMobile: boolean }) {
+  if (isMobile) return null;
+  const steps = [
+    ["01", "Busque", "Encontre uma empresa ou explore os destaques."],
+    ["02", "Abra", "Clique no planeta para ver métricas e contexto."],
+    ["03", "Aja", "Visite perfil, personalize, compare ou anuncie."],
+  ];
+
+  return (
+    <div className="pointer-events-none absolute right-8 top-24 z-20 hidden w-72 space-y-2 font-space xl:block">
+      {steps.map(([n, title, desc]) => (
+        <div key={n} className="border border-white/10 bg-black/24 p-3 backdrop-blur-xl">
+          <div className="flex items-center gap-3">
+            <span className="text-[10px] text-white/34">{n}</span>
+            <span className="text-[11px] uppercase tracking-[0.2em] text-white/64">{title}</span>
+          </div>
+          <p className="mt-2 text-[11px] leading-relaxed normal-case text-white/42">{desc}</p>
+        </div>
+      ))}
+    </div>
   );
 }
 
@@ -620,7 +724,7 @@ export default function UniverseCanvas({ companies }: { companies: CompanyRecord
   const renderPlanets = () => {
     if (isMobile) {
       return (
-        <div className="relative z-10 flex min-h-[1280px] flex-col gap-7 px-4 pb-[58svh] pt-36">
+        <div className="relative z-10 flex min-h-[1280px] flex-col gap-7 px-4 pb-[58svh] pt-[300px]">
           {visiblePlanets.map((planet, index) => {
             const alignment = index % 3 === 0 ? "self-center" : index % 3 === 1 ? "self-start ml-2" : "self-end mr-2";
             const isFocused = active?.login === planet.login;
@@ -678,15 +782,9 @@ export default function UniverseCanvas({ companies }: { companies: CompanyRecord
           <div className="pointer-events-none sticky top-0 z-20 h-44 bg-gradient-to-b from-black/80 to-transparent" />
           <div className="pointer-events-none absolute inset-x-0 bottom-0 h-48 bg-gradient-to-t from-black/80 to-transparent" />
 
-          <div className="pointer-events-none fixed left-4 right-4 top-4 z-30 max-w-[calc(100vw-2rem)] font-space sm:absolute sm:left-8 sm:right-auto sm:top-7 sm:max-w-sm">
-            <p className="text-[9px] uppercase tracking-[0.3em] text-white/38 sm:text-[10px] sm:tracking-[0.34em]">Grupo Maia Universe</p>
-            <h2 className="mt-2 text-lg font-semibold normal-case text-white/90 sm:text-3xl">Universo de realizacoes</h2>
-            <p className="mt-2 max-w-[19rem] text-[11px] leading-relaxed normal-case text-white/48 sm:mt-3 sm:text-sm">
-              {totalCompanies} empresas conectadas - {featured.length} planetas em destaque.
-            </p>
-          </div>
+          <UniverseHero totalCompanies={totalCompanies} featuredCount={featured.length} isMobile={isMobile} />
 
-          <label className="fixed left-4 right-4 top-[106px] z-30 block font-space sm:left-auto sm:right-8 sm:top-7 sm:w-72">
+          <label className="fixed left-4 right-4 top-[218px] z-30 block font-space sm:left-auto sm:right-8 sm:top-7 sm:w-72">
             <span className="sr-only">Buscar empresa</span>
             <input
               value={query}
@@ -694,6 +792,9 @@ export default function UniverseCanvas({ companies }: { companies: CompanyRecord
               placeholder="Buscar empresa"
               className="h-10 w-full border border-white/10 bg-black/45 px-3 text-sm text-white outline-none backdrop-blur-xl placeholder:text-white/35 focus:border-white/30"
             />
+            <span className="mt-2 block text-[10px] normal-case text-white/34">
+              Digite nome, @login ou setor.
+            </span>
           </label>
 
           {isMobile && !selected && (
@@ -703,6 +804,8 @@ export default function UniverseCanvas({ companies }: { companies: CompanyRecord
           )}
 
           {renderPlanets()}
+          <OnboardingRail isMobile={isMobile} />
+          <UniverseLegend isMobile={isMobile} />
         </div>
       </div>
 

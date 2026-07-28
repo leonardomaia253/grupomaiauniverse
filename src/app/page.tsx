@@ -607,7 +607,14 @@ function HomeContent() {
 
   // Auth state listener
   useEffect(() => {
-    const supabase = createBrowserSupabase();
+    let supabase: ReturnType<typeof createBrowserSupabase>;
+    try {
+      supabase = createBrowserSupabase();
+    } catch {
+      setSession(null);
+      return;
+    }
+
     supabase.auth.getSession().then(({ data: { session: s } }: { data: { session: Session | null } }) => {
       setSession(s);
       if (s) {
@@ -715,7 +722,13 @@ function HomeContent() {
   // Forward ref from localStorage to auth callback URL
   const handleSignInWithRef = useCallback(async (providerInput?: string) => {
     trackSignInClicked("Universe");
-    const supabase = createBrowserSupabase();
+    let supabase: ReturnType<typeof createBrowserSupabase>;
+    try {
+      supabase = createBrowserSupabase();
+    } catch {
+      console.warn("Login indisponível: Supabase público não configurado.");
+      return;
+    }
     let redirectTo = `${window.location.origin}/auth/callback`;
     try {
       const raw = localStorage.getItem("gc_ref");
@@ -1274,8 +1287,13 @@ function HomeContent() {
         setLoadProgress(100);
         setLoadStage("ready");
       } catch (err) {
-        setLoadError(err instanceof Error ? err.message : "Something went wrong");
-        setLoadStage("error");
+        console.warn("Universe data unavailable; rendering local brand shell.", err);
+        rawCompaniesRef.current = [];
+        setUniverseCompanies([]);
+        setStats({ total_companies: 0, total_contributions: 0 });
+        setLoadProgress(100);
+        setLoadError(null);
+        setLoadStage("ready");
       }
     }
 

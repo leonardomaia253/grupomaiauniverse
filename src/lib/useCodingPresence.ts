@@ -11,6 +11,10 @@ export interface LiveSession {
   language?: string;
 }
 
+type PresencePayload = Omit<LiveSession, "status"> & {
+  status?: LiveSession["status"] | "offline";
+};
+
 export function useCodingPresence() {
   const [liveByLogin, setLiveByLogin] = useState<Map<string, LiveSession>>(new Map());
   const channelRef = useRef<RealtimeChannel | null>(null);
@@ -42,14 +46,40 @@ export function useCodingPresence() {
       })
       .catch(() => {});
 
-    // Subscribe to realtime broadcast
-    const supabase = createBrowserSupabase();
+    // Subscribe to realtime broadcast when Supabase client-side auth is configured.
+    let supabase: ReturnType<typeof createBrowserSupabase>;
+    try {
+      supabase = createBrowserSupabase();
+    } catch {
+      const pruneOnlyInterval = setInterval(() => {
+        fetch("/api/presence")
+          .then((r) => r.json())
+          .then((data) => {
+            if (data.companies) {
+              const map = new Map<string, LiveSession>();
+              for (const d of data.companies) {
+                map.set(d.companyLogin, {
+                  companyLogin: d.companyLogin,
+                  avatarUrl: d.avatarUrl,
+                  status: d.status,
+                  language: d.language,
+                });
+              }
+              mapRef.current = map;
+              updateMap();
+            }
+          })
+          .catch(() => {});
+      }, 30_000);
+
+      return () => clearInterval(pruneOnlyInterval);
+    }
+
     const channel = supabase.channel("coding-presence");
     channelRef.current = channel;
 
     channel
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      .on("broadcast", { event: "heartbeat" }, ({ payload }: { payload: any }) => {
+      .on("broadcast", { event: "heartbeat" }, ({ payload }: { payload: PresencePayload }) => {
         if (!payload?.companyLogin) return;
 
         // Offline signal: remove dev from live map immediately

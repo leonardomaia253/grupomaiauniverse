@@ -3,7 +3,6 @@ import Link from "next/link";
 import { redirect } from "next/navigation";
 import { createServerSupabase } from "@/lib/supabase-server";
 import { getSupabaseAdmin } from "@/lib/supabase";
-import SignInButton from "./sign-in-button";
 
 export const dynamic = "force-dynamic";
 
@@ -46,7 +45,7 @@ export default async function ShopLanding() {
 
   return (
     <main className="min-h-screen bg-bg font-pixel uppercase text-warm">
-      <div className="mx-auto max-w-lg px-3 py-6 sm:px-4 sm:py-10">
+      <div className="mx-auto max-w-5xl px-3 py-6 sm:px-4 sm:py-10">
         {/* Back */}
         <Link
           href="/"
@@ -55,41 +54,62 @@ export default async function ShopLanding() {
           &larr; Back to Universe
         </Link>
 
-        <div className="border-[3px] border-border bg-bg-raised p-6 sm:p-10">
-          <h1 className="text-center text-xl text-cream sm:text-2xl">
-            Maia Universe <span style={{ color: ACCENT }}>Shop</span>
-          </h1>
+        <div className="grid gap-4 lg:grid-cols-[1.05fr_0.95fr]">
+          <section className="border-[3px] border-border bg-bg-raised p-6 sm:p-10">
+            <p className="text-[10px] tracking-[0.22em] text-muted">PLANET STUDIO</p>
+            <h1 className="mt-3 text-2xl leading-tight text-cream sm:text-4xl">
+              Personalize seu planeta sem perder a identidade.
+            </h1>
 
-          <p className="mt-4 text-center text-[10px] leading-relaxed text-muted normal-case">
-            Customize your planet with effects, structures and identity items.
-            Make your planet stand out in the Universe.
-          </p>
-
-          {/* How it works */}
-          <div className="mt-6 space-y-3">
-            <h2 className="text-xs" style={{ color: ACCENT }}>
-              How it works
-            </h2>
-            <div className="space-y-4 text-xs text-muted normal-case italic text-center">
-              <p>Sign-in is no longer required for regular users.</p>
-              <p>Explore all planets and constellations freely.</p>
-            </div>
-          </div>
-
-          {/* Free Universe Message */}
-          <div className="mt-8 flex flex-col items-center gap-3 text-center">
-            <p className="text-xs text-cream normal-case">
-              The Universe is now free and open to explore.
+            <p className="mt-4 max-w-xl text-sm leading-relaxed text-muted normal-case">
+              O estúdio reúne cores, auras, billboards e efeitos orbitais em uma experiência única: veja o preview, equipe itens e transforme seu perfil em presença visual.
             </p>
-            {!user && (
-              <Link
-                href="/auth"
-                className="mt-2 text-[10px] text-muted hover:text-cream underline"
-              >
-                Admin Login
+
+            <div className="mt-6 grid gap-3 sm:grid-cols-3">
+              {[
+                ["01", "Conecte", "Entre com GitHub e encontre seu planeta."],
+                ["02", "Teste", "Veja itens por zona com preview ao vivo."],
+                ["03", "Equipe", "Salve a aparência e volte ao universo."],
+              ].map(([n, title, text]) => (
+                <div key={n} className="border border-border/80 bg-bg px-4 py-4">
+                  <p className="text-lg" style={{ color: ACCENT }}>{n}</p>
+                  <p className="mt-2 text-xs text-cream">{title}</p>
+                  <p className="mt-2 text-[10px] leading-relaxed text-muted normal-case">{text}</p>
+                </div>
+              ))}
+            </div>
+
+            <div className="mt-8 flex flex-wrap gap-3">
+              <Link href="/" className="border-[2px] border-border px-4 py-3 text-xs text-cream transition hover:border-cream">
+                Explorar universo
               </Link>
-            )}
-          </div>
+              {!user && (
+                <Link href="/auth" className="px-4 py-3 text-xs text-bg transition hover:brightness-110" style={{ backgroundColor: ACCENT }}>
+                  Entrar no estúdio
+                </Link>
+              )}
+            </div>
+          </section>
+
+          <aside className="border-[3px] border-border bg-[#05070b] p-6 sm:p-8">
+            <div className="relative mx-auto aspect-square max-w-sm rounded-full border border-white/10" style={{ background: "radial-gradient(circle at 30% 22%, #fff 0 7%, transparent 16%), radial-gradient(circle at 62% 70%, rgba(200,230,74,0.42), transparent 34%), linear-gradient(145deg, #27320a, #05070b 72%)", boxShadow: `0 0 80px ${ACCENT}33, inset -28px -38px 60px rgba(0,0,0,0.72)` }}>
+              <div className="absolute inset-8 rounded-full border border-white/10" />
+              <div className="absolute -right-4 top-16 rounded-full border border-white/10 bg-black/60 px-3 py-2 text-[10px] text-cream backdrop-blur">
+                aura ativa
+              </div>
+              <div className="absolute bottom-12 left-1/2 w-40 -translate-x-1/2 border border-white/15 bg-black/70 px-3 py-2 text-center text-[10px] text-muted backdrop-blur">
+                billboard slot
+              </div>
+            </div>
+
+            <div className="mt-6 grid grid-cols-2 gap-2 text-[10px]">
+              {["Auras", "Billboards", "Cores", "Efeitos", "Coroas", "Veículos"].map((item) => (
+                <div key={item} className="border border-border/80 px-3 py-3 text-center text-muted">
+                  {item}
+                </div>
+              ))}
+            </div>
+          </aside>
         </div>
 
         {/* Creator credit */}

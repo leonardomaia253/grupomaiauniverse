@@ -35,6 +35,8 @@ const STAGE_MESSAGES: Record<string, string> = {
   generating: "Desenhando o grande grafo Maia...",
   rendering: "Sincronizando energia coletiva...",
   ready: "O próximo capítulo começa agora",
+  done: "Universo pronto",
+  error: "Não foi possível carregar o universo",
 };
 
 const BACKDROPS = [
@@ -47,7 +49,10 @@ let introAudio: HTMLAudioElement | null = null;
 let introHasPlayed = false;
 
 function useIntroLine(progress: number): number {
-  return Math.min(SCRIPT_LINES.length - 1, Math.floor((Math.max(0, progress) / 100) * SCRIPT_LINES.length));
+  return Math.min(
+    SCRIPT_LINES.length - 1,
+    Math.floor((Math.max(0, progress) / 100) * SCRIPT_LINES.length),
+  );
 }
 
 export default function LoadingScreen({
@@ -66,6 +71,11 @@ export default function LoadingScreen({
   const isError = stage === "error";
   const clampedProgress = Math.min(100, progress);
   const message = isError ? error : (STAGE_MESSAGES[stage] ?? "");
+
+  const finishIntro = useCallback(() => {
+    introAudio?.pause();
+    setFading(true);
+  }, []);
 
   const startIntroAudio = useCallback(async () => {
     if (isError || introHasPlayed) return;
@@ -87,7 +97,10 @@ export default function LoadingScreen({
   }, [isError]);
 
   useEffect(() => {
-    const timer = setInterval(() => setBackdropIndex((index) => (index + 1) % BACKDROPS.length), 5200);
+    const timer = setInterval(
+      () => setBackdropIndex((index) => (index + 1) % BACKDROPS.length),
+      5200,
+    );
     return () => clearInterval(timer);
   }, []);
 
@@ -142,12 +155,28 @@ export default function LoadingScreen({
       ))}
 
       <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(0,0,0,0.2),rgba(0,0,0,0.55))]" />
-      <div className="absolute inset-0 opacity-20" style={{ backgroundImage: "radial-gradient(circle at center, transparent 0, transparent 42%, rgba(0,0,0,0.84) 100%)" }} />
+      <div
+        className="absolute inset-0 opacity-20"
+        style={{
+          backgroundImage:
+            "radial-gradient(circle at center, transparent 0, transparent 42%, rgba(0,0,0,0.84) 100%)",
+        }}
+      />
 
       <div className="maia-motes pointer-events-none absolute inset-0" />
 
+      <button
+        type="button"
+        onClick={finishIntro}
+        className="absolute right-4 top-4 z-20 border border-white/15 bg-white/[0.05] px-3 py-2 text-[9px] font-semibold uppercase tracking-[0.16em] text-white/55 transition hover:border-white/35 hover:text-white sm:right-6 sm:top-6"
+      >
+        Pular intro
+      </button>
+
       <div className="relative z-10 flex min-h-[100svh] flex-col items-center justify-center px-4 py-8 text-center sm:px-6">
-        <p className="font-space text-[9px] uppercase tracking-[0.26em] text-white/45 sm:text-[10px] sm:tracking-[0.32em]">Grupo Maia Universe</p>
+        <p className="font-space text-[9px] uppercase tracking-[0.26em] text-white/45 sm:text-[10px] sm:tracking-[0.32em]">
+          Maia Universe
+        </p>
         <h1 className="font-orbitron mt-4 max-w-[22rem] text-2xl font-semibold leading-tight text-white sm:max-w-4xl sm:text-6xl">
           {SCRIPT_LINES[lineIndex]}
         </h1>
@@ -168,7 +197,7 @@ export default function LoadingScreen({
               />
             </div>
             <div className="mt-3 flex items-center justify-between text-[9px] uppercase tracking-[0.16em] text-white/38 sm:text-[10px] sm:tracking-[0.2em]">
-              <span>Adscendo</span>
+              <span>Sincronizando</span>
               <span>{Math.round(clampedProgress)}%</span>
             </div>
           </div>
@@ -184,7 +213,7 @@ export default function LoadingScreen({
           </button>
         )}
 
-        {!isError && audioBlocked && (
+        {!isError && stage !== "ready" && audioBlocked && (
           <button
             onClick={startIntroAudio}
             className="mt-5 border border-white/20 bg-white/[0.06] px-4 py-2 text-[9px] font-semibold uppercase tracking-[0.16em] text-white/72 transition hover:border-white/35 hover:bg-white/[0.1] hover:text-white sm:px-5 sm:text-[10px] sm:tracking-[0.18em]"

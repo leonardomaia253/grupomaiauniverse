@@ -45,8 +45,8 @@ export default async function Image() {
             textTransform: "uppercase",
           }}
         >
-          <span style={{ fontSize: 120, color: cream }}>GIT</span>
-          <span style={{ fontSize: 120, color: accent }}>Universe</span>
+          <span style={{ fontSize: 112, color: cream }}>Maia</span>
+          <span style={{ fontSize: 112, color: accent }}>Universe</span>
         </div>
 
         {/* Pitch Deck label */}
