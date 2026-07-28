@@ -1,18 +1,15 @@
 import { createClient, type SupabaseClient } from "@supabase/supabase-js";
 import { createBrowserClient } from "@supabase/ssr";
+import { getAdminProxySecret, getPublicSupabaseUrl, getSupabaseAnonKey } from "@/lib/env";
 
 let browserClient: ReturnType<typeof createBrowserClient> | null = null;
-
-function getSupabaseAnonKey() {
-  return (process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || "").replace(/your-anon-key.*$/i, "");
-}
 
 /** Client-side Supabase client (anon key, respects RLS) — singleton for "use client" */
 export function createBrowserSupabase() {
   if (browserClient) return browserClient;
 
   browserClient = createBrowserClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    getPublicSupabaseUrl(),
     getSupabaseAnonKey()
   );
   return browserClient;
@@ -20,15 +17,16 @@ export function createBrowserSupabase() {
 
 /** Server-side Supabase client (service role, bypasses RLS). Now proxied via Edge Function. */
 export function getSupabaseAdmin(): SupabaseClient {
-  const adminSecret = process.env.ADMIN_PROXY_SECRET || "fallback-secret";
+  const supabaseUrl = getPublicSupabaseUrl();
+  const adminSecret = getAdminProxySecret();
   return createClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    supabaseUrl,
     getSupabaseAnonKey(), // Use anon key to bypass local checks, proxy overrides it
     {
       auth: { persistSession: false },
       global: {
         fetch: async (url, options) => {
-          const proxyUrl = `${process.env.NEXT_PUBLIC_SUPABASE_URL}/functions/v1/admin-proxy`;
+          const proxyUrl = `${supabaseUrl}/functions/v1/admin-proxy`;
           const newHeaders = new Headers(options?.headers);
           newHeaders.set("x-admin-proxy-secret", adminSecret);
           newHeaders.set("x-target-url", url.toString());
@@ -55,9 +53,10 @@ export async function broadcastToChannel(
   event: string,
   payload: Record<string, unknown>,
 ) {
-  const url = `${process.env.NEXT_PUBLIC_SUPABASE_URL}/realtime/v1/api/broadcast`;
-  const proxyUrl = `${process.env.NEXT_PUBLIC_SUPABASE_URL}/functions/v1/admin-proxy`;
-  const adminSecret = process.env.ADMIN_PROXY_SECRET || "fallback-secret";
+  const supabaseUrl = getPublicSupabaseUrl();
+  const url = `${supabaseUrl}/realtime/v1/api/broadcast`;
+  const proxyUrl = `${supabaseUrl}/functions/v1/admin-proxy`;
+  const adminSecret = getAdminProxySecret();
 
   try {
     await fetch(proxyUrl, {

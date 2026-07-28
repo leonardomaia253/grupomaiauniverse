@@ -1,6 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getSupabaseAdmin } from "@/lib/supabase";
 
+export const dynamic = "force-dynamic";
+
 // POST: client heartbeat — upsert + prune + count via Postgres RPC
 export async function POST(request: NextRequest) {
   const body = await request.json().catch(() => null);

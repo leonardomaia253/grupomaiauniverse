@@ -5,6 +5,8 @@ import { createCheckoutSession } from "@/lib/stripe";
 import { createPixQrCode } from "@/lib/abacatepay";
 import { createCryptoInvoice } from "@/lib/nowpayments";
 
+export const dynamic = "force-dynamic";
+
 // Defense-in-depth: per-user rate limit IN ADDITION to the IP-based
 // middleware rate limit.  This one is keyed by Supabase user ID so it
 // catches authenticated abuse even when requests come from different IPs.

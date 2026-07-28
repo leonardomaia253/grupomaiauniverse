@@ -3,6 +3,8 @@ import { notFound } from "next/navigation";
 import { getSupabaseAdmin } from "@/lib/supabase";
 import { SetupContent } from "./SetupContent";
 
+export const dynamic = "force-dynamic";
+
 const ACCENT = "#c8e64a";
 
 export const metadata: Metadata = {

@@ -3,6 +3,8 @@ import { createServerSupabase } from "@/lib/supabase-server";
 import { getSupabaseAdmin } from "@/lib/supabase";
 import { FREE_CLAIM_ITEM, grantFreeClaimItem } from "@/lib/items";
 
+export const dynamic = "force-dynamic";
+
 export async function POST() {
   const supabase = await createServerSupabase();
   const {

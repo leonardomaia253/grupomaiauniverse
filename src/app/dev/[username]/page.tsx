@@ -17,6 +17,8 @@ import CompareChallenge from "@/components/CompareChallenge";
 import ReferralCTA from "@/components/ReferralCTA";
 import ProfileTracker from "@/components/ProfileTracker";
 
+export const dynamic = "force-dynamic";
+
 export const revalidate = 3600; // ISR: regenerate every 1 hour
 
 interface Props {

@@ -18,6 +18,8 @@ import {
   XP_LOSE_DEFENDER,
 } from "@/lib/raid";
 
+export const dynamic = "force-dynamic";
+
 export async function POST(request: Request) {
   const supabase = await createServerSupabase();
   const {

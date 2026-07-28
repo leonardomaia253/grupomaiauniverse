@@ -5,6 +5,7 @@ import { autoEquipIfSolo } from "@/lib/items";
 import { SKY_AD_PLANS, isValidPlanId } from "@/lib/skyAdPlans";
 import { sendPurchaseNotification, sendGiftSentNotification } from "@/lib/notification-senders/purchase";
 import { sendGiftReceivedNotification } from "@/lib/notification-senders/gift";
+import { claimWebhookEvent } from "@/lib/webhook-events";
 import type Stripe from "stripe";
 
 // Disable body parsing — Stripe needs raw body for signature verification
@@ -35,6 +36,11 @@ export async function POST(request: Request) {
   const sb = getSupabaseAdmin();
 
   try {
+    const claimed = await claimWebhookEvent(sb, "stripe", event.id, event.type);
+    if (!claimed) {
+      return NextResponse.json({ received: true, duplicate: true });
+    }
+
     switch (event.type) {
       case "checkout.session.completed": {
         const session = event.data.object as Stripe.Checkout.Session;

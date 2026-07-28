@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { flushPendingBatches } from "@/lib/notifications";
+import { requireCronRequest } from "@/lib/security";
 
 /**
  * Cron: Every 15 minutes - Flush closed notification batches.
@@ -7,9 +8,8 @@ import { flushPendingBatches } from "@/lib/notifications";
  */
 export async function GET(request: NextRequest) {
   const authHeader = request.headers.get("authorization");
-  if (authHeader !== `Bearer ${process.env.CRON_SECRET}`) {
-    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-  }
+  const unauthorized = requireCronRequest(authHeader);
+  if (unauthorized) return unauthorized;
 
   try {
     const flushed = await flushPendingBatches();

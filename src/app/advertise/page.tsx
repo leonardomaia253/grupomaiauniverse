@@ -6,6 +6,8 @@ import { AdPurchaseForm } from "./AdPurchaseForm";
 
 const ACCENT = "#c8e64a";
 
+export const dynamic = "force-dynamic";
+
 export const metadata: Metadata = {
   title: "Advertise on Maia Universe",
   description:

@@ -4,6 +4,8 @@ import { getSupabaseAdmin } from "@/lib/supabase";
 import { rateLimit } from "@/lib/rate-limit";
 import { getDailyMissions, getTodayStr, MISSIONS_BY_ID } from "@/lib/dailies";
 
+export const dynamic = "force-dynamic";
+
 export async function POST(request: Request) {
   const supabase = await createServerSupabase();
   const {

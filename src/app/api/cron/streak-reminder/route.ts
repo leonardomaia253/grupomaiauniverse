@@ -2,6 +2,9 @@ import { NextRequest, NextResponse } from "next/server";
 import { getSupabaseAdmin } from "@/lib/supabase";
 import { sendStreakReminderNotification } from "@/lib/notification-senders/streak-reminder";
 import { sendDailiesReminderNotification } from "@/lib/notification-senders/dailies-reminder";
+import { requireCronRequest } from "@/lib/security";
+
+export const dynamic = "force-dynamic";
 
 /**
  * Cron: Daily 20:00 UTC - Remind companies who haven't checked in today
@@ -9,9 +12,8 @@ import { sendDailiesReminderNotification } from "@/lib/notification-senders/dail
  */
 export async function GET(request: NextRequest) {
   const authHeader = request.headers.get("authorization");
-  if (authHeader !== `Bearer ${process.env.CRON_SECRET}`) {
-    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-  }
+  const unauthorized = requireCronRequest(authHeader);
+  if (unauthorized) return unauthorized;
 
   const sb = getSupabaseAdmin();
   const today = new Date().toISOString().split("T")[0];
@@ -74,7 +76,7 @@ export async function GET(request: NextRequest) {
 
   // ─── Dailies reminders: users with 1-2 missions done but not 3 ────
   const dailiesResults = { reminded: 0, skipped: 0 };
-  let dailiesOffset = 0;
+  const dailiesOffset = 0;
 
   while (true) {
     // Find companies who have some (but not all) missions done today

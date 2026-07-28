@@ -4,6 +4,8 @@ import { rateLimit } from "@/lib/rate-limit";
 import { MAX_TEXT_LENGTH } from "@/lib/skyAds";
 import { containsBlockedContent, isSuspiciousLink } from "@/lib/ad-moderation";
 
+export const dynamic = "force-dynamic";
+
 const ALLOWED_LINK = /^(https:\/\/|mailto:)/;
 
 export async function POST(request: NextRequest) {

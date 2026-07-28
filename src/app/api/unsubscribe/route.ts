@@ -2,6 +2,8 @@ import { NextResponse } from "next/server";
 import { getSupabaseAdmin } from "@/lib/supabase";
 import { verifyHmacToken, type NotificationCategory } from "@/lib/notifications";
 
+export const dynamic = "force-dynamic";
+
 const VALID_CATEGORIES = ["transactional", "social", "digest", "marketing", "streak_reminders", "all"];
 
 /**

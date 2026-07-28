@@ -9,7 +9,11 @@ type BrandRule = {
   name: string;
   match: string[];
   color: string;
+  sector: string;
+  description: string;
+  texture: "aurora" | "ember" | "ocean" | "obsidian" | "solar" | "forest" | "rose" | "ice";
   scale?: number;
+  priority?: number;
   forceFeatured?: boolean;
 };
 
@@ -17,6 +21,9 @@ type PlanetNode = {
   login: string;
   name: string | null;
   color: string;
+  sector: string;
+  description: string;
+  texture: BrandRule["texture"];
   size: number;
   x: number;
   y: number;
@@ -39,18 +46,29 @@ type ViewMode = "mobile" | "desktop";
 const TAU = Math.PI * 2;
 
 const BRAND_RULES: BrandRule[] = [
-  { login: "bilheking", name: "Bilheking", match: ["bilheking"], color: "#7c3aed", scale: 1.38, forceFeatured: true },
-  { login: "volup-ai", name: "Volup AI", match: ["volupai", "volup ai", "volup-ai"], color: "#10b981", scale: 1.38, forceFeatured: true },
-  { login: "spur", name: "Spur", match: ["spur"], color: "#ef233c", scale: 1.08, forceFeatured: true },
-  { login: "tosi", name: "Tosi", match: ["tosi"], color: "#2563eb", scale: 1.05, forceFeatured: true },
-  { login: "jack-it-fit", name: "Jack it fit", match: ["jackitfit", "jack it fit", "jack-it-fit"], color: "#111111", scale: 1.02, forceFeatured: true },
-  { login: "seu-jornaleiro", name: "Seu Jornaleiro", match: ["seujornaleiro", "seu jornaleiro", "seu-jornaleiro"], color: "#f97316", forceFeatured: true },
-  { login: "cattlecontrol", name: "CattleControl", match: ["cattlecontrol", "cattle control", "cattle-control"], color: "#16a34a", forceFeatured: true },
-  { login: "iris", name: "Iris", match: ["iris"], color: "#facc15", forceFeatured: true },
-  { login: "kinkora", name: "Kinkora", match: ["kinkora"], color: "#ec4899", forceFeatured: true },
-  { login: "avantyp", name: "Avantyp", match: ["avantyp"], color: "#7f1d1d", forceFeatured: true },
-  { login: "boase", name: "Boase", match: ["boase"], color: "#38bdf8", forceFeatured: true },
+  { login: "bilheking", name: "Bilheking", match: ["bilheking"], color: "#7c3aed", sector: "Entretenimento e bilheteria", description: "Motor comercial do ecossistema, conectado a vendas, eventos e crescimento.", texture: "aurora", scale: 1.42, priority: 100, forceFeatured: true },
+  { login: "volup-ai", name: "Volup AI", match: ["volupai", "volup ai", "volup-ai"], color: "#10b981", sector: "Inteligencia artificial", description: "Camada de IA aplicada a produtos, operacao e automacao do Grupo Maia.", texture: "forest", scale: 1.42, priority: 98, forceFeatured: true },
+  { login: "spur", name: "Spur", match: ["spur"], color: "#ef233c", sector: "Performance e crescimento", description: "Planeta de energia vermelha, orientado a tracao e execucao.", texture: "ember", scale: 1.1, priority: 90, forceFeatured: true },
+  { login: "tosi", name: "Tosi", match: ["tosi"], color: "#2563eb", sector: "Produto digital", description: "Operacao azul, focada em produto, tecnologia e confiabilidade.", texture: "ocean", scale: 1.06, priority: 88, forceFeatured: true },
+  { login: "jack-it-fit", name: "Jack it fit", match: ["jackitfit", "jack it fit", "jack-it-fit"], color: "#111111", sector: "Saude e fitness", description: "Planeta obsidiana, denso e disciplinado, ligado a saude e recorrencia.", texture: "obsidian", scale: 1.03, priority: 86, forceFeatured: true },
+  { login: "seu-jornaleiro", name: "Seu Jornaleiro", match: ["seujornaleiro", "seu jornaleiro", "seu-jornaleiro"], color: "#f97316", sector: "Midia e distribuicao", description: "Orbita laranja para conteudo, distribuicao e presenca local.", texture: "solar", priority: 84, forceFeatured: true },
+  { login: "cattlecontrol", name: "CattleControl", match: ["cattlecontrol", "cattle control", "cattle-control"], color: "#16a34a", sector: "Agro e gestao", description: "Planeta verde de controle, campo, dados e operacao produtiva.", texture: "forest", priority: 82, forceFeatured: true },
+  { login: "iris", name: "Iris", match: ["iris"], color: "#facc15", sector: "Visao e inteligencia", description: "Planeta amarelo, ligado a leitura, percepcao e clareza operacional.", texture: "solar", priority: 80, forceFeatured: true },
+  { login: "kinkora", name: "Kinkora", match: ["kinkora"], color: "#ec4899", sector: "Experiencia e comunidade", description: "Planeta rosa de relacao, marca e experiencia.", texture: "rose", priority: 78, forceFeatured: true },
+  { login: "avantyp", name: "Avantyp", match: ["avantyp"], color: "#7f1d1d", sector: "Estrategia e tecnologia", description: "Planeta vermelho escuro, compacto e estrategico.", texture: "ember", priority: 76, forceFeatured: true },
+  { login: "boase", name: "Boase", match: ["boase"], color: "#38bdf8", sector: "Operacao e servicos", description: "Planeta azul claro, leve, orientado a servicos e conexoes.", texture: "ice", priority: 74, forceFeatured: true },
 ];
+
+const PLANET_TEXTURES: Record<BrandRule["texture"], string> = {
+  aurora: "radial-gradient(circle at 28% 22%, #ffffff 0 8%, transparent 18%), radial-gradient(circle at 70% 28%, rgba(167,139,250,0.95), transparent 28%), radial-gradient(circle at 34% 72%, rgba(34,211,238,0.42), transparent 30%)",
+  ember: "radial-gradient(circle at 32% 20%, #fff2e8 0 7%, transparent 17%), linear-gradient(135deg, rgba(255,255,255,0.18), transparent 30%), radial-gradient(circle at 70% 68%, rgba(0,0,0,0.45), transparent 34%)",
+  ocean: "radial-gradient(circle at 30% 24%, #eff6ff 0 8%, transparent 18%), radial-gradient(circle at 66% 65%, rgba(14,165,233,0.52), transparent 34%), linear-gradient(150deg, rgba(255,255,255,0.16), transparent 42%)",
+  obsidian: "radial-gradient(circle at 34% 22%, rgba(255,255,255,0.9) 0 6%, transparent 16%), linear-gradient(135deg, rgba(255,255,255,0.14), transparent 26%), radial-gradient(circle at 72% 72%, rgba(0,0,0,0.8), transparent 36%)",
+  solar: "radial-gradient(circle at 30% 24%, #fff7cc 0 8%, transparent 18%), radial-gradient(circle at 72% 60%, rgba(251,146,60,0.45), transparent 34%), linear-gradient(120deg, rgba(255,255,255,0.14), transparent 40%)",
+  forest: "radial-gradient(circle at 28% 22%, #ecfdf5 0 8%, transparent 18%), radial-gradient(circle at 68% 70%, rgba(5,150,105,0.52), transparent 34%), linear-gradient(145deg, rgba(255,255,255,0.16), transparent 42%)",
+  rose: "radial-gradient(circle at 30% 22%, #fdf2f8 0 8%, transparent 18%), radial-gradient(circle at 70% 68%, rgba(244,114,182,0.48), transparent 34%), linear-gradient(150deg, rgba(255,255,255,0.14), transparent 42%)",
+  ice: "radial-gradient(circle at 30% 24%, #f0f9ff 0 8%, transparent 18%), radial-gradient(circle at 72% 66%, rgba(125,211,252,0.55), transparent 34%), linear-gradient(135deg, rgba(255,255,255,0.22), transparent 42%)",
+};
 
 const FEATURED_LAYOUT = [
   { x: 0.5, y: 0.47 },
@@ -154,6 +172,14 @@ function formatMoney(value: number | null | undefined): string {
   }).format(value);
 }
 
+function hasValue(value: number | null | undefined): boolean {
+  return typeof value === "number" && value > 0;
+}
+
+function dataState(value: number | null | undefined): "synced" | "empty" {
+  return hasValue(value) ? "synced" : "empty";
+}
+
 function hexToRgb01(color: string): [number, number, number] {
   if (!color.startsWith("#")) return [0.08, 0.08, 0.08];
   const hex = color.length === 4 ? `#${color[1]}${color[1]}${color[2]}${color[2]}${color[3]}${color[3]}` : color;
@@ -168,7 +194,7 @@ function makeBrandShell(brand: BrandRule, index: number): CompanyRecord {
     external_id: null,
     name: brand.name,
     avatar_url: null,
-    bio: "Dados operacionais aguardando sincronizacao. O planeta permanece fixo no mapa para preservar a arquitetura visual do Grupo Maia.",
+    bio: brand.description,
     contributions: 0,
     public_repos: 0,
     total_stars: 0,
@@ -231,6 +257,9 @@ function buildUniverse(companies: CompanyRecord[], mode: ViewMode) {
       login: company.username,
       name: company.name,
       color: colorForCompany(company),
+      sector: brand?.sector || company.category || "Ecossistema Maia",
+      description: brand?.description || company.bio || "Empresa conectada ao campo orbital do Grupo Maia.",
+      texture: brand?.texture || "ice",
       size: (base + Math.sqrt(mass / maxMass) * range) * scale,
       x: layout.x,
       y: layout.y,
@@ -272,6 +301,20 @@ function useViewMode(): ViewMode {
   }, []);
 
   return mode;
+}
+
+function usePrefersReducedMotion(): boolean {
+  const [reduced, setReduced] = useState(false);
+
+  useEffect(() => {
+    const query = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const update = () => setReduced(query.matches);
+    update();
+    query.addEventListener("change", update);
+    return () => query.removeEventListener("change", update);
+  }, []);
+
+  return reduced;
 }
 
 function StarField({ dots }: { dots: FieldDot[] }) {
@@ -333,12 +376,16 @@ function CobePlanet({
   planet,
   active,
   mode,
+  renderGlobe,
+  dimmed,
   onHover,
   onSelect,
 }: {
   planet: PlanetNode;
   active: boolean;
   mode: ViewMode;
+  renderGlobe: boolean;
+  dimmed: boolean;
   onHover: (planet: PlanetNode | null) => void;
   onSelect: (planet: PlanetNode) => void;
 }) {
@@ -358,7 +405,7 @@ function CobePlanet({
 
   useEffect(() => {
     const canvas = canvasRef.current;
-    if (!canvas) return;
+    if (!canvas || !renderGlobe) return;
     let globe: ReturnType<typeof createGlobe> | null = null;
     let frame = 0;
 
@@ -373,8 +420,8 @@ function CobePlanet({
         theta: 0.18,
         dark: 0,
         diffuse: 1.6,
-        mapSamples: active ? 20000 : 11000,
-        mapBrightness: 10,
+        mapSamples: mode === "mobile" ? (active ? 7000 : 4200) : active ? 18000 : 9000,
+        mapBrightness: mode === "mobile" ? 8.4 : 10,
         baseColor: [1, 1, 1],
         markerColor: [0, 0, 0],
         glowColor: [Math.max(0.66, color[0]), Math.max(0.66, color[1]), Math.max(0.66, color[2])],
@@ -398,7 +445,7 @@ function CobePlanet({
       cancelAnimationFrame(frame);
       globe?.destroy();
     };
-  }, [active, color, markers]);
+  }, [active, color, markers, mode, renderGlobe]);
 
   const isMobile = mode === "mobile";
   const size = planet.size * (active ? (isMobile ? 1.08 : 1.14) : 1);
@@ -412,7 +459,7 @@ function CobePlanet({
     return (
       <button
         type="button"
-        className="relative isolate block text-left outline-none transition-transform duration-500 active:scale-[0.98] focus-visible:z-20"
+        className={`relative isolate block text-left outline-none transition duration-500 active:scale-[0.98] focus-visible:z-20 ${dimmed ? "opacity-40 grayscale-[0.35]" : "opacity-100"}`}
         style={{
           width: size,
           height: size + 46,
@@ -422,9 +469,14 @@ function CobePlanet({
         aria-label={`Abrir ${planet.name || planet.login}`}
       >
         <span className="absolute inset-x-0 top-0 aspect-square rounded-full blur-2xl" style={{ backgroundColor: planet.color, opacity: active ? 0.34 : 0.16 }} />
+        <span className="absolute inset-x-[4%] top-[4%] aspect-square rounded-full opacity-80 mix-blend-screen" style={{ background: PLANET_TEXTURES[planet.texture] }} />
         <span className="absolute inset-x-[7%] top-[7%] aspect-square rounded-full border border-white/10" style={{ boxShadow: `inset 0 0 34px rgba(0,0,0,0.38), 0 0 30px ${planet.color}55` }} />
         <span className="pointer-events-none absolute inset-x-[7%] top-[7%] z-10 aspect-square rounded-full mix-blend-multiply" style={{ background: damageMask, opacity: planet.damage > 0.28 ? 1 : 0 }} />
-        <canvas ref={canvasRef} className="relative aspect-square w-full rounded-full opacity-95 saturate-[1.08] transition-opacity duration-700" />
+        {renderGlobe ? (
+          <canvas ref={canvasRef} className="relative aspect-square w-full rounded-full opacity-95 saturate-[1.08] transition-opacity duration-700" />
+        ) : (
+          <span className="relative block aspect-square w-full rounded-full border border-white/10" style={{ background: `radial-gradient(circle at 31% 24%, rgba(255,255,255,0.92), transparent 14%), ${PLANET_TEXTURES[planet.texture]}, radial-gradient(circle at 50% 50%, ${planet.color}, #020303 72%)`, boxShadow: `inset -18px -22px 32px rgba(0,0,0,0.55), 0 0 32px ${planet.color}55` }} />
+        )}
         <span className="pointer-events-none absolute left-1/2 top-[76%] flex max-w-[142px] -translate-x-1/2 flex-col items-center gap-1 whitespace-nowrap">
           <span className="max-w-full truncate bg-white px-2 py-1 font-mono text-[9px] leading-none text-black shadow-[0_2px_10px_rgba(0,0,0,0.25)]">
             {planet.name || planet.login}
@@ -440,7 +492,7 @@ function CobePlanet({
   return (
     <button
       type="button"
-      className="absolute isolate -translate-x-1/2 -translate-y-1/2 text-left outline-none transition-transform duration-500 hover:z-20 focus-visible:z-20"
+      className={`absolute isolate -translate-x-1/2 -translate-y-1/2 text-left outline-none transition duration-500 hover:z-20 focus-visible:z-20 ${dimmed ? "opacity-35 grayscale-[0.35]" : "opacity-100"}`}
       style={{
         left: `${planet.x * 100}%`,
         top: `${planet.y * 100}%`,
@@ -453,6 +505,7 @@ function CobePlanet({
       aria-label={`Abrir ${planet.name || planet.login}`}
     >
       <span className="absolute inset-0 rounded-full blur-2xl" style={{ backgroundColor: planet.color, opacity: active ? 0.33 : 0.13 }} />
+      <span className="absolute inset-[4%] rounded-full opacity-80 mix-blend-screen" style={{ background: PLANET_TEXTURES[planet.texture] }} />
       <span className="absolute inset-[7%] rounded-full border border-white/10" style={{ boxShadow: `inset 0 0 36px rgba(0,0,0,0.38), 0 0 34px ${planet.color}55` }} />
       <span className="pointer-events-none absolute inset-[7%] z-10 rounded-full mix-blend-multiply" style={{ background: damageMask, opacity: planet.damage > 0.28 ? 1 : 0 }} />
       <canvas ref={canvasRef} className="relative aspect-square w-full rounded-full opacity-95 saturate-[1.08] transition-opacity duration-700" />
@@ -473,16 +526,17 @@ function CompanyHud({ planet, mode, onClose }: { planet: PlanetNode; mode: ViewM
   const isMobile = mode === "mobile";
   const health = typeof company.health_score === "number" ? company.health_score : 100;
   const details = [
-    ["Tracao", formatMetric(planet.mass)],
-    ["Estrelas", formatMetric(company.total_stars)],
-    ["Repositorios", formatMetric(company.public_repos)],
-    ["Receita", formatMoney(company.revenue)],
-    ["Capital", formatMoney(company.share_capital)],
-    ["Saude", `${health}%`],
+    { label: "Tracao", value: formatMetric(planet.mass, "Em sincronizacao"), state: dataState(planet.mass) },
+    { label: "Estrelas", value: formatMetric(company.total_stars, "Sem dados publicos"), state: dataState(company.total_stars) },
+    { label: "Repositorios", value: formatMetric(company.public_repos, "Sem dados publicos"), state: dataState(company.public_repos) },
+    { label: "Receita", value: formatMoney(company.revenue), state: dataState(company.revenue) },
+    { label: "Capital", value: formatMoney(company.share_capital), state: dataState(company.share_capital) },
+    { label: "Saude", value: `${health}%`, state: "synced" },
   ];
+  const updatedAt = company.fetched_at ? new Date(company.fetched_at).toLocaleDateString("pt-BR") : "sincronizacao pendente";
 
   return (
-    <aside className={`pointer-events-auto ${isMobile ? "fixed bottom-3 left-3 right-3 max-h-[52svh]" : "absolute bottom-6 right-6 w-[430px]"} z-40 overflow-y-auto border border-white/12 bg-[#070808]/92 font-space shadow-2xl shadow-black/50 backdrop-blur-2xl`}>
+    <aside className={`pointer-events-auto ${isMobile ? "fixed bottom-3 left-3 right-3 max-h-[58svh]" : "absolute bottom-6 right-6 w-[460px]"} z-40 overflow-y-auto border border-white/12 bg-[#070808]/92 font-space shadow-2xl shadow-black/50 backdrop-blur-2xl`}>
       <div className="h-1.5 w-full" style={{ background: `linear-gradient(90deg, ${planet.color}, rgba(255,255,255,0.18))` }} />
       <div className="p-4">
         <div className="flex items-start gap-3 sm:gap-4">
@@ -492,9 +546,16 @@ function CompanyHud({ planet, mode, onClose }: { planet: PlanetNode; mode: ViewM
             <h3 className="mt-1 truncate text-lg font-semibold normal-case text-white sm:text-xl">{planet.name || planet.login}</h3>
             <p className="mt-1 text-xs normal-case text-white/50 sm:text-sm">@{planet.login} - dados em tempo real quando disponiveis</p>
           </div>
-          <button className="grid h-8 w-8 place-items-center border border-white/12 bg-white/[0.03] text-white/55 transition hover:border-white/30 hover:text-white" onClick={onClose} aria-label="Fechar painel">
+          <button className="grid h-10 w-10 place-items-center border border-white/12 bg-white/[0.03] text-lg text-white/65 transition hover:border-white/30 hover:text-white" onClick={onClose} aria-label="Fechar painel">
             x
           </button>
+        </div>
+
+        <div className="mt-4 border-y border-white/10 py-3">
+          <p className="text-[10px] uppercase tracking-[0.22em] text-white/36">Setor</p>
+          <p className="mt-1 text-sm text-white/78">{planet.sector}</p>
+          <p className="mt-3 text-xs leading-relaxed text-white/54">{planet.description}</p>
+          <p className="mt-3 text-[10px] uppercase tracking-[0.18em] text-white/34">Ultima atualizacao: {updatedAt}</p>
         </div>
 
         <div className="mt-4">
@@ -508,14 +569,17 @@ function CompanyHud({ planet, mode, onClose }: { planet: PlanetNode; mode: ViewM
         </div>
 
         <div className="mt-4 grid grid-cols-2 gap-px overflow-hidden border border-white/10 bg-white/10 text-xs sm:grid-cols-3">
-          {details.map(([label, value]) => (
+          {details.map(({ label, value, state }) => (
             <div key={label} className="bg-[#080a0b] p-3">
               <p className="text-white/36">{label}</p>
-              <p className="mt-2 break-words text-sm font-semibold normal-case text-white/86 sm:text-[15px]">{value}</p>
+              <p className={`mt-2 break-words text-sm font-semibold normal-case sm:text-[15px] ${state === "empty" ? "text-white/46" : "text-white/86"}`}>{value}</p>
             </div>
           ))}
         </div>
-        {company.bio && <p className="mt-4 border-t border-white/10 pt-3 text-xs leading-relaxed normal-case text-white/54">{company.bio}</p>}
+        <div className="mt-4 flex flex-wrap gap-2 text-[10px] uppercase tracking-[0.16em]">
+          <a className="border border-white/10 px-3 py-2 text-white/52 transition hover:border-white/25 hover:text-white" href={`/dev/${planet.login}`}>Perfil</a>
+          <a className="border border-white/10 px-3 py-2 text-white/52 transition hover:border-white/25 hover:text-white" href={`https://github.com/${planet.login}`} target="_blank" rel="noreferrer">GitHub</a>
+        </div>
       </div>
     </aside>
   );
@@ -527,46 +591,80 @@ export default function UniverseCanvas({ companies }: { companies: CompanyRecord
   const { featured, fieldDots, totalCompanies } = useMemo(() => buildUniverse(companies, mode), [companies, mode]);
   const [hovered, setHovered] = useState<PlanetNode | null>(null);
   const [selected, setSelected] = useState<PlanetNode | null>(null);
+  const [query, setQuery] = useState("");
   const active = selected || hovered;
+  const reducedMotion = usePrefersReducedMotion();
+  const normalizedQuery = normalize(query);
+  const visiblePlanets = useMemo(() => {
+    if (!normalizedQuery) return featured;
+    return featured.filter((planet) =>
+      normalize(`${planet.name || ""} ${planet.login} ${planet.sector}`).includes(normalizedQuery),
+    );
+  }, [featured, normalizedQuery]);
 
   const handleHover = useCallback((planet: PlanetNode | null) => {
     setHovered(planet);
   }, []);
 
+  useEffect(() => {
+    if (reducedMotion || selected || hovered || featured.length === 0) return;
+    const lead = featured.find((planet) => normalize(planet.login).includes("bilheking")) || featured[0];
+    const start = window.setTimeout(() => setHovered(lead), 120);
+    const end = window.setTimeout(() => setHovered(null), 1920);
+    return () => {
+      window.clearTimeout(start);
+      window.clearTimeout(end);
+    };
+  }, [featured, hovered, reducedMotion, selected]);
+
   const renderPlanets = () => {
     if (isMobile) {
       return (
         <div className="relative z-10 flex min-h-[1280px] flex-col gap-7 px-4 pb-[58svh] pt-36">
-          {featured.map((planet, index) => {
+          {visiblePlanets.map((planet, index) => {
             const alignment = index % 3 === 0 ? "self-center" : index % 3 === 1 ? "self-start ml-2" : "self-end mr-2";
+            const isFocused = active?.login === planet.login;
             return (
-              <div key={planet.login} className={`${alignment} max-w-[58vw]`}>
+              <div key={planet.login} className={`${alignment} max-w-[58vw] transition-opacity duration-300 ${active && !isFocused ? "opacity-40" : "opacity-100"}`}>
                 <CobePlanet
                   planet={planet}
                   mode={mode}
-                  active={active?.login === planet.login}
+                  active={isFocused}
+                  renderGlobe={!reducedMotion && (index < 2 || isFocused)}
+                  dimmed={Boolean(active && !isFocused)}
                   onHover={handleHover}
                   onSelect={setSelected}
                 />
               </div>
             );
           })}
+          {visiblePlanets.length === 0 && (
+            <div className="mx-auto mt-20 max-w-xs border border-white/10 bg-black/35 p-4 text-center font-space text-xs text-white/50 backdrop-blur-xl">
+              Nenhuma empresa encontrada nessa orbita.
+            </div>
+          )}
         </div>
       );
     }
 
     return (
       <>
-        {featured.map((planet) => (
-          <CobePlanet
-            key={planet.login}
-            planet={planet}
-            mode={mode}
-            active={active?.login === planet.login}
-            onHover={handleHover}
-            onSelect={setSelected}
-          />
-        ))}
+        {visiblePlanets.map((planet, index) => {
+          const isFocused = active?.login === planet.login;
+          return (
+            <div key={planet.login} className="contents">
+              <CobePlanet
+                planet={planet}
+                mode={mode}
+                active={isFocused}
+                renderGlobe={!reducedMotion && (index < 8 || isFocused)}
+                dimmed={Boolean(active && !isFocused)}
+                onHover={handleHover}
+                onSelect={setSelected}
+              />
+            </div>
+          );
+        })}
       </>
     );
   };
@@ -582,11 +680,21 @@ export default function UniverseCanvas({ companies }: { companies: CompanyRecord
 
           <div className="pointer-events-none fixed left-4 right-4 top-4 z-30 max-w-[calc(100vw-2rem)] font-space sm:absolute sm:left-8 sm:right-auto sm:top-7 sm:max-w-sm">
             <p className="text-[9px] uppercase tracking-[0.3em] text-white/38 sm:text-[10px] sm:tracking-[0.34em]">Grupo Maia Universe</p>
-            <h2 className="mt-2 text-lg font-semibold normal-case text-white/90 sm:text-3xl">Mapa de empresas</h2>
+            <h2 className="mt-2 text-lg font-semibold normal-case text-white/90 sm:text-3xl">Universo de realizacoes</h2>
             <p className="mt-2 max-w-[19rem] text-[11px] leading-relaxed normal-case text-white/48 sm:mt-3 sm:text-sm">
-              {totalCompanies} empresas no campo orbital - {featured.length} globes em alta definicao.
+              {totalCompanies} empresas conectadas - {featured.length} planetas em destaque.
             </p>
           </div>
+
+          <label className="fixed left-4 right-4 top-[106px] z-30 block font-space sm:left-auto sm:right-8 sm:top-7 sm:w-72">
+            <span className="sr-only">Buscar empresa</span>
+            <input
+              value={query}
+              onChange={(event) => setQuery(event.target.value)}
+              placeholder="Buscar empresa"
+              className="h-10 w-full border border-white/10 bg-black/45 px-3 text-sm text-white outline-none backdrop-blur-xl placeholder:text-white/35 focus:border-white/30"
+            />
+          </label>
 
           {isMobile && !selected && (
             <div className="pointer-events-none fixed bottom-3 left-1/2 z-30 -translate-x-1/2 border border-white/10 bg-black/45 px-3 py-2 font-space text-[10px] uppercase tracking-[0.18em] text-white/44 backdrop-blur-xl">

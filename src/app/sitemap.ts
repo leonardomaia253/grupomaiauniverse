@@ -10,7 +10,7 @@ const BASE_URL =
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   let companies: { username: string; last_active_at: string | null }[] = [];
 
-  if (process.env.NEXT_PUBLIC_SUPABASE_URL) {
+  if (process.env.NEXT_PUBLIC_SUPABASE_URL && process.env.ADMIN_PROXY_SECRET) {
     const supabase = getSupabaseAdmin();
     const { data } = await supabase
       .from("companies")

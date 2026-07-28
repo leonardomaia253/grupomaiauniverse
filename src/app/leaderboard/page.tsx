@@ -11,6 +11,8 @@ import FlyLeaderboard from "@/components/FlyLeaderboard";
 import DailiesLeaderboard from "@/components/DailiesLeaderboard";
 import { rankFromLevel, tierFromLevel } from "@/lib/xp";
 
+export const dynamic = "force-dynamic";
+
 export const revalidate = 300; // ISR: regenerate every 5 min
 
 export const metadata: Metadata = {

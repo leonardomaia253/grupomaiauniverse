@@ -1,27 +1,48 @@
 import { serve } from "https://deno.land/std@0.192.0/http/server.ts";
 
+function json(body: Record<string, unknown>, status: number) {
+  return new Response(JSON.stringify(body), {
+    status,
+    headers: { "Content-Type": "application/json" },
+  });
+}
+
+function isAllowedSupabaseTarget(targetUrl: URL, supabaseUrl: URL): boolean {
+  if (targetUrl.origin !== supabaseUrl.origin) return false;
+
+  return [
+    "/rest/v1/",
+    "/auth/v1/",
+    "/storage/v1/",
+    "/realtime/v1/",
+  ].some((prefix) => targetUrl.pathname.startsWith(prefix));
+}
+
 serve(async (req: Request) => {
   // We use a custom secret to authenticate the Next.js backend calling this proxy.
-  // In production, you would generate a secure random string for this.
   const proxySecret = req.headers.get("x-admin-proxy-secret");
   const expectedSecret = Deno.env.get("ADMIN_PROXY_SECRET");
 
   if (!proxySecret || !expectedSecret || proxySecret !== expectedSecret) {
-    return new Response(JSON.stringify({ error: "Unauthorized Gateway Access" }), { 
-      status: 401,
-      headers: { "Content-Type": "application/json" }
-    });
+    return json({ error: "Unauthorized Gateway Access" }, 401);
   }
 
   const targetUrlStr = req.headers.get("x-target-url");
   if (!targetUrlStr) {
-    return new Response(JSON.stringify({ error: "Missing target URL" }), { 
-      status: 400,
-      headers: { "Content-Type": "application/json" }
-    });
+    return json({ error: "Missing target URL" }, 400);
   }
 
   try {
+    const supabaseUrlStr = Deno.env.get("SUPABASE_URL");
+    if (!supabaseUrlStr) throw new Error("Missing SUPABASE_URL in Edge Function environment");
+
+    const targetUrl = new URL(targetUrlStr);
+    const supabaseUrl = new URL(supabaseUrlStr);
+
+    if (!isAllowedSupabaseTarget(targetUrl, supabaseUrl)) {
+      return json({ error: "Target URL is not allowed" }, 403);
+    }
+
     const serviceKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY");
     if (!serviceKey) throw new Error("Missing service key in Edge Function environment");
 
@@ -41,7 +62,7 @@ serve(async (req: Request) => {
       body = await req.arrayBuffer();
     }
 
-    const response = await fetch(targetUrlStr, {
+    const response = await fetch(targetUrl.toString(), {
       method: req.method,
       headers: newHeaders,
       body
@@ -55,10 +76,8 @@ serve(async (req: Request) => {
       statusText: response.statusText,
       headers: response.headers
     });
-  } catch (err: any) {
-    return new Response(JSON.stringify({ error: "Proxy Error", details: err.message }), {
-      status: 500,
-      headers: { "Content-Type": "application/json" }
-    });
+  } catch (err: unknown) {
+    const message = err instanceof Error ? err.message : "Unknown error";
+    return json({ error: "Proxy Error", details: message }, 500);
   }
 });

@@ -2,6 +2,8 @@ import { NextResponse } from "next/server";
 import { getSupabaseAdmin } from "@/lib/supabase";
 import { sendCommunityMilestoneNotifications } from "@/lib/notification-senders/community-milestone";
 
+export const dynamic = "force-dynamic";
+
 // Milestones to celebrate (every 5k after 10k)
 const MILESTONES = [10000, 15000, 20000, 25000, 30000, 40000, 50000, 75000, 100000];
 

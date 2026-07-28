@@ -1,6 +1,9 @@
 import { NextRequest, NextResponse } from "next/server";
 import { gzipSync } from "zlib";
 import { getSupabaseAdmin } from "@/lib/supabase";
+import { requireCronRequest } from "@/lib/security";
+
+export const dynamic = "force-dynamic";
 
 export const maxDuration = 300;
 
@@ -37,9 +40,8 @@ async function fetchAll<T>(
 
 export async function GET(request: NextRequest) {
   const auth = request.headers.get("authorization");
-  if (auth !== `Bearer ${process.env.CRON_SECRET}`) {
-    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-  }
+  const unauthorized = requireCronRequest(auth);
+  if (unauthorized) return unauthorized;
 
   const started = Date.now();
   const sb = getSupabaseAdmin();

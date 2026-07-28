@@ -3,6 +3,8 @@ import { createServerSupabase } from "@/lib/supabase-server";
 import { getSupabaseAdmin } from "@/lib/supabase";
 import { rateLimit } from "@/lib/rate-limit";
 
+export const dynamic = "force-dynamic";
+
 const VALID_constellationS = [
   "frontend", "backend", "fullstack", "mobile", "data_ai",
   "devops", "security", "gamedev", "vibe_coder", "creator",

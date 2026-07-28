@@ -2,6 +2,8 @@ import { NextResponse } from "next/server";
 import { createServerSupabase } from "@/lib/supabase-server";
 import { getSupabaseAdmin } from "@/lib/supabase";
 
+export const dynamic = "force-dynamic";
+
 const OWNER_LOGIN = "srizzon";
 
 // Historical baselines from Himetrica (tracking was lost in Supabase due to www origin bug).

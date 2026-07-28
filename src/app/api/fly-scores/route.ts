@@ -4,6 +4,8 @@ import { getSupabaseAdmin } from "@/lib/supabase";
 import { rateLimit } from "@/lib/rate-limit";
 import { trackDailyMission } from "@/lib/dailies";
 
+export const dynamic = "force-dynamic";
+
 function getTodaySeed() {
   const now = new Date();
   const start = new Date(now.getFullYear(), 0, 0);

@@ -45,9 +45,8 @@ function fmtRounded(n: number): string {
   return fmt(n);
 }
 
-export async function getPitchStats(): Promise<PitchStats> {
-  if (!process.env.NEXT_PUBLIC_SUPABASE_URL) {
-    return {
+function emptyPitchStats(): PitchStats {
+  return {
       companies: 0,
       claimed: 0,
       adCampaigns: 0,
@@ -70,10 +69,20 @@ export async function getPitchStats(): Promise<PitchStats> {
       formattedRevenue: "R$0",
       formattedAdRevenue: "R$0",
       formattedShopRevenue: "R$0",
-    };
+  }
+}
+
+export async function getPitchStats(): Promise<PitchStats> {
+  if (!process.env.NEXT_PUBLIC_SUPABASE_URL || !process.env.ADMIN_PROXY_SECRET) {
+    return emptyPitchStats();
   }
 
-  const admin = getSupabaseAdmin();
+  let admin: ReturnType<typeof getSupabaseAdmin>;
+  try {
+    admin = getSupabaseAdmin();
+  } catch {
+    return emptyPitchStats();
+  }
 
   const [
     companiesResult,

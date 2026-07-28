@@ -3,6 +3,8 @@ import { createServerSupabase } from "@/lib/supabase-server";
 import { getSupabaseAdmin } from "@/lib/supabase";
 import { getDailyMissions, getTodayStr, trackDailyMission } from "@/lib/dailies";
 
+export const dynamic = "force-dynamic";
+
 export async function GET() {
   const supabase = await createServerSupabase();
   const {

@@ -3,6 +3,7 @@ import { getSupabaseAdmin } from "./supabase";
 import { getResend } from "./resend";
 import { getcompanyEmail, isRecentlyActive } from "./notification-helpers";
 import { wrapInBaseTemplate } from "./email-template";
+import { getUnsubscribeHmacSecret } from "@/lib/security";
 
 // ── Types ──
 
@@ -54,7 +55,6 @@ export interface SendResult {
 // ── Config ──
 
 const FROM = "Maia Universe <noreply@maiauniverse.com.br>";
-const HMAC_SECRET = process.env.UNSUBSCRIBE_HMAC_SECRET || process.env.CRON_SECRET || "fallback-secret";
 const BASE_URL = process.env.NEXT_PUBLIC_APP_URL || "https://maiauniverse.com.br";
 
 const RATE_LIMITS: Record<Channel, { perHour: number; perDay: number }> = {
@@ -666,7 +666,7 @@ export function buildUnsubscribeUrl(devId: number, category: NotificationCategor
 
 export function generateHmacToken(devId: number, category: string): string {
   return crypto
-    .createHmac("sha256", HMAC_SECRET)
+    .createHmac("sha256", getUnsubscribeHmacSecret())
     .update(`${devId}:${category}`)
     .digest("hex")
     .slice(0, 32);

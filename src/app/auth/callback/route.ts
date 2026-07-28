@@ -9,6 +9,8 @@ import { sendReferralJoinedNotification } from "@/lib/notification-senders/refer
 
 import { isAdmin } from "@/lib/admin";
 
+export const dynamic = "force-dynamic";
+
 // Extend timeout for GitHub API calls during login
 export const maxDuration = 60;
 

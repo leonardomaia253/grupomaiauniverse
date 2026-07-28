@@ -3,6 +3,9 @@ import { getSupabaseAdmin } from "@/lib/supabase";
 import { getResend } from "@/lib/resend";
 import { getcompanyEmail } from "@/lib/notification-helpers";
 import { buildUnsubscribeUrl } from "@/lib/notifications";
+import { requireCronRequest } from "@/lib/security";
+
+export const dynamic = "force-dynamic";
 
 const FROM = "Maia Universe <noreply@maiauniverse.com.br>";
 
@@ -17,9 +20,8 @@ const FROM = "Maia Universe <noreply@maiauniverse.com.br>";
  */
 export async function POST(request: NextRequest) {
   const authHeader = request.headers.get("authorization");
-  if (authHeader !== `Bearer ${process.env.CRON_SECRET}`) {
-    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-  }
+  const unauthorized = requireCronRequest(authHeader);
+  if (unauthorized) return unauthorized;
 
   let body: { subject?: string; html?: string; slug?: string };
   try {

@@ -12,6 +12,8 @@ import {
 } from "@/lib/raid";
 import type { RaidBoostItem } from "@/lib/raid";
 
+export const dynamic = "force-dynamic";
+
 export async function POST(request: Request) {
   const supabase = await createServerSupabase();
   const {

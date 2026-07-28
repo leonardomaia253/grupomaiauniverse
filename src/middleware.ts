@@ -1,6 +1,7 @@
 import { type NextRequest, NextResponse } from "next/server";
 import { createServerClient } from "@supabase/ssr";
-import { rateLimit } from "@/lib/rate-limit";
+import { rateLimitAsync } from "@/lib/rate-limit";
+import { getPublicSupabaseUrl, getSupabaseAnonKey } from "@/lib/env";
 
 // ---------------------------------------------------------------------------
 // Route-specific rate limits: [maxRequests, windowMs]
@@ -64,10 +65,6 @@ function getClientIp(request: NextRequest): string {
   );
 }
 
-function getSupabaseAnonKey() {
-  return (process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || "").replace(/your-anon-key.*$/i, "");
-}
-
 // ---------------------------------------------------------------------------
 // Middleware
 // ---------------------------------------------------------------------------
@@ -78,7 +75,7 @@ export async function middleware(request: NextRequest) {
   const ip = getClientIp(request);
   const { limit, window, group } = getLimitForPath(pathname);
   const key = `${ip}:${group}`;
-  const { ok, remaining, reset } = rateLimit(key, limit, window);
+  const { ok, remaining, reset } = await rateLimitAsync(key, limit, window);
 
   if (!ok) {
     return new NextResponse(
@@ -108,7 +105,7 @@ export async function middleware(request: NextRequest) {
 
   if (hasSession) {
     const supabase = createServerClient(
-      process.env.NEXT_PUBLIC_SUPABASE_URL!,
+      getPublicSupabaseUrl(),
       getSupabaseAnonKey(),
       {
         cookies: {

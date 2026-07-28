@@ -1,6 +1,8 @@
 import { NextResponse } from "next/server";
 import { getSupabaseAdmin } from "@/lib/supabase";
 
+export const dynamic = "force-dynamic";
+
 export async function GET() {
   const sb = getSupabaseAdmin();
   const cutoff = new Date(Date.now() - 5 * 60_000).toISOString();

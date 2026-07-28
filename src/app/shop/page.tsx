@@ -5,6 +5,8 @@ import { createServerSupabase } from "@/lib/supabase-server";
 import { getSupabaseAdmin } from "@/lib/supabase";
 import SignInButton from "./sign-in-button";
 
+export const dynamic = "force-dynamic";
+
 export const metadata: Metadata = {
   title: "Shop - Maia Universe",
   description: "Customize your planet in Maia Universe with effects, structures and more",

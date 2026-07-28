@@ -4,6 +4,7 @@ import { autoEquipIfSolo } from "@/lib/items";
 import { sendPurchaseNotification, sendGiftSentNotification } from "@/lib/notification-senders/purchase";
 import { sendGiftReceivedNotification } from "@/lib/notification-senders/gift";
 import { SKY_AD_PLANS, isValidPlanId } from "@/lib/skyAdPlans";
+import { claimWebhookEvent } from "@/lib/webhook-events";
 
 export const dynamic = "force-dynamic";
 
@@ -42,6 +43,12 @@ export async function POST(request: Request) {
   const pixId = extractPixId(body.data);
 
   try {
+    const eventId = `${body.event ?? "unknown"}:${pixId ?? body.data?.id ?? body.id ?? "missing-id"}`;
+    const claimed = await claimWebhookEvent(sb, "abacatepay", eventId, body.event);
+    if (!claimed) {
+      return NextResponse.json({ received: true, duplicate: true });
+    }
+
     switch (body.event) {
       case "billing.paid":
       case "pixQrCode.paid": {

@@ -2,6 +2,8 @@ import { NextResponse } from "next/server";
 import { getSupabaseAdmin } from "@/lib/supabase";
 import { DEFAULT_SKY_ADS, MAX_PLANES, MAX_BLIMPS, MAX_BILLBOARDS, MAX_ROOFTOP_SIGNS, MAX_LED_WRAPS, type SkyAd } from "@/lib/skyAds";
 
+export const dynamic = "force-dynamic";
+
 // Rotation interval in seconds. Every interval, a different set of paid ads is served.
 const ROTATION_INTERVAL = 60;
 

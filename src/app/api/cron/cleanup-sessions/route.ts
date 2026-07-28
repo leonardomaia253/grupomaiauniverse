@@ -1,24 +1,12 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getSupabaseAdmin } from "@/lib/supabase";
-import crypto from "crypto";
+import { requireCronRequest } from "@/lib/security";
 
-function timingSafeEqual(a: string, b: string): boolean {
-  if (a.length !== b.length) return false;
-  return crypto.timingSafeEqual(Buffer.from(a), Buffer.from(b));
-}
+export const dynamic = "force-dynamic";
 
 export async function GET(request: NextRequest) {
-  const secret = process.env.CRON_SECRET;
-  if (!secret) {
-    return NextResponse.json({ error: "Server misconfigured" }, { status: 500 });
-  }
-
-  const auth = request.headers.get("authorization") ?? "";
-  const expected = `Bearer ${secret}`;
-
-  if (auth.length !== expected.length || !timingSafeEqual(auth, expected)) {
-    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-  }
+  const unauthorized = requireCronRequest(request.headers.get("authorization"));
+  if (unauthorized) return unauthorized;
 
   const sb = getSupabaseAdmin();
   const now = Date.now();

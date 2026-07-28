@@ -3,6 +3,8 @@ import { readFile } from "node:fs/promises";
 import { join } from "node:path";
 import { getSupabaseAdmin } from "@/lib/supabase";
 
+export const dynamic = "force-dynamic";
+
 export const alt = "The Other Side - Maia Universe";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
@@ -10,7 +12,7 @@ export const contentType = "image/png";
 export default async function Image() {
   const [fontData, completerCount] = await Promise.all([
     readFile(join(process.cwd(), "public/fonts/Silkscreen-Regular.ttf")),
-    process.env.NEXT_PUBLIC_SUPABASE_URL
+    process.env.NEXT_PUBLIC_SUPABASE_URL && process.env.ADMIN_PROXY_SECRET
       ? getSupabaseAdmin()
           .from("companies")
           .select("id", { count: "exact", head: true })

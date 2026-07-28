@@ -10,6 +10,8 @@ import { sendStreakBrokenNotification } from "@/lib/notification-senders/streak-
 import { trackDailyMission } from "@/lib/dailies";
 import type { SupabaseClient } from "@supabase/supabase-js";
 
+export const dynamic = "force-dynamic";
+
 // A12: Streak reward milestones — {milestone: days, pool: item_ids to pick from}
 const STREAK_MILESTONES = [
   { milestone: 3,  pool: ["flag"] },

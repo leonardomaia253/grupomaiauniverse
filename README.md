@@ -1,11 +1,11 @@
-<h1 align="center">Git City</h1>
+<h1 align="center">Maia Universe</h1>
 
 <p align="center">
-  <strong>Your perfil da empresa as a 3D pixel art building in an interactive city.</strong>
+  <strong>Company profiles as interactive 3D planets in Maia Universe.</strong>
 </p>
 
 <p align="center">
-  <a href="https://thegitcity.com">thegitcity.com</a>
+  <a href="https://maiauniverse.com.br">maiauniverse.com.br</a>
 </p>
 
 <p align="center">
@@ -14,9 +14,9 @@
 
 ---
 
-## What is Git City?
+## What is Maia Universe?
 
-Git City transforms every perfil da empresa into a unique pixel art building. The more you contribute, the taller your building grows. Explore an interactive 3D city, fly between buildings, and discover developers from around the world.
+Maia Universe transforms company and GitHub profiles into interactive 3D planets. Explore an orbital ecosystem, discover companies, compare activity, and connect product, community, ads, and profile identity in one visual layer.
 
 ## Features
 

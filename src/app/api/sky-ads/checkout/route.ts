@@ -6,6 +6,8 @@ import { MAX_TEXT_LENGTH } from "@/lib/skyAds";
 import { rateLimit } from "@/lib/rate-limit";
 import { containsBlockedContent } from "@/lib/ad-moderation";
 
+export const dynamic = "force-dynamic";
+
 const HEX_COLOR = /^#[0-9a-fA-F]{6}$/;
 
 function getBaseUrl(): string {

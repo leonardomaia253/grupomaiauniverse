@@ -4,6 +4,7 @@ import { verifyIpnSignature } from "@/lib/nowpayments";
 import { autoEquipIfSolo } from "@/lib/items";
 import { sendPurchaseNotification, sendGiftSentNotification } from "@/lib/notification-senders/purchase";
 import { sendGiftReceivedNotification } from "@/lib/notification-senders/gift";
+import { claimWebhookEvent } from "@/lib/webhook-events";
 
 export const dynamic = "force-dynamic";
 
@@ -36,6 +37,12 @@ export async function POST(request: Request) {
   }
 
   try {
+    const eventId = paymentId ? `${paymentId}:${paymentStatus}` : `${orderId}:${paymentStatus}`;
+    const claimed = await claimWebhookEvent(sb, "nowpayments", eventId, paymentStatus);
+    if (!claimed) {
+      return NextResponse.json({ received: true, duplicate: true });
+    }
+
     switch (paymentStatus) {
       case "finished":
       case "confirmed": {

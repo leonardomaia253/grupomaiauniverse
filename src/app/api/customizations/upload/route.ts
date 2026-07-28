@@ -2,6 +2,8 @@ import { NextResponse } from "next/server";
 import { createServerSupabase } from "@/lib/supabase-server";
 import { getSupabaseAdmin } from "@/lib/supabase";
 
+export const dynamic = "force-dynamic";
+
 const MAX_FILE_SIZE = 2 * 1024 * 1024; // 2 MB
 const ALLOWED_TYPES = new Set([
   "image/png",
@@ -9,6 +11,85 @@ const ALLOWED_TYPES = new Set([
   "image/webp",
   "image/gif",
 ]);
+const MAX_IMAGE_DIMENSION = 4096;
+
+function readUint16BE(bytes: Uint8Array, offset: number): number {
+  return (bytes[offset] << 8) | bytes[offset + 1];
+}
+
+function readUint16LE(bytes: Uint8Array, offset: number): number {
+  return bytes[offset] | (bytes[offset + 1] << 8);
+}
+
+function readUint24LE(bytes: Uint8Array, offset: number): number {
+  return bytes[offset] | (bytes[offset + 1] << 8) | (bytes[offset + 2] << 16);
+}
+
+function getImageInfo(bytes: Uint8Array): { type: string; width?: number; height?: number } | null {
+  if (
+    bytes.length >= 24 &&
+    bytes[0] === 0x89 &&
+    bytes[1] === 0x50 &&
+    bytes[2] === 0x4e &&
+    bytes[3] === 0x47
+  ) {
+    return {
+      type: "image/png",
+      width: readUint16BE(bytes, 16) * 65536 + readUint16BE(bytes, 18),
+      height: readUint16BE(bytes, 20) * 65536 + readUint16BE(bytes, 22),
+    };
+  }
+
+  if (bytes.length >= 10 && bytes[0] === 0x47 && bytes[1] === 0x49 && bytes[2] === 0x46) {
+    return {
+      type: "image/gif",
+      width: readUint16LE(bytes, 6),
+      height: readUint16LE(bytes, 8),
+    };
+  }
+
+  if (
+    bytes.length >= 30 &&
+    bytes[0] === 0x52 &&
+    bytes[1] === 0x49 &&
+    bytes[2] === 0x46 &&
+    bytes[3] === 0x46 &&
+    bytes[8] === 0x57 &&
+    bytes[9] === 0x45 &&
+    bytes[10] === 0x42 &&
+    bytes[11] === 0x50
+  ) {
+    if (bytes[12] === 0x56 && bytes[13] === 0x50 && bytes[14] === 0x38 && bytes[15] === 0x58) {
+      return {
+        type: "image/webp",
+        width: readUint24LE(bytes, 24) + 1,
+        height: readUint24LE(bytes, 27) + 1,
+      };
+    }
+    return { type: "image/webp" };
+  }
+
+  if (bytes.length >= 4 && bytes[0] === 0xff && bytes[1] === 0xd8) {
+    let offset = 2;
+    while (offset + 9 < bytes.length) {
+      if (bytes[offset] !== 0xff) return { type: "image/jpeg" };
+      const marker = bytes[offset + 1];
+      const length = readUint16BE(bytes, offset + 2);
+      if (length < 2) return null;
+      if (marker >= 0xc0 && marker <= 0xc3) {
+        return {
+          type: "image/jpeg",
+          height: readUint16BE(bytes, offset + 5),
+          width: readUint16BE(bytes, offset + 7),
+        };
+      }
+      offset += 2 + length;
+    }
+    return { type: "image/jpeg" };
+  }
+
+  return null;
+}
 
 export async function POST(request: Request) {
   // Auth required
@@ -115,17 +196,29 @@ export async function POST(request: Request) {
     );
   }
 
-  // Ensure billboards bucket exists
-  const { data: buckets } = await sb.storage.listBuckets();
-  const bucketExists = buckets?.some((b) => b.name === "billboards");
-  if (!bucketExists) {
-    await sb.storage.createBucket("billboards", { public: true });
-  }
-
   // Upload file (overwrite on re-upload)
   const ext = file.type.split("/")[1] === "jpeg" ? "jpg" : file.type.split("/")[1];
   const filePath = `${dev.id}_${slotIndex}.${ext}`;
   const fileBuffer = await file.arrayBuffer();
+  const bytes = new Uint8Array(fileBuffer);
+  const imageInfo = getImageInfo(bytes);
+
+  if (!imageInfo || imageInfo.type !== file.type) {
+    return NextResponse.json(
+      { error: "File contents do not match the declared image type" },
+      { status: 400 }
+    );
+  }
+
+  if (
+    (imageInfo.width && imageInfo.width > MAX_IMAGE_DIMENSION) ||
+    (imageInfo.height && imageInfo.height > MAX_IMAGE_DIMENSION)
+  ) {
+    return NextResponse.json(
+      { error: `Image dimensions are too large (max ${MAX_IMAGE_DIMENSION}px)` },
+      { status: 400 }
+    );
+  }
 
   const { error: uploadError } = await sb.storage
     .from("billboards")

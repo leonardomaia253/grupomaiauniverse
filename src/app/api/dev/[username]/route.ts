@@ -1,6 +1,8 @@
 import { NextResponse } from "next/server";
 import { getSupabaseAdmin } from "@/lib/supabase";
 
+export const dynamic = "force-dynamic";
+
 // Allow up to 60s on Vercel (Pro plan). Hobby plan max is 10s.
 export const maxDuration = 60;
 

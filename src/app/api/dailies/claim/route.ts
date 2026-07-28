@@ -5,6 +5,8 @@ import { rateLimit } from "@/lib/rate-limit";
 import { getDailyMissions, getTodayStr } from "@/lib/dailies";
 import { checkAchievements } from "@/lib/achievements";
 
+export const dynamic = "force-dynamic";
+
 export async function POST() {
   const supabase = await createServerSupabase();
   const {

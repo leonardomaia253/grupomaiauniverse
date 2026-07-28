@@ -3,6 +3,8 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getSupabaseAdmin } from "@/lib/supabase";
 
+export const dynamic = "force-dynamic";
+
 const ACCENT = "#c8e64a";
 
 // Historical baselines from Himetrica (tracking was lost in Supabase due to www origin bug).
