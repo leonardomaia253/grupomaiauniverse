@@ -46,13 +46,38 @@ const BACKDROPS = [
 ];
 
 let introAudio: HTMLAudioElement | null = null;
+let introBedAudio: HTMLAudioElement | null = null;
 let introHasPlayed = false;
+
+const VOICE_VOLUME = 0.95;
+const BED_VOLUME = 0.18;
+const BED_FADE_MS = 900;
 
 function useIntroLine(progress: number): number {
   return Math.min(
     SCRIPT_LINES.length - 1,
     Math.floor((Math.max(0, progress) / 100) * SCRIPT_LINES.length),
   );
+}
+
+function fadeOutBed() {
+  if (!introBedAudio) return;
+  const bed = introBedAudio;
+  const startVolume = bed.volume;
+  const startedAt = performance.now();
+  const fade = () => {
+    const elapsed = performance.now() - startedAt;
+    const progress = Math.min(1, elapsed / BED_FADE_MS);
+    bed.volume = startVolume * (1 - progress);
+    if (progress < 1) {
+      requestAnimationFrame(fade);
+      return;
+    }
+    bed.pause();
+    bed.currentTime = 0;
+    bed.volume = BED_VOLUME;
+  };
+  requestAnimationFrame(fade);
 }
 
 export default function LoadingScreen({
@@ -66,14 +91,17 @@ export default function LoadingScreen({
   const [fading, setFading] = useState(false);
   const [backdropIndex, setBackdropIndex] = useState(0);
   const [audioBlocked, setAudioBlocked] = useState(false);
+  const [audioEnabled, setAudioEnabled] = useState(false);
   const audioAttempted = useRef(false);
   const lineIndex = useIntroLine(progress);
   const isError = stage === "error";
+  const isReady = stage === "ready";
   const clampedProgress = Math.min(100, progress);
   const message = isError ? error : (STAGE_MESSAGES[stage] ?? "");
 
   const finishIntro = useCallback(() => {
     introAudio?.pause();
+    fadeOutBed();
     setFading(true);
   }, []);
 
@@ -82,17 +110,25 @@ export default function LoadingScreen({
     if (!introAudio) {
       introAudio = new Audio("/audio/grupo-maia-intro.mp3");
       introAudio.preload = "auto";
-      introAudio.volume = 0.82;
+      introAudio.volume = VOICE_VOLUME;
       introAudio.addEventListener("ended", () => {
         introHasPlayed = true;
       });
     }
+    if (!introBedAudio) {
+      introBedAudio = new Audio("/audio/midnight-commit.mp3");
+      introBedAudio.preload = "auto";
+      introBedAudio.loop = true;
+      introBedAudio.volume = BED_VOLUME;
+    }
 
     try {
-      await introAudio.play();
+      await Promise.all([introBedAudio.play(), introAudio.play()]);
       setAudioBlocked(false);
+      setAudioEnabled(true);
     } catch {
       setAudioBlocked(true);
+      setAudioEnabled(false);
     }
   }, [isError]);
 
@@ -103,12 +139,6 @@ export default function LoadingScreen({
     );
     return () => clearInterval(timer);
   }, []);
-
-  useEffect(() => {
-    if (stage !== "ready") return;
-    const frame = requestAnimationFrame(() => setFading(true));
-    return () => cancelAnimationFrame(frame);
-  }, [stage]);
 
   useEffect(() => {
     if (audioAttempted.current || isError) return;
@@ -185,6 +215,12 @@ export default function LoadingScreen({
         </p>
 
         {!isError && (
+          <p className="mt-3 text-[10px] uppercase tracking-[0.2em] text-white/36">
+            {audioEnabled ? "narração + trilha ativas" : audioBlocked ? "toque para ativar áudio" : "mix cinematográfico carregando"}
+          </p>
+        )}
+
+        {!isError && (
           <div className="mt-8 w-full max-w-[20rem] sm:mt-10 sm:max-w-md">
             <div className="h-px w-full bg-white/15">
               <div
@@ -213,12 +249,22 @@ export default function LoadingScreen({
           </button>
         )}
 
-        {!isError && stage !== "ready" && audioBlocked && (
+        {!isError && !isReady && audioBlocked && (
           <button
             onClick={startIntroAudio}
             className="mt-5 border border-white/20 bg-white/[0.06] px-4 py-2 text-[9px] font-semibold uppercase tracking-[0.16em] text-white/72 transition hover:border-white/35 hover:bg-white/[0.1] hover:text-white sm:px-5 sm:text-[10px] sm:tracking-[0.18em]"
           >
-            Ativar voz
+            Ativar áudio
+          </button>
+        )}
+
+        {!isError && isReady && (
+          <button
+            onClick={finishIntro}
+            className="mt-7 border border-white/20 px-6 py-3 text-[10px] font-semibold uppercase tracking-[0.2em] text-black transition hover:scale-[1.02] hover:brightness-110 sm:px-8 sm:text-xs"
+            style={{ backgroundColor: accentColor, boxShadow: `0 0 34px ${accentColor}55` }}
+          >
+            Entrar no universo
           </button>
         )}
       </div>
@@ -233,9 +279,28 @@ export default function LoadingScreen({
             radial-gradient(circle at 54% 44%, rgba(255,255,255,0.18) 0 1px, transparent 2px);
           animation: maia-mote-drift 8s ease-in-out infinite;
         }
+        .maia-motes::before,
+        .maia-motes::after {
+          content: "";
+          position: absolute;
+          inset: 16% 30%;
+          border: 1px solid rgba(255,255,255,0.08);
+          border-radius: 999px;
+          transform: rotate(-12deg);
+          animation: maia-orbit-pulse 3.8s ease-in-out infinite;
+        }
+        .maia-motes::after {
+          inset: 26% 24%;
+          transform: rotate(16deg);
+          animation-delay: 900ms;
+        }
         @keyframes maia-mote-drift {
           0%, 100% { transform: translate3d(0, 0, 0); opacity: 0.45; }
           50% { transform: translate3d(10px, -18px, 0); opacity: 0.82; }
+        }
+        @keyframes maia-orbit-pulse {
+          0%, 100% { opacity: 0.16; filter: blur(0); }
+          50% { opacity: 0.48; filter: blur(1px); }
         }
       `}</style>
     </div>

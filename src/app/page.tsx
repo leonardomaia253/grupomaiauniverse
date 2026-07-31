@@ -1120,7 +1120,7 @@ function HomeContent() {
   const handleLoadFadeComplete = useCallback(() => {
     setLoadStage("done");
     const hasDeepLink = searchParams.get("user") || searchParams.get("compare");
-    if (!localStorage.getItem("Universe_intro_seen") && !hasDeepLink) {
+    if (!localStorage.getItem("universe_intro_seen") && !hasDeepLink) {
       setIntroMode(true);
     }
   }, [searchParams]);

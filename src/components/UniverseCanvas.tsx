@@ -43,6 +43,15 @@ type FieldDot = {
 
 type ViewMode = "mobile" | "desktop";
 
+type CosmicEvent = {
+  id: string;
+  label: string;
+  detail: string;
+  x: number;
+  y: number;
+  color: string;
+};
+
 const TAU = Math.PI * 2;
 
 const BRAND_RULES: BrandRule[] = [
@@ -178,6 +187,62 @@ function hasValue(value: number | null | undefined): boolean {
 
 function dataState(value: number | null | undefined): "synced" | "empty" {
   return hasValue(value) ? "synced" : "empty";
+}
+
+function planetSignal(planet: PlanetNode): { title: string; body: string; tone: string } {
+  const health = typeof planet.company.health_score === "number" ? planet.company.health_score : 100;
+  if (health < 55) {
+    return {
+      title: "Planeta em instabilidade",
+      body: "A presença existe, mas a órbita pede manutenção: dados, ritmo operacional ou clareza de marca podem estar drenando energia.",
+      tone: "atenção",
+    };
+  }
+  if (planet.mass > 5000) {
+    return {
+      title: "Gigante em expansão",
+      body: "A massa deste planeta indica tração acumulada. Bom candidato para destaque, anúncios orbitais e uma identidade visual mais autoral.",
+      tone: "expansão",
+    };
+  }
+  if (planet.company.total_stars && planet.company.total_stars > 100) {
+    return {
+      title: "Núcleo técnico brilhando",
+      body: "O sinal de comunidade técnica está forte. A próxima melhoria é transformar reputação em narrativa visual e conversão.",
+      tone: "reputação",
+    };
+  }
+  return {
+    title: "Núcleo em formação",
+    body: "Este planeta já tem identidade no mapa. Personalização, histórico e campanhas podem aumentar brilho, confiança e memorabilidade.",
+    tone: "origem",
+  };
+}
+
+function useUniverseSfx(enabled: boolean) {
+  const ctxRef = useRef<AudioContext | null>(null);
+
+  return useCallback((kind: "hover" | "select" | "mission") => {
+    if (!enabled || typeof window === "undefined") return;
+    const AudioContextCtor = window.AudioContext || (window as Window & { webkitAudioContext?: typeof AudioContext }).webkitAudioContext;
+    if (!AudioContextCtor) return;
+    const ctx = ctxRef.current || new AudioContextCtor();
+    ctxRef.current = ctx;
+    const osc = ctx.createOscillator();
+    const gain = ctx.createGain();
+    const now = ctx.currentTime;
+    const frequency = kind === "select" ? 196 : kind === "mission" ? 392 : 261.63;
+    osc.type = "sine";
+    osc.frequency.setValueAtTime(frequency, now);
+    osc.frequency.exponentialRampToValueAtTime(frequency * (kind === "select" ? 1.55 : 1.18), now + 0.16);
+    gain.gain.setValueAtTime(0.0001, now);
+    gain.gain.exponentialRampToValueAtTime(kind === "hover" ? 0.018 : 0.035, now + 0.025);
+    gain.gain.exponentialRampToValueAtTime(0.0001, now + 0.22);
+    osc.connect(gain);
+    gain.connect(ctx.destination);
+    osc.start(now);
+    osc.stop(now + 0.24);
+  }, [enabled]);
 }
 
 function hexToRgb01(color: string): [number, number, number] {
@@ -469,6 +534,8 @@ function CobePlanet({
         aria-label={`Abrir ${planet.name || planet.login}`}
       >
         <span className="absolute inset-x-0 top-0 aspect-square rounded-full blur-2xl" style={{ backgroundColor: planet.color, opacity: active ? 0.34 : 0.16 }} />
+        <span className="pointer-events-none absolute inset-x-[-6%] top-[-6%] aspect-square rounded-full border border-white/10 opacity-50" style={{ transform: "rotate(-18deg) scaleY(0.34)", boxShadow: `0 0 18px ${planet.color}33` }} />
+        {active && <span className="pointer-events-none absolute right-[8%] top-[18%] h-3 w-3 rounded-full" style={{ backgroundColor: planet.color, boxShadow: `0 0 16px ${planet.color}` }} />}
         <span className="absolute inset-x-[4%] top-[4%] aspect-square rounded-full opacity-80 mix-blend-screen" style={{ background: PLANET_TEXTURES[planet.texture] }} />
         <span className="absolute inset-x-[7%] top-[7%] aspect-square rounded-full border border-white/10" style={{ boxShadow: `inset 0 0 34px rgba(0,0,0,0.38), 0 0 30px ${planet.color}55` }} />
         <span className="pointer-events-none absolute inset-x-[7%] top-[7%] z-10 aspect-square rounded-full mix-blend-multiply" style={{ background: damageMask, opacity: planet.damage > 0.28 ? 1 : 0 }} />
@@ -505,6 +572,8 @@ function CobePlanet({
       aria-label={`Abrir ${planet.name || planet.login}`}
     >
       <span className="absolute inset-0 rounded-full blur-2xl" style={{ backgroundColor: planet.color, opacity: active ? 0.33 : 0.13 }} />
+      <span className="pointer-events-none absolute inset-[-7%] rounded-full border border-white/10 opacity-50" style={{ transform: "rotate(-18deg) scaleY(0.34)", boxShadow: `0 0 20px ${planet.color}33` }} />
+      {active && <span className="pointer-events-none absolute right-[6%] top-[18%] h-3 w-3 rounded-full" style={{ backgroundColor: planet.color, boxShadow: `0 0 16px ${planet.color}` }} />}
       <span className="absolute inset-[4%] rounded-full opacity-80 mix-blend-screen" style={{ background: PLANET_TEXTURES[planet.texture] }} />
       <span className="absolute inset-[7%] rounded-full border border-white/10" style={{ boxShadow: `inset 0 0 36px rgba(0,0,0,0.38), 0 0 34px ${planet.color}55` }} />
       <span className="pointer-events-none absolute inset-[7%] z-10 rounded-full mix-blend-multiply" style={{ background: damageMask, opacity: planet.damage > 0.28 ? 1 : 0 }} />
@@ -525,6 +594,7 @@ function CompanyHud({ planet, mode, onClose }: { planet: PlanetNode; mode: ViewM
   const company = planet.company;
   const isMobile = mode === "mobile";
   const health = typeof company.health_score === "number" ? company.health_score : 100;
+  const signal = planetSignal(planet);
   const details = [
     { label: "Tracao", value: formatMetric(planet.mass, "Em sincronizacao"), state: dataState(planet.mass) },
     { label: "Estrelas", value: formatMetric(company.total_stars, "Sem dados publicos"), state: dataState(company.total_stars) },
@@ -556,6 +626,15 @@ function CompanyHud({ planet, mode, onClose }: { planet: PlanetNode; mode: ViewM
           <p className="mt-1 text-sm text-white/78">{planet.sector}</p>
           <p className="mt-3 text-xs leading-relaxed text-white/54">{planet.description}</p>
           <p className="mt-3 text-[10px] uppercase tracking-[0.18em] text-white/34">Ultima atualizacao: {updatedAt}</p>
+        </div>
+
+        <div className="mt-4 border border-white/10 bg-white/[0.035] p-3">
+          <div className="flex items-center justify-between gap-3">
+            <p className="text-[10px] uppercase tracking-[0.22em] text-white/38">Sinal do planeta</p>
+            <span className="text-[10px] uppercase tracking-[0.18em]" style={{ color: planet.color }}>{signal.tone}</span>
+          </div>
+          <p className="mt-2 text-sm font-semibold normal-case text-white/82">{signal.title}</p>
+          <p className="mt-2 text-xs leading-relaxed normal-case text-white/52">{signal.body}</p>
         </div>
 
         <div className="mt-4">
@@ -689,6 +768,63 @@ function OnboardingRail({ isMobile }: { isMobile: boolean }) {
   );
 }
 
+function CosmicEventsLayer({ events, reducedMotion }: { events: CosmicEvent[]; reducedMotion: boolean }) {
+  return (
+    <div className="pointer-events-none absolute inset-0 z-10 overflow-hidden">
+      {events.map((event) => (
+        <div
+          key={event.id}
+          className="absolute hidden -translate-x-1/2 -translate-y-1/2 items-center gap-2 font-space text-[10px] uppercase tracking-[0.16em] text-white/54 sm:flex"
+          style={{ left: `${event.x * 100}%`, top: `${event.y * 100}%` }}
+        >
+          <span
+            className={`h-2 w-2 rounded-full ${reducedMotion ? "" : "animate-ping"}`}
+            style={{ backgroundColor: event.color, boxShadow: `0 0 22px ${event.color}` }}
+          />
+          <span className="border border-white/10 bg-black/35 px-2 py-1 backdrop-blur-xl">
+            {event.label}
+          </span>
+        </div>
+      ))}
+    </div>
+  );
+}
+
+function MissionRail({
+  isMobile,
+  hasSelected,
+  hasSearched,
+}: {
+  isMobile: boolean;
+  hasSelected: boolean;
+  hasSearched: boolean;
+}) {
+  const missions = [
+    { label: "Localize uma marca", done: hasSearched, hint: "Use a busca por nome, @login ou setor." },
+    { label: "Abra um planeta", done: hasSelected, hint: "Clique para revelar contexto e métricas." },
+    { label: "Escolha uma ação", done: hasSelected, hint: "Perfil, estúdio ou anúncio orbital." },
+  ];
+
+  return (
+    <aside className={`${isMobile ? "fixed bottom-3 left-3 right-3 z-30" : "absolute bottom-6 left-[23rem] z-30 w-80"} pointer-events-auto border border-white/10 bg-black/38 p-3 font-space backdrop-blur-2xl`}>
+      <p className="text-[10px] uppercase tracking-[0.24em] text-white/38">Missões iniciais</p>
+      <div className="mt-3 grid gap-2">
+        {missions.map((mission, index) => (
+          <div key={mission.label} className="flex items-start gap-3 text-[11px]">
+            <span className={`mt-0.5 grid h-5 w-5 shrink-0 place-items-center border ${mission.done ? "border-lime-300 bg-lime-300 text-black" : "border-white/12 text-white/36"}`}>
+              {mission.done ? "✓" : index + 1}
+            </span>
+            <div>
+              <p className="uppercase tracking-[0.16em] text-white/70">{mission.label}</p>
+              <p className="mt-1 normal-case leading-relaxed text-white/42">{mission.hint}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+    </aside>
+  );
+}
+
 export default function UniverseCanvas({ companies }: { companies: CompanyRecord[] }) {
   const mode = useViewMode();
   const isMobile = mode === "mobile";
@@ -696,8 +832,11 @@ export default function UniverseCanvas({ companies }: { companies: CompanyRecord
   const [hovered, setHovered] = useState<PlanetNode | null>(null);
   const [selected, setSelected] = useState<PlanetNode | null>(null);
   const [query, setQuery] = useState("");
+  const [hasSelectedOnce, setHasSelectedOnce] = useState(false);
+  const [soundEnabled, setSoundEnabled] = useState(true);
   const active = selected || hovered;
   const reducedMotion = usePrefersReducedMotion();
+  const playSfx = useUniverseSfx(soundEnabled && !reducedMotion);
   const normalizedQuery = normalize(query);
   const visiblePlanets = useMemo(() => {
     if (!normalizedQuery) return featured;
@@ -708,7 +847,26 @@ export default function UniverseCanvas({ companies }: { companies: CompanyRecord
 
   const handleHover = useCallback((planet: PlanetNode | null) => {
     setHovered(planet);
-  }, []);
+    if (planet) playSfx("hover");
+  }, [playSfx]);
+
+  const handleSelect = useCallback((planet: PlanetNode) => {
+    setSelected(planet);
+    setHasSelectedOnce(true);
+    playSfx("select");
+  }, [playSfx]);
+
+  const cosmicEvents = useMemo<CosmicEvent[]>(() => {
+    const source = featured.slice(0, 4);
+    return source.map((planet, index) => ({
+      id: `${planet.login}-signal`,
+      label: index === 0 ? "cometa de tração" : index === 1 ? "pulso de marca" : index === 2 ? "órbita ativa" : "sinal vivo",
+      detail: planet.sector,
+      x: Math.max(0.08, Math.min(0.92, planet.x + (index % 2 === 0 ? 0.09 : -0.08))),
+      y: Math.max(0.12, Math.min(0.88, planet.y + (index % 2 === 0 ? -0.08 : 0.09))),
+      color: planet.color,
+    }));
+  }, [featured]);
 
   useEffect(() => {
     if (reducedMotion || selected || hovered || featured.length === 0) return;
@@ -737,7 +895,7 @@ export default function UniverseCanvas({ companies }: { companies: CompanyRecord
                   renderGlobe={!reducedMotion && (index < 2 || isFocused)}
                   dimmed={Boolean(active && !isFocused)}
                   onHover={handleHover}
-                  onSelect={setSelected}
+                  onSelect={handleSelect}
                 />
               </div>
             );
@@ -764,7 +922,7 @@ export default function UniverseCanvas({ companies }: { companies: CompanyRecord
                 renderGlobe={!reducedMotion && (index < 8 || isFocused)}
                 dimmed={Boolean(active && !isFocused)}
                 onHover={handleHover}
-                onSelect={setSelected}
+                onSelect={handleSelect}
               />
             </div>
           );
@@ -778,6 +936,7 @@ export default function UniverseCanvas({ companies }: { companies: CompanyRecord
       <div className={`relative h-full w-full ${isMobile ? "overflow-y-auto overscroll-contain scroll-smooth" : "overflow-hidden"}`}>
         <div className={`relative w-full ${isMobile ? "min-h-[1500px]" : "h-full"}`}>
           <StarField dots={fieldDots} />
+          <CosmicEventsLayer events={cosmicEvents} reducedMotion={reducedMotion} />
           <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_0%,transparent_57%,rgba(0,0,0,0.78)_100%)]" />
           <div className="pointer-events-none sticky top-0 z-20 h-44 bg-gradient-to-b from-black/80 to-transparent" />
           <div className="pointer-events-none absolute inset-x-0 bottom-0 h-48 bg-gradient-to-t from-black/80 to-transparent" />
@@ -806,10 +965,20 @@ export default function UniverseCanvas({ companies }: { companies: CompanyRecord
           {renderPlanets()}
           <OnboardingRail isMobile={isMobile} />
           <UniverseLegend isMobile={isMobile} />
+          <MissionRail isMobile={isMobile} hasSelected={hasSelectedOnce} hasSearched={Boolean(normalizedQuery)} />
         </div>
       </div>
 
       {selected && <CompanyHud planet={selected} mode={mode} onClose={() => setSelected(null)} />}
+      {!isMobile && (
+        <button
+          type="button"
+          onClick={() => setSoundEnabled((value) => !value)}
+          className="pointer-events-auto absolute bottom-6 right-[31rem] z-30 border border-white/10 bg-black/35 px-3 py-2 font-space text-[10px] uppercase tracking-[0.16em] text-white/48 backdrop-blur-xl transition hover:border-white/25 hover:text-white"
+        >
+          som {soundEnabled ? "on" : "off"}
+        </button>
+      )}
     </div>
   );
 }
