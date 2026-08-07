@@ -3,6 +3,7 @@
 import createGlobe from "cobe";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { type CompanyRecord } from "@/lib/github";
+import { getPlanetPerformance, type PlanetPerformance, type PlanetTexture } from "@/lib/planet-performance";
 
 type BrandRule = {
   login: string;
@@ -11,7 +12,7 @@ type BrandRule = {
   color: string;
   sector: string;
   description: string;
-  texture: "aurora" | "ember" | "ocean" | "obsidian" | "solar" | "forest" | "rose" | "ice";
+  texture: PlanetTexture;
   scale?: number;
   priority?: number;
   forceFeatured?: boolean;
@@ -29,6 +30,7 @@ type PlanetNode = {
   y: number;
   mass: number;
   damage: number;
+  performance: PlanetPerformance;
   company: CompanyRecord;
 };
 
@@ -68,7 +70,7 @@ const BRAND_RULES: BrandRule[] = [
   { login: "boase", name: "Boase", match: ["boase"], color: "#38bdf8", sector: "Operacao e servicos", description: "Planeta azul claro, leve, orientado a servicos e conexoes.", texture: "ice", priority: 74, forceFeatured: true },
 ];
 
-const PLANET_TEXTURES: Record<BrandRule["texture"], string> = {
+const PLANET_TEXTURES: Record<PlanetTexture, string> = {
   aurora: "radial-gradient(circle at 28% 22%, #ffffff 0 8%, transparent 18%), radial-gradient(circle at 70% 28%, rgba(167,139,250,0.95), transparent 28%), radial-gradient(circle at 34% 72%, rgba(34,211,238,0.42), transparent 30%)",
   ember: "radial-gradient(circle at 32% 20%, #fff2e8 0 7%, transparent 17%), linear-gradient(135deg, rgba(255,255,255,0.18), transparent 30%), radial-gradient(circle at 70% 68%, rgba(0,0,0,0.45), transparent 34%)",
   ocean: "radial-gradient(circle at 30% 24%, #eff6ff 0 8%, transparent 18%), radial-gradient(circle at 66% 65%, rgba(14,165,233,0.52), transparent 34%), linear-gradient(150deg, rgba(255,255,255,0.16), transparent 42%)",
@@ -152,70 +154,37 @@ function colorForCompany(company: CompanyRecord): string {
   const brand = brandForCompany(company);
   if (brand) return brand.color;
   if (company.custom_color) return company.custom_color;
-  const seed = hashString(`${company.username}:${company.primary_language || company.category || ""}`);
-  return `hsl(${seed % 360} ${58 + Math.round(seededUnit(seed + 3) * 24)}% ${50 + Math.round(seededUnit(seed + 7) * 18)}%)`;
+  return getPlanetPerformance(company.username, company.name).color;
 }
 
 function massForCompany(company: CompanyRecord): number {
-  return (company.contributions_total || company.contributions || 0) + (company.total_stars || 0) * 2 + (company.revenue || 0) / 30000;
+  return getPlanetPerformance(company.username, company.name).score;
 }
 
 function damageForCompany(company: CompanyRecord): number {
-  if (typeof company.health_score !== "number") return 0.12;
-  return Math.max(0, Math.min(0.8, (100 - company.health_score) / 100));
-}
-
-function formatMetric(value: number | null | undefined, empty = "Nao informado"): string {
-  if (!value || value <= 0) return empty;
-  if (value >= 1_000_000) return `${(value / 1_000_000).toFixed(1)}M`;
-  if (value >= 1_000) return `${(value / 1_000).toFixed(1)}K`;
-  return `${Math.round(value)}`;
-}
-
-function formatMoney(value: number | null | undefined): string {
-  if (!value || value <= 0) return "Nao informado";
-  return new Intl.NumberFormat("pt-BR", {
-    style: "currency",
-    currency: "BRL",
-    maximumFractionDigits: value >= 1000 ? 0 : 2,
-  }).format(value);
-}
-
-function hasValue(value: number | null | undefined): boolean {
-  return typeof value === "number" && value > 0;
-}
-
-function dataState(value: number | null | undefined): "synced" | "empty" {
-  return hasValue(value) ? "synced" : "empty";
+  return getPlanetPerformance(company.username, company.name).damage;
 }
 
 function planetSignal(planet: PlanetNode): { title: string; body: string; tone: string } {
-  const health = typeof planet.company.health_score === "number" ? planet.company.health_score : 100;
-  if (health < 55) {
+  const { score, growth, stability, status } = planet.performance;
+  if (status === "alerta") {
     return {
       title: "Planeta em instabilidade",
-      body: "A presença existe, mas a órbita pede manutenção: dados, ritmo operacional ou clareza de marca podem estar drenando energia.",
-      tone: "atenção",
+      body: "O rendimento visual interno indica baixa estabilidade. A orbita pede foco, consistencia e reforco de identidade.",
+      tone: "atencao",
     };
   }
-  if (planet.mass > 5000) {
+  if (status === "ascensao") {
     return {
-      title: "Gigante em expansão",
-      body: "A massa deste planeta indica tração acumulada. Bom candidato para destaque, anúncios orbitais e uma identidade visual mais autoral.",
-      tone: "expansão",
-    };
-  }
-  if (planet.company.total_stars && planet.company.total_stars > 100) {
-    return {
-      title: "Núcleo técnico brilhando",
-      body: "O sinal de comunidade técnica está forte. A próxima melhoria é transformar reputação em narrativa visual e conversão.",
-      tone: "reputação",
+      title: "Planeta em ascensao",
+      body: `O rendimento visual esta forte: score ${score}, crescimento ${growth} e estabilidade ${stability}. Bom candidato para destaque e campanhas orbitais.`,
+      tone: "ascensao",
     };
   }
   return {
-    title: "Núcleo em formação",
-    body: "Este planeta já tem identidade no mapa. Personalização, histórico e campanhas podem aumentar brilho, confiança e memorabilidade.",
-    tone: "origem",
+    title: "Planeta estavel",
+    body: `O rendimento visual esta equilibrado: score ${score}, crescimento ${growth} e estabilidade ${stability}.`,
+    tone: "estavel",
   };
 }
 
@@ -313,6 +282,7 @@ function buildUniverse(companies: CompanyRecord[], mode: ViewMode) {
 
   const featured = featuredCompanies.map((company, index): PlanetNode => {
     const brand = brandForCompany(company);
+    const performance = getPlanetPerformance(company.username, company.name);
     const mass = massForCompany(company);
     const layout = (isMobile ? MOBILE_LAYOUT : FEATURED_LAYOUT)[index] || { x: 0.5, y: 0.5 };
     const scale = (brand?.scale || 1) * (isMobile ? 0.72 : 1);
@@ -324,12 +294,13 @@ function buildUniverse(companies: CompanyRecord[], mode: ViewMode) {
       color: colorForCompany(company),
       sector: brand?.sector || company.category || "Ecossistema LMF",
       description: brand?.description || company.bio || "Empresa conectada ao campo orbital do Grupo LMF.",
-      texture: brand?.texture || "ice",
+      texture: brand?.texture || performance.texture,
       size: (base + Math.sqrt(mass / maxMass) * range) * scale,
       x: layout.x,
       y: layout.y,
       mass,
       damage: damageForCompany(company),
+      performance,
       company,
     };
   });
@@ -593,15 +564,15 @@ function CobePlanet({
 function CompanyHud({ planet, mode, onClose }: { planet: PlanetNode; mode: ViewMode; onClose: () => void }) {
   const company = planet.company;
   const isMobile = mode === "mobile";
-  const health = typeof company.health_score === "number" ? company.health_score : 100;
+  const { score, growth, stability, energy } = planet.performance;
   const signal = planetSignal(planet);
   const details = [
-    { label: "Tracao", value: formatMetric(planet.mass, "Em sincronizacao"), state: dataState(planet.mass) },
-    { label: "Estrelas", value: formatMetric(company.total_stars, "Sem dados publicos"), state: dataState(company.total_stars) },
-    { label: "Repositorios", value: formatMetric(company.public_repos, "Sem dados publicos"), state: dataState(company.public_repos) },
-    { label: "Receita", value: formatMoney(company.revenue), state: dataState(company.revenue) },
-    { label: "Capital", value: formatMoney(company.share_capital), state: dataState(company.share_capital) },
-    { label: "Saude", value: `${health}%`, state: "synced" },
+    { label: "Rendimento", value: `${score}/100`, state: "synced" },
+    { label: "Crescimento", value: `${growth}/100`, state: "synced" },
+    { label: "Estabilidade", value: `${stability}/100`, state: "synced" },
+    { label: "Energia", value: `${energy}/100`, state: "synced" },
+    { label: "Escala visual", value: `${Math.round(planet.performance.sizeFactor * 100)}%`, state: "synced" },
+    { label: "Status", value: planet.performance.status, state: "synced" },
   ];
   const updatedAt = company.fetched_at ? new Date(company.fetched_at).toLocaleDateString("pt-BR") : "sincronizacao pendente";
 
@@ -614,7 +585,7 @@ function CompanyHud({ planet, mode, onClose }: { planet: PlanetNode; mode: ViewM
           <div className="min-w-0 flex-1">
             <p className="text-[10px] uppercase tracking-[0.24em] text-white/42">Planeta selecionado</p>
             <h3 className="mt-1 truncate text-lg font-semibold normal-case text-white sm:text-xl">{planet.name || planet.login}</h3>
-            <p className="mt-1 text-xs normal-case text-white/50 sm:text-sm">@{planet.login} - métricas sincronizadas quando disponíveis</p>
+            <p className="mt-1 text-xs normal-case text-white/50 sm:text-sm">@{planet.login} - rendimento visual interno</p>
           </div>
           <button className="grid h-10 w-10 place-items-center border border-white/12 bg-white/[0.03] text-lg text-white/65 transition hover:border-white/30 hover:text-white" onClick={onClose} aria-label="Fechar painel">
             x
@@ -639,21 +610,21 @@ function CompanyHud({ planet, mode, onClose }: { planet: PlanetNode; mode: ViewM
 
         <div className="mt-4">
           <div className="mb-2 flex items-center justify-between text-[10px] uppercase tracking-[0.22em] text-white/40">
-            <span>Saude do negocio</span>
-            <span>{health}%</span>
+            <span>Estabilidade visual</span>
+            <span>{stability}%</span>
           </div>
           <div className="h-2 overflow-hidden bg-white/10">
-            <div className="h-full" style={{ width: `${Math.max(0, Math.min(100, health))}%`, backgroundColor: planet.color }} />
+            <div className="h-full" style={{ width: `${Math.max(0, Math.min(100, stability))}%`, backgroundColor: planet.color }} />
           </div>
         </div>
 
         <div className="mt-4 rounded-sm border border-white/10 bg-white/[0.03] p-3">
           <p className="text-[10px] uppercase tracking-[0.22em] text-white/38">Como ler este planeta</p>
           <div className="mt-3 grid gap-2 text-[11px] leading-relaxed normal-case text-white/56 sm:grid-cols-2">
-            <p><span style={{ color: planet.color }}>●</span> Tamanho combina tração, estrelas e receita.</p>
-            <p><span style={{ color: planet.color }}>●</span> Brilho indica força visual da marca.</p>
-            <p><span style={{ color: planet.color }}>●</span> Saúde baixa cria marcas de instabilidade.</p>
-            <p><span style={{ color: planet.color }}>●</span> Setor define a órbita narrativa.</p>
+            <p><span style={{ color: planet.color }}>●</span> Tamanho vem do rendimento visual interno.</p>
+            <p><span style={{ color: planet.color }}>●</span> Brilho vem da energia do planeta.</p>
+            <p><span style={{ color: planet.color }}>●</span> Instabilidade vem da estabilidade visual.</p>
+            <p><span style={{ color: planet.color }}>●</span> Cor e textura nao dependem de GitHub ou financeiro.</p>
           </div>
         </div>
 
@@ -669,7 +640,7 @@ function CompanyHud({ planet, mode, onClose }: { planet: PlanetNode; mode: ViewM
           <a className="border border-white/10 px-3 py-2 text-center text-white/72 transition hover:border-white/25 hover:text-white" href={`/dev/${planet.login}`}>Abrir perfil</a>
           <a className="border border-white/10 px-3 py-2 text-center text-white/52 transition hover:border-white/25 hover:text-white" href={`/shop/${planet.login}`}>Estúdio do planeta</a>
           <a className="border border-white/10 px-3 py-2 text-center text-white/52 transition hover:border-white/25 hover:text-white" href={`/advertise?planet=${planet.login}`}>Anunciar aqui</a>
-          <a className="border border-white/10 px-3 py-2 text-center text-white/52 transition hover:border-white/25 hover:text-white" href={`https://github.com/${planet.login}`} target="_blank" rel="noreferrer">GitHub</a>
+          <a className="border border-white/10 px-3 py-2 text-center text-white/52 transition hover:border-white/25 hover:text-white" href={`/compare/${planet.login}/${planet.login}`}>Comparar sinal</a>
         </div>
       </div>
     </aside>
@@ -749,7 +720,7 @@ function OnboardingRail({ isMobile }: { isMobile: boolean }) {
   if (isMobile) return null;
   const steps = [
     ["01", "Busque", "Encontre uma empresa ou explore os destaques."],
-    ["02", "Abra", "Clique no planeta para ver métricas e contexto."],
+    ["02", "Abra", "Clique no planeta para ver rendimento visual e contexto."],
     ["03", "Aja", "Visite perfil, personalize, compare ou anuncie."],
   ];
 
@@ -801,7 +772,7 @@ function MissionRail({
 }) {
   const missions = [
     { label: "Localize uma marca", done: hasSearched, hint: "Use a busca por nome, @login ou setor." },
-    { label: "Abra um planeta", done: hasSelected, hint: "Clique para revelar contexto e métricas." },
+    { label: "Abra um planeta", done: hasSelected, hint: "Clique para revelar contexto e rendimento visual." },
     { label: "Escolha uma ação", done: hasSelected, hint: "Perfil, estúdio ou anúncio orbital." },
   ];
 

@@ -1,4 +1,6 @@
-// ─── Types ───────────────────────────────────────────────────
+import { getPlanetPerformance } from "./planet-performance";
+
+// â”€â”€â”€ Types â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 export interface CompanyRecord {
   id: number;
@@ -120,7 +122,7 @@ export interface SpaceDecoration {
   size?: [number, number];
 }
 
-// ─── Spiral Coordinate ──────────────────────────────────────
+// â”€â”€â”€ Spiral Coordinate â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 function spiralCoord(index: number): [number, number] {
   if (index === 0) return [0, 0];
@@ -150,11 +152,11 @@ function spiralCoord(index: number): [number, number] {
   return [x, y];
 }
 
-// ─── Universe Layout ─────────────────────────────────────────────
+// â”€â”€â”€ Universe Layout â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 const BLOCK_SIZE = 4;     // 4x4 planets per Universe block
-const LOT_W = 38;        // lot width  (X axis) — tighter packing
-const LOT_D = 32;        // lot depth  (Z axis) — tighter packing
+const LOT_W = 38;        // lot width  (X axis) â€” tighter packing
+const LOT_D = 32;        // lot depth  (Z axis) â€” tighter packing
 const ALLEY_W = 3;       // narrow gap between planets within a block
 const STREET_W = 12;     // street between blocks (within a constellation)
 
@@ -166,86 +168,7 @@ const RIVER_MARGIN = 8;      // Margin on each side of the river
 
 const MAX_planet_HEIGHT = 600;
 const MIN_planet_HEIGHT = 35;
-const HEIGHT_RANGE = MAX_planet_HEIGHT - MIN_planet_HEIGHT; // 565
-
-function calcHeight(
-  contributions: number,
-  totalStars: number,
-  publicRepos: number,
-  maxContrib: number,
-  maxStars: number,
-): { height: number; composite: number } {
-  const effMaxC = Math.min(maxContrib, 20_000);
-  const effMaxS = Math.min(maxStars, 200_000);
-
-  // Normalize to 0-1 (can exceed 1 for outliers)
-  const cNorm = contributions / Math.max(1, effMaxC);
-  const sNorm = totalStars / Math.max(1, effMaxS);
-  const rNorm = Math.min(publicRepos / 200, 1);
-
-  // Power curves — exponent < 1 compresses, > 0.5 gives more contrast than sqrt
-  const cScore = Math.pow(Math.min(cNorm, 3), 0.55);   // contributions (allow up to 3x max)
-  const sScore = Math.pow(Math.min(sNorm, 3), 0.45);   // stars (more generous curve)
-  const rScore = Math.pow(rNorm, 0.5);                   // repos
-
-  // Weights: contributions dominate, but stars matter a lot
-  const composite = cScore * 0.55 + sScore * 0.35 + rScore * 0.10;
-
-  const height = Math.min(MAX_planet_HEIGHT, MIN_planet_HEIGHT + composite * HEIGHT_RANGE);
-  return { height, composite };
-}
-
-// ─── V2 Detection & Formulas ────────────────────────────────
-
-function isV2Dev(dev: CompanyRecord): boolean {
-  return (dev.employee_count ?? 0) > 0 || (dev.revenue ?? 0) > 0;
-}
-
-function calcHeightV2(
-  dev: CompanyRecord,
-): { height: number; composite: number } {
-  // Normalize based on typical business ranges
-  const revNorm = Math.min((dev.revenue ?? 0) / 1_000_000, 1);
-  const capNorm = Math.min((dev.share_capital ?? 0) / 2_000_000, 1);
-  const healthNorm = (dev.health_score ?? 100) / 100;
-
-  // Revenue and Capital are log-compressed for better visual hierarchy
-  const revScore = Math.pow(revNorm, 0.4);
-  const capScore = Math.pow(capNorm, 0.5);
-  const healthScore = Math.pow(healthNorm, 0.6);
-
-  const composite =
-    revScore * 0.45 +
-    capScore * 0.35 +
-    healthScore * 0.20;
-
-  const height = Math.min(MAX_planet_HEIGHT, MIN_planet_HEIGHT + composite * HEIGHT_RANGE);
-  return { height, composite };
-}
-
-function calcWidthV2(dev: CompanyRecord): number {
-  const empNorm = Math.min(dev.employee_count / 1000, 1);
-  const score = Math.pow(empNorm, 0.5);
-
-  const jitter = (seededRandom(hashStr(dev.username)) - 0.5) * 4;
-  return Math.round(14 + score * 30 + jitter);
-}
-
-function calcDepthV2(dev: CompanyRecord): number {
-  const appNorm = Math.min(dev.applications_count / 20, 1);
-  const score = Math.pow(appNorm, 0.5);
-
-  const jitter = (seededRandom(hashStr(dev.username) + 99) - 0.5) * 4;
-  return Math.round(12 + score * 24 + jitter);
-}
-
-function calcLitPercentageV2(dev: CompanyRecord): number {
-  const yieldNorm = dev.yield_percent ?? 0.5;
-  const streakNorm = Math.min((dev.app_streak ?? 0) / 30, 1);
-
-  const score = yieldNorm * 0.7 + streakNorm * 0.3;
-  return 0.05 + score * 0.90;
-}
+const HEIGHT_RANGE = MAX_planet_HEIGHT - MIN_planet_HEIGHT;
 
 export interface SpaceRiver {
   x: number;
@@ -271,20 +194,15 @@ export interface GalaxyZone {
 
 const RIVER_WIDTH = 40;
 
-function precomputeComposites(
-  companies: CompanyRecord[],
-): Map<string, number> {
+function precomputeComposites(companies: CompanyRecord[]): Map<string, number> {
   const map = new Map<string, number>();
   for (const dev of companies) {
-    const { composite } = isV2Dev(dev)
-      ? calcHeightV2(dev)
-      : calcHeight(dev.contributions, dev.total_stars, dev.public_repos, 1, 1); // Fallback to 1 for max as it's less relevant now
-    map.set(dev.username, composite);
+    map.set(dev.username, getPlanetPerformance(dev.username, dev.name).score / 100);
   }
   return map;
 }
 
-// ─── constellation Layout ────────────────────────────────────────
+// â”€â”€â”€ constellation Layout â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 export const CONSTELLATION_NAMES: Record<string, string> = {
   'Galactic Center': 'Galactic Center',
@@ -352,11 +270,8 @@ export function generateUniverseLayout(companies: CompanyRecord[]): {
   const plazas: SpacePlaza[] = [];
   const decorations: SpaceDecoration[] = [];
   const GalaxyZones: GalaxyZone[] = [];
-  const maxContrib = companies.reduce((max, d) => Math.max(max, d.contributions), 1);
-  const maxStars = companies.reduce((max, d) => Math.max(max, d.total_stars), 1);
-  const maxContribV2 = companies.reduce((max, d) => Math.max(max, d.contributions_total ?? 0), 1);
 
-  // ── 1. Group by constellation, sort within each, concat in priority order ──
+  // â”€â”€ 1. Group by constellation, sort within each, concat in priority order â”€â”€
   const composites = precomputeComposites(companies);
 
   const constellation_ORDER = [
@@ -381,7 +296,7 @@ export function generateUniverseLayout(companies: CompanyRecord[]): {
     return result;
   }
 
-  // ── Extract top 50 global companies as "Galactic Center" (center, around the spire) ──
+  // â”€â”€ Extract top 50 global companies as "Galactic Center" (center, around the spire) â”€â”€
   const GalacticCenter_COUNT = 50;
   const LOTS_PER_BLOCK = BLOCK_SIZE * BLOCK_SIZE; // 16
   const allcompaniesSorted = [...companies].sort((a, b) =>
@@ -399,7 +314,7 @@ export function generateUniverseLayout(companies: CompanyRecord[]): {
 
   const GalacticCenterOverride = new Set(GalacticCentercompanies.map(d => d.username));
 
-  // ── Per-constellation dev arrays (sorted by composite, block-shuffled, minus Galactic Center) ──
+  // â”€â”€ Per-constellation dev arrays (sorted by composite, block-shuffled, minus Galactic Center) â”€â”€
   const constellationDevArrays: { did: string; companies: CompanyRecord[] }[] = [];
   for (const did of constellation_ORDER) {
     const group = constellationGroups[did];
@@ -417,7 +332,7 @@ export function generateUniverseLayout(companies: CompanyRecord[]): {
     }
   }
 
-  // ── 2. Place blocks on a GLOBAL axis-aligned grid ──
+  // â”€â”€ 2. Place blocks on a GLOBAL axis-aligned grid â”€â”€
   // Galactic Center spiral at center, each constellation spiral at an offset.
   // occupiedCells prevents any overlap.
   const BLOCK_STEP_X = BLOCK_FOOTPRINT_X + STREET_W; // 173
@@ -433,12 +348,12 @@ export function generateUniverseLayout(companies: CompanyRecord[]): {
   let globalBlockSeed = 0;
   const allBlocks: { cx: number; cz: number; gx: number; gz: number }[] = [];
 
-  // ── Helper: grid coord → world position ──
+  // â”€â”€ Helper: grid coord â†’ world position â”€â”€
   function gridToWorld(gx: number, gz: number): [number, number] {
     return [localBlockAxisPos(gx, BLOCK_FOOTPRINT_X), localBlockAxisPos(gz, BLOCK_FOOTPRINT_Z)];
   }
 
-  // ── Helper: create planets + decorations for one block ──
+  // â”€â”€ Helper: create planets + decorations for one block â”€â”€
   function placeBlockContent(
     blockCX: number, blockCZ: number,
     blockcompanies: CompanyRecord[],
@@ -450,23 +365,13 @@ export function generateUniverseLayout(companies: CompanyRecord[]): {
       const localCol = i % BLOCK_SIZE;
       const posX = blockCX + (localCol - (BLOCK_SIZE - 1) / 2) * (LOT_W + ALLEY_W);
       const posZ = blockCZ + (localRow - (BLOCK_SIZE - 1) / 2) * (LOT_D + ALLEY_W);
-
-      let height: number, composite: number, w: number, d: number, litPercentage: number;
-
-      if (isV2Dev(dev)) {
-        ({ height, composite } = calcHeightV2(dev));
-        w = calcWidthV2(dev);
-        d = calcDepthV2(dev);
-        litPercentage = calcLitPercentageV2(dev);
-      } else {
-        ({ height, composite } = calcHeight(dev.contributions, dev.total_stars, dev.public_repos, maxContrib, maxStars));
-        const seed1 = hashStr(dev.username);
-        const repoFactor = Math.min(1, dev.public_repos / 100);
-        const baseW = 14 + repoFactor * 12;
-        w = Math.round(baseW + seededRandom(seed1) * 8);
-        d = Math.round(12 + seededRandom(seed1 + 99) * 16);
-        litPercentage = 0.2 + composite * 0.7;
-      }
+      const performance = getPlanetPerformance(dev.username, dev.name);
+      const seed1 = hashStr(dev.username);
+      const composite = performance.score / 100;
+      const height = Math.round(MIN_planet_HEIGHT + performance.sizeFactor * HEIGHT_RANGE * 0.72);
+      const w = Math.round(14 + performance.energy * 0.24 + seededRandom(seed1) * 5);
+      const d = Math.round(12 + performance.stability * 0.2 + seededRandom(seed1 + 99) * 5);
+      const litPercentage = 0.12 + (performance.energy / 100) * 0.74;
 
       const floorH = 6;
       const floors = Math.max(3, Math.floor(height / floorH));
@@ -581,7 +486,7 @@ export function generateUniverseLayout(companies: CompanyRecord[]): {
     globalDevIndex += blockcompanies.length;
   }
 
-  // ── Helper: place a spiral of companies at grid origin (ogx, ogz) ──
+  // â”€â”€ Helper: place a spiral of companies at grid origin (ogx, ogz) â”€â”€
   function placeSpiralCluster(
     clustercompanies: CompanyRecord[],
     ogx: number, ogz: number,
@@ -632,10 +537,10 @@ export function generateUniverseLayout(companies: CompanyRecord[]): {
     }
   }
 
-  // ── A) Galactic Center: spiral at grid (0, 0) ──
+  // â”€â”€ A) Galactic Center: spiral at grid (0, 0) â”€â”€
   placeSpiralCluster(GalacticCentercompanies, 0, 0, true);
 
-  // ── B) constellations: spiral at offset grid positions ──
+  // â”€â”€ B) constellations: spiral at offset grid positions â”€â”€
   for (let di = 0; di < constellationDevArrays.length; di++) {
     const angle = (di / constellationDevArrays.length) * Math.PI * 2 - Math.PI / 2;
     // Snap constellation origin to global grid
@@ -644,7 +549,7 @@ export function generateUniverseLayout(companies: CompanyRecord[]): {
     placeSpiralCluster(constellationDevArrays[di].companies, ogx, ogz, true);
   }
 
-  // ── Road markings between adjacent blocks (global grid) ──
+  // â”€â”€ Road markings between adjacent blocks (global grid) â”€â”€
   const DASH_LENGTH = 6;
   const DASH_GAP = 8;
   const DASH_STEP = DASH_LENGTH + DASH_GAP;
@@ -673,7 +578,7 @@ export function generateUniverseLayout(companies: CompanyRecord[]): {
     }
   }
 
-  // ── Plaza decorations ──
+  // â”€â”€ Plaza decorations â”€â”€
   for (let pi = 0; pi < plazas.length; pi++) {
     const plaza = plazas[pi];
     const [px, , pz] = plaza.position;
@@ -703,7 +608,7 @@ export function generateUniverseLayout(companies: CompanyRecord[]): {
     }
   }
 
-  // ── constellation zones (computed from actual planet positions) ──
+  // â”€â”€ constellation zones (computed from actual planet positions) â”€â”€
   const dzMap: Record<string, UniversePlanet[]> = {};
   for (const b of planets) {
     const did = b.constellation ?? 'fullstack';
@@ -727,7 +632,7 @@ export function generateUniverseLayout(companies: CompanyRecord[]): {
     });
   }
 
-  // ── River ──
+  // â”€â”€ River â”€â”€
   const riverCenterZ = RIVER_Z_THRESHOLD + RIVER_PUSH / 2 + STREET_W / 2;
   let bMinX = 0, bMaxX = 0;
   for (const b of planets) {
@@ -743,7 +648,7 @@ export function generateUniverseLayout(companies: CompanyRecord[]): {
     length: RIVER_WIDTH,
     centerZ: riverCenterZ,
   };
-  // ── Bridges ──
+  // â”€â”€ Bridges â”€â”€
   const bridgeWidth = RIVER_WIDTH + 20;
   const bridgeSpacing = riverXExtent / 4;
   const bridges: SpaceBridge[] = [
@@ -755,46 +660,26 @@ export function generateUniverseLayout(companies: CompanyRecord[]): {
   return { planets, plazas, decorations, river, bridges, GalaxyZones };
 }
 
-// ─── planet Dimensions (reusable for shop preview) ────────
+// â”€â”€â”€ planet Dimensions (reusable for shop preview) â”€â”€â”€â”€â”€â”€â”€â”€
 
 export function calcPlanetDims(
   username: string,
-  contributions: number,
-  publicRepos: number,
-  totalStars: number,
-  maxContrib: number,
-  maxStars: number,
-  v2Data?: Partial<CompanyRecord>,
+  _contributions: number,
+  _publicRepos: number,
+  _totalStars: number,
+  _maxContrib: number,
+  _maxStars: number,
+  _v2Data?: Partial<CompanyRecord>,
 ): { width: number; height: number; depth: number } {
-  // V2 path when expanded data is available
-  if (v2Data && (v2Data.contributions_total ?? 0) > 0) {
-    const dev: CompanyRecord = {
-      id: 0, username: username, external_id: null, name: null,
-      avatar_url: null, bio: null, contributions: contributions, public_repos: publicRepos,
-      owned_items: [], category: null, primary_language: null,
-      employee_count: 1, applications_count: 0, yield_percent: 0,
-      total_stars: totalStars, top_repos: [],
-      rank: null, fetched_at: '', created_at: '', claimed: false,
-      fetch_priority: 0, claimed_at: null,
-      kudos_count: 0, visit_count: 0, contributions_total: 0, contribution_years: [], total_prs: 0, total_reviews: 0, repos_contributed_to: [],
-      followers: 0, following: 0, organizations_count: 0, account_created_at: null, current_streak: 0,
-      ...v2Data,
-    };
-    const { height } = calcHeightV2(dev);
-    return { width: calcWidthV2(dev), height, depth: calcDepthV2(dev) };
-  }
-
-  // V1 fallback
-  const { height } = calcHeight(contributions, totalStars, publicRepos, maxContrib, maxStars);
+  const performance = getPlanetPerformance(username);
   const seed1 = hashStr(username);
-  const repoFactor = Math.min(1, publicRepos / 100);
-  const baseW = 14 + repoFactor * 16;
-  const width = Math.round(baseW + seededRandom(seed1) * 10);
-  const depth = Math.round(12 + seededRandom(seed1 + 99) * 20);
+  const height = Math.round(MIN_planet_HEIGHT + performance.sizeFactor * HEIGHT_RANGE * 0.72);
+  const width = Math.round(14 + performance.energy * 0.24 + seededRandom(seed1) * 5);
+  const depth = Math.round(12 + performance.stability * 0.2 + seededRandom(seed1 + 99) * 5);
   return { width, height, depth };
 }
 
-// ─── Utilities (kept for planet3D seeded variance) ─────────
+// â”€â”€â”€ Utilities (kept for planet3D seeded variance) â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 export function hashStr(str: string): number {
   let h = 0;
