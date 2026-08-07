@@ -2,7 +2,7 @@ import { ImageResponse } from "next/og";
 import { readFile } from "node:fs/promises";
 import { join } from "node:path";
 
-export const alt = "Maia Universe - Suas empresas como um Universo 3D";
+export const alt = "Grupo LMF Universe - Suas empresas como um Universo 3D";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
@@ -104,7 +104,7 @@ export default async function Image() {
               textTransform: "uppercase",
             }}
           >
-            <span style={{ fontSize: 110, color: cream }}>MAIA</span>
+            <span style={{ fontSize: 110, color: cream }}>GRUPO</span>
             <span style={{ fontSize: 110, color: accent }}>UNIVERSE</span>
           </div>
           <div

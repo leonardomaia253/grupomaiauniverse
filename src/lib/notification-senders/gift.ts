@@ -1,8 +1,9 @@
 import { sendNotificationAsync } from "../notifications";
 import { buildButton } from "../email-template";
 import { ITEM_NAMES } from "../zones";
+import { getAppUrl } from "@/lib/brand";
 
-const BASE_URL = process.env.NEXT_PUBLIC_APP_URL || "https://maiauniverse.com.br";
+const BASE_URL = getAppUrl();
 
 export function sendGiftReceivedNotification(
   receiverId: number,

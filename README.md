@@ -1,22 +1,22 @@
-<h1 align="center">Maia Universe</h1>
+<h1 align="center">Grupo LMF Universe</h1>
 
 <p align="center">
   <strong>Company and GitHub profiles as interactive 3D planets.</strong>
 </p>
 
 <p align="center">
-  <a href="https://maiauniverse.com.br">maiauniverse.com.br</a>
+  <a href="https://universe.grupomaia.me">universe.grupomaia.me</a>
 </p>
 
 <p align="center">
-  <img src="public/og-image.png" alt="Maia Universe — interactive 3D company planets" width="800" />
+  <img src="public/og-image.png" alt="Grupo LMF Universe — interactive 3D company planets" width="800" />
 </p>
 
 ---
 
-## What is Maia Universe?
+## What is Grupo LMF Universe?
 
-Maia Universe turns company and GitHub profiles into a living 3D universe. Each planet represents identity, traction, activity, health, and community presence. Visitors can explore planets, open profile panels, compare signals, customize identity, and place native ads inside the world.
+Grupo LMF Universe turns company and GitHub profiles into a living 3D universe. Each planet represents identity, traction, activity, health, and community presence. Visitors can explore planets, open profile panels, compare signals, customize identity, and place native ads inside the world.
 
 ## Product pillars
 

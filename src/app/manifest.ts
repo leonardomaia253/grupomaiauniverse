@@ -1,10 +1,11 @@
 import type { MetadataRoute } from "next";
+import { BRAND } from "@/lib/brand";
 
 export default function manifest(): MetadataRoute.Manifest {
   return {
-    name: "Maia Universe",
-    short_name: "Maia Universe",
-    description: "Explore empresas como planetas em um Universo pixel art 3D. Voe pelo Universo e descubra novas companhias.",
+    name: BRAND.name,
+    short_name: BRAND.shortName,
+    description: BRAND.appDescription,
     start_url: "/",
     display: "standalone",
     background_color: "#0d1117",

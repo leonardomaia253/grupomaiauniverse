@@ -7,8 +7,8 @@ import { getSupabaseAdmin } from "@/lib/supabase";
 export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
-  title: "Shop - Maia Universe",
-  description: "Customize your planet in Maia Universe with effects, structures and more",
+  title: "Shop - Grupo LMF Universe",
+  description: "Customize your planet in Grupo LMF Universe with effects, structures and more",
 };
 
 const ACCENT = "#c8e64a";

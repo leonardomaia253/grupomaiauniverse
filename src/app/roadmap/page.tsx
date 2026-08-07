@@ -8,9 +8,9 @@ export const dynamic = "force-dynamic";
 export const revalidate = 300;
 
 export const metadata: Metadata = {
-  title: "Roadmap - Maia Universe",
+  title: "Roadmap - Grupo LMF Universe",
   description:
-    "See what's coming next for Maia Universe. Vote on the features you want most.",
+    "See what's coming next for Grupo LMF Universe. Vote on the features you want most.",
 };
 
 export default async function RoadmapPage() {

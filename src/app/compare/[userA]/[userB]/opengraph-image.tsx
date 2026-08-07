@@ -3,7 +3,7 @@ import { readFile } from "node:fs/promises";
 import { join } from "node:path";
 import { createClient } from "@supabase/supabase-js";
 
-export const alt = "Comparação de Empresas - Maia Universe";
+export const alt = "Comparação de Empresas - Grupo LMF Universe";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
@@ -281,7 +281,7 @@ export default async function Image({
 
         {/* Center: VS + Stats */}
         <div
-          title="Configurar seu Anúncio - Maia Universe"
+          title="Configurar seu Anúncio - Grupo LMF Universe"
           style={{
             position: "absolute",
             left: 310,

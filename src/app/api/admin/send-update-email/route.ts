@@ -7,7 +7,7 @@ import { requireCronRequest } from "@/lib/security";
 
 export const dynamic = "force-dynamic";
 
-const FROM = "Maia Universe <noreply@maiauniverse.com.br>";
+const FROM = "Grupo LMF Universe <noreply@universe.grupomaia.me>";
 
 /**
  * POST /api/admin/send-update-email

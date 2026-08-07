@@ -2,7 +2,7 @@
 
 ## Supported Versions
 
-Git City is actively developed. Security fixes are applied to the latest version on `main`.
+Grupo LMF Universe is actively developed. Security fixes are applied to the latest version on `main`.
 
 | Version | Supported          |
 | ------- | ------------------ |
@@ -11,7 +11,7 @@ Git City is actively developed. Security fixes are applied to the latest version
 
 ## Reporting a Vulnerability
 
-We take security seriously. If you discover a vulnerability in Git City, please **do not** open a public GitHub issue.
+We take security seriously. If you discover a vulnerability in Grupo LMF Universe, please **do not** open a public GitHub issue.
 
 ### How to Report
 
@@ -34,7 +34,7 @@ Please include as much of the following information as possible to help us under
 
 ## Sensitive Areas
 
-Git City handles the following sensitive data — please pay special attention when auditing:
+Grupo LMF Universe handles the following sensitive data — please pay special attention when auditing:
 
 - **Autenticação Maia tokens** — used for authentication via Supabase
 - **Supabase Row Level Security (RLS)** — controls data access per user
@@ -56,4 +56,4 @@ We follow a **coordinated disclosure** model. Once a fix is available, we will:
 2. Credit the reporter (unless they wish to remain anonymous)
 3. Release a patched version
 
-Thank you for helping keep Git City and its users safe!
+Thank you for helping keep Grupo LMF Universe and its users safe!

@@ -91,7 +91,7 @@ export async function POST() {
     return NextResponse.json({ ok: true, verified: true, already_owned: true });
   }
 
-  // Check Estrela Maia
+  // Check Estrela LMF
   const starred = await isStargazer(companyLogin);
   if (!starred) {
     return NextResponse.json({ ok: true, verified: false });

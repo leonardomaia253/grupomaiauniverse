@@ -3,10 +3,11 @@ import { getSupabaseAdmin } from "@/lib/supabase";
 import { sendNotificationAsync } from "@/lib/notifications";
 import { buildButton } from "@/lib/email-template";
 import { requireCronRequest } from "@/lib/security";
+import { getAppUrl } from "@/lib/brand";
 
 export const dynamic = "force-dynamic";
 
-const BASE_URL = process.env.NEXT_PUBLIC_APP_URL || "https://maiauniverse.com.br";
+const BASE_URL = getAppUrl();
 
 interface ReEngagementTier {
   daysInactive: number;
@@ -21,7 +22,7 @@ const TIERS: ReEngagementTier[] = [
     daysInactive: 7,
     tier: "7d",
     subject: () => "Your planet misses you!",
-    body: (login) => `Hey @${login}, your planet in Maia Universe is waiting. Come check in!`,
+    body: (login) => `Hey @${login}, your planet in Grupo LMF Universe is waiting. Come check in!`,
     html: (login, extraInfo) => `
       <p style="color: #f0f0f0; font-size: 16px;">Your planet misses you, @${login}!</p>
       <p style="color: #f0f0f0;">It's been a week since your last visit. Your planet is still standing, but it could use some attention.</p>
@@ -36,7 +37,7 @@ const TIERS: ReEngagementTier[] = [
     body: (login) => `Hey @${login}, the Universe has grown since your last visit!`,
     html: (login, extraInfo) => `
       <p style="color: #f0f0f0; font-size: 16px;">The Universe grew while you were away!</p>
-      <p style="color: #f0f0f0;">New companies have joined Maia Universe since your last visit, @${login}.</p>
+      <p style="color: #f0f0f0;">New companies have joined Grupo LMF Universe since your last visit, @${login}.</p>
       ${extraInfo}
       ${buildButton("See What's New", `${BASE_URL}/?user=${login}`)}
     `,
@@ -51,7 +52,7 @@ const TIERS: ReEngagementTier[] = [
       <p style="color: #f0f0f0;">It's been over a month since your last visit. Your planet is still in the Universe, waiting for you.</p>
       <p style="color: #666; font-size: 13px;">This is our last reminder. We won't bother you again unless you come back.</p>
       ${extraInfo}
-      ${buildButton("Visit Maia Universe", `${BASE_URL}/?user=${login}`)}
+      ${buildButton("Visit Grupo LMF Universe", `${BASE_URL}/?user=${login}`)}
     `,
   },
 ];

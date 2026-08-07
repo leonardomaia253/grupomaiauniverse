@@ -1,10 +1,7 @@
 import type { MetadataRoute } from "next";
+import { getSiteUrl } from "@/lib/brand";
 
-const BASE_URL =
-  process.env.NEXT_PUBLIC_BASE_URL ??
-  (process.env.VERCEL_URL
-    ? `https://${process.env.VERCEL_URL}`
-    : "http://universe.grupomaia.me");
+const BASE_URL = getSiteUrl();
 
 export default function robots(): MetadataRoute.Robots {
   return {

@@ -16,9 +16,9 @@ export const dynamic = "force-dynamic";
 export const revalidate = 300; // ISR: regenerate every 5 min
 
 export const metadata: Metadata = {
-  title: "Leaderboard - Maia Universe",
+  title: "Leaderboard - Grupo LMF Universe",
   description:
-    "Top GitHub companies ranked by contributions, stars, repos, achievements, and referrals in Maia Universe.",
+    "Top GitHub companies ranked by contributions, stars, repos, achievements, and referrals in Grupo LMF Universe.",
 };
 
 interface company {
@@ -199,7 +199,7 @@ export default async function LeaderboardPage({
             Leader<span style={{ color: ACCENT }}>board</span>
           </h1>
           <p className="mt-3 text-xs text-muted normal-case">
-            Top companies ranked in Maia Universe
+            Top companies ranked in Grupo LMF Universe
           </p>
         </div>
 

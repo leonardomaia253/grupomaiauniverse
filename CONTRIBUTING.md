@@ -1,4 +1,4 @@
-# Contributing to Git City
+# Contributing to Grupo LMF Universe
 
 Thanks for your interest in contributing! Here's how to get started.
 

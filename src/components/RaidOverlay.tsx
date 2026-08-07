@@ -262,9 +262,9 @@ export default function RaidOverlay({ phase, raidData, onSkip, onExit }: Props) 
               <button
                 onClick={() => {
                   const text = raidData.success
-                    ? `I just battled ${defenderLogin}'s planet on Maia Universe! ${raidData.attack_score} vs ${raidData.defense_score}`
-                    : `${defenderLogin} defended my attack on Maia Universe! ${raidData.attack_score} vs ${raidData.defense_score}`;
-                  const url = `https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent("https://maiauniverse.com.br")}`;
+                    ? `I just battled ${defenderLogin}'s planet on Grupo LMF Universe! ${raidData.attack_score} vs ${raidData.defense_score}`
+                    : `${defenderLogin} defended my attack on Grupo LMF Universe! ${raidData.attack_score} vs ${raidData.defense_score}`;
+                  const url = `https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent("https://universe.grupomaia.me")}`;
                   window.open(url, "_blank");
                 }}
                 className="btn-press w-full border-2 border-blue-400/40 px-4 py-3 text-sm text-blue-400 transition-colors hover:bg-blue-400/10"

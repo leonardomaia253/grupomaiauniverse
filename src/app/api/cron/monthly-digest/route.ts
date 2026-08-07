@@ -3,10 +3,11 @@ import { getSupabaseAdmin } from "@/lib/supabase";
 import { sendNotificationAsync } from "@/lib/notifications";
 import { buildButton, buildStatsTable } from "@/lib/email-template";
 import { requireCronRequest } from "@/lib/security";
+import { getAppUrl } from "@/lib/brand";
 
 export const dynamic = "force-dynamic";
 
-const BASE_URL = process.env.NEXT_PUBLIC_APP_URL || "https://maiauniverse.com.br";
+const BASE_URL = getAppUrl();
 
 const MONTH_NAMES = [
   "January", "February", "March", "April", "May", "June",
@@ -107,12 +108,12 @@ export async function GET(request: NextRequest) {
           category: "digest",
           companyId: dev.id,
           dedupKey: `monthly_digest:${dev.id}:${yearMonth}`,
-          title: `Your ${monthName} in Maia Universe`,
+          title: `Your ${monthName} in Grupo LMF Universe`,
           body: `${monthName} recap: ${dev.contributions.toLocaleString()} total contributions, rank #${dev.rank ?? "?"}.`,
           html: `
-            <p style="color: #c8e64a; font-size: 16px;">Your ${monthName} in Maia Universe</p>
+            <p style="color: #c8e64a; font-size: 16px;">Your ${monthName} in Grupo LMF Universe</p>
             ${buildStatsTable(stats)}
-            ${buildButton("Visit Maia Universe", `${BASE_URL}/?user=${dev.username}`)}
+            ${buildButton("Visit Grupo LMF Universe", `${BASE_URL}/?user=${dev.username}`)}
           `,
           actionUrl: `${BASE_URL}/?user=${dev.username}`,
           priority: "high",

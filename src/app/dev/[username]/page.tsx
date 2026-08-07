@@ -40,12 +40,12 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const dev = await getCompany(username);
 
   if (!dev) {
-    return { title: "Empresa não encontrada - Maia Universe" };
+    return { title: "Empresa não encontrada - Grupo LMF Universe" };
   }
 
   const contribs = (dev.contributions_total && dev.contributions_total > 0) ? dev.contributions_total : dev.contributions;
-  const title = `@${dev.username} - Maia Universe | ${contribs.toLocaleString()} contribuições`;
-  const description = `Veja o planeta de @${dev.username} no Maia Universe. ${contribs.toLocaleString()} contribuições, ${dev.public_repos.toLocaleString()} repositórios, ${dev.total_stars.toLocaleString()} estrelas. Rank #${dev.rank ?? "?"} no universo.`;
+  const title = `@${dev.username} - Grupo LMF Universe | ${contribs.toLocaleString()} contribuições`;
+  const description = `Veja o planeta de @${dev.username} no Grupo LMF Universe. ${contribs.toLocaleString()} contribuições, ${dev.public_repos.toLocaleString()} repositórios, ${dev.total_stars.toLocaleString()} estrelas. Rank #${dev.rank ?? "?"} no universo.`;
 
   return {
     title,
@@ -131,7 +131,7 @@ export default async function DevPage({ params }: Props) {
     "@context": "https://schema.org",
     "@type": "BreadcrumbList",
     itemListElement: [
-      { "@type": "ListItem", position: 1, name: "Maia Universe", item: baseUrl },
+      { "@type": "ListItem", position: 1, name: "Grupo LMF Universe", item: baseUrl },
       {
         "@type": "ListItem",
         position: 2,

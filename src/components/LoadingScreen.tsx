@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useCallback, useEffect, useRef, useState } from "react";
 
@@ -22,21 +22,21 @@ interface LoadingScreenProps {
 
 const SCRIPT_LINES = [
   "Olhe ao seu redor...",
-  "Bilhões de mentes, conexões e possibilidades...",
-  "Uma energia que transforma ideias em impérios.",
+  "Bilhoes de mentes, conexoes e possibilidades...",
+  "Uma energia que transforma ideias em imperios.",
   "Tecnologia em magia. Caos em sincronia.",
-  "Nós criamos o amanhã.",
-  "Bem-vindo ao Grupo Maia.",
+  "Nos criamos o amanha.",
+  "Bem-vindo ao Grupo LMF.",
 ];
 
 const STAGE_MESSAGES: Record<string, string> = {
   init: "Abrindo os portais...",
   fetching: "Conectando empresas e possibilidades...",
-  generating: "Desenhando o grande grafo Maia...",
+  generating: "Desenhando o grande grafo LMF...",
   rendering: "Sincronizando energia coletiva...",
-  ready: "O próximo capítulo começa agora",
+  ready: "O proximo capitulo comeca agora",
   done: "Universo pronto",
-  error: "Não foi possível carregar o universo",
+  error: "Nao foi possivel carregar o universo",
 };
 
 const BACKDROPS = [
@@ -108,7 +108,7 @@ export default function LoadingScreen({
   const startIntroAudio = useCallback(async () => {
     if (isError || introHasPlayed) return;
     if (!introAudio) {
-      introAudio = new Audio("/audio/grupo-maia-intro.mp3");
+      introAudio = new Audio("/audio/grupo-lmf-intro.mp3");
       introAudio.preload = "auto";
       introAudio.volume = VOICE_VOLUME;
       introAudio.addEventListener("ended", () => {
@@ -205,7 +205,7 @@ export default function LoadingScreen({
 
       <div className="relative z-10 flex min-h-[100svh] flex-col items-center justify-center px-4 py-8 text-center sm:px-6">
         <p className="font-space text-[9px] uppercase tracking-[0.26em] text-white/45 sm:text-[10px] sm:tracking-[0.32em]">
-          Maia Universe
+          Grupo LMF Universe
         </p>
         <h1 className="font-orbitron mt-4 max-w-[22rem] text-2xl font-semibold leading-tight text-white sm:max-w-4xl sm:text-6xl">
           {SCRIPT_LINES[lineIndex]}

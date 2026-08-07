@@ -1,5 +1,6 @@
 import crypto from "node:crypto";
 import { getSupabaseAdmin } from "./supabase";
+import { getSiteUrl } from "./brand";
 
 const NOWPAYMENTS_API = process.env.NOWPAYMENTS_SANDBOX === "true"
   ? "https://api-sandbox.nowpayments.io/v1"
@@ -44,7 +45,7 @@ export async function createCryptoInvoice(
   }
 
   const priceUsd = item.price_usd_cents / 100;
-  const siteUrl = (process.env.NEXT_PUBLIC_SITE_URL || "https://www.maiauniverse.com.br").replace(/\/+$/, "");
+  const siteUrl = getSiteUrl();
 
   const successUrl = `${siteUrl}/shop/${companyLogin}?purchased=${itemId}`;
   const cancelUrl = `${siteUrl}/shop/${companyLogin}`;

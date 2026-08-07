@@ -42,12 +42,12 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const record = await getCompany(username);
 
   if (!record) {
-    return { title: "Company Not Found - Maia Universe" };
+    return { title: "Company Not Found - Grupo LMF Universe" };
   }
 
   return {
-    title: `Shop - @${record.username} - Maia Universe`,
-    description: `Customize @${record.username}'s planet in Maia Universe`,
+    title: `Shop - @${record.username} - Grupo LMF Universe`,
+    description: `Customize @${record.username}'s planet in Grupo LMF Universe`,
   };
 }
 

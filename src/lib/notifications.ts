@@ -4,6 +4,7 @@ import { getResend } from "./resend";
 import { getcompanyEmail, isRecentlyActive } from "./notification-helpers";
 import { wrapInBaseTemplate } from "./email-template";
 import { getUnsubscribeHmacSecret } from "@/lib/security";
+import { getAppUrl, getFromAddress } from "./brand";
 
 // ── Types ──
 
@@ -54,8 +55,8 @@ export interface SendResult {
 
 // ── Config ──
 
-const FROM = "Maia Universe <noreply@maiauniverse.com.br>";
-const BASE_URL = process.env.NEXT_PUBLIC_APP_URL || "https://maiauniverse.com.br";
+const FROM = getFromAddress();
+const BASE_URL = getAppUrl();
 
 const RATE_LIMITS: Record<Channel, { perHour: number; perDay: number }> = {
   email: { perHour: 5, perDay: 10 },

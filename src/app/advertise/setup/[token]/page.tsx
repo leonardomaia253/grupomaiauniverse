@@ -8,7 +8,7 @@ export const dynamic = "force-dynamic";
 const ACCENT = "#c8e64a";
 
 export const metadata: Metadata = {
-  title: "Configurar seu Anúncio - Maia Universe",
+  title: "Configurar seu Anúncio - Grupo LMF Universe",
   robots: { index: false, follow: false },
 };
 

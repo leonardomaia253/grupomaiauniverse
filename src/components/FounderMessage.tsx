@@ -27,8 +27,8 @@ const MESSAGES: Record<Lang, string[]> = {
 };
 
 const SIGNATURE: Record<Lang, string> = {
-  en: "// leonardomaia253, founder, Grupo Maia, citizen #1",
-  pt: "// leonardomaia253, fundador, Grupo Maia, cidadão #1",
+  en: "// leonardomaia253, founder, Grupo LMF, citizen #1",
+  pt: "// leonardomaia253, fundador, Grupo LMF, cidadão #1",
 };
 
 const PS_TEXT: Record<Lang, string> = {

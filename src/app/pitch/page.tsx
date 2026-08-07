@@ -5,9 +5,9 @@ import PitchDeck from "./PitchDeck";
 export const revalidate = 300;
 
 export const metadata: Metadata = {
-  title: "Pitch Deck - Maia Universe",
+  title: "Pitch Deck - Grupo LMF Universe",
   description:
-    "Maia Universe: transforming perfis de empresas into an interactive 3D Universe. 11,800+ companies, organic growth, revenue from day one.",
+    "Grupo LMF Universe: transforming perfis de empresas into an interactive 3D Universe. 11,800+ companies, organic growth, revenue from day one.",
 };
 
 export default async function PitchPage() {

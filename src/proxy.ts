@@ -3,11 +3,9 @@ import { createServerClient } from "@supabase/ssr";
 import { rateLimitAsync } from "@/lib/rate-limit";
 import { getPublicSupabaseUrl, getSupabaseAnonKey } from "@/lib/env";
 
-// ---------------------------------------------------------------------------
 // Route-specific rate limits: [maxRequests, windowMs]
-// ---------------------------------------------------------------------------
 const ROUTE_LIMITS: [string, number, number][] = [
-  // Exact-prefix match – order from most-specific to least-specific
+  // Exact-prefix match: order from most-specific to least-specific.
   ["/api/customizations/upload", 5, 60_000],
   ["/api/customizations", 10, 60_000],
   ["/api/sky-ads/track", 30, 60_000],
@@ -24,7 +22,7 @@ const ROUTE_LIMITS: [string, number, number][] = [
   ["/api/checkout/status", 40, 60_000],
   ["/api/checkout", 6, 60_000],
   ["/api/claim", 5, 60_000],
-  ["/api/Universe", 30, 60_000],
+  ["/api/city", 30, 60_000],
   ["/api/dev/", 60, 60_000],
   ["/api/items", 30, 60_000],
   ["/api/auth", 10, 60_000],
@@ -38,7 +36,7 @@ function getLimitForPath(pathname: string): {
   window: number;
   group: string;
 } {
-  // Webhooks are called by trusted third-parties (Stripe, AbacatePay) –
+  // Webhooks are called by trusted third parties.
   // they verify signatures, so we don't rate-limit them.
   if (pathname.startsWith("/api/webhooks")) {
     return { limit: 1000, window: 60_000, group: "webhooks" };
@@ -65,13 +63,10 @@ function getClientIp(request: NextRequest): string {
   );
 }
 
-// ---------------------------------------------------------------------------
-// Middleware
-// ---------------------------------------------------------------------------
-export async function middleware(request: NextRequest) {
+export async function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
-  // ── 1. Rate Limit ────────────────────────────────────────────────────
+  // 1. Rate limit
   const ip = getClientIp(request);
   const { limit, window, group } = getLimitForPath(pathname);
   const key = `${ip}:${group}`;
@@ -93,7 +88,7 @@ export async function middleware(request: NextRequest) {
     );
   }
 
-  // ── 2. Supabase Session Refresh ──────────────────────────────────────
+  // 2. Supabase session refresh
   // Only call Supabase when the user is actually logged in (has auth
   // cookies).  For anonymous visitors (~80%+ of viral traffic) we skip
   // the external HTTP call entirely, saving latency and Supabase quota.
@@ -128,13 +123,13 @@ export async function middleware(request: NextRequest) {
     await supabase.auth.getUser();
   }
 
-  // ── 3. Security headers ─────────────────────────────────────────────
+  // 3. Security headers
   supabaseResponse.headers.set("X-Frame-Options", "DENY");
   supabaseResponse.headers.set("X-Content-Type-Options", "nosniff");
   supabaseResponse.headers.set("Referrer-Policy", "strict-origin-when-cross-origin");
   supabaseResponse.headers.set("Permissions-Policy", "camera=(), microphone=(), geolocation=()");
 
-  // ── 4. Attach rate-limit headers so clients can self-throttle ────────
+  // 4. Attach rate-limit headers so clients can self-throttle.
   supabaseResponse.headers.set("X-RateLimit-Limit", String(limit));
   supabaseResponse.headers.set("X-RateLimit-Remaining", String(remaining));
   supabaseResponse.headers.set(

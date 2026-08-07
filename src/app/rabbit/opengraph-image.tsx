@@ -5,7 +5,7 @@ import { getSupabaseAdmin } from "@/lib/supabase";
 
 export const dynamic = "force-dynamic";
 
-export const alt = "The Other Side - Maia Universe";
+export const alt = "The Other Side - Grupo LMF Universe";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
@@ -151,7 +151,7 @@ export default async function Image() {
           display: "flex",
         }}>
           <span style={{ fontSize: 16, color: "#222222" }}>
-            maiauniverse.com.br
+            universe.grupomaia.me
           </span>
         </div>
       </div>

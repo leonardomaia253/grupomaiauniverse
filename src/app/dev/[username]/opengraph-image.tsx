@@ -3,7 +3,7 @@ import { readFile } from "node:fs/promises";
 import { join } from "node:path";
 import { createClient } from "@supabase/supabase-js";
 
-export const alt = "Perfil da Empresa - Maia Universe";
+export const alt = "Perfil da Empresa - Grupo LMF Universe";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 

@@ -1,8 +1,9 @@
 import { sendNotificationAsync } from "../notifications";
 import { buildButton } from "../email-template";
 import { TIER_EMOJI } from "../achievements";
+import { getAppUrl } from "@/lib/brand";
 
-const BASE_URL = process.env.NEXT_PUBLIC_APP_URL || "https://maiauniverse.com.br";
+const BASE_URL = getAppUrl();
 
 interface AchievementInfo {
   id: string;

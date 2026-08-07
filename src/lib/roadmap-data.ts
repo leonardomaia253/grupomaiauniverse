@@ -26,7 +26,7 @@ export const ROADMAP_PHASES: RoadmapPhase[] = [
       {
         id: "3d-Universe-canvas",
         name: "3D Universe Canvas",
-        description: "Interactive Three.js Universe built from real dados do Grupo Maia",
+        description: "Interactive Three.js Universe built from real dados do Grupo LMF",
         status: "done",
       },
       {

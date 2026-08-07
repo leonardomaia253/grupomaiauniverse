@@ -3,18 +3,13 @@ import Script from "next/script";
 import { Analytics } from "@vercel/analytics/next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import GlobalRadio from "@/components/GlobalRadio";
+import { BRAND, getSiteUrl } from "@/lib/brand";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  metadataBase: new URL(
-    process.env.NEXT_PUBLIC_BASE_URL ??
-      (process.env.VERCEL_URL
-        ? `https://${process.env.VERCEL_URL}`
-        : "http://localhost:3000")
-  ),
-  title: "Maia Universe - Suas empresas como um Universo 3D",
-  description:
-    "Explore empresas como planetas em um Universo pixel art 3D. Voe pelo Universo e descubra novas companhias.",
+  metadataBase: new URL(getSiteUrl()),
+  title: `${BRAND.name} - Suas empresas como um Universo 3D`,
+  description: BRAND.appDescription,
   keywords: [
     "3d Universe",
     "company profile",
@@ -24,50 +19,44 @@ export const metadata: Metadata = {
     "git visualization",
   ],
   openGraph: {
-    title: "Maia Universe - Suas empresas como um Universo 3D",
-    description:
-      "Explore empresas como planetas em um Universo pixel art 3D. Voe pelo Universo e descubra novas companhias.",
-    siteName: "Maia Universe",
+    title: `${BRAND.name} - Suas empresas como um Universo 3D`,
+    description: BRAND.appDescription,
+    siteName: BRAND.name,
     type: "website",
     locale: "en_US",
     images: [
       {
         url: "/og-image.png",
-        alt: "Maia Universe: Suas empresas como planetas 3D em um universo interativo.",
+        alt: BRAND.ogAlt,
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    creator: "@leonardomaia253",
-    site: "@leonardomaia253",
+    creator: BRAND.xCreator,
+    site: BRAND.xCreator,
   },
-  authors: [{ name: "leonardomaia253", url: "https://x.com/leonardomaia253" }],
+  authors: [{ name: BRAND.xCreator.replace("@", ""), url: BRAND.xCreatorUrl }],
   icons: {
     icon: "/favicon.ico",
     apple: "/apple-icon.png",
   },
 };
 
-const BASE_URL =
-  process.env.NEXT_PUBLIC_BASE_URL ??
-  (process.env.VERCEL_URL
-    ? `https://${process.env.VERCEL_URL}`
-    : "http://localhost:3000");
+const BASE_URL = getSiteUrl();
 
 const jsonLd = {
   "@context": "https://schema.org",
   "@type": "WebApplication",
-  name: "Maia Universe",
-  description:
-    "Maia Universe: Suas empresas como planetas 3D em um universo interativo.",
+  name: BRAND.name,
+  description: BRAND.ogAlt,
   url: BASE_URL,
   applicationCategory: "companyApplication",
   operatingSystem: "Web",
   author: {
     "@type": "Person",
-    name: "leonardomaia253",
-    url: "https://x.com/leonardomaia253",
+    name: BRAND.xCreator.replace("@", ""),
+    url: BRAND.xCreatorUrl,
   },
   offers: {
     "@type": "Offer",

@@ -2,8 +2,8 @@ import Link from "next/link";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Privacy Policy - Maia Universe",
-  description: "Privacy Policy for Maia Universe.",
+  title: "Privacy Policy - Grupo LMF Universe",
+  description: "Privacy Policy for Grupo LMF Universe.",
 };
 
 const ACCENT = "#c8e64a";
@@ -36,7 +36,7 @@ export default function PrivacyPage() {
             </ul>
             <p className="mt-1">
               We do NOT access your private repositories, code, or any non-public
-              dados do Grupo Maia.
+              dados do Grupo LMF.
             </p>
           </Section>
 
@@ -114,7 +114,7 @@ export default function PrivacyPage() {
 
           <Section n={8} title="Children">
             <p>
-              Maia Universe is not intended for children under 13. We do not knowingly
+              Grupo LMF Universe is not intended for children under 13. We do not knowingly
               collect data from children under 13. If you believe a child has
               provided us with data, contact us for removal.
             </p>
@@ -122,7 +122,7 @@ export default function PrivacyPage() {
 
           <Section n={9} title="Changes">
             <p>
-              We may update this policy at any time. Continued use of Maia Universe
+              We may update this policy at any time. Continued use of Grupo LMF Universe
               after changes constitutes acceptance.
             </p>
           </Section>

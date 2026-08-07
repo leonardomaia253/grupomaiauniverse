@@ -34,7 +34,7 @@ export async function GET(request: NextRequest) {
         try {
           const endsAt = new Date(ad.ends_at);
           const daysLeft = Math.max(1, Math.ceil((endsAt.getTime() - now.getTime()) / 86_400_000));
-          const trackingUrl = `https://maiauniverse.com.br/advertise/track/${ad.tracking_token}`;
+          const trackingUrl = `https://universe.grupomaia.me/advertise/track/${ad.tracking_token}`;
 
           await sendAdExpiringEmail(
             ad.purchaser_email,
@@ -95,7 +95,7 @@ export async function GET(request: NextRequest) {
               impressions: impRes.count ?? 0,
               clicks: clickRes.count ?? 0,
             },
-            "https://maiauniverse.com.br/advertise",
+            "https://universe.grupomaia.me/advertise",
           );
 
           await sb

@@ -1,7 +1,8 @@
 import { sendNotificationAsync } from "../notifications";
 import { buildButton } from "../email-template";
+import { getAppUrl } from "@/lib/brand";
 
-const BASE_URL = process.env.NEXT_PUBLIC_APP_URL || "https://maiauniverse.com.br";
+const BASE_URL = getAppUrl();
 
 export function sendRaidAlertNotification(
   defenderId: number,

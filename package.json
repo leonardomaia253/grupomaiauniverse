@@ -1,12 +1,12 @@
 {
-  "name": "maia-universe",
+  "name": "lmf-universe",
   "version": "0.1.0",
   "private": true,
-  "description": "Company profiles as interactive 3D planets in Maia Universe",
-  "homepage": "https://maiauniverse.com.br",
+  "description": "Company profiles as interactive 3D planets in Grupo LMF Universe",
+  "homepage": "https://universe.grupomaia.me",
   "repository": {
     "type": "git",
-    "url": "https://github.com/srizzon/git-city"
+    "url": "https://github.com/leonardomaia253/lmf-universe"
   },
   "author": "leonardomaia253",
   "license": "AGPL-3.0",

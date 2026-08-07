@@ -27,17 +27,17 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       .single(),
   ]);
 
-  const title = `@${userA} vs @${userB} - Maia Universe`;
+  const title = `@${userA} vs @${userB} - Grupo LMF Universe`;
 
   if (!devA || !devB) {
     return {
       title,
-      description: `Compare ${userA} and ${userB} in Maia Universe`,
+      description: `Compare ${userA} and ${userB} in Grupo LMF Universe`,
       openGraph: {
         images: [
           {
             url: `https://maia.universe.sh/api/og?userA=${userA}&userB=${userB}`,
-            alt: "Comparação de Perfis - Maia Universe",
+            alt: "Comparação de Perfis - Grupo LMF Universe",
           },
         ],
       },
@@ -55,7 +55,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       images: [
         {
           url: `https://maia.universe.sh/api/og?userA=${userA}&userB=${userB}`,
-          alt: "Comparação de Perfis - Maia Universe",
+          alt: "Comparação de Perfis - Grupo LMF Universe",
         },
       ],
     },

@@ -56,7 +56,7 @@ const TAU = Math.PI * 2;
 
 const BRAND_RULES: BrandRule[] = [
   { login: "bilheking", name: "Bilheking", match: ["bilheking"], color: "#7c3aed", sector: "Entretenimento e bilheteria", description: "Motor comercial do ecossistema, conectado a vendas, eventos e crescimento.", texture: "aurora", scale: 1.42, priority: 100, forceFeatured: true },
-  { login: "volup-ai", name: "Volup AI", match: ["volupai", "volup ai", "volup-ai"], color: "#10b981", sector: "Inteligencia artificial", description: "Camada de IA aplicada a produtos, operacao e automacao do Grupo Maia.", texture: "forest", scale: 1.42, priority: 98, forceFeatured: true },
+  { login: "volup-ai", name: "Volup AI", match: ["volupai", "volup ai", "volup-ai"], color: "#10b981", sector: "Inteligencia artificial", description: "Camada de IA aplicada a produtos, operacao e automacao do Grupo LMF.", texture: "forest", scale: 1.42, priority: 98, forceFeatured: true },
   { login: "spur", name: "Spur", match: ["spur"], color: "#ef233c", sector: "Performance e crescimento", description: "Planeta de energia vermelha, orientado a tracao e execucao.", texture: "ember", scale: 1.1, priority: 90, forceFeatured: true },
   { login: "tosi", name: "Tosi", match: ["tosi"], color: "#2563eb", sector: "Produto digital", description: "Operacao azul, focada em produto, tecnologia e confiabilidade.", texture: "ocean", scale: 1.06, priority: 88, forceFeatured: true },
   { login: "jack-it-fit", name: "Jack it fit", match: ["jackitfit", "jack it fit", "jack-it-fit"], color: "#111111", sector: "Saude e fitness", description: "Planeta obsidiana, denso e disciplinado, ligado a saude e recorrencia.", texture: "obsidian", scale: 1.03, priority: 86, forceFeatured: true },
@@ -322,8 +322,8 @@ function buildUniverse(companies: CompanyRecord[], mode: ViewMode) {
       login: company.username,
       name: company.name,
       color: colorForCompany(company),
-      sector: brand?.sector || company.category || "Ecossistema Maia",
-      description: brand?.description || company.bio || "Empresa conectada ao campo orbital do Grupo Maia.",
+      sector: brand?.sector || company.category || "Ecossistema LMF",
+      description: brand?.description || company.bio || "Empresa conectada ao campo orbital do Grupo LMF.",
       texture: brand?.texture || "ice",
       size: (base + Math.sqrt(mass / maxMass) * range) * scale,
       x: layout.x,
@@ -688,7 +688,7 @@ function UniverseHero({
   return (
     <section className="pointer-events-auto fixed left-4 right-4 top-4 z-30 max-w-[calc(100vw-2rem)] font-space sm:absolute sm:left-8 sm:right-auto sm:top-7 sm:max-w-md">
       <div className="border border-white/10 bg-black/42 p-3 shadow-2xl shadow-black/30 backdrop-blur-2xl sm:p-5">
-        <p className="text-[9px] uppercase tracking-[0.3em] text-white/38 sm:text-[10px] sm:tracking-[0.34em]">Maia Universe</p>
+        <p className="text-[9px] uppercase tracking-[0.3em] text-white/38 sm:text-[10px] sm:tracking-[0.34em]">Grupo LMF Universe</p>
         <h1 className="mt-2 text-xl font-semibold leading-tight normal-case text-white sm:text-4xl">
           Transforme empresas em planetas vivos.
         </h1>

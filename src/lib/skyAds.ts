@@ -1,3 +1,5 @@
+import { BRAND } from "./brand";
+
 export type AdVehicle = "plane" | "blimp" | "billboard" | "rooftop_sign" | "led_wrap";
 
 export interface SkyAd {
@@ -89,13 +91,13 @@ export function trackAdEvents(adId: string, eventTypes: ("impression" | "click" 
 
 export const DEFAULT_SKY_ADS: SkyAd[] = [
   {
-    id: "gitUniverse",
-    text: "THEGITUniverse.COM ★ YOUR CODE, YOUR Universe ★ THEGITUniverse.COM",
-    brand: "Maia Universe",
-    description: "A Universe built from KPIs do Grupo Maia. Search your username and find your planet among thousands of companies.",
+    id: "lmfUniverse",
+    text: "GRUPO LMF UNIVERSE - SUAS EMPRESAS EM UM UNIVERSO 3D",
+    brand: BRAND.name,
+    description: `A Universe built from KPIs do ${BRAND.groupName}. Search your username and find your planet among thousands of companies.`,
     color: "#f8d880",
     bgColor: "#1a1018",
-    link: "https://maiauniverse.com.br",
+    link: BRAND.baseUrl,
     vehicle: "plane",
     priority: 100,
   },
@@ -103,12 +105,11 @@ export const DEFAULT_SKY_ADS: SkyAd[] = [
     id: "advertise",
     text: "ADD YOUR AD HERE",
     brand: "Sky Ads",
-    description: "Want your brand flying over Maia Universe? Planes, blimps, your colors. Get in touch!",
+    description: `Want your brand flying over ${BRAND.name}? Planes, blimps, your colors. Get in touch!`,
     color: "#f8d880",
     bgColor: "#1a1018",
-    link: "https://maiauniverse.com.br/advertise",
+    link: `${BRAND.baseUrl}/advertise`,
     vehicle: "plane",
     priority: 10,
   },
 ];
-

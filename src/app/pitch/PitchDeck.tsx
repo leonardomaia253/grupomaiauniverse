@@ -129,7 +129,7 @@ export default function PitchDeck({ stats }: { stats: PitchStats }) {
             href="/"
             className="text-xs text-dim transition-colors hover:text-cream sm:text-sm"
           >
-            &larr; Maia Universe
+            &larr; Grupo LMF Universe
           </Link>
           <span className="text-sm text-muted sm:text-base">
             <span style={{ color: CREAM }}>
@@ -263,7 +263,7 @@ function SlideProblem() {
           100M+
         </p>
         <p className="mt-3 text-sm text-muted normal-case sm:text-base">
-          Maia Universe transforms every company into a unique 3D pixel art
+          Grupo LMF Universe transforms every company into a unique 3D pixel art
         </p>
       </div>
     </div>
@@ -275,7 +275,7 @@ function SlideSolution() {
     <div className="flex w-full max-w-4xl flex-col gap-8">
       <SlideHeader n="03" title="The Solution" />
       <p className="max-w-2xl text-base leading-relaxed text-muted normal-case sm:text-lg">
-        Maia Universe transforms every GitHub company into a unique 3D pixel art
+        Grupo LMF Universe transforms every GitHub company into a unique 3D pixel art
         planet. Contributions become height. Repos become width. Activity
         lights up windows. Together, they form a living Universe.
       </p>
@@ -447,7 +447,7 @@ function SlideCompetition() {
             <tr className="border-b-2 border-border text-muted">
               <th className="pb-3 pr-6 text-sm sm:text-base">Feature</th>
               <th className="pb-3 pr-6 text-sm sm:text-base" style={{ color: ACCENT }}>
-                Maia Universe
+                Grupo LMF Universe
               </th>
               <th className="pb-3 pr-6 text-sm sm:text-base">Outros</th>
               <th className="pb-3 text-sm sm:text-base">CodersRank</th>
@@ -463,7 +463,7 @@ function SlideCompetition() {
         </table>
       </div>
       <p className="text-sm text-dim normal-case sm:text-base">
-        No active product does what Maia Universe
+        No active product does what Grupo LMF Universe
         does.
       </p>
     </div>
@@ -576,7 +576,7 @@ function SlideVision() {
           <span style={{ color: ACCENT }}>Universe</span>.
         </p>
         <p className="mt-4 text-sm text-muted normal-case sm:text-base">
-          maiauniverse.com.br
+          universe.grupomaia.me
         </p>
       </div>
     </div>
@@ -591,7 +591,7 @@ function SlideRoadmap() {
         <RoadmapItem quarter="Q1 2026" status="done" title="Core Universe" desc="3D Universe, leaderboards, achievements, streaks, shop, ads, constellations, battles" />
         <RoadmapItem quarter="Q2 2026" status="next" title="Street Mode" desc="Third-person walking. Visit planets, discover secrets, vehicles." />
         <RoadmapItem quarter="Q3 2026" status="planned" title="Pixels Economy" desc="Virtual currency, premium marketplace, season passes." />
-        <RoadmapItem quarter="Q4 2026" status="planned" title="Maia Universe Wrapped" desc="Year-in-review animations. Viral shareable cards." />
+        <RoadmapItem quarter="Q4 2026" status="planned" title="Grupo LMF Universe Wrapped" desc="Year-in-review animations. Viral shareable cards." />
         <RoadmapItem quarter="2027" status="planned" title="100K+ companies" desc="Enterprise, API, analytics dashboard, global events." />
       </div>
     </div>
@@ -603,7 +603,7 @@ function SlideContact() {
     <div className="flex w-full max-w-4xl flex-col items-center justify-center gap-10 text-center">
       <SlideHeader n="13" title="Let's Talk" />
       <p className="max-w-xl text-base leading-relaxed text-muted normal-case sm:text-lg">
-        Interested in Maia Universe? Have questions, ideas, or want to collaborate?
+        Interested in Grupo LMF Universe? Have questions, ideas, or want to collaborate?
       </p>
       <div className="flex flex-col gap-5">
         <a
@@ -622,7 +622,7 @@ function SlideContact() {
         </a>
       </div>
       <p className="mt-4 text-sm text-muted normal-case sm:text-base">
-        maiauniverse.com.br
+        universe.grupomaia.me
       </p>
     </div>
   );

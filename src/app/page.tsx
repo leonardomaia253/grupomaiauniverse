@@ -35,6 +35,7 @@ import LoadingScreen, { type LoadingStage } from "@/components/LoadingScreen";
 import { getUniverseCache, setUniverseCache, clearUniverseCache } from "@/lib/UniverseCache";
 import { DEFAULT_SKY_ADS, buildAdLink, trackAdEvent, trackAdEvents, isPlanetAd } from "@/lib/skyAds";
 import { track } from "@vercel/analytics";
+import { BRAND } from "@/lib/brand";
 import {
   identifyUser,
   trackSignInClicked,
@@ -71,7 +72,7 @@ const LevelUpToast = dynamic(() => import("@/components/LevelUpToast"), { ssr: f
 const MiniMap = dynamic(() => import("@/components/MiniMap"), { ssr: false });
 
 // Feature flags — flip to switch milestone banner
-const MILESTONE_MODE: "stars" | "companies" = "companies"; // "stars" = Estrela Maias road to 1K, "companies" = total companies
+const MILESTONE_MODE: "stars" | "companies" = "companies"; // "stars" = Estrela LMFs road to 1K, "companies" = total companies
 
 const THEMES = [
   { name: "Midnight", accent: "#6090e0", shadow: "#203870" },
@@ -121,7 +122,7 @@ const DEV_CLASSES = [
   "Console.log Debugger",
   "Ctrl+C Ctrl+V Engineer",
   "Senior Googler",
-  "Maia Power User",
+  "LMF Power User",
   "Dark Mode Purist",
   "Rubber Duck Whisperer",
   "Merge Conflict Magnet",
@@ -180,7 +181,7 @@ const ERROR_MESSAGES: Record<string, { primary: (u: string) => string; secondary
   },
   "org": {
     primary: (u) => `"@${u}" é uma organização, não uma empresa`,
-    secondary: "Maia Universe é focado em perfis empresariais.",
+    secondary: "Grupo LMF Universe é focado em perfis empresariais.",
   },
   "no-activity": {
     primary: (u) => `A empresa "@${u}" não possui atividade pública ainda`,
@@ -523,9 +524,9 @@ function HomeContent() {
   const prevRaidPhaseRef = useRef<string>("idle");
   const lastSuccessfulRaidRef = useRef<{ defenderLogin: string; attackerLogin: string; tagStyle: string } | null>(null);
 
-  // Fetch Estrela Maia count
+  // Fetch Estrela LMF count
   useEffect(() => {
-    fetch("https://api.github.com/repos/leonardomaia253/grupomaiauniverse")
+    fetch(BRAND.starRepositoryApi)
       .then((r) => r.ok ? r.json() : null)
       .then((d) => { if (d?.stargazers_count != null) setStarCount(d.stargazers_count); })
       .catch(() => { });
@@ -1305,12 +1306,12 @@ function HomeContent() {
   // re-mounts the component and loads fresh data via the mount effect above.
 
   // ─── Intro text phase timing (14s total) ─────────────────────
-  const INTRO_TEXT_SCHEDULE = [0, 2000, 4500, 7000, 10000]; // Phase 0 (Welcome), 1 (The Universe), 2 (Collect PX), 3 (Welcome to Maia), 4 (Done)
+  const INTRO_TEXT_SCHEDULE = [0, 2000, 4500, 7000, 10000]; // Phase 0 (Welcome), 1 (The Universe), 2 (Collect PX), 3 (Welcome to Grupo LMF), 4 (Done)
   const INTRO_TEXTS = [
     "Bem-vindo ao",
     "O Universo das empresas",
     "Navegue, Colete PX, Evolua",
-    "Bem-vindo ao Maia Universe",
+    "Bem-vindo ao Grupo LMF Universe",
     ""
   ];
   const [introConfetti, setIntroConfetti] = useState(false);
@@ -1326,7 +1327,7 @@ function HomeContent() {
     for (let i = 0; i < INTRO_TEXT_SCHEDULE.length; i++) {
       timers.push(setTimeout(() => setIntroPhase(i), INTRO_TEXT_SCHEDULE[i]));
     }
-    // Confetti shortly after "Welcome to Maia Universe"
+    // Confetti shortly after "Welcome to Grupo LMF Universe"
     timers.push(setTimeout(() => setIntroConfetti(true), INTRO_TEXT_SCHEDULE[3] + 500));
 
     return () => timers.forEach(clearTimeout);
