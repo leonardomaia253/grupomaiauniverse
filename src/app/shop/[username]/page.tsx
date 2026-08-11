@@ -42,12 +42,12 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const record = await getCompany(username);
 
   if (!record) {
-    return { title: "Company Not Found - Grupo LMF Universe" };
+    return { title: "Company Not Found - Constellation OS" };
   }
 
   return {
-    title: `Shop - @${record.username} - Grupo LMF Universe`,
-    description: `Customize @${record.username}'s planet in Grupo LMF Universe`,
+    title: `Shop - @${record.username} - Constellation OS`,
+    description: `Customize @${record.username}'s planet in Constellation OS`,
   };
 }
 
@@ -282,13 +282,13 @@ export default async function ShopPage({ params, searchParams }: Props) {
           <p className="text-[9px] text-muted normal-case">
             built by{" "}
             <a
-              href="https://x.com/leonardomaia253"
+              href="mailto:contato@grupomaia.com.br"
               target="_blank"
               rel="noopener noreferrer"
               className="transition-colors hover:text-cream"
               style={{ color: ACCENT }}
             >
-              @leonardomaia253
+              contato institucional
             </a>
           </p>
         </div>

@@ -7,11 +7,11 @@ import * as THREE from "three";
 const MATRIX_GREEN = "#00ff41";
 const SPIRE_HEIGHT = 800;
 
-interface FounderSpireProps {
+interface PrincipalSpireProps {
   onClick: () => void;
 }
 
-export default function FounderSpire({ onClick }: FounderSpireProps) {
+export default function PrincipalSpire({ onClick }: PrincipalSpireProps) {
   const groupRef = useRef<THREE.Group>(null);
   const pulseRef = useRef<THREE.Mesh>(null);
   const ring1Ref = useRef<THREE.Mesh>(null);

@@ -50,7 +50,7 @@ export default function ShareButtons({
       const url = URL.createObjectURL(blob);
       const a = document.createElement("a");
       a.href = url;
-      a.download = `gitUniverse-${login}-${format}.png`;
+      a.download = `constellationOS-${login}-${format}.png`;
       document.body.appendChild(a);
       a.click();
       a.remove();

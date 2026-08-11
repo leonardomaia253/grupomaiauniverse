@@ -1,12 +1,12 @@
-# Contributing to Grupo LMF Universe
+# Contributing to Constellation OS
 
 Thanks for your interest in contributing! Here's how to get started.
 
 ## Setup
 
 ```bash
-git clone https://github.com/srizzon/git-city.git
-cd git-city
+git clone https://github.com/leonardomaia253/constellation-os.git
+cd constellation-os
 npm install
 cp .env.example .env.local
 # Fill in your keys (see .env.example for details)
@@ -94,7 +94,7 @@ Start with an emoji + type. Single line, present tense, concise.
 
 ## Good First Issues
 
-Look for issues labeled [`good first issue`](https://github.com/srizzon/git-city/labels/good%20first%20issue). These are scoped tasks that don't require deep knowledge of the codebase.
+Look for issues labeled [`good first issue`](https://github.com/leonardomaia253/constellation-os/labels/good%20first%20issue). These are scoped tasks that don't require deep knowledge of the codebase.
 
 ## Project Structure
 
@@ -134,4 +134,4 @@ Run `npm install` to pick up any new dependencies, then `npm run lint` to surfac
 
 ## Questions?
 
-Open an issue or reach out on [X/Twitter](https://x.com/leonardomaia253).
+Open an issue or reach out on [X/Twitter](mailto:contato@grupomaia.com.br).

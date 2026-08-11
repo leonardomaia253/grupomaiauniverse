@@ -136,8 +136,8 @@ export async function POST(request: NextRequest) {
           price_data: {
             currency,
             product_data: {
-              name: `Grupo LMF Universe Ad: ${plan.label}`,
-              description: `${plan.label} monthly ad subscription on Grupo LMF Universe`,
+              name: `Constellation OS Ad: ${plan.label}`,
+              description: `${plan.label} monthly ad subscription on Constellation OS`,
             },
             unit_amount: getPriceCents(plan_id, currency),
             recurring: { interval: "month" },

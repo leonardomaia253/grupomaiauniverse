@@ -100,7 +100,7 @@ export default function PitchDeck({ stats }: { stats: PitchStats }) {
     <SlideMarket key="market" />,
     <SlideCompetition key="competition" />,
     <SlideGTM key="gtm" stats={stats} />,
-    <SlideFounder key="founder" />,
+    <SlidePrincipal key="principal" />,
     <SlideVision key="vision" />,
     <SlideRoadmap key="roadmap" />,
     <SlideContact key="contact" />,
@@ -129,7 +129,7 @@ export default function PitchDeck({ stats }: { stats: PitchStats }) {
             href="/"
             className="text-xs text-dim transition-colors hover:text-cream sm:text-sm"
           >
-            &larr; Grupo LMF Universe
+            &larr; Constellation OS
           </Link>
           <span className="text-sm text-muted sm:text-base">
             <span style={{ color: CREAM }}>
@@ -222,7 +222,7 @@ function SlideCover({ stats }: { stats: PitchStats }) {
         <span style={{ color: ACCENT }}>Universe</span>
       </div>
       <p className="max-w-lg text-base leading-relaxed text-muted normal-case sm:text-xl lg:text-2xl">
-        Your perfil da empresa as a 3D pixel art planet in an interactive Universe
+        Your perfil da empresa as a 3D premium planet in an interactive Universe
       </p>
       <div className="mt-2 flex flex-wrap items-center justify-center gap-3">
         <Pill>{stats.formattedcompanies} companies</Pill>
@@ -263,7 +263,7 @@ function SlideProblem() {
           100M+
         </p>
         <p className="mt-3 text-sm text-muted normal-case sm:text-base">
-          Grupo LMF Universe transforms every company into a unique 3D pixel art
+          Constellation OS transforms every company into a unique 3D premium
         </p>
       </div>
     </div>
@@ -275,7 +275,7 @@ function SlideSolution() {
     <div className="flex w-full max-w-4xl flex-col gap-8">
       <SlideHeader n="03" title="The Solution" />
       <p className="max-w-2xl text-base leading-relaxed text-muted normal-case sm:text-lg">
-        Grupo LMF Universe transforms every GitHub company into a unique 3D pixel art
+        Constellation OS transforms every empresa do ecossistema into a unique 3D premium
         planet. Contributions become height. Repos become width. Activity
         lights up windows. Together, they form a living Universe.
       </p>
@@ -294,7 +294,7 @@ function SlideSolution() {
         />
         <SolutionPoint
           title="Rank = Location"
-          desc="Top contributors live downtown. A living leaderboard."
+          desc="Top contributors live downtown. A living company map."
         />
       </div>
     </div>
@@ -447,7 +447,7 @@ function SlideCompetition() {
             <tr className="border-b-2 border-border text-muted">
               <th className="pb-3 pr-6 text-sm sm:text-base">Feature</th>
               <th className="pb-3 pr-6 text-sm sm:text-base" style={{ color: ACCENT }}>
-                Grupo LMF Universe
+                Constellation OS
               </th>
               <th className="pb-3 pr-6 text-sm sm:text-base">Outros</th>
               <th className="pb-3 text-sm sm:text-base">CodersRank</th>
@@ -455,7 +455,7 @@ function SlideCompetition() {
           </thead>
           <tbody className="text-muted">
             <CompRow feature="3D visualization" gc="Full Universe" sky="Bar chart" cr="None" />
-            <CompRow feature="Community" gc="Kudos, battles, gifts" sky="None" cr="Basic" />
+            <CompRow feature="Community" gc="Stories, signals, visits" sky="None" cr="Basic" />
             <CompRow feature="Gamification" gc="Achievements, streaks, boards" sky="None" cr="Score" />
             <CompRow feature="Monetization" gc="Ads + Shop" sky="None (dead)" cr="Premium" />
             <CompRow feature="Status" gc="Active, growing" sky="Discontinued" cr="Low traction" />
@@ -463,7 +463,7 @@ function SlideCompetition() {
         </table>
       </div>
       <p className="text-sm text-dim normal-case sm:text-base">
-        No active product does what Grupo LMF Universe
+        No active product does what Constellation OS
         does.
       </p>
     </div>
@@ -483,7 +483,7 @@ function SlideGTM({ stats }: { stats: PitchStats }) {
         <GTMCard
           n="02"
           title="Viral Mechanics"
-          desc="Share cards, comparisons, achievements, leaderboards. Every interaction generates a share."
+          desc="Share cards, comparisons, achievements, company maps. Every interaction generates a share."
         />
         <GTMCard
           n="03"
@@ -508,10 +508,10 @@ function SlideGTM({ stats }: { stats: PitchStats }) {
   );
 }
 
-function SlideFounder() {
+function SlidePrincipal() {
   return (
     <div className="flex w-full max-w-4xl flex-col gap-8">
-      <SlideHeader n="10" title="The Founder" />
+      <SlideHeader n="10" title="The Guide" />
       <div className="border-[3px] border-border bg-bg-raised p-6 sm:p-8">
         <div className="flex flex-col gap-6">
           <div className="flex items-center gap-5">
@@ -522,9 +522,9 @@ function SlideFounder() {
               SR
             </div>
             <div>
-              <p className="text-2xl text-cream sm:text-3xl">leonardomaia253</p>
+              <p className="text-2xl text-cream sm:text-3xl">equipe operacional</p>
               <p className="mt-1 text-sm text-muted normal-case sm:text-base">
-                Solo Founder & Full-Stack company
+                Produto guiado por uma equipe enxuta
               </p>
             </div>
           </div>
@@ -588,10 +588,10 @@ function SlideRoadmap() {
     <div className="flex w-full max-w-4xl flex-col gap-6">
       <SlideHeader n="12" title="Roadmap" />
       <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
-        <RoadmapItem quarter="Q1 2026" status="done" title="Core Universe" desc="3D Universe, leaderboards, achievements, streaks, shop, ads, constellations, battles" />
+        <RoadmapItem quarter="Q1 2026" status="done" title="Company Guide" desc="3D Universe, company maps, achievements, streaks, shop, ads, constellations, guided tours" />
         <RoadmapItem quarter="Q2 2026" status="next" title="Street Mode" desc="Third-person walking. Visit planets, discover secrets, vehicles." />
         <RoadmapItem quarter="Q3 2026" status="planned" title="Pixels Economy" desc="Virtual currency, premium marketplace, season passes." />
-        <RoadmapItem quarter="Q4 2026" status="planned" title="Grupo LMF Universe Wrapped" desc="Year-in-review animations. Viral shareable cards." />
+        <RoadmapItem quarter="Q4 2026" status="planned" title="Company stories" desc="Animated timelines, public narratives and shareable cards." />
         <RoadmapItem quarter="2027" status="planned" title="100K+ companies" desc="Enterprise, API, analytics dashboard, global events." />
       </div>
     </div>
@@ -603,16 +603,16 @@ function SlideContact() {
     <div className="flex w-full max-w-4xl flex-col items-center justify-center gap-10 text-center">
       <SlideHeader n="13" title="Let's Talk" />
       <p className="max-w-xl text-base leading-relaxed text-muted normal-case sm:text-lg">
-        Interested in Grupo LMF Universe? Have questions, ideas, or want to collaborate?
+        Interested in Constellation OS? Questions, ideas, or partnership proposals?
       </p>
       <div className="flex flex-col gap-5">
         <a
-          href="https://x.com/srizzon"
+          href="mailto:contato@grupomaia.com.br"
           target="_blank"
           rel="noopener noreferrer"
           className="border-[3px] border-border bg-bg-raised px-8 py-4 text-base text-cream transition-colors hover:border-border-light sm:text-lg"
         >
-          @srizzon on X
+          Contato institucional
         </a>
         <a
           href="mailto:contato@grupomaia.com.br"

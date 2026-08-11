@@ -1567,7 +1567,7 @@ export const StreakFlame = memo(function StreakFlame({
   );
 });
 
-// ─── Estrela LMF (crown zone) ────────────────────────────────
+// ─── Estrela do Portfolio (crown zone) ────────────────────────────────
 // Giant golden 5-pointed star floating above the planet
 
 function createStarShape(outerR: number, innerR: number, points = 5): THREE.Shape {
@@ -1792,7 +1792,7 @@ export const TierBaseGlow = memo(function TierBaseGlow({
   );
 });
 
-/** Sky beam effect for high tiers (Unicorn/Founder) */
+/** Sky beam effect for high tiers (Reference/Institutional) */
 export const TierSkyBeam = memo(function TierSkyBeam({
   height,
   color,

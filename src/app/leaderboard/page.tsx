@@ -16,9 +16,9 @@ export const dynamic = "force-dynamic";
 export const revalidate = 300; // ISR: regenerate every 5 min
 
 export const metadata: Metadata = {
-  title: "Leaderboard - Grupo LMF Universe",
+  title: "Leaderboard - Constellation OS",
   description:
-    "Top GitHub companies ranked by contributions, stars, repos, achievements, and referrals in Grupo LMF Universe.",
+    "Top empresas do ecossistema ranked by contributions, stars, repos, achievements, and referrals in Constellation OS.",
 };
 
 interface company {
@@ -199,7 +199,7 @@ export default async function LeaderboardPage({
             Leader<span style={{ color: ACCENT }}>board</span>
           </h1>
           <p className="mt-3 text-xs text-muted normal-case">
-            Top companies ranked in Grupo LMF Universe
+            Top companies ranked in Constellation OS
           </p>
         </div>
 
@@ -385,13 +385,13 @@ export default async function LeaderboardPage({
           <p className="mt-6 text-[9px] text-muted normal-case">
             built by{" "}
             <a
-              href="https://x.com/leonardomaia253"
+              href="mailto:contato@grupomaia.com.br"
               target="_blank"
               rel="noopener noreferrer"
               className="transition-colors hover:text-cream"
               style={{ color: ACCENT }}
             >
-              @leonardomaia253
+              contato institucional
             </a>
           </p>
         </div>

@@ -433,7 +433,7 @@ export default memo(function InstancedPlanets({
     for (let i = 0; i < count; i++) {
       const login = planets[i].login.toLowerCase();
       // Creator gets an overdriven glow (1.5 overshoots the mix, extra bright)
-      arr[i] = liveByLogin?.has(login) ? (login === "srizzon" ? 1.5 : 1.0) : 0.0;
+      arr[i] = liveByLogin?.has(login) ? (login === "leonardomaia253" ? 1.5 : 1.0) : 0.0;
     }
     liveAttr.needsUpdate = true;
   }, [liveByLogin, planets, count]);

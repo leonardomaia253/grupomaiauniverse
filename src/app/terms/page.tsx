@@ -2,8 +2,8 @@ import Link from "next/link";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Terms of Service - Grupo LMF Universe",
-  description: "Terms of Service for Grupo LMF Universe.",
+  title: "Terms of Service - Constellation OS",
+  description: "Terms of Service for Constellation OS.",
 };
 
 const ACCENT = "#c8e64a";
@@ -29,15 +29,15 @@ export default function TermsPage() {
         <div className="mt-8 flex flex-col gap-5">
           <Section n={1} title="The Service">
             <p>
-              Grupo LMF Universe is a web application that visualizes perfis de empresas as 3D
-              planets in a virtual Universe. By using Grupo LMF Universe, you agree to these
+              Constellation OS is a web application that visualizes perfis de empresas as 3D
+              planets in a virtual Universe. By using Constellation OS, you agree to these
               terms.
             </p>
           </Section>
 
           <Section n={2} title="Account & Access">
             <p>
-              You sign in via Autenticação Maia. We access your public dados do Grupo LMF
+              You sign in via autenticacao segura. We access your public dados do portfolio
               (profile, repositories, contribution count) to generate your
               planet. We do not access private repositories or modify any data
               on your GitHub account.
@@ -53,7 +53,7 @@ export default function TermsPage() {
             <p>You agree not to:</p>
             <ul className="mt-1 flex flex-col gap-1">
               <Li>Abuse, exploit, or attempt to disrupt the service</Li>
-              <Li>Scrape or collect data from Grupo LMF Universe without permission</Li>
+              <Li>Scrape or collect data from Constellation OS without permission</Li>
               <Li>Use automated systems to create fake accounts or inflate metrics</Li>
               <Li>Impersonate other users or misrepresent your identity</Li>
             </ul>
@@ -61,16 +61,16 @@ export default function TermsPage() {
 
           <Section n={4} title="Intellectual Property">
             <p>
-              Grupo LMF Universe, its code, design, and branding are owned by leonardomaia253
-              Rizzon. Your dados do Grupo LMF remains yours. By using the service, you
-              grant us a limited license to display your public dados do Grupo LMF as
+              Constellation OS, its code, design, and branding are operated by the portfolio team
+              Your dados do portfolio remains yours. By using the service, you
+              grant us a limited license to display your public dados do portfolio as
               part of the Universe visualization.
             </p>
           </Section>
 
           <Section n={5} title="Purchases & Shop">
             <p>
-              Grupo LMF Universe offers optional cosmetic items for purchase. All purchases
+              Constellation OS offers optional cosmetic items for purchase. All purchases
               are final and non-refundable unless required by applicable law.
               Cosmetic items have no real-world value and exist only within Git
               Universe.
@@ -79,7 +79,7 @@ export default function TermsPage() {
 
           <Section n={6} title="Disclaimer of Warranties">
             <p>
-              Grupo LMF Universe is provided &quot;as is&quot; and &quot;as
+              Constellation OS is provided &quot;as is&quot; and &quot;as
               available&quot; without warranties of any kind, express or implied.
               We do not guarantee uptime, accuracy of data, or uninterrupted
               access. GitHub API limitations or outages may affect the service.
@@ -88,7 +88,7 @@ export default function TermsPage() {
 
           <Section n={7} title="Limitation of Liability">
             <p>
-              To the maximum extent permitted by law, leonardomaia253 and Grupo LMF Universe
+              To the maximum extent permitted by law, the portfolio team and Constellation OS
               shall not be liable for any indirect, incidental, special, or
               consequential damages arising from your use of the service.
             </p>
@@ -96,8 +96,8 @@ export default function TermsPage() {
 
           <Section n={8} title="Third-Party Token">
             <p>
-              A token called $GITC exists on the Base blockchain. This token was
-              created by the community, not by Grupo LMF Universe or leonardomaia253. We do
+              A token called token comunit?rio exists on the Base blockchain. This token was
+              created by the community, not by Constellation OS or the portfolio team. We do
               not control, manage, or endorse the token. Any interaction with the
               token is entirely at your own risk. See the{" "}
               <a
@@ -113,7 +113,7 @@ export default function TermsPage() {
 
           <Section n={9} title="Changes to Terms">
             <p>
-              We may update these terms at any time. Continued use of Grupo LMF Universe
+              We may update these terms at any time. Continued use of Constellation OS
               after changes constitutes acceptance of the updated terms.
             </p>
           </Section>
@@ -122,13 +122,13 @@ export default function TermsPage() {
             <p>
               Questions? Reach out at{" "}
               <a
-                href="https://x.com/leonardomaia253"
+                href="mailto:contato@grupomaia.com.br"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="transition-colors hover:text-cream"
                 style={{ color: ACCENT }}
               >
-                @leonardomaia253
+                contato institucional
               </a>{" "}
               on X.
             </p>

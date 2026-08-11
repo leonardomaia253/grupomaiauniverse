@@ -262,8 +262,8 @@ export default function RaidOverlay({ phase, raidData, onSkip, onExit }: Props) 
               <button
                 onClick={() => {
                   const text = raidData.success
-                    ? `I just battled ${defenderLogin}'s planet on Grupo LMF Universe! ${raidData.attack_score} vs ${raidData.defense_score}`
-                    : `${defenderLogin} defended my attack on Grupo LMF Universe! ${raidData.attack_score} vs ${raidData.defense_score}`;
+                    ? `I just explored ${defenderLogin}'s planet on Constellation OS! ${raidData.attack_score} vs ${raidData.defense_score}`
+                    : `${defenderLogin} appeared in my tour on Constellation OS! ${raidData.attack_score} vs ${raidData.defense_score}`;
                   const url = `https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent("https://universe.grupomaia.me")}`;
                   window.open(url, "_blank");
                 }}

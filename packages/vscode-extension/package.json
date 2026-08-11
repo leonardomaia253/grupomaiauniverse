@@ -1,17 +1,17 @@
 {
   "name": "gitcity",
-  "displayName": "Git City: Pulse",
+  "displayName": "Constellation Pulse",
   "description": "Keep your city alive. When you code, your building glows and powers the signal. Privacy-first: you control what gets shared.",
   "version": "0.3.0",
-  "publisher": "git-city",
+  "publisher": "constellation-os",
   "license": "AGPL-3.0",
   "repository": {
     "type": "git",
-    "url": "https://github.com/srizzon/git-city"
+    "url": "https://github.com/leonardomaia253/constellation-os"
   },
   "homepage": "https://www.thegitcity.com",
   "bugs": {
-    "url": "https://github.com/srizzon/git-city/issues"
+    "url": "https://github.com/leonardomaia253/constellation-os/issues"
   },
   "engines": {
     "vscode": "^1.93.0"
@@ -40,7 +40,7 @@
       }
     ],
     "configuration": {
-      "title": "Git City",
+      "title": "Constellation OS",
       "properties": {
         "gitCity.enabled": {
           "type": "boolean",
@@ -50,7 +50,7 @@
         "gitCity.apiUrl": {
           "type": "string",
           "default": "https://www.thegitcity.com",
-          "description": "Git City API URL (changing this sends your API key to a different server)",
+          "description": "Constellation OS API URL (changing this sends your API key to a different server)",
           "scope": "application"
         },
         "gitCity.privacy.shareLanguage": {

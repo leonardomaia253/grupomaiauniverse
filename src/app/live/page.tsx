@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import type { LiveSession } from "@/lib/useCodingPresence";
 
-const CREATOR_LOGIN = "srizzon";
+const CREATOR_LOGIN = "leonardomaia253";
 
 interface PresenceDev {
   companyLogin: string;
@@ -128,7 +128,7 @@ export default function LivePage() {
             Every dev who codes keeps a planet lit. Install Pulse to power yours.
           </p>
           <a
-            href="https://marketplace.visualstudio.com/items?itemName=git-Universe.gitUniverse"
+            href="https://marketplace.visualstudio.com/items?itemName=git-Universe.constellationOS"
             target="_blank"
             rel="noopener noreferrer"
             className="btn-press inline-block px-8 py-3 text-xs text-bg"

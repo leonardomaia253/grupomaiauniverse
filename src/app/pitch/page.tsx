@@ -5,9 +5,9 @@ import PitchDeck from "./PitchDeck";
 export const revalidate = 300;
 
 export const metadata: Metadata = {
-  title: "Pitch Deck - Grupo LMF Universe",
+  title: "Pitch Deck - Constellation OS",
   description:
-    "Grupo LMF Universe: transforming perfis de empresas into an interactive 3D Universe. 11,800+ companies, organic growth, revenue from day one.",
+    "Constellation OS: transforming perfis de empresas into an interactive 3D Universe. 11,800+ companies, organic growth, revenue from day one.",
 };
 
 export default async function PitchPage() {

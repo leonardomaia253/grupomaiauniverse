@@ -26,13 +26,13 @@ const SCRIPT_LINES = [
   "Uma energia que transforma ideias em imperios.",
   "Tecnologia em magia. Caos em sincronia.",
   "Nos criamos o amanha.",
-  "Bem-vindo ao Grupo LMF.",
+  "Bem-vindo ao Constellation OS.",
 ];
 
 const STAGE_MESSAGES: Record<string, string> = {
   init: "Abrindo os portais...",
   fetching: "Conectando empresas e possibilidades...",
-  generating: "Desenhando o grande grafo LMF...",
+  generating: "Desenhando o grande grafo Maia...",
   rendering: "Sincronizando energia coletiva...",
   ready: "O proximo capitulo comeca agora",
   done: "Universo pronto",
@@ -205,7 +205,7 @@ export default function LoadingScreen({
 
       <div className="relative z-10 flex min-h-[100svh] flex-col items-center justify-center px-4 py-8 text-center sm:px-6">
         <p className="font-space text-[9px] uppercase tracking-[0.26em] text-white/45 sm:text-[10px] sm:tracking-[0.32em]">
-          Grupo LMF Universe
+          Constellation OS
         </p>
         <h1 className="font-orbitron mt-4 max-w-[22rem] text-2xl font-semibold leading-tight text-white sm:max-w-4xl sm:text-6xl">
           {SCRIPT_LINES[lineIndex]}

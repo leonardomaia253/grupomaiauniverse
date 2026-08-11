@@ -6,7 +6,7 @@ const BASE_URL = getAppUrl();
 
 const MILESTONE_MESSAGES: Record<number, { emoji: string; tagline: string }> = {
   7:   { emoji: "🔥", tagline: "You're on fire!" },
-  30:  { emoji: "🏆", tagline: "A whole month. Legendary." },
+  30:  { emoji: "🏆", tagline: "A whole month of consistency." },
   100: { emoji: "💎", tagline: "Triple digits. Unstoppable." },
   365: { emoji: "👑", tagline: "One full year. You're a legend." },
 };

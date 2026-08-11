@@ -2,7 +2,7 @@
   "name": "lmf-universe",
   "version": "0.1.0",
   "private": true,
-  "description": "Company profiles as interactive 3D planets in Grupo LMF Universe",
+  "description": "Company profiles as interactive 3D planets in Constellation OS",
   "homepage": "https://universe.grupomaia.me",
   "repository": {
     "type": "git",

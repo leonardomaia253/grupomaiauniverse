@@ -689,7 +689,7 @@ export default function Planet3D({ planet, colors, atlasTexture, introMode, focu
                 <TierNeonTrim width={planet.width} height={planet.height} depth={planet.depth} color={tier.color} />
               </>
             )}
-            {/* Unicorn (Lv 19-23): Cyan sky beam + base glow + neon trim */}
+            {/* Reference (Lv 19-23): Cyan sky beam + base glow + neon trim */}
             {tier.id === "unicorn" && (
               <>
                 <TierBaseGlow width={planet.width} depth={planet.depth} color={tier.color} />
@@ -697,8 +697,8 @@ export default function Planet3D({ planet, colors, atlasTexture, introMode, focu
                 <TierSkyBeam height={planet.height} color={tier.color} />
               </>
             )}
-            {/* Founder (Lv 24+): Prismatic sky beam + base glow + white neon trim */}
-            {tier.id === "founder" && (
+            {/* Principal (Lv 24+): Prismatic sky beam + base glow + white neon trim */}
+            {tier.id === "principal" && (
               <>
                 <TierBaseGlow width={planet.width} depth={planet.depth} color={tier.color} />
                 <TierNeonTrim width={planet.width} height={planet.height} depth={planet.depth} color={tier.color} />

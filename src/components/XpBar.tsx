@@ -15,7 +15,7 @@ const TIER_BADGES: Record<string, string> = {
   production: "PROD",
   open_source: "OS",
   unicorn: "UNI",
-  founder: "FDR",
+  principal: "PRN",
 };
 
 export default memo(function XpBar({ xpTotal, xpLevel }: XpBarProps) {

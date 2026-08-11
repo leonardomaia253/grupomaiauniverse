@@ -27,17 +27,17 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       .single(),
   ]);
 
-  const title = `@${userA} vs @${userB} - Grupo LMF Universe`;
+  const title = `@${userA} vs @${userB} - Constellation OS`;
 
   if (!devA || !devB) {
     return {
       title,
-      description: `Compare ${userA} and ${userB} in Grupo LMF Universe`,
+      description: `Compare ${userA} and ${userB} in Constellation OS`,
       openGraph: {
         images: [
           {
             url: `https://maia.universe.sh/api/og?userA=${userA}&userB=${userB}`,
-            alt: "Comparação de Perfis - Grupo LMF Universe",
+            alt: "Comparação de Perfis - Constellation OS",
           },
         ],
       },
@@ -55,7 +55,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       images: [
         {
           url: `https://maia.universe.sh/api/og?userA=${userA}&userB=${userB}`,
-          alt: "Comparação de Perfis - Grupo LMF Universe",
+          alt: "Comparação de Perfis - Constellation OS",
         },
       ],
     },

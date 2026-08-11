@@ -5,7 +5,7 @@ import { rateLimit } from "@/lib/rate-limit";
 
 export const dynamic = "force-dynamic";
 
-const REPO_OWNER = "srizzon";
+const REPO_OWNER = "leonardomaia253";
 const REPO_NAME = "git-Universe";
 
 function ghHeaders(): HeadersInit {
@@ -91,7 +91,7 @@ export async function POST() {
     return NextResponse.json({ ok: true, verified: true, already_owned: true });
   }
 
-  // Check Estrela LMF
+  // Check Estrela do Portfolio
   const starred = await isStargazer(companyLogin);
   if (!starred) {
     return NextResponse.json({ ok: true, verified: false });

@@ -7,8 +7,8 @@ import { getSupabaseAdmin } from "@/lib/supabase";
 export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
-  title: "Shop - Grupo LMF Universe",
-  description: "Customize your planet in Grupo LMF Universe with effects, structures and more",
+  title: "Shop - Constellation OS",
+  description: "Customize your planet in Constellation OS with effects, structures and more",
 };
 
 const ACCENT = "#c8e64a";
@@ -117,13 +117,13 @@ export default async function ShopLanding() {
           <p className="text-[9px] text-muted normal-case">
             built by{" "}
             <a
-              href="https://x.com/leonardomaia253"
+              href="mailto:contato@grupomaia.com.br"
               target="_blank"
               rel="noopener noreferrer"
               className="transition-colors hover:text-cream"
               style={{ color: ACCENT }}
             >
-              @leonardomaia253
+              contato institucional
             </a>
           </p>
         </div>

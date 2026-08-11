@@ -379,7 +379,7 @@ function RabbitContent() {
             className="font-pixel text-[9px] sm:text-[11px] tracking-widest"
             style={{ color: "#00ff41", opacity: 0.5 }}
           >
-            {completers.length} citizen{completers.length !== 1 ? "s" : ""} {completers.length === 1 ? "has" : "have"} found the white rabbit
+            {completers.length} visitor{completers.length !== 1 ? "s" : ""} {completers.length === 1 ? "has" : "have"} found the white rabbit
           </p>
         </div>
 
@@ -432,8 +432,8 @@ function RabbitContent() {
             <a
               href={`https://x.com/intent/tweet?text=${encodeURIComponent(
                 myPosition
-                  ? `I followed the white rabbit in Grupo LMF Universe.\nCitizen #${myPosition} to find the other side.`
-                  : `I followed the white rabbit in Grupo LMF Universe.`
+                  ? `I followed the white rabbit in Constellation OS.\nCitizen #${myPosition} to find the other side.`
+                  : `I followed the white rabbit in Constellation OS.`
               )}&url=${encodeURIComponent("https://universe.grupomaia.me/rabbit")}`}
               target="_blank"
               rel="noopener noreferrer"

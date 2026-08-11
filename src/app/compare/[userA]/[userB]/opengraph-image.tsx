@@ -3,7 +3,7 @@ import { readFile } from "node:fs/promises";
 import { join } from "node:path";
 import { createClient } from "@supabase/supabase-js";
 
-export const alt = "Comparação de Empresas - Grupo LMF Universe";
+export const alt = "Comparação de Empresas - Constellation OS";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
@@ -281,7 +281,7 @@ export default async function Image({
 
         {/* Center: VS + Stats */}
         <div
-          title="Configurar seu Anúncio - Grupo LMF Universe"
+          title="Configurar seu Anúncio - Constellation OS"
           style={{
             position: "absolute",
             left: 310,
@@ -408,7 +408,7 @@ export default async function Image({
         >
           <span style={{ fontSize: 24, color: cream }}>MAIA</span>
           <span style={{ fontSize: 24, color: accent }}>UNIVERSE</span>
-          <span style={{ fontSize: 16, color: muted, marginLeft: 8 }}>by @leonardomaia253</span>
+          <span style={{ fontSize: 16, color: muted, marginLeft: 8 }}>Constellation OS</span>
         </div>
       </div>
     ),

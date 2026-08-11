@@ -26,7 +26,7 @@ export const ROADMAP_PHASES: RoadmapPhase[] = [
       {
         id: "3d-Universe-canvas",
         name: "3D Universe Canvas",
-        description: "Interactive Three.js Universe built from real dados do Grupo LMF",
+        description: "Interactive Three.js Universe built from real dados do portfolio",
         status: "done",
       },
       {
@@ -106,7 +106,7 @@ export const ROADMAP_PHASES: RoadmapPhase[] = [
       {
         id: "xp-leveling",
         name: "XP & Leveling",
-        description: "Earn XP from coding and exploring. Rank up from Localhost to Founder",
+        description: "Earn XP from coding and exploring. Rank up from Localhost to Principal",
         status: "done",
       },
       {

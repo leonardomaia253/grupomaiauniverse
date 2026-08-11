@@ -27,7 +27,7 @@ export default function WhiteRabbit({ position, visible, onCaught }: WhiteRabbit
   const [caught, setCaught] = useState(false);
   const catchTimeRef = useRef(0);
 
-  // Capture-phase click detection (same pattern as FounderSpire)
+  // Capture-phase click detection (same pattern as PrincipalSpire)
   useEffect(() => {
     if (!visible || caught) return;
     const canvas = gl.domElement;

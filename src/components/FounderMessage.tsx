@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useRef, useCallback } from "react";
 
-interface FounderMessageProps {
+interface PrincipalMessageProps {
   onClose: () => void;
   session: { user: { user_metadata?: { user_name?: string; preferred_username?: string } } } | null;
   hasClaimed: boolean;
@@ -27,8 +27,8 @@ const MESSAGES: Record<Lang, string[]> = {
 };
 
 const SIGNATURE: Record<Lang, string> = {
-  en: "// leonardomaia253, founder, Grupo LMF, citizen #1",
-  pt: "// leonardomaia253, fundador, Grupo LMF, cidadão #1",
+  en: "// guia do mapa, Constellation OS",
+  pt: "// equipe operacional, operador, Portfolio Patrimonial, cidadão #1",
 };
 
 const PS_TEXT: Record<Lang, string> = {
@@ -39,7 +39,7 @@ const PS_TEXT: Record<Lang, string> = {
 const CHAR_DELAY = 25;
 const PARAGRAPH_PAUSE = 400;
 
-export default function FounderMessage({ onClose, session, hasClaimed, onSignIn }: FounderMessageProps) {
+export default function PrincipalMessage({ onClose, session, hasClaimed, onSignIn }: PrincipalMessageProps) {
   const [lang, setLang] = useState<Lang>("en");
   const [typedText, setTypedText] = useState("");
   const [currentParagraph, setCurrentParagraph] = useState(0);

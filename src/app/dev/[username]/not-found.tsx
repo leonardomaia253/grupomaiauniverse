@@ -8,7 +8,7 @@ export default function DevNotFound() {
       <div className="text-center">
         <h1 className="text-5xl text-cream">404</h1>
         <p className="mt-4 text-xs text-muted normal-case">
-          Esta empresa ainda não foi adicionada ao Grupo LMF Universe.
+          Esta empresa ainda não foi adicionada ao Constellation OS.
         </p>
         <Link
           href="/"

@@ -12,6 +12,11 @@ type BrandRule = {
   color: string;
   sector: string;
   description: string;
+  ownership: string;
+  capital: string;
+  payments?: string;
+  linkedinSlot?: number;
+  status?: string;
   texture: PlanetTexture;
   scale?: number;
   priority?: number;
@@ -57,17 +62,32 @@ type CosmicEvent = {
 const TAU = Math.PI * 2;
 
 const BRAND_RULES: BrandRule[] = [
-  { login: "bilheking", name: "Bilheking", match: ["bilheking"], color: "#7c3aed", sector: "Entretenimento e bilheteria", description: "Motor comercial do ecossistema, conectado a vendas, eventos e crescimento.", texture: "aurora", scale: 1.42, priority: 100, forceFeatured: true },
-  { login: "volup-ai", name: "Volup AI", match: ["volupai", "volup ai", "volup-ai"], color: "#10b981", sector: "Inteligencia artificial", description: "Camada de IA aplicada a produtos, operacao e automacao do Grupo LMF.", texture: "forest", scale: 1.42, priority: 98, forceFeatured: true },
-  { login: "spur", name: "Spur", match: ["spur"], color: "#ef233c", sector: "Performance e crescimento", description: "Planeta de energia vermelha, orientado a tracao e execucao.", texture: "ember", scale: 1.1, priority: 90, forceFeatured: true },
-  { login: "tosi", name: "Tosi", match: ["tosi"], color: "#2563eb", sector: "Produto digital", description: "Operacao azul, focada em produto, tecnologia e confiabilidade.", texture: "ocean", scale: 1.06, priority: 88, forceFeatured: true },
-  { login: "jack-it-fit", name: "Jack it fit", match: ["jackitfit", "jack it fit", "jack-it-fit"], color: "#111111", sector: "Saude e fitness", description: "Planeta obsidiana, denso e disciplinado, ligado a saude e recorrencia.", texture: "obsidian", scale: 1.03, priority: 86, forceFeatured: true },
-  { login: "seu-jornaleiro", name: "Seu Jornaleiro", match: ["seujornaleiro", "seu jornaleiro", "seu-jornaleiro"], color: "#f97316", sector: "Midia e distribuicao", description: "Orbita laranja para conteudo, distribuicao e presenca local.", texture: "solar", priority: 84, forceFeatured: true },
-  { login: "cattlecontrol", name: "CattleControl", match: ["cattlecontrol", "cattle control", "cattle-control"], color: "#16a34a", sector: "Agro e gestao", description: "Planeta verde de controle, campo, dados e operacao produtiva.", texture: "forest", priority: 82, forceFeatured: true },
-  { login: "iris", name: "Iris", match: ["iris"], color: "#facc15", sector: "Visao e inteligencia", description: "Planeta amarelo, ligado a leitura, percepcao e clareza operacional.", texture: "solar", priority: 80, forceFeatured: true },
-  { login: "kinkora", name: "Kinkora", match: ["kinkora"], color: "#ec4899", sector: "Experiencia e comunidade", description: "Planeta rosa de relacao, marca e experiencia.", texture: "rose", priority: 78, forceFeatured: true },
-  { login: "avantyp", name: "Avantyp", match: ["avantyp"], color: "#7f1d1d", sector: "Estrategia e tecnologia", description: "Planeta vermelho escuro, compacto e estrategico.", texture: "ember", priority: 76, forceFeatured: true },
-  { login: "boase", name: "Boase", match: ["boase"], color: "#38bdf8", sector: "Operacao e servicos", description: "Planeta azul claro, leve, orientado a servicos e conexoes.", texture: "ice", priority: 74, forceFeatured: true },
+  { login: "bilheking", name: "Bilheking", match: ["bilheking"], color: "#8b5cf6", sector: "Bilheteria e entretenimento", description: "Motor comercial do ecossistema, conectado a eventos, vendas e recorrência.", ownership: "66% Leonardo / 34% Jodelle", capital: "80% holding patrimonial, 10% Leonardo, 10% Jodelle", payments: "Split interno via ledger e saques distribuídos", linkedinSlot: 3, texture: "aurora", scale: 1.38, priority: 100, forceFeatured: true },
+  { login: "tosi", name: "Tosi", match: ["tosi"], color: "#2563eb", sector: "Produto digital", description: "Operação azul, precisa e confiável: produto, tecnologia e margem.", ownership: "100% Leonardo", capital: "80% holding patrimonial, 10% Leonardo, 10% Jodelle", payments: "Sem split na Pagar.me", linkedinSlot: 2, texture: "ocean", scale: 1.14, priority: 99, forceFeatured: true },
+  { login: "jack-it-fit", name: "Jack it fit", match: ["jackitfit", "jack it fit", "jack-it-fit"], color: "#0f172a", sector: "Saúde e fitness", description: "Planeta obsidiana, disciplinado e recorrente, feito para performance operacional.", ownership: "100% Leonardo", capital: "80% holding patrimonial, 10% Leonardo, 10% Jodelle", payments: "Sem split na Pagar.me", linkedinSlot: 1, texture: "obsidian", scale: 1.1, priority: 98, forceFeatured: true },
+  { login: "spur", name: "Spur", match: ["spur"], color: "#ef233c", sector: "Performance e crescimento", description: "Planeta vermelho de execução: produção em tração forte e foco comercial.", ownership: "80% Leonardo / 20% Jodelle", capital: "80% holding patrimonial, 10% Leonardo, 10% Jodelle", payments: "Sem split; 90% em produção", linkedinSlot: 4, texture: "ember", scale: 1.08, priority: 97, forceFeatured: true },
+  { login: "volup", name: "Volup", match: ["volup", "volup ai", "volup-ai"], color: "#10b981", sector: "IA e automação", description: "Camada de inteligência aplicada a produtos, operações e alavancagem do grupo.", ownership: "100% Leonardo", capital: "80% holding patrimonial e Leonardo", linkedinSlot: 5, texture: "forest", scale: 1.2, priority: 96, forceFeatured: true },
+  { login: "scoreking", name: "Scoreking", match: ["scoreking"], color: "#f59e0b", sector: "Score e inteligência", description: "Índice orbital para leitura de performance, ranking e decisão.", ownership: "100% Leonardo", capital: "80% holding patrimonial, 10% Leonardo, 10% Jodelle", linkedinSlot: 6, texture: "solar", priority: 95, forceFeatured: true },
+  { login: "instaboost", name: "Instaboost", match: ["instaboost"], color: "#ec4899", sector: "Crescimento social", description: "MVP operacional para impulsionamento, alcance e distribuição.", ownership: "100% Leonardo", capital: "80% holding patrimonial e Leonardo", linkedinSlot: 7, status: "Operacional MVP", texture: "rose", priority: 94, forceFeatured: true },
+  { login: "kinkora", name: "Kinkora", match: ["kinkora"], color: "#f472b6", sector: "Experiência e comunidade", description: "Planeta de marca, desejo, relacionamento e comunidade.", ownership: "90% Leonardo / 10% Jodelle", capital: "80% holding patrimonial, 10% Leonardo, 10% Jodelle", linkedinSlot: 8, texture: "rose", priority: 93, forceFeatured: true },
+  { login: "abroo", name: "Abroo", match: ["abroo"], color: "#22d3ee", sector: "Plataforma digital", description: "Ativo leve, rápido e modular para novas frentes de produto.", ownership: "100% Leonardo", capital: "80% holding patrimonial e Leonardo", linkedinSlot: 9, texture: "ice", priority: 92, forceFeatured: true },
+  { login: "voluclinic", name: "Voluclinic", match: ["voluclinic"], color: "#14b8a6", sector: "Healthtech", description: "Saúde, agenda e operação clínica orbitando automação e atendimento.", ownership: "100% Leonardo", capital: "80% holding patrimonial e Leonardo", linkedinSlot: 10, texture: "forest", priority: 91, forceFeatured: true },
+  { login: "avantyp", name: "Avantyp", match: ["avantyp"], color: "#7f1d1d", sector: "Estratégia e tecnologia", description: "Planeta escuro, compacto e estratégico para tecnologia aplicada.", ownership: "100% Leonardo", capital: "80% holding patrimonial, 10% Leonardo, 10% Jodelle", linkedinSlot: 11, texture: "ember", priority: 90, forceFeatured: true },
+  { login: "boase", name: "Boase", match: ["boase"], color: "#38bdf8", sector: "Operação e serviços", description: "Planeta azul claro, orientado a serviços, conexão e execução.", ownership: "100% Leonardo", capital: "80% holding patrimonial, 10% Leonardo, 10% Jodelle", linkedinSlot: 12, texture: "ice", priority: 89, forceFeatured: true },
+  { login: "venti-imoveis", name: "Venti Imóveis", match: ["venti", "venti imoveis", "venti imóveis"], color: "#06b6d4", sector: "Imóveis", description: "Ativo imobiliário do universo, com leitura patrimonial e comercial.", ownership: "100% Leonardo", capital: "80% holding patrimonial, 10% Leonardo, 10% Jodelle", linkedinSlot: 13, texture: "ice", priority: 88, forceFeatured: true },
+  { login: "instead", name: "Instead", match: ["instead"], color: "#a855f7", sector: "Produto e operação", description: "Planeta de substituição inteligente: processos melhores, menos atrito.", ownership: "100% Leonardo", capital: "80% holding patrimonial, 10% Leonardo, 10% Jodelle", payments: "Sem split na Pagar.me", linkedinSlot: 14, texture: "aurora", priority: 87, forceFeatured: true },
+  { login: "seu-jornaleiro", name: "Seu Jornaleiro", match: ["seujornaleiro", "seu jornaleiro", "seu-jornaleiro"], color: "#f97316", sector: "Mídia e distribuição", description: "Órbita laranja para conteúdo, distribuição e presença local.", ownership: "50% Leonardo / 50% Jodelle", capital: "80% holding patrimonial, 10% Leonardo, 10% Jodelle", payments: "Sem split na Pagar.me", linkedinSlot: 15, texture: "solar", priority: 86, forceFeatured: true },
+  { login: "pipex", name: "Pipex", match: ["pipex"], color: "#60a5fa", sector: "Pipelines e automação", description: "Fluxos operacionais, cadência e integração entre áreas.", ownership: "100% Leonardo", capital: "80% holding patrimonial e Leonardo", linkedinSlot: 16, texture: "ocean", priority: 85, forceFeatured: true },
+  { login: "smartrh", name: "SmartRH", match: ["smartrh", "smart rh"], color: "#84cc16", sector: "RH e people ops", description: "Gente, processos e inteligência de contratação em uma órbita só.", ownership: "100% Leonardo", capital: "80% holding patrimonial e Leonardo", linkedinSlot: 17, texture: "forest", priority: 84, forceFeatured: true },
+  { login: "iris", name: "Iris", match: ["iris"], color: "#facc15", sector: "Visão e inteligência", description: "Planeta de leitura, percepção e clareza operacional.", ownership: "100% Leonardo", capital: "80% holding patrimonial e Leonardo", linkedinSlot: 18, texture: "solar", priority: 83, forceFeatured: true },
+  { login: "gaslee", name: "Gaslee", match: ["gaslee"], color: "#fb7185", sector: "Energia e serviços", description: "Operação de energia cotidiana com camada de eficiência comercial.", ownership: "100% Leonardo", capital: "80% holding patrimonial e Leonardo", linkedinSlot: 19, texture: "ember", priority: 82, forceFeatured: true },
+  { login: "maia-go", name: "Maia GO", match: ["maia go", "maiago"], color: "#34d399", sector: "Mobilidade e operação", description: "Movimento, execução e rotas rápidas para o ecossistema.", ownership: "100% Leonardo", capital: "80% holding patrimonial e Leonardo", linkedinSlot: 20, texture: "forest", priority: 81, forceFeatured: true },
+  { login: "minvest", name: "Minvest", match: ["minvest"], color: "#fbbf24", sector: "Investimentos", description: "Camada patrimonial e inteligência de capital do universo.", ownership: "100% Leonardo", capital: "80% holding patrimonial, 10% Leonardo, 10% Jodelle", linkedinSlot: 21, texture: "solar", priority: 80, forceFeatured: true },
+  { login: "habitat-x", name: "Habitat X", match: ["habitat x", "habitatx"], color: "#2dd4bf", sector: "Habitat e real estate", description: "Espaços, moradia e produto imobiliário com identidade própria.", ownership: "100% Leonardo", capital: "80% holding patrimonial e Leonardo", linkedinSlot: 22, texture: "ice", priority: 79, forceFeatured: true },
+  { login: "tikal-beach-club", name: "Tikal Beach Club", match: ["tikal", "tikal beach club"], color: "#38bdf8", sector: "Hospitalidade", description: "Experiência, lazer e lifestyle em órbita premium.", ownership: "100% Leonardo", capital: "80% holding patrimonial e Leonardo", linkedinSlot: 23, texture: "ocean", priority: 78, forceFeatured: true },
+  { login: "sun-and-tan", name: "Sun & Tan", match: ["sun tan", "sun & tan"], color: "#fb923c", sector: "Beleza e bem-estar", description: "Solar, visual e direto ao consumidor: presença física com aura digital.", ownership: "100% Leonardo", capital: "80% holding patrimonial e Leonardo", linkedinSlot: 24, texture: "solar", priority: 77, forceFeatured: true },
+  { login: "13-de-maio", name: "13 de Maio", match: ["13 de maio", "treze de maio"], color: "#e5e7eb", sector: "Ativo patrimonial", description: "Ativo minoritário com presença patrimonial no mapa Maia.", ownership: "10% Leonardo", capital: "80% holding patrimonial e Leonardo", linkedinSlot: 25, texture: "obsidian", priority: 76, forceFeatured: true },
+  { login: "agrovolup", name: "Agrovolup", match: ["agrovolup", "agro volup"], color: "#4ade80", sector: "Agro e IA", description: "Soluções para o agro, pertencente a Leonardo e Volup, sem abertura pública de percentuais.", ownership: "Leonardo e Volup", capital: "80% holding patrimonial, 10% Leonardo, 10% Jodelle", status: "Sem detalhes públicos de sociedade", texture: "forest", priority: 75, forceFeatured: true },
 ];
 
 const PLANET_TEXTURES: Record<PlanetTexture, string> = {
@@ -277,14 +297,24 @@ function buildUniverse(companies: CompanyRecord[], mode: ViewMode) {
   const ranked = completeCompanies.slice().sort((a, b) => massForCompany(b) - massForCompany(a));
   const maxMass = Math.max(1, ...ranked.map(massForCompany));
   const forced = ranked.filter((company) => brandForCompany(company)?.forceFeatured);
-  const top = ranked.filter((company) => !brandForCompany(company)?.forceFeatured).slice(0, Math.max(0, 12 - forced.length));
-  const featuredCompanies = [...forced, ...top].slice(0, 12);
+  const top = ranked.filter((company) => !brandForCompany(company)?.forceFeatured).slice(0, Math.max(0, 26 - forced.length));
+  const featuredCompanies = [...forced, ...top].slice(0, 26);
 
   const featured = featuredCompanies.map((company, index): PlanetNode => {
     const brand = brandForCompany(company);
     const performance = getPlanetPerformance(company.username, company.name);
     const mass = massForCompany(company);
-    const layout = (isMobile ? MOBILE_LAYOUT : FEATURED_LAYOUT)[index] || { x: 0.5, y: 0.5 };
+    const seed = hashString(company.username);
+    const baseLayout = (isMobile ? MOBILE_LAYOUT : FEATURED_LAYOUT)[index];
+    const row = Math.floor(index / 3);
+    const col = index % 3;
+    const generatedLayout = isMobile
+      ? { x: [0.28, 0.72, 0.5][col], y: 0.12 + index * 0.115 }
+      : {
+          x: [0.23, 0.5, 0.77][col] + (seededUnit(seed + 3) - 0.5) * 0.08,
+          y: 0.12 + row * 0.105 + (seededUnit(seed + 7) - 0.5) * 0.035,
+        };
+    const layout = baseLayout || generatedLayout;
     const scale = (brand?.scale || 1) * (isMobile ? 0.72 : 1);
     const base = isMobile ? 96 : 136;
     const range = isMobile ? 58 : 96;
@@ -292,8 +322,8 @@ function buildUniverse(companies: CompanyRecord[], mode: ViewMode) {
       login: company.username,
       name: company.name,
       color: colorForCompany(company),
-      sector: brand?.sector || company.category || "Ecossistema LMF",
-      description: brand?.description || company.bio || "Empresa conectada ao campo orbital do Grupo LMF.",
+      sector: brand?.sector || company.category || "Empresas do grupo",
+      description: brand?.description || company.bio || "Empresa conectada ao mapa do grupo.",
       texture: brand?.texture || performance.texture,
       size: (base + Math.sqrt(mass / maxMass) * range) * scale,
       x: layout.x,
@@ -563,6 +593,7 @@ function CobePlanet({
 
 function CompanyHud({ planet, mode, onClose }: { planet: PlanetNode; mode: ViewMode; onClose: () => void }) {
   const company = planet.company;
+  const brand = brandForCompany(company);
   const isMobile = mode === "mobile";
   const { score, growth, stability, energy } = planet.performance;
   const signal = planetSignal(planet);
@@ -573,6 +604,11 @@ function CompanyHud({ planet, mode, onClose }: { planet: PlanetNode; mode: ViewM
     { label: "Energia", value: `${energy}/100`, state: "synced" },
     { label: "Escala visual", value: `${Math.round(planet.performance.sizeFactor * 100)}%`, state: "synced" },
     { label: "Status", value: planet.performance.status, state: "synced" },
+    ...(brand ? [
+      { label: "Participacao", value: brand.ownership, state: "synced" },
+      { label: "Estrutura", value: brand.capital, state: "synced" },
+      { label: "LinkedIn", value: brand.linkedinSlot ? `slot ${brand.linkedinSlot}` : "mapear", state: "synced" },
+    ] : []),
   ];
   const updatedAt = company.fetched_at ? new Date(company.fetched_at).toLocaleDateString("pt-BR") : "sincronizacao pendente";
 
@@ -585,7 +621,7 @@ function CompanyHud({ planet, mode, onClose }: { planet: PlanetNode; mode: ViewM
           <div className="min-w-0 flex-1">
             <p className="text-[10px] uppercase tracking-[0.24em] text-white/42">Planeta selecionado</p>
             <h3 className="mt-1 truncate text-lg font-semibold normal-case text-white sm:text-xl">{planet.name || planet.login}</h3>
-            <p className="mt-1 text-xs normal-case text-white/50 sm:text-sm">@{planet.login} - rendimento visual interno</p>
+            <p className="mt-1 text-xs normal-case text-white/50 sm:text-sm">código orbital {planet.login} · informacoes publicas</p>
           </div>
           <button className="grid h-10 w-10 place-items-center border border-white/12 bg-white/[0.03] text-lg text-white/65 transition hover:border-white/30 hover:text-white" onClick={onClose} aria-label="Fechar painel">
             x
@@ -596,7 +632,9 @@ function CompanyHud({ planet, mode, onClose }: { planet: PlanetNode; mode: ViewM
           <p className="text-[10px] uppercase tracking-[0.22em] text-white/36">Setor</p>
           <p className="mt-1 text-sm text-white/78">{planet.sector}</p>
           <p className="mt-3 text-xs leading-relaxed text-white/54">{planet.description}</p>
-          <p className="mt-3 text-[10px] uppercase tracking-[0.18em] text-white/34">Ultima atualizacao: {updatedAt}</p>
+          {brand?.payments && <p className="mt-3 text-xs leading-relaxed text-white/50">{brand.payments}</p>}
+          {brand?.status && <p className="mt-2 text-[10px] uppercase tracking-[0.18em]" style={{ color: planet.color }}>{brand.status}</p>}
+          <p className="mt-3 text-[10px] uppercase tracking-[0.18em] text-white/34">Última atualização: {updatedAt}</p>
         </div>
 
         <div className="mt-4 border border-white/10 bg-white/[0.035] p-3">
@@ -619,12 +657,12 @@ function CompanyHud({ planet, mode, onClose }: { planet: PlanetNode; mode: ViewM
         </div>
 
         <div className="mt-4 rounded-sm border border-white/10 bg-white/[0.03] p-3">
-          <p className="text-[10px] uppercase tracking-[0.22em] text-white/38">Como ler este planeta</p>
+          <p className="text-[10px] uppercase tracking-[0.22em] text-white/38">Como conhecer esta empresa</p>
           <div className="mt-3 grid gap-2 text-[11px] leading-relaxed normal-case text-white/56 sm:grid-cols-2">
-            <p><span style={{ color: planet.color }}>●</span> Tamanho vem do rendimento visual interno.</p>
+            <p><span style={{ color: planet.color }}>●</span> Tamanho e brilho ajudam a dar destaque visual.</p>
             <p><span style={{ color: planet.color }}>●</span> Brilho vem da energia do planeta.</p>
-            <p><span style={{ color: planet.color }}>●</span> Instabilidade vem da estabilidade visual.</p>
-            <p><span style={{ color: planet.color }}>●</span> Cor e textura nao dependem de GitHub ou financeiro.</p>
+            <p><span style={{ color: planet.color }}>●</span> Textura traduz setor e personalidade.</p>
+            <p><span style={{ color: planet.color }}>●</span> A leitura prioriza clareza para clientes, fas e investidores.</p>
           </div>
         </div>
 
@@ -659,12 +697,12 @@ function UniverseHero({
   return (
     <section className="pointer-events-auto fixed left-4 right-4 top-4 z-30 max-w-[calc(100vw-2rem)] font-space sm:absolute sm:left-8 sm:right-auto sm:top-7 sm:max-w-md">
       <div className="border border-white/10 bg-black/42 p-3 shadow-2xl shadow-black/30 backdrop-blur-2xl sm:p-5">
-        <p className="text-[9px] uppercase tracking-[0.3em] text-white/38 sm:text-[10px] sm:tracking-[0.34em]">Grupo LMF Universe</p>
+        <p className="text-[9px] uppercase tracking-[0.3em] text-white/38 sm:text-[10px] sm:tracking-[0.34em]">Constellation OS</p>
         <h1 className="mt-2 text-xl font-semibold leading-tight normal-case text-white sm:text-4xl">
-          Transforme empresas em planetas vivos.
+          Conheca cada empresa como um planeta vivo.
         </h1>
         <p className="mt-2 max-w-[24rem] text-[11px] leading-relaxed normal-case text-white/58 sm:mt-3 sm:text-sm">
-          Explore tração, presença, saúde e identidade em um universo 3D. Clique em um planeta para entender os dados e agir.
+          Veja de forma simples e animada o que cada empresa faz, sua historia, informacoes publicas e por que ela pode interessar clientes, fas ou investidores. Role para passear pelos planetas.
         </p>
         <div className="mt-3 grid grid-cols-3 gap-px overflow-hidden border border-white/10 bg-white/10 text-center sm:mt-4">
           <div className="bg-[#070808]/95 px-2 py-3">
@@ -682,9 +720,9 @@ function UniverseHero({
         </div>
         {!isMobile && (
           <div className="mt-4 flex flex-wrap gap-2 text-[10px] uppercase tracking-[0.16em]">
-            <a className="border border-white/15 bg-white/[0.06] px-3 py-2 text-white/74 transition hover:border-white/30 hover:text-white" href="/shop">Meu planeta</a>
+            <a className="border border-white/15 bg-white/[0.06] px-3 py-2 text-white/74 transition hover:border-white/30 hover:text-white" href="/shop">Explorar empresas</a>
             <a className="border border-white/15 bg-white/[0.03] px-3 py-2 text-white/54 transition hover:border-white/30 hover:text-white" href="/advertise">Anunciar</a>
-            <a className="border border-white/15 bg-white/[0.03] px-3 py-2 text-white/54 transition hover:border-white/30 hover:text-white" href="/leaderboard">Ranking</a>
+            <a className="border border-white/15 bg-white/[0.03] px-3 py-2 text-white/54 transition hover:border-white/30 hover:text-white" href="/leaderboard">Mapa geral</a>
           </div>
         )}
       </div>
@@ -695,10 +733,10 @@ function UniverseHero({
 function UniverseLegend({ isMobile }: { isMobile: boolean }) {
   if (isMobile) return null;
   const rows = [
-    ["Tamanho", "tração + estrelas + receita"],
-    ["Cor", "marca, setor ou identidade customizada"],
-    ["Marcas", "saúde operacional baixa"],
-    ["Órbita", "posição narrativa no ecossistema"],
+    ["Tamanho", "tamanho relativo e destaque visual"],
+    ["Cor", "marca, setor ou identidade visual"],
+    ["Marcas", "sinais publicos e contexto"],
+    ["Órbita", "lugar da empresa na historia do grupo"],
   ];
 
   return (
@@ -772,7 +810,7 @@ function MissionRail({
 }) {
   const missions = [
     { label: "Localize uma marca", done: hasSearched, hint: "Use a busca por nome, @login ou setor." },
-    { label: "Abra um planeta", done: hasSelected, hint: "Clique para revelar contexto e rendimento visual." },
+    { label: "Abra um planeta", done: hasSelected, hint: "Clique para ver historia, contexto e informacoes publicas." },
     { label: "Escolha uma ação", done: hasSelected, hint: "Perfil, estúdio ou anúncio orbital." },
   ];
 
@@ -793,6 +831,33 @@ function MissionRail({
         ))}
       </div>
     </aside>
+  );
+}
+
+function RobotHandLayer({ isMobile }: { isMobile: boolean }) {
+  if (isMobile) return null;
+  return (
+    <div className="pointer-events-none fixed inset-x-0 bottom-[-3rem] z-[6] flex justify-center">
+      <div className="relative h-72 w-[42rem] opacity-80">
+        <div className="absolute left-1/2 top-28 h-28 w-64 -translate-x-1/2 rounded-[4rem_4rem_3rem_3rem] border border-cyan-200/18 bg-[linear-gradient(135deg,rgba(226,246,255,0.22),rgba(14,23,35,0.84)_45%,rgba(95,234,255,0.14))] shadow-[0_0_80px_rgba(34,211,238,0.16),inset_0_0_30px_rgba(255,255,255,0.08)] backdrop-blur-xl" />
+        {[0, 1, 2, 3, 4].map((finger) => (
+          <div
+            key={finger}
+            className="absolute top-10 h-36 w-16 origin-bottom rounded-full border border-cyan-200/14 bg-[linear-gradient(180deg,rgba(219,244,255,0.22),rgba(10,18,28,0.9))] shadow-[inset_0_0_18px_rgba(255,255,255,0.08),0_0_34px_rgba(45,212,191,0.08)]"
+            style={{
+              left: `${8 + finger * 18}%`,
+              transform: `rotate(${[-24, -10, 0, 10, 24][finger]}deg)`,
+              height: `${finger === 2 ? 162 : finger === 0 || finger === 4 ? 126 : 148}px`,
+            }}
+          >
+            <span className="absolute left-2 right-2 top-12 h-px bg-cyan-100/20" />
+            <span className="absolute left-3 right-3 top-24 h-px bg-cyan-100/16" />
+          </div>
+        ))}
+        <div className="absolute left-1/2 top-36 h-24 w-[34rem] -translate-x-1/2 rounded-full bg-cyan-300/10 blur-3xl" />
+        <div className="absolute left-1/2 top-8 h-56 w-56 -translate-x-1/2 rounded-full border border-white/8 bg-[radial-gradient(circle,rgba(255,255,255,0.08),transparent_68%)]" />
+      </div>
+    </div>
   );
 }
 
@@ -904,8 +969,9 @@ export default function UniverseCanvas({ companies }: { companies: CompanyRecord
 
   return (
     <div className="relative h-[100svh] w-full overflow-hidden bg-[#020305]">
-      <div className={`relative h-full w-full ${isMobile ? "overflow-y-auto overscroll-contain scroll-smooth" : "overflow-hidden"}`}>
-        <div className={`relative w-full ${isMobile ? "min-h-[1500px]" : "h-full"}`}>
+      <RobotHandLayer isMobile={isMobile} />
+      <div className="relative h-full w-full overflow-y-auto overscroll-contain scroll-smooth">
+        <div className={`relative w-full ${isMobile ? "min-h-[1500px]" : "min-h-[2450px]"}`}>
           <StarField dots={fieldDots} />
           <CosmicEventsLayer events={cosmicEvents} reducedMotion={reducedMotion} />
           <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_0%,transparent_57%,rgba(0,0,0,0.78)_100%)]" />

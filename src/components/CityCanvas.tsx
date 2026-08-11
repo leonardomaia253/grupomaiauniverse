@@ -16,7 +16,7 @@ import type { SkyAd } from "@/lib/skyAds";
 import RaidSequence3D, { VehicleMesh } from "./RaidSequence3D";
 import type { RaidPhase } from "@/lib/useRaidSequence";
 import type { RaidExecuteResponse } from "@/lib/raid";
-import FounderSpire from "./FounderSpire";
+import PrincipalSpire from "./FounderSpire";
 import WhiteRabbit from "./WhiteRabbit";
 import CelebrationEffect from "./CelebrationEffect";
 import ComparePath from "./ComparePath";
@@ -200,8 +200,8 @@ function SkyDome({ stops }: { stops: [number, string][] }) {
 
 const INTRO_DURATION = 14; // seconds
 
-// Founder planet sits at roughly (146, h, -66) in the first block.
-// Camera target: founder planet top.
+// Principal planet sits at roughly (146, h, -66) in the first block.
+// Camera target: principal planet top.
 const FOUNDER_X = 146;
 const FOUNDER_Z = -66;
 const TARGET_X = FOUNDER_X;
@@ -209,7 +209,7 @@ const TARGET_Z = FOUNDER_Z;
 const TARGET_Y = 450;
 
 // Arc sweep: camera arcs ~180° around the Universe
-// Far left in fog -> descends through planets -> rises to wide panorama centered on founder
+// Far left in fog -> descends through planets -> rises to wide panorama centered on principal
 const INTRO_WAYPOINTS: [number, number, number][] = [
   [-1600, 800, 1800],   // WP0: Far, high, left - Universe hidden in fog
   [-1000, 700, 1300],   // WP1: Descending, silhouette appears
@@ -221,10 +221,10 @@ const INTRO_WAYPOINTS: [number, number, number][] = [
   [800, 850, 1000],   // WP7: Final orbit position (wide panorama)
 ];
 
-// Look targets smoothly converge toward the founder planet top
+// Look targets smoothly converge toward the principal planet top
 const INTRO_LOOK_TARGETS: [number, number, number][] = [
   [100, 300, -200],      // WP0: Toward distant Universe, already high
-  [TARGET_X, 380, TARGET_Z],  // WP1: Rising toward founder top
+  [TARGET_X, 380, TARGET_Z],  // WP1: Rising toward principal top
   [TARGET_X, TARGET_Y, TARGET_Z],  // WP2: Locking on
   [TARGET_X, TARGET_Y, TARGET_Z],  // WP3: Holding
   [TARGET_X, TARGET_Y, TARGET_Z],  // WP4: Holding
@@ -1885,7 +1885,7 @@ function OrbitScene({ planets, focusedPlanet, focusedPlanetB }: { planets: Unive
   const controlsRef = useRef<any>(null);
   const { camera } = useThree();
 
-  // Reset camera on mount — wide panorama centered on founder area
+  // Reset camera on mount — wide panorama centered on principal area
   useEffect(() => {
     camera.position.set(800, 700, 1000);
     camera.lookAt(TARGET_X, TARGET_Y, TARGET_Z);
@@ -2139,7 +2139,7 @@ export default function CityCanvas({ planets, plazas, decorations, river, bridge
 
       <Ground key={`ground-${themeIndex}`} color={t.groundColor} grid1={t.grid1} grid2={t.grid2} />
 
-      <FounderSpire onClick={onLandmarkClick ?? (() => { })} />
+      <PrincipalSpire onClick={onLandmarkClick ?? (() => { })} />
 
       {!wallpaperMode && celebrationActive && <CelebrationEffect UniverseRadius={UniverseRadius} />}
 

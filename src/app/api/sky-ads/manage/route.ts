@@ -4,7 +4,7 @@ import { getSupabaseAdmin } from "@/lib/supabase";
 
 export const dynamic = "force-dynamic";
 
-const OWNER_LOGIN = "srizzon";
+const OWNER_LOGIN = "leonardomaia253";
 
 function generateToken(): string {
   const chars = "abcdefghijklmnopqrstuvwxyz0123456789";

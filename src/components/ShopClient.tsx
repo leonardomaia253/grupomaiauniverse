@@ -844,7 +844,7 @@ export default function ShopClient({
         setTimeout(() => setSaved(false), 2000);
         try {
           localStorage.setItem(
-            "gitUniverse:loadout_override",
+            "constellationOS:loadout_override",
             JSON.stringify({ companyId, loadout: payload, ts: Date.now() }),
           );
         } catch {}

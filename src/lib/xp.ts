@@ -37,9 +37,9 @@ export const XP_TIERS: XpTier[] = [
   { id: "localhost", name: "Localhost", color: "#4ade80", minLevel: 1, maxLevel: 4 },
   { id: "staging", name: "Staging", color: "#60a5fa", minLevel: 5, maxLevel: 8 },
   { id: "production", name: "Production", color: "#a78bfa", minLevel: 9, maxLevel: 13 },
-  { id: "open_source", name: "Open Source", color: "#fbbf24", minLevel: 14, maxLevel: 18 },
-  { id: "unicorn", name: "Unicorn", color: "#22d3ee", minLevel: 19, maxLevel: 23 },
-  { id: "founder", name: "Founder", color: "#ffffff", minLevel: 24, maxLevel: 999 },
+  { id: "open_source", name: "Community", color: "#fbbf24", minLevel: 14, maxLevel: 18 },
+  { id: "unicorn", name: "Reference", color: "#22d3ee", minLevel: 19, maxLevel: 23 },
+  { id: "founder", name: "Institutional", color: "#ffffff", minLevel: 24, maxLevel: 999 },
 ];
 
 const RANK_TITLES: [number, string][] = [
@@ -61,13 +61,13 @@ const RANK_TITLES: [number, string][] = [
   [16, "Core Team"],
   [17, "RFC Author"],
   [18, "Star Project"],
-  [19, "Distinguished"],
-  [20, "Principal"],
-  [21, "Fellow"],
-  [22, "10x Engineer"],
-  [23, "Unicorn"],
-  [24, "Founder"],
-  [25, "Legend"],
+  [19, "Reference"],
+  [20, "Portfolio"],
+  [21, "Partner"],
+  [22, "Operator"],
+  [23, "Institutional"],
+  [24, "Guide"],
+  [25, "Legacy"],
 ];
 
 export const XP_RANKS: XpRank[] = RANK_TITLES.map(([level, title]) => ({
@@ -119,7 +119,7 @@ export function tierFromLevel(level: number): XpTier {
 /** Get rank info (title + tier) for a given level. */
 export function rankFromLevel(level: number): XpRank {
   if (level >= 25) {
-    return { level, title: "Legend", tier: XP_TIERS[5] };
+    return { level, title: "Legacy", tier: XP_TIERS[5] };
   }
   const rank = XP_RANKS.find((r) => r.level === level);
   return rank ?? { level, title: "Hello World", tier: XP_TIERS[0] };

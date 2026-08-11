@@ -65,14 +65,14 @@ const DailiesWidget = dynamic(() => import("@/components/DailiesWidget"), { ssr:
 const RaidPreviewModal = dynamic(() => import("@/components/RaidPreviewModal"), { ssr: false });
 const RaidOverlay = dynamic(() => import("@/components/RaidOverlay"), { ssr: false });
 const PillModal = dynamic(() => import("@/components/PillModal"), { ssr: false });
-const FounderMessage = dynamic(() => import("@/components/FounderMessage"), { ssr: false });
+const PrincipalMessage = dynamic(() => import("@/components/FounderMessage"), { ssr: false });
 const RabbitCompletion = dynamic(() => import("@/components/RabbitCompletion"), { ssr: false });
 const ConstellationChooser = dynamic(() => import("@/components/constellation-chooser"), { ssr: false });
 const LevelUpToast = dynamic(() => import("@/components/LevelUpToast"), { ssr: false });
 const MiniMap = dynamic(() => import("@/components/MiniMap"), { ssr: false });
 
 // Feature flags — flip to switch milestone banner
-const MILESTONE_MODE: "stars" | "companies" = "companies"; // "stars" = Estrela LMFs road to 1K, "companies" = total companies
+const MILESTONE_MODE: "stars" | "companies" = "companies"; // "stars" = Estrelas do Portfolio road to 1K, "companies" = total companies
 
 const THEMES = [
   { name: "Midnight", accent: "#6090e0", shadow: "#203870" },
@@ -102,17 +102,17 @@ const ACHIEVEMENT_TIERS_MAP: Record<string, string> = {
   daily_rookie: "bronze", daily_regular: "silver", daily_master: "gold", daily_legend: "diamond",
 };
 const ACHIEVEMENT_NAMES_MAP: Record<string, string> = {
-  god_mode: "God Mode", legend: "Legend", famous: "Famous", mayor: "Mayor",
+  god_mode: "Modo Avancado", legend: "Referencia", famous: "Reconhecida", mayor: "Guia",
   machine: "Machine", popular: "Popular", factory: "Factory", influencer: "Influencer",
   grinder: "Grinder", architect: "Architect", builder: "Builder", rising_star: "Rising Star",
   recruiter: "Recruiter", committed: "Committed", first_push: "First Push",
   philanthropist: "Philanthropist", patron: "Patron", generous: "Generous",
   icon: "Icon", beloved: "Beloved", gifted: "Gifted",
-  legendary: "Legendary", admired: "Admired", appreciated: "Appreciated",
+  legendary: "Referencia", admired: "Admirada", appreciated: "Reconhecida",
   on_fire: "On Fire", dedicated: "Dedicated", obsessed: "Obsessed",
   no_life: "No Life", generous_streak: "Generous Streak",
   white_rabbit: "White Rabbit",
-  daily_rookie: "Daily Rookie", daily_regular: "Daily Regular", daily_master: "Daily Master", daily_legend: "Daily Legend",
+  daily_rookie: "Inicio Diario", daily_regular: "Ritmo Diario", daily_master: "Consistencia", daily_legend: "Referencia Diaria",
 };
 
 // Dev "class" — funny RPG-style title, deterministic per username
@@ -122,7 +122,7 @@ const DEV_CLASSES = [
   "Console.log Debugger",
   "Ctrl+C Ctrl+V Engineer",
   "Senior Googler",
-  "LMF Power User",
+  "Portfolio Power User",
   "Dark Mode Purist",
   "Rubber Duck Whisperer",
   "Merge Conflict Magnet",
@@ -181,7 +181,7 @@ const ERROR_MESSAGES: Record<string, { primary: (u: string) => string; secondary
   },
   "org": {
     primary: (u) => `"@${u}" é uma organização, não uma empresa`,
-    secondary: "Grupo LMF Universe é focado em perfis empresariais.",
+    secondary: "Constellation OS é focado em perfis empresariais.",
   },
   "no-activity": {
     primary: (u) => `A empresa "@${u}" não possui atividade pública ainda`,
@@ -476,7 +476,7 @@ function HomeContent() {
   const [skyAds, setSkyAds] = useState<import("@/lib/skyAds").SkyAd[]>(DEFAULT_SKY_ADS);
   const [starCount, setStarCount] = useState<number | null>(null);
   const [pillModalOpen, setPillModalOpen] = useState(false);
-  const [founderMessageOpen, setFounderMessageOpen] = useState(false);
+  const [principalMessageOpen, setPrincipalMessageOpen] = useState(false);
   const [constellationChooserOpen, setConstellationChooserOpen] = useState(false);
   const [rabbitCinematic, setRabbitCinematic] = useState(false);
   const [rabbitCinematicPhase, setRabbitCinematicPhase] = useState(-1);
@@ -524,7 +524,7 @@ function HomeContent() {
   const prevRaidPhaseRef = useRef<string>("idle");
   const lastSuccessfulRaidRef = useRef<{ defenderLogin: string; attackerLogin: string; tagStyle: string } | null>(null);
 
-  // Fetch Estrela LMF count
+  // Fetch Estrela do Portfolio count
   useEffect(() => {
     fetch(BRAND.starRepositoryApi)
       .then((r) => r.ok ? r.json() : null)
@@ -872,12 +872,12 @@ function HomeContent() {
   // During fly mode: only close overlays (profile card) — AirplaneFlight handles pause/exit
   // Outside fly mode: compare → share modal → profile card → focus → explore mode
   useEffect(() => {
-    if (flyMode && !selectedPlanet && !pillModalOpen && !founderMessageOpen) return;
-    if (!flyMode && !exploreMode && !focusedPlanet && !shareData && !selectedPlanet && !giftClaimed && !giftModalOpen && !comparePair && !comparePlanet && !founderMessageOpen && !pillModalOpen && !rabbitCinematic && !invitePreview && raidState.phase === "idle") return;
+    if (flyMode && !selectedPlanet && !pillModalOpen && !principalMessageOpen) return;
+    if (!flyMode && !exploreMode && !focusedPlanet && !shareData && !selectedPlanet && !giftClaimed && !giftModalOpen && !comparePair && !comparePlanet && !principalMessageOpen && !pillModalOpen && !rabbitCinematic && !invitePreview && raidState.phase === "idle") return;
     const onKey = (e: KeyboardEvent) => {
       if (e.code === "Escape") {
-        // Founder modals take highest priority
-        if (founderMessageOpen) { setFounderMessageOpen(false); return; }
+        // Principal modals take highest priority
+        if (principalMessageOpen) { setPrincipalMessageOpen(false); return; }
         if (pillModalOpen) { setPillModalOpen(false); return; }
         // Rabbit cinematic
         if (rabbitCinematic) { endRabbitCinematic(); return; }
@@ -922,7 +922,7 @@ function HomeContent() {
     };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
-  }, [flyMode, exploreMode, focusedPlanet, shareData, selectedPlanet, giftClaimed, giftModalOpen, comparePair, comparePlanet, founderMessageOpen, pillModalOpen, rabbitCinematic, endRabbitCinematic, raidState.phase, raidActions, invitePreview]);
+  }, [flyMode, exploreMode, focusedPlanet, shareData, selectedPlanet, giftClaimed, giftModalOpen, comparePair, comparePlanet, principalMessageOpen, pillModalOpen, rabbitCinematic, endRabbitCinematic, raidState.phase, raidActions, invitePreview]);
 
   // Rabbit cinematic text phase timing (8s total flyover)
   useEffect(() => {
@@ -1306,12 +1306,12 @@ function HomeContent() {
   // re-mounts the component and loads fresh data via the mount effect above.
 
   // ─── Intro text phase timing (14s total) ─────────────────────
-  const INTRO_TEXT_SCHEDULE = [0, 2000, 4500, 7000, 10000]; // Phase 0 (Welcome), 1 (The Universe), 2 (Collect PX), 3 (Welcome to Grupo LMF), 4 (Done)
+  const INTRO_TEXT_SCHEDULE = [0, 2000, 4500, 7000, 10000]; // Phase 0 (Welcome), 1 (The Universe), 2 (Collect PX), 3 (Welcome to Constellation OS), 4 (Done)
   const INTRO_TEXTS = [
     "Bem-vindo ao",
     "O Universo das empresas",
     "Navegue, Colete PX, Evolua",
-    "Bem-vindo ao Grupo LMF Universe",
+    "Bem-vindo ao mapa das empresas",
     ""
   ];
   const [introConfetti, setIntroConfetti] = useState(false);
@@ -1327,7 +1327,7 @@ function HomeContent() {
     for (let i = 0; i < INTRO_TEXT_SCHEDULE.length; i++) {
       timers.push(setTimeout(() => setIntroPhase(i), INTRO_TEXT_SCHEDULE[i]));
     }
-    // Confetti shortly after "Welcome to Grupo LMF Universe"
+    // Confetti shortly after "Welcome to Constellation OS"
     timers.push(setTimeout(() => setIntroConfetti(true), INTRO_TEXT_SCHEDULE[3] + 500));
 
     return () => timers.forEach(clearTimeout);
@@ -1883,7 +1883,7 @@ function HomeContent() {
     if (loadStage !== "done" || isMobile || !session || flyMode || introMode) return;
     dailyNudgeTimerRef.current = setTimeout(() => {
       try {
-        const raw = localStorage.getItem("gitUniverse_fly_history");
+        const raw = localStorage.getItem("constellationOS_fly_history");
         if (!raw) return; // no history — first-fly hint handles this
         const hist = JSON.parse(raw);
         if (!hist.seeds || Object.keys(hist.seeds).length === 0) return;
@@ -1905,14 +1905,14 @@ function HomeContent() {
   useEffect(() => {
     if (loadStage !== "done" || isMobile || flyMode || introMode) return;
     try {
-      if (localStorage.getItem("gitUniverse_fly_history") || localStorage.getItem("gitUniverse_fly_hint_seen")) return;
+      if (localStorage.getItem("constellationOS_fly_history") || localStorage.getItem("constellationOS_fly_hint_seen")) return;
     } catch { return; }
     flyHintTimerRef.current = setTimeout(() => {
       setShowFlyHint(true);
       // Auto-dismiss after 10s
       const autoDismiss = setTimeout(() => {
         setShowFlyHint(false);
-        try { localStorage.setItem("gitUniverse_fly_hint_seen", "1"); } catch { }
+        try { localStorage.setItem("constellationOS_fly_hint_seen", "1"); } catch { }
       }, 10000);
       flyHintTimerRef.current = autoDismiss;
     }, 5000);

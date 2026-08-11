@@ -11,7 +11,7 @@ interface MiniMapProps {
   currentconstellation?: string | null;
 }
 
-// 64px internal → 128px display = clean 2x pixel art
+// 64px internal → 128px display = crisp 2x minimap rendering
 const RES = 64;
 const DISPLAY = 128;
 const PAD = 3;

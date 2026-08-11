@@ -57,7 +57,7 @@ export function buildAdLink(ad: SkyAd): string | undefined {
   if (ad.link.startsWith("mailto:")) return ad.link;
   try {
     const url = new URL(ad.link);
-    url.searchParams.set("utm_source", "gitUniverse");
+    url.searchParams.set("utm_source", "constellationOS");
     url.searchParams.set("utm_medium", "sky_ad");
     url.searchParams.set("utm_campaign", ad.id);
     url.searchParams.set("utm_content", ad.vehicle);
@@ -92,7 +92,7 @@ export function trackAdEvents(adId: string, eventTypes: ("impression" | "click" 
 export const DEFAULT_SKY_ADS: SkyAd[] = [
   {
     id: "lmfUniverse",
-    text: "GRUPO LMF UNIVERSE - SUAS EMPRESAS EM UM UNIVERSO 3D",
+    text: "CONSTELLATION OS - SUAS EMPRESAS EM UM UNIVERSO 3D",
     brand: BRAND.name,
     description: `A Universe built from KPIs do ${BRAND.groupName}. Search your username and find your planet among thousands of companies.`,
     color: "#f8d880",

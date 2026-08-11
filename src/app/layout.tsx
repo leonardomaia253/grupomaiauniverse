@@ -8,22 +8,22 @@ import "./globals.css";
 
 export const metadata: Metadata = {
   metadataBase: new URL(getSiteUrl()),
-  title: `${BRAND.name} - Suas empresas como um Universo 3D`,
+  title: "Constellation OS - Guia animado das empresas",
   description: BRAND.appDescription,
   keywords: [
-    "3d Universe",
-    "company profile",
-    "contributions",
-    "pixel art",
-    "open source",
-    "git visualization",
+    "empresas do grupo",
+    "guia visual",
+    "historias empresariais",
+    "informacoes publicas",
+    "clientes",
+    "investidores",
   ],
   openGraph: {
-    title: `${BRAND.name} - Suas empresas como um Universo 3D`,
+    title: "Constellation OS - Guia animado das empresas",
     description: BRAND.appDescription,
     siteName: BRAND.name,
     type: "website",
-    locale: "en_US",
+    locale: "pt_BR",
     images: [
       {
         url: "/og-image.png",
@@ -36,7 +36,7 @@ export const metadata: Metadata = {
     creator: BRAND.xCreator,
     site: BRAND.xCreator,
   },
-  authors: [{ name: BRAND.xCreator.replace("@", ""), url: BRAND.xCreatorUrl }],
+  authors: [{ name: "Equipe do produto", url: BRAND.xCreatorUrl }],
   icons: {
     icon: "/favicon.ico",
     apple: "/apple-icon.png",
@@ -51,11 +51,11 @@ const jsonLd = {
   name: BRAND.name,
   description: BRAND.ogAlt,
   url: BASE_URL,
-  applicationCategory: "companyApplication",
+  applicationCategory: "BusinessApplication",
   operatingSystem: "Web",
   author: {
-    "@type": "Person",
-    name: BRAND.xCreator.replace("@", ""),
+    "@type": "Organization",
+    name: "Equipe do produto",
     url: BRAND.xCreatorUrl,
   },
   offers: {
@@ -71,7 +71,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="pt-BR">
       <head>
         <script
           type="application/ld+json"

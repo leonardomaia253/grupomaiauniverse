@@ -133,13 +133,13 @@ export default function RoadmapClient({
           <p className="mt-6 text-[9px] text-muted normal-case">
             built by{" "}
             <a
-              href="https://x.com/leonardomaia253"
+              href="mailto:contato@grupomaia.com.br"
               target="_blank"
               rel="noopener noreferrer"
               className="transition-colors hover:text-cream"
               style={{ color: ACCENT }}
             >
-              @leonardomaia253
+              contato institucional
             </a>
           </p>
         </div>

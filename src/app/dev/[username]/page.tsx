@@ -40,12 +40,12 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const dev = await getCompany(username);
 
   if (!dev) {
-    return { title: "Empresa não encontrada - Grupo LMF Universe" };
+    return { title: "Empresa não encontrada - Constellation OS" };
   }
 
   const contribs = (dev.contributions_total && dev.contributions_total > 0) ? dev.contributions_total : dev.contributions;
-  const title = `@${dev.username} - Grupo LMF Universe | ${contribs.toLocaleString()} contribuições`;
-  const description = `Veja o planeta de @${dev.username} no Grupo LMF Universe. ${contribs.toLocaleString()} contribuições, ${dev.public_repos.toLocaleString()} repositórios, ${dev.total_stars.toLocaleString()} estrelas. Rank #${dev.rank ?? "?"} no universo.`;
+  const title = `@${dev.username} - Constellation OS | ${contribs.toLocaleString()} contribuições`;
+  const description = `Veja o planeta de @${dev.username} no Constellation OS. ${contribs.toLocaleString()} contribuições, ${dev.public_repos.toLocaleString()} repositórios, ${dev.total_stars.toLocaleString()} estrelas. Rank #${dev.rank ?? "?"} no universo.`;
 
   return {
     title,
@@ -56,8 +56,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     },
     twitter: {
       card: "summary_large_image",
-      creator: "@leonardomaia253",
-      site: "@leonardomaia253",
+      creator: "contato institucional",
+      site: "contato institucional",
     },
   };
 }
@@ -131,7 +131,7 @@ export default async function DevPage({ params }: Props) {
     "@context": "https://schema.org",
     "@type": "BreadcrumbList",
     itemListElement: [
-      { "@type": "ListItem", position: 1, name: "Grupo LMF Universe", item: baseUrl },
+      { "@type": "ListItem", position: 1, name: "Constellation OS", item: baseUrl },
       {
         "@type": "ListItem",
         position: 2,
@@ -474,13 +474,13 @@ export default async function DevPage({ params }: Props) {
           <p className="text-[9px] text-muted normal-case">
             built by{" "}
             <a
-              href="https://x.com/leonardomaia253"
+              href="mailto:contato@grupomaia.com.br"
               target="_blank"
               rel="noopener noreferrer"
               className="transition-colors hover:text-cream"
               style={{ color: accent }}
             >
-              @leonardomaia253
+              contato institucional
             </a>
           </p>
         </div>

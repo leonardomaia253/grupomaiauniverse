@@ -108,12 +108,12 @@ export async function GET(request: NextRequest) {
           category: "digest",
           companyId: dev.id,
           dedupKey: `monthly_digest:${dev.id}:${yearMonth}`,
-          title: `Your ${monthName} in Grupo LMF Universe`,
+          title: `Your ${monthName} in Constellation OS`,
           body: `${monthName} recap: ${dev.contributions.toLocaleString()} total contributions, rank #${dev.rank ?? "?"}.`,
           html: `
-            <p style="color: #c8e64a; font-size: 16px;">Your ${monthName} in Grupo LMF Universe</p>
+            <p style="color: #c8e64a; font-size: 16px;">Your ${monthName} in Constellation OS</p>
             ${buildStatsTable(stats)}
-            ${buildButton("Visit Grupo LMF Universe", `${BASE_URL}/?user=${dev.username}`)}
+            ${buildButton("Visit Constellation OS", `${BASE_URL}/?user=${dev.username}`)}
           `,
           actionUrl: `${BASE_URL}/?user=${dev.username}`,
           priority: "high",

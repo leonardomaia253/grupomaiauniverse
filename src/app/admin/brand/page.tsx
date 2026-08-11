@@ -2,7 +2,7 @@ import { redirect } from "next/navigation";
 import { BRAND, getSiteUrl } from "@/lib/brand";
 import { createServerSupabase } from "@/lib/supabase-server";
 
-const OWNER_LOGIN = "srizzon";
+const OWNER_LOGIN = "leonardomaia253";
 
 const rows = [
   ["Nome", BRAND.name],

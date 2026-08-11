@@ -9,21 +9,21 @@ const ACCENT = "#c8e64a";
 export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
-  title: "Advertise on Grupo LMF Universe",
+  title: "Advertise on Constellation OS",
   description:
-    "Reach 9,000+ GitHub companies. Planes, blimps, and billboards in a 3D Universe. 1%+ CTR (2x industry avg). From $29/mo.",
+    "Reach 9,000+ empresas do ecossistema. Planes, blimps, and billboards in a 3D Universe. 1%+ CTR (2x industry avg). From $29/mo.",
   openGraph: {
-    title: "Advertise on Grupo LMF Universe",
+    title: "Advertise on Constellation OS",
     description:
-      "Reach 9,000+ GitHub companies. Planes, blimps, and billboards in a 3D Universe. 1%+ CTR (2x industry avg). From $29/mo.",
-    siteName: "Grupo LMF Universe",
+      "Reach 9,000+ empresas do ecossistema. Planes, blimps, and billboards in a 3D Universe. 1%+ CTR (2x industry avg). From $29/mo.",
+    siteName: "Constellation OS",
     type: "website",
     locale: "en_US",
   },
   twitter: {
     card: "summary_large_image",
-    creator: "@leonardomaia253",
-    site: "@leonardomaia253",
+    creator: "contato institucional",
+    site: "contato institucional",
   },
 };
 
@@ -81,7 +81,7 @@ export default async function AdvertisePage() {
       label: "avg click rate",
       sub: ctr > 0.9 ? "2x+ industry avg" : undefined,
     },
-    { value: `${formatK(devCount)}+`, label: "GitHub companies" },
+    { value: `${formatK(devCount)}+`, label: "empresas do ecossistema" },
   ];
 
   const barMax = Math.max(ctr, 1.2);
@@ -108,7 +108,7 @@ export default async function AdvertisePage() {
           <p className="mx-auto mt-4 max-w-lg text-sm leading-relaxed text-muted normal-case">
             Planes fly across the sky. Blimps float between planets.
             Billboards light up orbital placements. {devCount.toLocaleString()}+ real
-            GitHub companies explore this Universe every week. Your ad lives inside it.
+            empresas do ecossistema explore this Universe every week. Your ad lives inside it.
           </p>
         </div>
 
@@ -178,7 +178,7 @@ export default async function AdvertisePage() {
           <p className="text-base text-cream">Your audience</p>
           <div className="mt-4 grid gap-3 sm:grid-cols-2">
             {[
-              "Verified GitHub companies, not bots",
+              "Verified empresas do ecossistema, not bots",
               "Software engineers, CTOs, indie hackers",
               "Premium demographic: avg $120K+ salary",
               "Minutes of engagement per session, not seconds",
@@ -202,17 +202,17 @@ export default async function AdvertisePage() {
         {ctr > 0.5 && (
           <div className="mt-8 border-[3px] border-border p-5 sm:p-6">
             <p className="text-base text-cream">
-              Grupo LMF Universe vs traditional ads
+              Constellation OS vs traditional ads
             </p>
             <p className="mt-1 text-xs text-muted normal-case">
               Click-through rate comparison (30-day average)
             </p>
 
             <div className="mt-5 space-y-3">
-              {/* Grupo LMF Universe bar */}
+              {/* Constellation OS bar */}
               <div className="flex items-center gap-3">
                 <span className="w-28 shrink-0 text-xs text-cream normal-case sm:w-32">
-                  Grupo LMF Universe
+                  Constellation OS
                 </span>
                 <div className="relative h-6 flex-1 overflow-hidden rounded-sm">
                   <div
@@ -341,7 +341,7 @@ export default async function AdvertisePage() {
                 },
                 {
                   q: "Who is the audience?",
-                  a: "100% GitHub companies. Software engineers, CTOs, indie hackers, open source maintainers. Every planet is a real perfil da empresa with real contribution data. No bots, no fake traffic.",
+                  a: "100% empresas do ecossistema. Software engineers, CTOs, indie hackers, operadores, gestores e equipes. Every planet is a real perfil da empresa with real contribution data. No bots, no fake traffic.",
                 },
                 {
                   q: "What formats are available?",
@@ -393,13 +393,13 @@ export default async function AdvertisePage() {
             <p className="mt-4 text-xs text-muted normal-case">
               built by{" "}
               <a
-                href="https://x.com/leonardomaia253"
+                href="mailto:contato@grupomaia.com.br"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="transition-colors hover:text-cream"
                 style={{ color: ACCENT }}
               >
-                @leonardomaia253
+                contato institucional
               </a>
             </p>
           </div>

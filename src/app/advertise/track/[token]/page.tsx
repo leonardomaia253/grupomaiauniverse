@@ -17,7 +17,7 @@ const HISTORICAL_BASELINES: Record<string, { impressions: number; clicks: number
 };
 
 export const metadata: Metadata = {
-  title: "Acompanhamento de Anúncio - Grupo LMF Universe",
+  title: "Acompanhamento de Anúncio - Constellation OS",
   robots: { index: false, follow: false },
 };
 

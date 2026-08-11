@@ -1,7 +1,7 @@
 export const BRAND = {
-  name: "Grupo LMF Universe",
-  shortName: "Grupo LMF",
-  groupName: "Grupo LMF",
+  name: "Constellation OS",
+  shortName: "Constellation",
+  groupName: "Portfolio Patrimonial",
   domain: "universe.grupomaia.me",
   baseUrl: "https://universe.grupomaia.me",
   contactEmail: "contato@grupomaia.com.br",
@@ -9,12 +9,12 @@ export const BRAND = {
   repository: "https://github.com/leonardomaia253/lmf-universe",
   starRepositoryApi:
     "https://api.github.com/repos/leonardomaia253/lmf-universe",
-  xCreator: "@leonardomaia253",
-  xCreatorUrl: "https://x.com/leonardomaia253",
+  xCreator: "@constellationos",
+  xCreatorUrl: "mailto:contato@grupomaia.com.br",
   appDescription:
-    "Explore empresas como planetas em um Universo pixel art 3D. Voe pelo Universo e descubra novas companhias.",
+    "Um guia visual e animado para conhecer as empresas do grupo: o que fazem, suas historias, informacoes publicas e caminhos para clientes, fas e investidores.",
   ogAlt:
-    "Grupo LMF Universe: Suas empresas como planetas 3D em um universo interativo.",
+    "Constellation OS: empresas do grupo apresentadas como planetas em uma experiencia 3D clara, animada e exploravel.",
 } as const;
 
 export function getSiteUrl(env = process.env): string {

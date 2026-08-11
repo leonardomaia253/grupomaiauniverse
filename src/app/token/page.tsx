@@ -21,27 +21,27 @@ export default function TokenPage() {
         </Link>
 
         <h1 className="text-2xl text-cream sm:text-3xl">
-          $GITC <span style={{ color: ACCENT }}>Token</span>
+          token comunit?rio <span style={{ color: ACCENT }}>Token</span>
         </h1>
 
         {/* The story */}
         <div className="mt-8 border-[3px] border-border bg-bg-raised p-5 sm:p-8">
-          <p className="text-base text-cream sm:text-lg">About $GITC</p>
+          <p className="text-base text-cream sm:text-lg">About token comunit?rio</p>
           <div className="mt-4 flex flex-col gap-4 text-sm leading-relaxed text-muted normal-case sm:text-base">
             <p>
-              I created Grupo LMF Universe. The <A>community created</A> the $GITC token.
+              Constellation OS is operated independently. The <A>community created</A> the token comunit?rio.
               I did <A>not create, launch, or request</A> the creation of this
               token.
             </p>
             <p>
               I receive <A>transaction fees</A> from the token, which help
-              support the development of Grupo LMF Universe. I&apos;m grateful to the
+              support the development of Constellation OS. The team is grateful to the
               community for believing in this project and supporting it.
             </p>
             <p>
               That said, I <A>don&apos;t control</A> the token. Not the supply,
               not the price, not the listings, not any aspect of its market. My
-              focus is <A>planet Grupo LMF Universe</A>. The community manages the token.
+              focus is <A>planet Constellation OS</A>. The community manages the token.
             </p>
           </div>
         </div>
@@ -67,7 +67,7 @@ export default function TokenPage() {
               token, you do so entirely <A>at your own risk</A>.
             </p>
             <p>
-              Grupo LMF Universe makes no promises, guarantees, or representations about
+              Constellation OS makes no promises, guarantees, or representations about
               the token&apos;s value, future performance, or utility.
             </p>
             <p>

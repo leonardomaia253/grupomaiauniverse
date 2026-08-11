@@ -1,7 +1,7 @@
-<h1 align="center">Grupo LMF Universe</h1>
+<h1 align="center">Constellation OS</h1>
 
 <p align="center">
-  <strong>Company and GitHub profiles as interactive 3D planets.</strong>
+  <strong>Um guia animado para conhecer as empresas do grupo como planetas 3D.</strong>
 </p>
 
 <p align="center">
@@ -9,14 +9,14 @@
 </p>
 
 <p align="center">
-  <img src="public/og-image.png" alt="Grupo LMF Universe — interactive 3D company planets" width="800" />
+  <img src="public/og-image.png" alt="Constellation OS — interactive 3D company planets" width="800" />
 </p>
 
 ---
 
-## What is Grupo LMF Universe?
+## What is Constellation OS?
 
-Grupo LMF Universe turns company and GitHub profiles into a living 3D universe. Each planet represents identity, traction, activity, health, and community presence. Visitors can explore planets, open profile panels, compare signals, customize identity, and place native ads inside the world.
+Constellation OS apresenta cada empresa do grupo de um jeito mais facil, visual e animado. Cada planeta pode reunir o que a empresa faz, sua historia, informacoes publicas, sinais de mercado e caminhos para quem quer conhecer, comprar, acompanhar ou investir.
 
 ## Product pillars
 
@@ -73,5 +73,5 @@ npm run build
 ---
 
 <p align="center">
-  Built by <a href="https://x.com/leonardomaia253">@leonardomaia253</a>
+  Built by the portfolio team
 </p>

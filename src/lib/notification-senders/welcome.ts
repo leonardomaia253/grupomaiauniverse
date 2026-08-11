@@ -12,12 +12,12 @@ export function sendWelcomeNotification(devId: number, login: string, rank?: num
     category: "transactional",
     companyId: devId,
     dedupKey: `welcome:${devId}`,
-    title: `Welcome to Grupo LMF Universe, @${login}!`,
-    body: `Your planet is live in Grupo LMF Universe. ${rankText} Check in daily to grow your streak and unlock items.`,
+    title: `Welcome to Constellation OS, @${login}!`,
+    body: `Your planet is live in Constellation OS. ${rankText} Check in daily to grow your streak and unlock items.`,
     html: `
       <p style="margin:0 0 4px; font-size:12px; font-weight:bold; color:#5a8a00; letter-spacing:1px; text-transform:uppercase;">Welcome</p>
       <h1 style="margin:0 0 8px; font-size:24px; font-weight:bold; color:#111111; font-family:Helvetica,Arial,sans-serif;">Your planet is live${rankText ? ` &mdash; #${rank!.toLocaleString()}` : ""}!</h1>
-      <p style="margin:0 0 20px; font-size:15px; color:#555555; line-height:1.6;">Grupo LMF Universe is a living Universe built from KPIs do Grupo LMF. Here's how to get started:</p>
+      <p style="margin:0 0 20px; font-size:15px; color:#555555; line-height:1.6;">Constellation OS is a living Universe built from KPIs do portfolio. Here's how to get started:</p>
       <ul style="margin:0 0 28px; padding-left:20px; font-size:15px; color:#555555; line-height:1.8;">
         <li>Check in daily to build your streak</li>
         <li>Customize your planet in the shop</li>
