@@ -1,4 +1,4 @@
-# Constellation Pulse
+# Mapa Vivo Pulse
 
 Your building's transmitter. When you code, it pulses. The city lights up.
 
@@ -18,7 +18,7 @@ When you're coding, your building glows in the city and you appear in the live f
 | `Pulse: Connect` | Link your building to the city |
 | `Pulse: Disconnect` | Unlink your building |
 | `Pulse: Toggle` | Pause/resume your transmitter |
-| `Pulse: Open City` | Open Constellation OS in your browser |
+| `Pulse: Open City` | Open Mapa Vivo in your browser |
 
 ## Status bar
 
@@ -50,7 +50,7 @@ Click the status bar item to toggle your transmitter on/off.
 
 ### Privacy settings
 
-Open VS Code Settings (`Cmd+,`) and search for "Constellation OS":
+Open VS Code Settings (`Cmd+,`) and search for "Mapa Vivo":
 
 - `gitCity.privacy.shareLanguage` - Share the programming language (default: on)
 - `gitCity.privacy.shareProject` - Send project name for personal analytics (default: on)

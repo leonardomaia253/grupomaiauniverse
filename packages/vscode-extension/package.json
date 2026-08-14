@@ -1,17 +1,17 @@
 {
   "name": "gitcity",
-  "displayName": "Constellation Pulse",
+  "displayName": "Mapa Vivo Pulse",
   "description": "Keep your city alive. When you code, your building glows and powers the signal. Privacy-first: you control what gets shared.",
   "version": "0.3.0",
-  "publisher": "constellation-os",
+  "publisher": "mapa-vivo",
   "license": "AGPL-3.0",
   "repository": {
     "type": "git",
-    "url": "https://github.com/leonardomaia253/constellation-os"
+    "url": "https://github.com/leonardomaia253/mapa-vivo"
   },
   "homepage": "https://www.thegitcity.com",
   "bugs": {
-    "url": "https://github.com/leonardomaia253/constellation-os/issues"
+    "url": "https://github.com/leonardomaia253/mapa-vivo/issues"
   },
   "engines": {
     "vscode": "^1.93.0"
@@ -40,7 +40,7 @@
       }
     ],
     "configuration": {
-      "title": "Constellation OS",
+      "title": "Mapa Vivo",
       "properties": {
         "gitCity.enabled": {
           "type": "boolean",
@@ -50,7 +50,7 @@
         "gitCity.apiUrl": {
           "type": "string",
           "default": "https://www.thegitcity.com",
-          "description": "Constellation OS API URL (changing this sends your API key to a different server)",
+          "description": "Mapa Vivo API URL (changing this sends your API key to a different server)",
           "scope": "application"
         },
         "gitCity.privacy.shareLanguage": {

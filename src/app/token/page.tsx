@@ -29,19 +29,19 @@ export default function TokenPage() {
           <p className="text-base text-cream sm:text-lg">About token comunit?rio</p>
           <div className="mt-4 flex flex-col gap-4 text-sm leading-relaxed text-muted normal-case sm:text-base">
             <p>
-              Constellation OS is operated independently. The <A>community created</A> the token comunit?rio.
+              Mapa Vivo is operated independently. The <A>community created</A> the token comunit?rio.
               I did <A>not create, launch, or request</A> the creation of this
               token.
             </p>
             <p>
               I receive <A>transaction fees</A> from the token, which help
-              support the development of Constellation OS. The team is grateful to the
+              support the development of Mapa Vivo. The team is grateful to the
               community for believing in this project and supporting it.
             </p>
             <p>
               That said, I <A>don&apos;t control</A> the token. Not the supply,
               not the price, not the listings, not any aspect of its market. My
-              focus is <A>planet Constellation OS</A>. The community manages the token.
+              focus is <A>planet Mapa Vivo</A>. The community manages the token.
             </p>
           </div>
         </div>
@@ -67,7 +67,7 @@ export default function TokenPage() {
               token, you do so entirely <A>at your own risk</A>.
             </p>
             <p>
-              Constellation OS makes no promises, guarantees, or representations about
+              Mapa Vivo makes no promises, guarantees, or representations about
               the token&apos;s value, future performance, or utility.
             </p>
             <p>

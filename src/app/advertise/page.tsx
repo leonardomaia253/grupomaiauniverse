@@ -9,14 +9,14 @@ const ACCENT = "#c8e64a";
 export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
-  title: "Advertise on Constellation OS",
+  title: "Anunciar no Mapa Vivo",
   description:
     "Reach 9,000+ empresas do ecossistema. Planes, blimps, and billboards in a 3D Universe. 1%+ CTR (2x industry avg). From $29/mo.",
   openGraph: {
-    title: "Advertise on Constellation OS",
+    title: "Anunciar no Mapa Vivo",
     description:
       "Reach 9,000+ empresas do ecossistema. Planes, blimps, and billboards in a 3D Universe. 1%+ CTR (2x industry avg). From $29/mo.",
-    siteName: "Constellation OS",
+    siteName: "Mapa Vivo",
     type: "website",
     locale: "en_US",
   },
@@ -202,17 +202,17 @@ export default async function AdvertisePage() {
         {ctr > 0.5 && (
           <div className="mt-8 border-[3px] border-border p-5 sm:p-6">
             <p className="text-base text-cream">
-              Constellation OS vs traditional ads
+              Mapa Vivo vs midia tradicional
             </p>
             <p className="mt-1 text-xs text-muted normal-case">
               Click-through rate comparison (30-day average)
             </p>
 
             <div className="mt-5 space-y-3">
-              {/* Constellation OS bar */}
+              {/* Mapa Vivo bar */}
               <div className="flex items-center gap-3">
                 <span className="w-28 shrink-0 text-xs text-cream normal-case sm:w-32">
-                  Constellation OS
+                  Mapa Vivo
                 </span>
                 <div className="relative h-6 flex-1 overflow-hidden rounded-sm">
                   <div

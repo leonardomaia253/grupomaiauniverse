@@ -1,0 +1,405 @@
+[   22453ms] [INFO] %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold @ http://localhost:3001/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[   23263ms] [LOG] [HMR] connected @ http://localhost:3001/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[   27252ms] [ERROR] Failed to load resource: the server responded with a status of 404 () @ https://api.github.com/repos/leonardomaia253/lmf-universe:0
+[   27257ms] [LOG] %c[Vercel Web Analytics]%c Debug mode is enabled by default in development. No requests will be sent to the server. color: rgb(120, 120, 120) color: inherit @ http://localhost:3001/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[   27258ms] [LOG] %c[Vercel Web Analytics]%c Running queued event color: rgb(120, 120, 120) color: inherit pageview {route: /, path: /} @ http://localhost:3001/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[   27260ms] [LOG] %c[Vercel Web Analytics]%c [view] http://localhost:3001/ color: rgb(120, 120, 120) color: inherit {o: http://localhost:3001/, sv: 0.1.3, sdkn: @vercel/analytics/next, sdkv: 1.6.1, ts: 1786496404834} /_vercel/insights/view @ http://localhost:3001/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[   27266ms] [LOG] %c[Vercel Speed Insights]%c Debug mode is enabled by default in development. No requests will be sent to the server. color: rgb(120, 120, 120) color: inherit @ http://localhost:3001/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[   27518ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3001/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[   27585ms] [ERROR] Failed to load resource: the server responded with a status of 400 () @ https://wjvrcwvnznkisoerngal.supabase.co/storage/v1/object/public/Universe-data/snapshot.json?v=5954988:0
+[   36305ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:3001/api/feed?limit=50&today=1:0
+[   38880ms] [LOG] [Fast Refresh] done in 11464ms @ http://localhost:3001/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[   39161ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3001/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[   39263ms] [LOG] [Fast Refresh] done in 204ms @ http://localhost:3001/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[   39898ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3001/_next/static/chunks/node_modules_cobe_dist_index_esm_12980c51.js:267
+[   39916ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3001/_next/static/chunks/node_modules_cobe_dist_index_esm_12980c51.js:267
+[   39941ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3001/_next/static/chunks/node_modules_cobe_dist_index_esm_12980c51.js:267
+[   39963ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3001/_next/static/chunks/node_modules_cobe_dist_index_esm_12980c51.js:267
+[   39984ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3001/_next/static/chunks/node_modules_cobe_dist_index_esm_12980c51.js:267
+[   40001ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3001/_next/static/chunks/node_modules_cobe_dist_index_esm_12980c51.js:267
+[   40019ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3001/_next/static/chunks/node_modules_cobe_dist_index_esm_12980c51.js:267
+[   40038ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3001/_next/static/chunks/node_modules_cobe_dist_index_esm_12980c51.js:267
+[   42438ms] [WARNING] [.WebGL-0x455400932000]GL Driver Message (OpenGL, Performance, GL_CLOSE_PATH_NV, High): GPU stall due to ReadPixels @ http://localhost:3001/:0
+[   42438ms] [WARNING] [.WebGL-0x455400931400]GL Driver Message (OpenGL, Performance, GL_CLOSE_PATH_NV, High): GPU stall due to ReadPixels @ http://localhost:3001/:0
+[   42438ms] [WARNING] [.WebGL-0x455400193400]GL Driver Message (OpenGL, Performance, GL_CLOSE_PATH_NV, High): GPU stall due to ReadPixels @ http://localhost:3001/:0
+[   42438ms] [WARNING] [.WebGL-0x455400192800]GL Driver Message (OpenGL, Performance, GL_CLOSE_PATH_NV, High): GPU stall due to ReadPixels (this message will no longer repeat) @ http://localhost:3001/:0
+[   57373ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3001/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[   64457ms] [LOG] [Fast Refresh] done in 7203ms @ http://localhost:3001/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[   64625ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3001/_next/static/chunks/node_modules_cobe_dist_index_esm_12980c51.js:267
+[   64640ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3001/_next/static/chunks/node_modules_cobe_dist_index_esm_12980c51.js:267
+[   64655ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3001/_next/static/chunks/node_modules_cobe_dist_index_esm_12980c51.js:267
+[   64669ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3001/_next/static/chunks/node_modules_cobe_dist_index_esm_12980c51.js:267
+[   64686ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3001/_next/static/chunks/node_modules_cobe_dist_index_esm_12980c51.js:267
+[   64702ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3001/_next/static/chunks/node_modules_cobe_dist_index_esm_12980c51.js:267
+[   64717ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3001/_next/static/chunks/node_modules_cobe_dist_index_esm_12980c51.js:267
+[   64733ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3001/_next/static/chunks/node_modules_cobe_dist_index_esm_12980c51.js:267
+[   66198ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3001/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[   66203ms] [LOG] [Fast Refresh] done in 1743ms @ http://localhost:3001/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[   67041ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3001/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[   67063ms] [LOG] [Fast Refresh] done in 159ms @ http://localhost:3001/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[   67300ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3001/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[   67310ms] [LOG] [Fast Refresh] done in 126ms @ http://localhost:3001/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[   67602ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3001/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[   67714ms] [LOG] [Fast Refresh] done in 245ms @ http://localhost:3001/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[   68357ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3001/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[   68457ms] [LOG] [Fast Refresh] done in 208ms @ http://localhost:3001/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[   68695ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3001/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[   68851ms] [LOG] [Fast Refresh] done in 274ms @ http://localhost:3001/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[   93842ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3001/_next/static/chunks/node_modules_cobe_dist_index_esm_12980c51.js:267
+[   93860ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3001/_next/static/chunks/node_modules_cobe_dist_index_esm_12980c51.js:267
+[   93877ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3001/_next/static/chunks/node_modules_cobe_dist_index_esm_12980c51.js:267
+[   93894ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3001/_next/static/chunks/node_modules_cobe_dist_index_esm_12980c51.js:267
+[   93909ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3001/_next/static/chunks/node_modules_cobe_dist_index_esm_12980c51.js:267
+[   93925ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3001/_next/static/chunks/node_modules_cobe_dist_index_esm_12980c51.js:267
+[   93942ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3001/_next/static/chunks/node_modules_cobe_dist_index_esm_12980c51.js:267
+[   93958ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3001/_next/static/chunks/node_modules_cobe_dist_index_esm_12980c51.js:267
+[  125212ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3001/_next/static/chunks/node_modules_cobe_dist_index_esm_12980c51.js:267
+[  125218ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3001/_next/static/chunks/node_modules_cobe_dist_index_esm_12980c51.js:267
+[  125225ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3001/_next/static/chunks/node_modules_cobe_dist_index_esm_12980c51.js:267
+[  125231ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3001/_next/static/chunks/node_modules_cobe_dist_index_esm_12980c51.js:267
+[  125237ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3001/_next/static/chunks/node_modules_cobe_dist_index_esm_12980c51.js:267
+[  125243ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3001/_next/static/chunks/node_modules_cobe_dist_index_esm_12980c51.js:267
+[  125249ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3001/_next/static/chunks/node_modules_cobe_dist_index_esm_12980c51.js:267
+[  125256ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3001/_next/static/chunks/node_modules_cobe_dist_index_esm_12980c51.js:267
+[  127680ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3001/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[  128384ms] [LOG] [Fast Refresh] done in 850ms @ http://localhost:3001/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[  129395ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3001/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[  131499ms] [LOG] [Fast Refresh] done in 2231ms @ http://localhost:3001/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[  132279ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3001/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[  132285ms] [LOG] [Fast Refresh] done in 122ms @ http://localhost:3001/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[  133638ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3001/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[  133928ms] [LOG] [Fast Refresh] done in 522ms @ http://localhost:3001/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[  134098ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3001/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[  135038ms] [LOG] [Fast Refresh] done in 1109ms @ http://localhost:3001/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[  135904ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3001/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[  137676ms] [LOG] [Fast Refresh] done in 1880ms @ http://localhost:3001/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[  137838ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3001/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[  138534ms] [LOG] [Fast Refresh] done in 858ms @ http://localhost:3001/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[  151351ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:3001/api/feed?limit=50&today=1:0
+[  163397ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3001/_next/static/chunks/node_modules_cobe_dist_index_esm_12980c51.js:267
+[  163403ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3001/_next/static/chunks/node_modules_cobe_dist_index_esm_12980c51.js:267
+[  163410ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3001/_next/static/chunks/node_modules_cobe_dist_index_esm_12980c51.js:267
+[  163416ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3001/_next/static/chunks/node_modules_cobe_dist_index_esm_12980c51.js:267
+[  163423ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3001/_next/static/chunks/node_modules_cobe_dist_index_esm_12980c51.js:267
+[  163430ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3001/_next/static/chunks/node_modules_cobe_dist_index_esm_12980c51.js:267
+[  163438ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3001/_next/static/chunks/node_modules_cobe_dist_index_esm_12980c51.js:267
+[  163445ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3001/_next/static/chunks/node_modules_cobe_dist_index_esm_12980c51.js:267
+[  176200ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3001/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[  193837ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3001/_next/static/chunks/node_modules_cobe_dist_index_esm_12980c51.js:267
+[  193890ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3001/_next/static/chunks/node_modules_cobe_dist_index_esm_12980c51.js:267
+[  193947ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3001/_next/static/chunks/node_modules_cobe_dist_index_esm_12980c51.js:267
+[  194001ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3001/_next/static/chunks/node_modules_cobe_dist_index_esm_12980c51.js:267
+[  194055ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3001/_next/static/chunks/node_modules_cobe_dist_index_esm_12980c51.js:267
+[  194108ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3001/_next/static/chunks/node_modules_cobe_dist_index_esm_12980c51.js:267
+[  194163ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3001/_next/static/chunks/node_modules_cobe_dist_index_esm_12980c51.js:267
+[  194216ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3001/_next/static/chunks/node_modules_cobe_dist_index_esm_12980c51.js:267
+[  195018ms] [LOG] [Fast Refresh] done in 18961ms @ http://localhost:3001/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[  195314ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3001/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[  195364ms] [LOG] [Fast Refresh] done in 175ms @ http://localhost:3001/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[  197150ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3001/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[  197167ms] [LOG] [Fast Refresh] done in 150ms @ http://localhost:3001/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[  197620ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3001/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[  198400ms] [LOG] [Fast Refresh] done in 1001ms @ http://localhost:3001/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[  199530ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3001/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[  199595ms] [LOG] [Fast Refresh] done in 194ms @ http://localhost:3001/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[  199820ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3001/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[  199954ms] [LOG] [Fast Refresh] done in 358ms @ http://localhost:3001/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[  200906ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3001/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[  201318ms] [LOG] [Fast Refresh] done in 523ms @ http://localhost:3001/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[  202626ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3001/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[  203669ms] [LOG] [Fast Refresh] done in 1169ms @ http://localhost:3001/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[  207725ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3001/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[  208393ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3001/_next/static/chunks/node_modules_cobe_dist_index_esm_12980c51.js:267
+[  208399ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3001/_next/static/chunks/node_modules_cobe_dist_index_esm_12980c51.js:267
+[  208405ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3001/_next/static/chunks/node_modules_cobe_dist_index_esm_12980c51.js:267
+[  208412ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3001/_next/static/chunks/node_modules_cobe_dist_index_esm_12980c51.js:267
+[  208418ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3001/_next/static/chunks/node_modules_cobe_dist_index_esm_12980c51.js:267
+[  208424ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3001/_next/static/chunks/node_modules_cobe_dist_index_esm_12980c51.js:267
+[  208431ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3001/_next/static/chunks/node_modules_cobe_dist_index_esm_12980c51.js:267
+[  208437ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3001/_next/static/chunks/node_modules_cobe_dist_index_esm_12980c51.js:267
+[  209672ms] [LOG] [Fast Refresh] done in 2075ms @ http://localhost:3001/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[  237448ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3001/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[  237612ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3001/_next/static/chunks/node_modules_cobe_dist_index_esm_12980c51.js:267
+[  237666ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3001/_next/static/chunks/node_modules_cobe_dist_index_esm_12980c51.js:267
+[  237721ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3001/_next/static/chunks/node_modules_cobe_dist_index_esm_12980c51.js:267
+[  237777ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3001/_next/static/chunks/node_modules_cobe_dist_index_esm_12980c51.js:267
+[  237833ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3001/_next/static/chunks/node_modules_cobe_dist_index_esm_12980c51.js:267
+[  237886ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3001/_next/static/chunks/node_modules_cobe_dist_index_esm_12980c51.js:267
+[  237943ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3001/_next/static/chunks/node_modules_cobe_dist_index_esm_12980c51.js:267
+[  238001ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3001/_next/static/chunks/node_modules_cobe_dist_index_esm_12980c51.js:267
+[  238833ms] [LOG] [Fast Refresh] done in 1504ms @ http://localhost:3001/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[  239423ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3001/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[  239810ms] [LOG] [Fast Refresh] done in 511ms @ http://localhost:3001/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[  240730ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3001/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[  241161ms] [LOG] [Fast Refresh] done in 534ms @ http://localhost:3001/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[  241387ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3001/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[  241395ms] [LOG] [Fast Refresh] done in 116ms @ http://localhost:3001/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[  241781ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3001/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[  241917ms] [LOG] [Fast Refresh] done in 283ms @ http://localhost:3001/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[  242228ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3001/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[  242767ms] [LOG] [Fast Refresh] done in 717ms @ http://localhost:3001/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[  267330ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3001/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[  267513ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3001/_next/static/chunks/node_modules_cobe_dist_index_esm_12980c51.js:267
+[  267572ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3001/_next/static/chunks/node_modules_cobe_dist_index_esm_12980c51.js:267
+[  267627ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3001/_next/static/chunks/node_modules_cobe_dist_index_esm_12980c51.js:267
+[  267680ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3001/_next/static/chunks/node_modules_cobe_dist_index_esm_12980c51.js:267
+[  267734ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3001/_next/static/chunks/node_modules_cobe_dist_index_esm_12980c51.js:267
+[  267790ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3001/_next/static/chunks/node_modules_cobe_dist_index_esm_12980c51.js:267
+[  267846ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3001/_next/static/chunks/node_modules_cobe_dist_index_esm_12980c51.js:267
+[  267899ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3001/_next/static/chunks/node_modules_cobe_dist_index_esm_12980c51.js:267
+[  272573ms] [LOG] [Fast Refresh] done in 5355ms @ http://localhost:3001/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[  272745ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3001/_next/static/chunks/node_modules_cobe_dist_index_esm_12980c51.js:267
+[  272761ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3001/_next/static/chunks/node_modules_cobe_dist_index_esm_12980c51.js:267
+[  272779ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3001/_next/static/chunks/node_modules_cobe_dist_index_esm_12980c51.js:267
+[  272798ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3001/_next/static/chunks/node_modules_cobe_dist_index_esm_12980c51.js:267
+[  272814ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3001/_next/static/chunks/node_modules_cobe_dist_index_esm_12980c51.js:267
+[  272830ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3001/_next/static/chunks/node_modules_cobe_dist_index_esm_12980c51.js:267
+[  272861ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3001/_next/static/chunks/node_modules_cobe_dist_index_esm_12980c51.js:267
+[  272876ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3001/_next/static/chunks/node_modules_cobe_dist_index_esm_12980c51.js:267
+[  274526ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3001/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[  274534ms] [LOG] [Fast Refresh] done in 279ms @ http://localhost:3001/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[  275107ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3001/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[  276458ms] [LOG] [Fast Refresh] done in 1463ms @ http://localhost:3001/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[  277728ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3001/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[  278023ms] [LOG] [Fast Refresh] done in 463ms @ http://localhost:3001/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[  278472ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3001/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[  278632ms] [LOG] [Fast Refresh] done in 312ms @ http://localhost:3001/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[  278925ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3001/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[  279117ms] [LOG] [Fast Refresh] done in 363ms @ http://localhost:3001/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[  279901ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3001/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[  280426ms] [LOG] [Fast Refresh] done in 651ms @ http://localhost:3001/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[  280951ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3001/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[  281627ms] [LOG] [Fast Refresh] done in 814ms @ http://localhost:3001/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[  297770ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3001/_next/static/chunks/node_modules_cobe_dist_index_esm_12980c51.js:267
+[  297786ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3001/_next/static/chunks/node_modules_cobe_dist_index_esm_12980c51.js:267
+[  297803ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3001/_next/static/chunks/node_modules_cobe_dist_index_esm_12980c51.js:267
+[  297819ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3001/_next/static/chunks/node_modules_cobe_dist_index_esm_12980c51.js:267
+[  297834ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3001/_next/static/chunks/node_modules_cobe_dist_index_esm_12980c51.js:267
+[  297850ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3001/_next/static/chunks/node_modules_cobe_dist_index_esm_12980c51.js:267
+[  297867ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3001/_next/static/chunks/node_modules_cobe_dist_index_esm_12980c51.js:267
+[  297907ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3001/_next/static/chunks/node_modules_cobe_dist_index_esm_12980c51.js:267
+[  299406ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3001/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[  299412ms] [LOG] [Fast Refresh] done in 1818ms @ http://localhost:3001/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[  299560ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3001/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[  300181ms] [LOG] [Fast Refresh] done in 767ms @ http://localhost:3001/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[  301711ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3001/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[  301938ms] [LOG] [Fast Refresh] done in 375ms @ http://localhost:3001/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[  302458ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3001/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[  302748ms] [LOG] [Fast Refresh] done in 425ms @ http://localhost:3001/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[  303042ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3001/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[  303426ms] [LOG] [Fast Refresh] done in 492ms @ http://localhost:3001/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[  303686ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3001/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[  303841ms] [LOG] [Fast Refresh] done in 281ms @ http://localhost:3001/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[  304011ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3001/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[  304038ms] [LOG] [Fast Refresh] done in 177ms @ http://localhost:3001/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[  327517ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3001/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[  327573ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3001/_next/static/chunks/node_modules_cobe_dist_index_esm_12980c51.js:267
+[  327593ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3001/_next/static/chunks/node_modules_cobe_dist_index_esm_12980c51.js:267
+[  327609ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3001/_next/static/chunks/node_modules_cobe_dist_index_esm_12980c51.js:267
+[  327624ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3001/_next/static/chunks/node_modules_cobe_dist_index_esm_12980c51.js:267
+[  327640ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3001/_next/static/chunks/node_modules_cobe_dist_index_esm_12980c51.js:267
+[  327656ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3001/_next/static/chunks/node_modules_cobe_dist_index_esm_12980c51.js:267
+[  327672ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3001/_next/static/chunks/node_modules_cobe_dist_index_esm_12980c51.js:267
+[  327688ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3001/_next/static/chunks/node_modules_cobe_dist_index_esm_12980c51.js:267
+[  330955ms] [LOG] [Fast Refresh] done in 3562ms @ http://localhost:3001/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[  331129ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3001/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[  333830ms] [LOG] [Fast Refresh] done in 2874ms @ http://localhost:3001/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[  335375ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3001/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[  335871ms] [LOG] [Fast Refresh] done in 650ms @ http://localhost:3001/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[  337965ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3001/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[  338553ms] [LOG] [Fast Refresh] done in 854ms @ http://localhost:3001/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[  358650ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3001/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[  358797ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3001/_next/static/chunks/node_modules_cobe_dist_index_esm_12980c51.js:267
+[  358803ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3001/_next/static/chunks/node_modules_cobe_dist_index_esm_12980c51.js:267
+[  358809ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3001/_next/static/chunks/node_modules_cobe_dist_index_esm_12980c51.js:267
+[  358816ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3001/_next/static/chunks/node_modules_cobe_dist_index_esm_12980c51.js:267
+[  358822ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3001/_next/static/chunks/node_modules_cobe_dist_index_esm_12980c51.js:267
+[  358829ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3001/_next/static/chunks/node_modules_cobe_dist_index_esm_12980c51.js:267
+[  358835ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3001/_next/static/chunks/node_modules_cobe_dist_index_esm_12980c51.js:267
+[  358842ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3001/_next/static/chunks/node_modules_cobe_dist_index_esm_12980c51.js:267
+[  360072ms] [LOG] [Fast Refresh] done in 1530ms @ http://localhost:3001/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[  361451ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3001/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[  361582ms] [LOG] [Fast Refresh] done in 249ms @ http://localhost:3001/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[  362670ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3001/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[  363194ms] [LOG] [Fast Refresh] done in 675ms @ http://localhost:3001/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[  363336ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3001/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[  363820ms] [LOG] [Fast Refresh] done in 613ms @ http://localhost:3001/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[  364911ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3001/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[  365383ms] [LOG] [Fast Refresh] done in 583ms @ http://localhost:3001/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[  366301ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3001/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[  366302ms] [LOG] [Fast Refresh] done in 153ms @ http://localhost:3001/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[  366968ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3001/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[  367177ms] [LOG] [Fast Refresh] done in 327ms @ http://localhost:3001/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[  367298ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3001/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[  367460ms] [LOG] [Fast Refresh] done in 282ms @ http://localhost:3001/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[  367613ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3001/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[  367753ms] [LOG] [Fast Refresh] done in 292ms @ http://localhost:3001/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[  368513ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3001/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[  368766ms] [LOG] [Fast Refresh] done in 391ms @ http://localhost:3001/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[  369239ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3001/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[  370189ms] [LOG] [Fast Refresh] done in 1060ms @ http://localhost:3001/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[  370454ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3001/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[  370764ms] [LOG] [Fast Refresh] done in 446ms @ http://localhost:3001/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[  387472ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3001/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[  389101ms] [LOG] [Fast Refresh] done in 1758ms @ http://localhost:3001/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[  389261ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3001/_next/static/chunks/node_modules_cobe_dist_index_esm_12980c51.js:267
+[  389268ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3001/_next/static/chunks/node_modules_cobe_dist_index_esm_12980c51.js:267
+[  389275ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3001/_next/static/chunks/node_modules_cobe_dist_index_esm_12980c51.js:267
+[  389281ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3001/_next/static/chunks/node_modules_cobe_dist_index_esm_12980c51.js:267
+[  389288ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3001/_next/static/chunks/node_modules_cobe_dist_index_esm_12980c51.js:267
+[  389294ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3001/_next/static/chunks/node_modules_cobe_dist_index_esm_12980c51.js:267
+[  389300ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3001/_next/static/chunks/node_modules_cobe_dist_index_esm_12980c51.js:267
+[  389308ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3001/_next/static/chunks/node_modules_cobe_dist_index_esm_12980c51.js:267
+[  389312ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3001/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[  390781ms] [LOG] [Fast Refresh] done in 1677ms @ http://localhost:3001/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[  391173ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3001/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[  391790ms] [LOG] [Fast Refresh] done in 848ms @ http://localhost:3001/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[  391918ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3001/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[  392080ms] [LOG] [Fast Refresh] done in 288ms @ http://localhost:3001/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[  392934ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3001/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[  393071ms] [LOG] [Fast Refresh] done in 379ms @ http://localhost:3001/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[  394201ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3001/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[  394924ms] [LOG] [Fast Refresh] done in 856ms @ http://localhost:3001/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[  395331ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3001/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[  395873ms] [LOG] [Fast Refresh] done in 693ms @ http://localhost:3001/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[  396155ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3001/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[  397046ms] [LOG] [Fast Refresh] done in 1015ms @ http://localhost:3001/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[  397167ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3001/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[  397207ms] [LOG] [Fast Refresh] done in 160ms @ http://localhost:3001/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[  399215ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3001/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[  400080ms] [LOG] [Fast Refresh] done in 972ms @ http://localhost:3001/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[  400477ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3001/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[  400669ms] [LOG] [Fast Refresh] done in 325ms @ http://localhost:3001/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[  407670ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3001/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[  407945ms] [LOG] [Fast Refresh] done in 400ms @ http://localhost:3001/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[  408612ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3001/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[  409026ms] [LOG] [Fast Refresh] done in 554ms @ http://localhost:3001/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[  417852ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3001/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[  417853ms] [LOG] [Fast Refresh] done in 521ms @ http://localhost:3001/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[  417903ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3001/_next/static/chunks/node_modules_cobe_dist_index_esm_12980c51.js:267
+[  417918ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3001/_next/static/chunks/node_modules_cobe_dist_index_esm_12980c51.js:267
+[  417933ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3001/_next/static/chunks/node_modules_cobe_dist_index_esm_12980c51.js:267
+[  417949ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3001/_next/static/chunks/node_modules_cobe_dist_index_esm_12980c51.js:267
+[  417964ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3001/_next/static/chunks/node_modules_cobe_dist_index_esm_12980c51.js:267
+[  417980ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3001/_next/static/chunks/node_modules_cobe_dist_index_esm_12980c51.js:267
+[  417996ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3001/_next/static/chunks/node_modules_cobe_dist_index_esm_12980c51.js:267
+[  418011ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3001/_next/static/chunks/node_modules_cobe_dist_index_esm_12980c51.js:267
+[  449351ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3001/_next/static/chunks/node_modules_cobe_dist_index_esm_12980c51.js:267
+[  449366ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3001/_next/static/chunks/node_modules_cobe_dist_index_esm_12980c51.js:267
+[  449381ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3001/_next/static/chunks/node_modules_cobe_dist_index_esm_12980c51.js:267
+[  449398ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3001/_next/static/chunks/node_modules_cobe_dist_index_esm_12980c51.js:267
+[  449413ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3001/_next/static/chunks/node_modules_cobe_dist_index_esm_12980c51.js:267
+[  449428ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3001/_next/static/chunks/node_modules_cobe_dist_index_esm_12980c51.js:267
+[  449446ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3001/_next/static/chunks/node_modules_cobe_dist_index_esm_12980c51.js:267
+[  449461ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3001/_next/static/chunks/node_modules_cobe_dist_index_esm_12980c51.js:267
+[  450934ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3001/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[  452938ms] [LOG] [Fast Refresh] done in 2115ms @ http://localhost:3001/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[  478242ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3001/_next/static/chunks/node_modules_cobe_dist_index_esm_12980c51.js:267
+[  478248ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3001/_next/static/chunks/node_modules_cobe_dist_index_esm_12980c51.js:267
+[  478255ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3001/_next/static/chunks/node_modules_cobe_dist_index_esm_12980c51.js:267
+[  478261ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3001/_next/static/chunks/node_modules_cobe_dist_index_esm_12980c51.js:267
+[  478267ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3001/_next/static/chunks/node_modules_cobe_dist_index_esm_12980c51.js:267
+[  478274ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3001/_next/static/chunks/node_modules_cobe_dist_index_esm_12980c51.js:267
+[  478280ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3001/_next/static/chunks/node_modules_cobe_dist_index_esm_12980c51.js:267
+[  478286ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3001/_next/static/chunks/node_modules_cobe_dist_index_esm_12980c51.js:267
+[  507464ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3001/_next/static/chunks/node_modules_cobe_dist_index_esm_12980c51.js:267
+[  507517ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3001/_next/static/chunks/node_modules_cobe_dist_index_esm_12980c51.js:267
+[  507575ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3001/_next/static/chunks/node_modules_cobe_dist_index_esm_12980c51.js:267
+[  507628ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3001/_next/static/chunks/node_modules_cobe_dist_index_esm_12980c51.js:267
+[  507683ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3001/_next/static/chunks/node_modules_cobe_dist_index_esm_12980c51.js:267
+[  507738ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3001/_next/static/chunks/node_modules_cobe_dist_index_esm_12980c51.js:267
+[  507790ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3001/_next/static/chunks/node_modules_cobe_dist_index_esm_12980c51.js:267
+[  507844ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3001/_next/static/chunks/node_modules_cobe_dist_index_esm_12980c51.js:267
+[  508650ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3001/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[  508656ms] [LOG] [Fast Refresh] done in 1309ms @ http://localhost:3001/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[  508966ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3001/_next/static/chunks/node_modules_cobe_dist_index_esm_12980c51.js:267
+[  508973ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3001/_next/static/chunks/node_modules_cobe_dist_index_esm_12980c51.js:267
+[  508979ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3001/_next/static/chunks/node_modules_cobe_dist_index_esm_12980c51.js:267
+[  508986ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3001/_next/static/chunks/node_modules_cobe_dist_index_esm_12980c51.js:267
+[  508993ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3001/_next/static/chunks/node_modules_cobe_dist_index_esm_12980c51.js:267
+[  508999ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3001/_next/static/chunks/node_modules_cobe_dist_index_esm_12980c51.js:267
+[  509006ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3001/_next/static/chunks/node_modules_cobe_dist_index_esm_12980c51.js:267
+[  509012ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3001/_next/static/chunks/node_modules_cobe_dist_index_esm_12980c51.js:267
+[  510227ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3001/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[  510826ms] [LOG] [Fast Refresh] done in 2010ms @ http://localhost:3001/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[  512207ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3001/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[  512217ms] [LOG] [Fast Refresh] done in 126ms @ http://localhost:3001/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[  514335ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3001/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[  514842ms] [LOG] [Fast Refresh] done in 649ms @ http://localhost:3001/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[  515120ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3001/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[  516859ms] [LOG] [Fast Refresh] done in 1847ms @ http://localhost:3001/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[  518421ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3001/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[  519263ms] [LOG] [Fast Refresh] done in 982ms @ http://localhost:3001/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[  519404ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3001/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[  519586ms] [LOG] [Fast Refresh] done in 322ms @ http://localhost:3001/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[  521095ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3001/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[  522093ms] [LOG] [Fast Refresh] done in 1217ms @ http://localhost:3001/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[  522239ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3001/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[  522507ms] [LOG] [Fast Refresh] done in 412ms @ http://localhost:3001/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[  523894ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3001/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[  525139ms] [LOG] [Fast Refresh] done in 1390ms @ http://localhost:3001/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[  526065ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3001/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[  527451ms] [LOG] [Fast Refresh] done in 1513ms @ http://localhost:3001/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[  528570ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3001/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[  529124ms] [LOG] [Fast Refresh] done in 696ms @ http://localhost:3001/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[  529358ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3001/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[  529747ms] [LOG] [Fast Refresh] done in 623ms @ http://localhost:3001/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[  531525ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3001/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[  531757ms] [LOG] [Fast Refresh] done in 493ms @ http://localhost:3001/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[  537847ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3001/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[  540539ms] [LOG] [Fast Refresh] done in 2847ms @ http://localhost:3001/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[  540650ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3001/_next/static/chunks/node_modules_cobe_dist_index_esm_12980c51.js:267
+[  540703ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3001/_next/static/chunks/node_modules_cobe_dist_index_esm_12980c51.js:267
+[  540759ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3001/_next/static/chunks/node_modules_cobe_dist_index_esm_12980c51.js:267
+[  540813ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3001/_next/static/chunks/node_modules_cobe_dist_index_esm_12980c51.js:267
+[  540881ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3001/_next/static/chunks/node_modules_cobe_dist_index_esm_12980c51.js:267
+[  540935ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3001/_next/static/chunks/node_modules_cobe_dist_index_esm_12980c51.js:267
+[  540992ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3001/_next/static/chunks/node_modules_cobe_dist_index_esm_12980c51.js:267
+[  541045ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3001/_next/static/chunks/node_modules_cobe_dist_index_esm_12980c51.js:267
+[  542002ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3001/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[  542018ms] [LOG] [Fast Refresh] done in 199ms @ http://localhost:3001/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[  543320ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3001/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[  543470ms] [LOG] [Fast Refresh] done in 297ms @ http://localhost:3001/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[  544052ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3001/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[  544609ms] [LOG] [Fast Refresh] done in 692ms @ http://localhost:3001/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[  567466ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3001/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[  567863ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3001/_next/static/chunks/node_modules_cobe_dist_index_esm_12980c51.js:267
+[  567869ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3001/_next/static/chunks/node_modules_cobe_dist_index_esm_12980c51.js:267
+[  567875ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3001/_next/static/chunks/node_modules_cobe_dist_index_esm_12980c51.js:267
+[  567881ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3001/_next/static/chunks/node_modules_cobe_dist_index_esm_12980c51.js:267
+[  567887ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3001/_next/static/chunks/node_modules_cobe_dist_index_esm_12980c51.js:267
+[  567894ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3001/_next/static/chunks/node_modules_cobe_dist_index_esm_12980c51.js:267
+[  567900ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3001/_next/static/chunks/node_modules_cobe_dist_index_esm_12980c51.js:267
+[  567907ms] [WARNING] WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute @ http://localhost:3001/_next/static/chunks/node_modules_cobe_dist_index_esm_12980c51.js:267
+[  569120ms] [LOG] [Fast Refresh] done in 1771ms @ http://localhost:3001/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[  569275ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3001/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[  569865ms] [LOG] [Fast Refresh] done in 743ms @ http://localhost:3001/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[  570117ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3001/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[  570257ms] [LOG] [Fast Refresh] done in 269ms @ http://localhost:3001/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[  570559ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3001/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[  571300ms] [LOG] [Fast Refresh] done in 878ms @ http://localhost:3001/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[  571417ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3001/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[  571575ms] [LOG] [Fast Refresh] done in 273ms @ http://localhost:3001/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[  572001ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3001/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[  572327ms] [LOG] [Fast Refresh] done in 470ms @ http://localhost:3001/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[  572465ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3001/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[  572584ms] [LOG] [Fast Refresh] done in 242ms @ http://localhost:3001/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[  573187ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3001/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[  573326ms] [LOG] [Fast Refresh] done in 262ms @ http://localhost:3001/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[  589908ms] [ERROR] WebSocket connection to 'ws://localhost:3001/_next/webpack-hmr?id=H9fqVvnm_hZIOWtzk8old' failed: Error in connection establishment: net::ERR_CONNECTION_REFUSED @ http://localhost:3001/_next/static/chunks/node_modules_next_dist_client_17643121._.js:10878
+[  593434ms] [ERROR] WebSocket connection to 'ws://localhost:3001/_next/webpack-hmr?id=H9fqVvnm_hZIOWtzk8old' failed: Error in connection establishment: net::ERR_CONNECTION_REFUSED @ http://localhost:3001/_next/static/chunks/node_modules_next_dist_client_17643121._.js:10878
+[  597534ms] [ERROR] WebSocket connection to 'ws://localhost:3001/_next/webpack-hmr?id=H9fqVvnm_hZIOWtzk8old' failed: Error in connection establishment: net::ERR_CONNECTION_REFUSED @ http://localhost:3001/_next/static/chunks/node_modules_next_dist_client_17643121._.js:10878
+[  600167ms] [ERROR] Failed to load resource: net::ERR_CONNECTION_REFUSED @ http://localhost:3001/api/online:0
+[  600168ms] [ERROR] Failed to load resource: net::ERR_CONNECTION_REFUSED @ http://localhost:3001/api/presence:0
+[  601526ms] [ERROR] WebSocket connection to 'ws://localhost:3001/_next/webpack-hmr?id=H9fqVvnm_hZIOWtzk8old' failed: Error in connection establishment: net::ERR_CONNECTION_REFUSED @ http://localhost:3001/_next/static/chunks/node_modules_next_dist_client_17643121._.js:10878
+[  605378ms] [ERROR] WebSocket connection to 'ws://localhost:3001/_next/webpack-hmr?id=H9fqVvnm_hZIOWtzk8old' failed: Error in connection establishment: net::ERR_CONNECTION_REFUSED @ http://localhost:3001/_next/static/chunks/node_modules_next_dist_client_17643121._.js:10878
+[  613368ms] [ERROR] WebSocket connection to 'ws://localhost:3001/_next/webpack-hmr?id=H9fqVvnm_hZIOWtzk8old' failed: Error in connection establishment: net::ERR_CONNECTION_REFUSED @ http://localhost:3001/_next/static/chunks/node_modules_next_dist_client_17643121._.js:10878
+[  620675ms] [ERROR] WebSocket connection to 'ws://localhost:3001/_next/webpack-hmr?id=H9fqVvnm_hZIOWtzk8old' failed: Error in connection establishment: net::ERR_CONNECTION_REFUSED @ http://localhost:3001/_next/static/chunks/node_modules_next_dist_client_17643121._.js:10878
+[  628513ms] [ERROR] WebSocket connection to 'ws://localhost:3001/_next/webpack-hmr?id=H9fqVvnm_hZIOWtzk8old' failed: Error in connection establishment: net::ERR_CONNECTION_REFUSED @ http://localhost:3001/_next/static/chunks/node_modules_next_dist_client_17643121._.js:10878
+[  629699ms] [ERROR] Failed to load resource: net::ERR_CONNECTION_REFUSED @ http://localhost:3001/api/online:0
+[  629699ms] [ERROR] Failed to load resource: net::ERR_CONNECTION_REFUSED @ http://localhost:3001/api/feed?limit=50&today=1:0
+[  629699ms] [ERROR] Failed to load resource: net::ERR_CONNECTION_REFUSED @ http://localhost:3001/api/presence:0
+[  636200ms] [ERROR] WebSocket connection to 'ws://localhost:3001/_next/webpack-hmr?id=H9fqVvnm_hZIOWtzk8old' failed: Error in connection establishment: net::ERR_CONNECTION_REFUSED @ http://localhost:3001/_next/static/chunks/node_modules_next_dist_client_17643121._.js:10878
+[  643795ms] [ERROR] WebSocket connection to 'ws://localhost:3001/_next/webpack-hmr?id=H9fqVvnm_hZIOWtzk8old' failed: Error in connection establishment: net::ERR_CONNECTION_REFUSED @ http://localhost:3001/_next/static/chunks/node_modules_next_dist_client_17643121._.js:10878
+[  651328ms] [ERROR] WebSocket connection to 'ws://localhost:3001/_next/webpack-hmr?id=H9fqVvnm_hZIOWtzk8old' failed: Error in connection establishment: net::ERR_CONNECTION_REFUSED @ http://localhost:3001/_next/static/chunks/node_modules_next_dist_client_17643121._.js:10878
+[  658995ms] [ERROR] WebSocket connection to 'ws://localhost:3001/_next/webpack-hmr?id=H9fqVvnm_hZIOWtzk8old' failed: Error in connection establishment: net::ERR_CONNECTION_REFUSED @ http://localhost:3001/_next/static/chunks/node_modules_next_dist_client_17643121._.js:10878

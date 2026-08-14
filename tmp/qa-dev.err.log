@@ -1,0 +1,168 @@
+[presence] Falling back to empty presence Error: ADMIN_PROXY_SECRET is not set
+    at requireEnv (src\lib\env.ts:12:11)
+    at getAdminProxySecret (src\lib\env.ts:30:10)
+    at getSupabaseAdmin (src\lib\supabase.ts:21:42)
+    at GET (src\app\api\presence\route.ts:8:32)
+  10 |   const value = process.env[name];
+  11 |   if (!value || value.trim().length === 0) {
+> 12 |     throw new Error(`${name} is not set`);
+     |           ^
+  13 |   }
+  14 |   return value;
+  15 | }
+[online] Falling back to single visitor Error: ADMIN_PROXY_SECRET is not set
+    at requireEnv (src\lib\env.ts:12:11)
+    at getAdminProxySecret (src\lib\env.ts:30:10)
+    at getSupabaseAdmin (src\lib\supabase.ts:21:42)
+    at POST (src\app\api\online\route.ts:15:32)
+  10 |   const value = process.env[name];
+  11 |   if (!value || value.trim().length === 0) {
+> 12 |     throw new Error(`${name} is not set`);
+     |           ^
+  13 |   }
+  14 |   return value;
+  15 | }
+⨯ Error: ADMIN_PROXY_SECRET is not set
+    at requireEnv (src\lib\env.ts:12:11)
+    at getAdminProxySecret (src\lib\env.ts:30:10)
+    at getSupabaseAdmin (src\lib\supabase.ts:21:42)
+    at GET (src\app\api\feed\route.ts:15:30)
+  10 |   const value = process.env[name];
+  11 |   if (!value || value.trim().length === 0) {
+> 12 |     throw new Error(`${name} is not set`);
+     |           ^
+  13 |   }
+  14 |   return value;
+  15 | }
+[city] Falling back to empty city payload Error: ADMIN_PROXY_SECRET is not set
+    at requireEnv (src\lib\env.ts:12:11)
+    at getAdminProxySecret (src\lib\env.ts:30:10)
+    at getSupabaseAdmin (src\lib\supabase.ts:21:42)
+    at GET (src\app\api\city\route.ts:22:32)
+  10 |   const value = process.env[name];
+  11 |   if (!value || value.trim().length === 0) {
+> 12 |     throw new Error(`${name} is not set`);
+     |           ^
+  13 |   }
+  14 |   return value;
+  15 | }
+[milestone] Falling back to no celebrations Error: ADMIN_PROXY_SECRET is not set
+    at requireEnv (src\lib\env.ts:12:11)
+    at getAdminProxySecret (src\lib\env.ts:30:10)
+    at getSupabaseAdmin (src\lib\supabase.ts:21:42)
+    at GET (src\app\api\milestone-celebration\route.ts:46:32)
+  10 |   const value = process.env[name];
+  11 |   if (!value || value.trim().length === 0) {
+> 12 |     throw new Error(`${name} is not set`);
+     |           ^
+  13 |   }
+  14 |   return value;
+  15 | }
+[online] Falling back to single visitor Error: ADMIN_PROXY_SECRET is not set
+    at requireEnv (src\lib\env.ts:12:11)
+    at getAdminProxySecret (src\lib\env.ts:30:10)
+    at getSupabaseAdmin (src\lib\supabase.ts:21:42)
+    at POST (src\app\api\online\route.ts:15:32)
+  10 |   const value = process.env[name];
+  11 |   if (!value || value.trim().length === 0) {
+> 12 |     throw new Error(`${name} is not set`);
+     |           ^
+  13 |   }
+  14 |   return value;
+  15 | }
+[presence] Falling back to empty presence Error: ADMIN_PROXY_SECRET is not set
+    at requireEnv (src\lib\env.ts:12:11)
+    at getAdminProxySecret (src\lib\env.ts:30:10)
+    at getSupabaseAdmin (src\lib\supabase.ts:21:42)
+    at GET (src\app\api\presence\route.ts:8:32)
+  10 |   const value = process.env[name];
+  11 |   if (!value || value.trim().length === 0) {
+> 12 |     throw new Error(`${name} is not set`);
+     |           ^
+  13 |   }
+  14 |   return value;
+  15 | }
+[online] Falling back to single visitor Error: ADMIN_PROXY_SECRET is not set
+    at requireEnv (src\lib\env.ts:12:11)
+    at getAdminProxySecret (src\lib\env.ts:30:10)
+    at getSupabaseAdmin (src\lib\supabase.ts:21:42)
+    at POST (src\app\api\online\route.ts:15:32)
+  10 |   const value = process.env[name];
+  11 |   if (!value || value.trim().length === 0) {
+> 12 |     throw new Error(`${name} is not set`);
+     |           ^
+  13 |   }
+  14 |   return value;
+  15 | }
+[presence] Falling back to empty presence Error: ADMIN_PROXY_SECRET is not set
+    at requireEnv (src\lib\env.ts:12:11)
+    at getAdminProxySecret (src\lib\env.ts:30:10)
+    at getSupabaseAdmin (src\lib\supabase.ts:21:42)
+    at GET (src\app\api\presence\route.ts:8:32)
+  10 |   const value = process.env[name];
+  11 |   if (!value || value.trim().length === 0) {
+> 12 |     throw new Error(`${name} is not set`);
+     |           ^
+  13 |   }
+  14 |   return value;
+  15 | }
+[online] Falling back to single visitor Error: ADMIN_PROXY_SECRET is not set
+    at requireEnv (src\lib\env.ts:12:11)
+    at getAdminProxySecret (src\lib\env.ts:30:10)
+    at getSupabaseAdmin (src\lib\supabase.ts:21:42)
+    at POST (src\app\api\online\route.ts:15:32)
+  10 |   const value = process.env[name];
+  11 |   if (!value || value.trim().length === 0) {
+> 12 |     throw new Error(`${name} is not set`);
+     |           ^
+  13 |   }
+  14 |   return value;
+  15 | }
+[presence] Falling back to empty presence Error: ADMIN_PROXY_SECRET is not set
+    at requireEnv (src\lib\env.ts:12:11)
+    at getAdminProxySecret (src\lib\env.ts:30:10)
+    at getSupabaseAdmin (src\lib\supabase.ts:21:42)
+    at GET (src\app\api\presence\route.ts:8:32)
+  10 |   const value = process.env[name];
+  11 |   if (!value || value.trim().length === 0) {
+> 12 |     throw new Error(`${name} is not set`);
+     |           ^
+  13 |   }
+  14 |   return value;
+  15 | }
+⨯ Error: ADMIN_PROXY_SECRET is not set
+    at requireEnv (src\lib\env.ts:12:11)
+    at getAdminProxySecret (src\lib\env.ts:30:10)
+    at getSupabaseAdmin (src\lib\supabase.ts:21:42)
+    at GET (src\app\api\feed\route.ts:15:30)
+  10 |   const value = process.env[name];
+  11 |   if (!value || value.trim().length === 0) {
+> 12 |     throw new Error(`${name} is not set`);
+     |           ^
+  13 |   }
+  14 |   return value;
+  15 | }
+[online] Falling back to single visitor Error: ADMIN_PROXY_SECRET is not set
+    at requireEnv (src\lib\env.ts:12:11)
+    at getAdminProxySecret (src\lib\env.ts:30:10)
+    at getSupabaseAdmin (src\lib\supabase.ts:21:42)
+    at POST (src\app\api\online\route.ts:15:32)
+  10 |   const value = process.env[name];
+  11 |   if (!value || value.trim().length === 0) {
+> 12 |     throw new Error(`${name} is not set`);
+     |           ^
+  13 |   }
+  14 |   return value;
+  15 | }
+[presence] Falling back to empty presence Error: ADMIN_PROXY_SECRET is not set
+    at requireEnv (src\lib\env.ts:12:11)
+    at getAdminProxySecret (src\lib\env.ts:30:10)
+    at getSupabaseAdmin (src\lib\supabase.ts:21:42)
+    at GET (src\app\api\presence\route.ts:8:32)
+  10 |   const value = process.env[name];
+  11 |   if (!value || value.trim().length === 0) {
+> 12 |     throw new Error(`${name} is not set`);
+     |           ^
+  13 |   }
+  14 |   return value;
+  15 | }

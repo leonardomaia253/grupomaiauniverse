@@ -62,14 +62,14 @@ function sendNotificationForMilestone(
     category: "transactional",
     companyId: devId,
     dedupKey: `community_milestone:${milestone}:${devId}`,
-    title: `Constellation OS hit ${formatted} companies!`,
+    title: `Mapa Vivo hit ${formatted} companies!`,
     body: `The community just reached ${formatted} companies. You're one of them!`,
     html: `
       <p style="margin:0 0 4px; font-size:12px; font-weight:bold; color:#5a8a00; letter-spacing:1px; text-transform:uppercase;">Community milestone</p>
       <h1 style="margin:0 0 8px; font-size:40px; font-weight:bold; color:#111111; font-family:Helvetica,Arial,sans-serif;">${formatted}</h1>
-      <p style="margin:0 0 28px; font-size:15px; color:#555555; line-height:1.6;">companies in Constellation OS &mdash; and you're one of them, @${login}!</p>
+      <p style="margin:0 0 28px; font-size:15px; color:#555555; line-height:1.6;">companies in Mapa Vivo &mdash; and you're one of them, @${login}!</p>
       <hr style="border:none; border-top:1px solid #eeeeee; margin:0 0 28px;" />
-      ${buildButton("Visit Constellation OS", BASE_URL)}
+      ${buildButton("Abrir Mapa Vivo", BASE_URL)}
     `,
     actionUrl: BASE_URL,
     priority: "low",

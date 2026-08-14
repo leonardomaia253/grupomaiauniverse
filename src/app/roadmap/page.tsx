@@ -8,9 +8,9 @@ export const dynamic = "force-dynamic";
 export const revalidate = 300;
 
 export const metadata: Metadata = {
-  title: "Roadmap - Constellation OS",
+  title: "Roadmap - Mapa Vivo",
   description:
-    "See what's coming next for Constellation OS. Vote on the features you want most.",
+    "See what's coming next for Mapa Vivo. Vote on the features you want most.",
 };
 
 export default async function RoadmapPage() {

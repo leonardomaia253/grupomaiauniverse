@@ -17,7 +17,7 @@ const HISTORICAL_BASELINES: Record<string, { impressions: number; clicks: number
 };
 
 export const metadata: Metadata = {
-  title: "Acompanhamento de Anúncio - Constellation OS",
+  title: "Acompanhamento de Anúncio - Mapa Vivo",
   robots: { index: false, follow: false },
 };
 

@@ -40,12 +40,12 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const dev = await getCompany(username);
 
   if (!dev) {
-    return { title: "Empresa não encontrada - Constellation OS" };
+    return { title: "Empresa não encontrada - Mapa Vivo" };
   }
 
   const contribs = (dev.contributions_total && dev.contributions_total > 0) ? dev.contributions_total : dev.contributions;
-  const title = `@${dev.username} - Constellation OS | ${contribs.toLocaleString()} contribuições`;
-  const description = `Veja o planeta de @${dev.username} no Constellation OS. ${contribs.toLocaleString()} contribuições, ${dev.public_repos.toLocaleString()} repositórios, ${dev.total_stars.toLocaleString()} estrelas. Rank #${dev.rank ?? "?"} no universo.`;
+  const title = `@${dev.username} - Mapa Vivo | ${contribs.toLocaleString()} contribuições`;
+  const description = `Veja o planeta de @${dev.username} no Mapa Vivo. ${contribs.toLocaleString()} contribuições, ${dev.public_repos.toLocaleString()} repositórios, ${dev.total_stars.toLocaleString()} estrelas. Rank #${dev.rank ?? "?"} no universo.`;
 
   return {
     title,
@@ -131,7 +131,7 @@ export default async function DevPage({ params }: Props) {
     "@context": "https://schema.org",
     "@type": "BreadcrumbList",
     itemListElement: [
-      { "@type": "ListItem", position: 1, name: "Constellation OS", item: baseUrl },
+      { "@type": "ListItem", position: 1, name: "Mapa Vivo", item: baseUrl },
       {
         "@type": "ListItem",
         position: 2,
@@ -190,7 +190,7 @@ export default async function DevPage({ params }: Props) {
                 </div>
               )}
 
-              {/* Constellation badge */}
+              {/* Mapa Vivo badge */}
               {dev.category && (
                 <div className="mt-2 flex items-center gap-2">
                   <span

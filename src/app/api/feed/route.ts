@@ -7,6 +7,12 @@ const MIN_EVENTS = 8;
 
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
+  if (process.env.NODE_ENV === "development") {
+    return NextResponse.json(
+      { events: [], has_more: false },
+      { headers: { "Cache-Control": "no-store" } },
+    );
+  }
   const limit = Math.min(50, Math.max(1, parseInt(searchParams.get("limit") ?? "20", 10)));
   const before = searchParams.get("before"); // UUID cursor
 

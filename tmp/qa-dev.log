@@ -1,0 +1,60 @@
+
+> lmf-universe@0.1.0 dev
+> next dev -p 3001
+
+▲ Next.js 16.1.6 (Turbopack)
+- Local:         http://localhost:3001
+- Network:       http://172.31.39.15:3001
+- Environments: .env
+
+✓ Starting...
+✓ Ready in 7.5s
+○ Compiling / ...
+ GET / 200 in 22.1s (compile: 7.0s, proxy.ts: 9.9s, render: 5.2s)
+ GET /api/presence 200 in 5.2s (compile: 2.9s, proxy.ts: 171ms, render: 2.1s)
+ GET /api/sky-ads 200 in 6.2s (compile: 5.6s, proxy.ts: 54ms, render: 534ms)
+ POST /api/online 200 in 8.2s (compile: 6.6s, proxy.ts: 60ms, render: 1500ms)
+○ Compiling /api/sky-ads ...
+ GET /api/feed?limit=50&today=1 500 in 9.1s (compile: 8.3s, proxy.ts: 57ms, render: 725ms)
+ GET /api/city?from=0&to=1000 200 in 8.8s (compile: 7.8s, proxy.ts: 12ms, render: 954ms)
+ GET /api/milestone-celebration 200 in 11.7s (compile: 11.1s, proxy.ts: 175ms, render: 420ms)
+ POST /api/online 200 in 4.1s (compile: 16ms, proxy.ts: 33ms, render: 4.0s)
+ GET /api/presence 200 in 6.8s (compile: 4.1s, proxy.ts: 31ms, render: 2.7s)
+ POST /api/online 200 in 4.4s (compile: 17ms, proxy.ts: 15ms, render: 4.4s)
+ GET /api/presence 200 in 6.3s (compile: 4.4s, proxy.ts: 16ms, render: 1852ms)
+ POST /api/online 200 in 2.6s (compile: 8ms, proxy.ts: 9ms, render: 2.6s)
+ GET /api/presence 200 in 5.1s (compile: 689ms, proxy.ts: 7ms, render: 4.4s)
+ GET /api/feed?limit=50&today=1 500 in 2.3s (compile: 15ms, proxy.ts: 47ms, render: 2.2s)
+ POST /api/online 200 in 6.7s (compile: 2.3s, proxy.ts: 61ms, render: 4.3s)
+ GET /api/presence 200 in 5.0s (compile: 2.1s, proxy.ts: 199ms, render: 2.8s)
+ POST /api/online 200 in 10.4s (compile: 8.0s, proxy.ts: 2.3s, render: 150ms)
+ GET /api/presence 200 in 15.2s (compile: 9.9s, proxy.ts: 2.3s, render: 3.0s)
+ POST /api/online 200 in 123ms (compile: 44ms, proxy.ts: 68ms, render: 11ms)
+ GET /api/presence 200 in 140ms (compile: 49ms, proxy.ts: 79ms, render: 11ms)
+ POST /api/online 200 in 114ms (compile: 21ms, proxy.ts: 40ms, render: 52ms)
+ GET /api/presence 200 in 140ms (compile: 82ms, proxy.ts: 44ms, render: 13ms)
+ POST /api/online 200 in 131ms (compile: 12ms, proxy.ts: 16ms, render: 103ms)
+ GET /api/presence 200 in 151ms (compile: 122ms, proxy.ts: 16ms, render: 13ms)
+ GET /api/feed?limit=50&today=1 200 in 5.0s (compile: 4.8s, proxy.ts: 17ms, render: 179ms)
+ POST /api/online 200 in 249ms (compile: 19ms, proxy.ts: 13ms, render: 217ms)
+ GET /api/presence 200 in 295ms (compile: 273ms, proxy.ts: 12ms, render: 10ms)
+ POST /api/online 200 in 96ms (compile: 26ms, proxy.ts: 11ms, render: 60ms)
+ GET /api/presence 200 in 241ms (compile: 178ms, proxy.ts: 12ms, render: 51ms)
+ POST /api/online 200 in 108ms (compile: 40ms, proxy.ts: 10ms, render: 58ms)
+ GET /api/presence 200 in 243ms (compile: 132ms, proxy.ts: 8ms, render: 103ms)
+ POST /api/online 200 in 961ms (compile: 16ms, proxy.ts: 17ms, render: 929ms)
+ GET /api/feed?limit=50&today=1 200 in 1024ms (compile: 949ms, proxy.ts: 17ms, render: 58ms)
+ GET /api/presence 200 in 1083ms (compile: 1031ms, proxy.ts: 18ms, render: 34ms)
+ POST /api/online 200 in 153ms (compile: 12ms, proxy.ts: 15ms, render: 126ms)
+ GET /api/presence 200 in 261ms (compile: 150ms, proxy.ts: 12ms, render: 100ms)
+ POST /api/online 200 in 1641ms (compile: 14ms, proxy.ts: 14ms, render: 1613ms)
+ GET /api/presence 200 in 1667ms (compile: 1640ms, proxy.ts: 15ms, render: 12ms)
+ POST /api/online 200 in 123ms (compile: 23ms, proxy.ts: 87ms, render: 13ms)
+ GET /api/presence 200 in 207ms (compile: 67ms, proxy.ts: 52ms, render: 88ms)
+ GET /api/feed?limit=50&today=1 200 in 135ms (compile: 49ms, proxy.ts: 75ms, render: 11ms)
+ POST /api/online 200 in 110ms (compile: 31ms, proxy.ts: 67ms, render: 11ms)
+ GET /api/presence 200 in 229ms (compile: 150ms, proxy.ts: 65ms, render: 15ms)
+ POST /api/online 200 in 38ms (compile: 11ms, proxy.ts: 13ms, render: 13ms)
+ GET /api/presence 200 in 2.8s (compile: 1272ms, proxy.ts: 13ms, render: 1560ms)
+ POST /api/online 200 in 102ms (compile: 41ms, proxy.ts: 34ms, render: 28ms)
+ GET /api/presence 200 in 47ms (compile: 7ms, proxy.ts: 6ms, render: 34ms)

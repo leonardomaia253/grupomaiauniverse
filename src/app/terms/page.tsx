@@ -2,8 +2,8 @@ import Link from "next/link";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Terms of Service - Constellation OS",
-  description: "Terms of Service for Constellation OS.",
+  title: "Terms of Service - Mapa Vivo",
+  description: "Terms of Service for Mapa Vivo.",
 };
 
 const ACCENT = "#c8e64a";
@@ -29,8 +29,8 @@ export default function TermsPage() {
         <div className="mt-8 flex flex-col gap-5">
           <Section n={1} title="The Service">
             <p>
-              Constellation OS is a web application that visualizes perfis de empresas as 3D
-              planets in a virtual Universe. By using Constellation OS, you agree to these
+              Mapa Vivo is a web application that visualizes perfis de empresas as 3D
+              planets in a virtual Universe. By using Mapa Vivo, you agree to these
               terms.
             </p>
           </Section>
@@ -53,7 +53,7 @@ export default function TermsPage() {
             <p>You agree not to:</p>
             <ul className="mt-1 flex flex-col gap-1">
               <Li>Abuse, exploit, or attempt to disrupt the service</Li>
-              <Li>Scrape or collect data from Constellation OS without permission</Li>
+              <Li>Scrape or collect data from Mapa Vivo without permission</Li>
               <Li>Use automated systems to create fake accounts or inflate metrics</Li>
               <Li>Impersonate other users or misrepresent your identity</Li>
             </ul>
@@ -61,7 +61,7 @@ export default function TermsPage() {
 
           <Section n={4} title="Intellectual Property">
             <p>
-              Constellation OS, its code, design, and branding are operated by the portfolio team
+              Mapa Vivo, its code, design, and branding are operated by the portfolio team
               Your dados do portfolio remains yours. By using the service, you
               grant us a limited license to display your public dados do portfolio as
               part of the Universe visualization.
@@ -70,7 +70,7 @@ export default function TermsPage() {
 
           <Section n={5} title="Purchases & Shop">
             <p>
-              Constellation OS offers optional cosmetic items for purchase. All purchases
+              Mapa Vivo offers optional cosmetic items for purchase. All purchases
               are final and non-refundable unless required by applicable law.
               Cosmetic items have no real-world value and exist only within Git
               Universe.
@@ -79,7 +79,7 @@ export default function TermsPage() {
 
           <Section n={6} title="Disclaimer of Warranties">
             <p>
-              Constellation OS is provided &quot;as is&quot; and &quot;as
+              Mapa Vivo is provided &quot;as is&quot; and &quot;as
               available&quot; without warranties of any kind, express or implied.
               We do not guarantee uptime, accuracy of data, or uninterrupted
               access. GitHub API limitations or outages may affect the service.
@@ -88,7 +88,7 @@ export default function TermsPage() {
 
           <Section n={7} title="Limitation of Liability">
             <p>
-              To the maximum extent permitted by law, the portfolio team and Constellation OS
+              To the maximum extent permitted by law, the portfolio team and Mapa Vivo
               shall not be liable for any indirect, incidental, special, or
               consequential damages arising from your use of the service.
             </p>
@@ -97,7 +97,7 @@ export default function TermsPage() {
           <Section n={8} title="Third-Party Token">
             <p>
               A token called token comunit?rio exists on the Base blockchain. This token was
-              created by the community, not by Constellation OS or the portfolio team. We do
+              created by the community, not by Mapa Vivo or the portfolio team. We do
               not control, manage, or endorse the token. Any interaction with the
               token is entirely at your own risk. See the{" "}
               <a
@@ -113,7 +113,7 @@ export default function TermsPage() {
 
           <Section n={9} title="Changes to Terms">
             <p>
-              We may update these terms at any time. Continued use of Constellation OS
+              We may update these terms at any time. Continued use of Mapa Vivo
               after changes constitutes acceptance of the updated terms.
             </p>
           </Section>

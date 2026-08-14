@@ -1,0 +1,15 @@
+- generic [active] [ref=e1]:
+  - main [ref=e2]:
+    - generic [ref=e3]:
+      - button "Pular intro" [ref=e9]
+      - generic [ref=e10]:
+        - paragraph [ref=e11]: Mapa Vivo
+        - heading "Este e o Mapa Vivo das Empresas." [level=1] [ref=e12]
+        - paragraph [ref=e13]: Carregando empresas do grupo...
+        - paragraph [ref=e14]: toque para ativar audio
+        - generic [ref=e18]:
+          - generic [ref=e19]: Sincronizando
+          - generic [ref=e20]: 10%
+        - button "Ativar áudio" [ref=e21]
+  - button "Open Next.js Dev Tools" [ref=e27] [cursor=pointer]
+  - alert [ref=e31]

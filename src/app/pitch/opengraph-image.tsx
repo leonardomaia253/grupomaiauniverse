@@ -3,7 +3,7 @@ import { readFile } from "node:fs/promises";
 import { join } from "node:path";
 import { getPitchStats } from "@/lib/pitch-stats";
 
-export const alt = "Constellation OS - Pitch Deck";
+export const alt = "Mapa Vivo - Pitch Deck";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 

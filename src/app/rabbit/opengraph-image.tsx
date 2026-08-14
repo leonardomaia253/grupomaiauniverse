@@ -5,7 +5,7 @@ import { getSupabaseAdmin } from "@/lib/supabase";
 
 export const dynamic = "force-dynamic";
 
-export const alt = "The Other Side - Constellation OS";
+export const alt = "Mapa Vivo das Empresas";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 

@@ -5,9 +5,9 @@ import PitchDeck from "./PitchDeck";
 export const revalidate = 300;
 
 export const metadata: Metadata = {
-  title: "Pitch Deck - Constellation OS",
+  title: "Pitch Deck - Mapa Vivo",
   description:
-    "Constellation OS: transforming perfis de empresas into an interactive 3D Universe. 11,800+ companies, organic growth, revenue from day one.",
+    "Mapa Vivo: transforming perfis de empresas into an interactive 3D Universe. 11,800+ companies, organic growth, revenue from day one.",
 };
 
 export default async function PitchPage() {

@@ -27,17 +27,17 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       .single(),
   ]);
 
-  const title = `@${userA} vs @${userB} - Constellation OS`;
+  const title = `@${userA} vs @${userB} - Mapa Vivo`;
 
   if (!devA || !devB) {
     return {
       title,
-      description: `Compare ${userA} and ${userB} in Constellation OS`,
+      description: `Compare ${userA} and ${userB} in Mapa Vivo`,
       openGraph: {
         images: [
           {
             url: `https://maia.universe.sh/api/og?userA=${userA}&userB=${userB}`,
-            alt: "Comparação de Perfis - Constellation OS",
+            alt: "Comparação de Perfis - Mapa Vivo",
           },
         ],
       },
@@ -55,7 +55,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       images: [
         {
           url: `https://maia.universe.sh/api/og?userA=${userA}&userB=${userB}`,
-          alt: "Comparação de Perfis - Constellation OS",
+          alt: "Comparação de Perfis - Mapa Vivo",
         },
       ],
     },

@@ -2,8 +2,8 @@ import Link from "next/link";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Privacy Policy - Constellation OS",
-  description: "Privacy Policy for Constellation OS.",
+  title: "Privacy Policy - Mapa Vivo",
+  description: "Privacy Policy for Mapa Vivo.",
 };
 
 const ACCENT = "#c8e64a";
@@ -114,7 +114,7 @@ export default function PrivacyPage() {
 
           <Section n={8} title="Children">
             <p>
-              Constellation OS is not intended for children under 13. We do not knowingly
+              Mapa Vivo is not intended for children under 13. We do not knowingly
               collect data from children under 13. If you believe a child has
               provided us with data, contact us for removal.
             </p>
@@ -122,7 +122,7 @@ export default function PrivacyPage() {
 
           <Section n={9} title="Changes">
             <p>
-              We may update this policy at any time. Continued use of Constellation OS
+              We may update this policy at any time. Continued use of Mapa Vivo
               after changes constitutes acceptance.
             </p>
           </Section>

@@ -8,7 +8,7 @@ import "./globals.css";
 
 export const metadata: Metadata = {
   metadataBase: new URL(getSiteUrl()),
-  title: "Constellation OS - Guia animado das empresas",
+  title: "Mapa Vivo das Empresas - Guia animado",
   description: BRAND.appDescription,
   keywords: [
     "empresas do grupo",
@@ -19,7 +19,7 @@ export const metadata: Metadata = {
     "investidores",
   ],
   openGraph: {
-    title: "Constellation OS - Guia animado das empresas",
+    title: "Mapa Vivo das Empresas - Guia animado",
     description: BRAND.appDescription,
     siteName: BRAND.name,
     type: "website",

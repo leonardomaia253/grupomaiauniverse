@@ -4,6 +4,7 @@ import createGlobe from "cobe";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { type CompanyRecord } from "@/lib/github";
 import { getPlanetPerformance, type PlanetPerformance, type PlanetTexture } from "@/lib/planet-performance";
+import { SplineScene } from "@/components/SplineScene";
 
 type BrandRule = {
   login: string;
@@ -697,7 +698,7 @@ function UniverseHero({
   return (
     <section className="pointer-events-auto fixed left-4 right-4 top-4 z-30 max-w-[calc(100vw-2rem)] font-space sm:absolute sm:left-8 sm:right-auto sm:top-7 sm:max-w-md">
       <div className="border border-white/10 bg-black/42 p-3 shadow-2xl shadow-black/30 backdrop-blur-2xl sm:p-5">
-        <p className="text-[9px] uppercase tracking-[0.3em] text-white/38 sm:text-[10px] sm:tracking-[0.34em]">Constellation OS</p>
+        <p className="text-[9px] uppercase tracking-[0.3em] text-white/38 sm:text-[10px] sm:tracking-[0.34em]">Mapa Vivo</p>
         <h1 className="mt-2 text-xl font-semibold leading-tight normal-case text-white sm:text-4xl">
           Conheca cada empresa como um planeta vivo.
         </h1>
@@ -836,8 +837,15 @@ function MissionRail({
 
 function RobotHandLayer({ isMobile }: { isMobile: boolean }) {
   if (isMobile) return null;
+  const splineScene = process.env.NEXT_PUBLIC_ROBOT_HAND_SPLINE_SCENE;
+
   return (
     <div className="pointer-events-none fixed inset-x-0 bottom-[-3rem] z-[6] flex justify-center">
+      {splineScene && (
+        <div className="absolute bottom-0 left-1/2 h-[30rem] w-[52rem] -translate-x-1/2 opacity-85">
+          <SplineScene scene={splineScene} className="h-full w-full" />
+        </div>
+      )}
       <div className="relative h-72 w-[42rem] opacity-80">
         <div className="absolute left-1/2 top-28 h-28 w-64 -translate-x-1/2 rounded-[4rem_4rem_3rem_3rem] border border-cyan-200/18 bg-[linear-gradient(135deg,rgba(226,246,255,0.22),rgba(14,23,35,0.84)_45%,rgba(95,234,255,0.14))] shadow-[0_0_80px_rgba(34,211,238,0.16),inset_0_0_30px_rgba(255,255,255,0.08)] backdrop-blur-xl" />
         {[0, 1, 2, 3, 4].map((finger) => (

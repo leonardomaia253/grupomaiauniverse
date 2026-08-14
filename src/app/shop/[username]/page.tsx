@@ -42,12 +42,12 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const record = await getCompany(username);
 
   if (!record) {
-    return { title: "Company Not Found - Constellation OS" };
+    return { title: "Company Not Found - Mapa Vivo" };
   }
 
   return {
-    title: `Shop - @${record.username} - Constellation OS`,
-    description: `Customize @${record.username}'s planet in Constellation OS`,
+    title: `Shop - @${record.username} - Mapa Vivo`,
+    description: `Customize @${record.username}'s planet in Mapa Vivo`,
   };
 }
 

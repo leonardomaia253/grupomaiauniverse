@@ -1,4 +1,4 @@
-<h1 align="center">Constellation OS</h1>
+<h1 align="center">Mapa Vivo</h1>
 
 <p align="center">
   <strong>Um guia animado para conhecer as empresas do grupo como planetas 3D.</strong>
@@ -9,14 +9,14 @@
 </p>
 
 <p align="center">
-  <img src="public/og-image.png" alt="Constellation OS — interactive 3D company planets" width="800" />
+  <img src="public/og-image.png" alt="Mapa Vivo — interactive 3D company planets" width="800" />
 </p>
 
 ---
 
-## What is Constellation OS?
+## What is Mapa Vivo?
 
-Constellation OS apresenta cada empresa do grupo de um jeito mais facil, visual e animado. Cada planeta pode reunir o que a empresa faz, sua historia, informacoes publicas, sinais de mercado e caminhos para quem quer conhecer, comprar, acompanhar ou investir.
+Mapa Vivo apresenta cada empresa do grupo de um jeito mais facil, visual e animado. Cada planeta pode reunir o que a empresa faz, sua historia, informacoes publicas, sinais de mercado e caminhos para quem quer conhecer, comprar, acompanhar ou investir.
 
 ## Product pillars
 

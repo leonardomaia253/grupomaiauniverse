@@ -1,12 +1,12 @@
-# Contributing to Constellation OS
+# Contributing to Mapa Vivo
 
 Thanks for your interest in contributing! Here's how to get started.
 
 ## Setup
 
 ```bash
-git clone https://github.com/leonardomaia253/constellation-os.git
-cd constellation-os
+git clone https://github.com/leonardomaia253/mapa-vivo.git
+cd mapa-vivo
 npm install
 cp .env.example .env.local
 # Fill in your keys (see .env.example for details)
@@ -94,7 +94,7 @@ Start with an emoji + type. Single line, present tense, concise.
 
 ## Good First Issues
 
-Look for issues labeled [`good first issue`](https://github.com/leonardomaia253/constellation-os/labels/good%20first%20issue). These are scoped tasks that don't require deep knowledge of the codebase.
+Look for issues labeled [`good first issue`](https://github.com/leonardomaia253/mapa-vivo/labels/good%20first%20issue). These are scoped tasks that don't require deep knowledge of the codebase.
 
 ## Project Structure
 

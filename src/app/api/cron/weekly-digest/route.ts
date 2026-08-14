@@ -116,12 +116,12 @@ export async function GET(request: NextRequest) {
           category: "digest",
           companyId: dev.id,
           dedupKey: `weekly_digest:${dev.id}:${weekStartDate}`,
-          title: `Your week in Constellation OS: ${dev.app_streak ?? 0}-day streak, rank #${dev.rank ?? "?"}`,
+          title: `Your week in Mapa Vivo: ${dev.app_streak ?? 0}-day streak, rank #${dev.rank ?? "?"}`,
           body: `Streak: ${dev.app_streak ?? 0} days. Kudos: ${weeklyKudos}. Check your weekly recap.`,
           html: `
-            <p style="color: #c8e64a; font-size: 16px;">Your week in Constellation OS</p>
+            <p style="color: #c8e64a; font-size: 16px;">Your week in Mapa Vivo</p>
             ${buildStatsTable(stats)}
-            ${buildButton("Visit Constellation OS", `${BASE_URL}/?user=${dev.username}`)}
+            ${buildButton("Abrir Mapa Vivo", `${BASE_URL}/?user=${dev.username}`)}
           `,
           actionUrl: `${BASE_URL}/?user=${dev.username}`,
           priority: "high", // Digests are their own batch, don't re-batch

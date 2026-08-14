@@ -27,7 +27,7 @@ const MESSAGES: Record<Lang, string[]> = {
 };
 
 const SIGNATURE: Record<Lang, string> = {
-  en: "// guia do mapa, Constellation OS",
+  en: "// guia do mapa, Mapa Vivo",
   pt: "// equipe operacional, operador, Portfolio Patrimonial, cidadão #1",
 };
 

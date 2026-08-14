@@ -42,11 +42,20 @@ export async function POST(req: Request) {
 
 // GET: return all celebrated milestones
 export async function GET() {
-  const sb = getSupabaseAdmin();
-  const { data } = await sb
-    .from("milestone_celebrations")
-    .select("milestone, reached_at")
-    .order("milestone", { ascending: false });
+  try {
+    if (process.env.NODE_ENV === "development") {
+      return NextResponse.json([]);
+    }
+    const sb = getSupabaseAdmin();
+    const { data, error } = await sb
+      .from("milestone_celebrations")
+      .select("milestone, reached_at")
+      .order("milestone", { ascending: false });
 
-  return NextResponse.json(data ?? []);
+    if (error) throw error;
+    return NextResponse.json(data ?? []);
+  } catch (error) {
+    console.warn("[milestone] Falling back to no celebrations", error);
+    return NextResponse.json([]);
+  }
 }

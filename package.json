@@ -2,7 +2,7 @@
   "name": "lmf-universe",
   "version": "0.1.0",
   "private": true,
-  "description": "Company profiles as interactive 3D planets in Constellation OS",
+  "description": "Guia animado das empresas do grupo em planetas 3D",
   "homepage": "https://universe.grupomaia.me",
   "repository": {
     "type": "git",
@@ -34,6 +34,7 @@
     "@react-three/drei": "^10.7.7",
     "@react-three/fiber": "^9.5.0",
     "@react-three/postprocessing": "^3.0.4",
+    "@splinetool/react-spline": "^4.1.0",
     "@supabase/ssr": "^0.8.0",
     "@supabase/supabase-js": "^2.97.0",
     "@types/three": "^0.183.0",

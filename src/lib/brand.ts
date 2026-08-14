@@ -1,6 +1,6 @@
 export const BRAND = {
-  name: "Constellation OS",
-  shortName: "Constellation",
+  name: "Mapa Vivo",
+  shortName: "Mapa Vivo",
   groupName: "Portfolio Patrimonial",
   domain: "universe.grupomaia.me",
   baseUrl: "https://universe.grupomaia.me",
@@ -9,12 +9,12 @@ export const BRAND = {
   repository: "https://github.com/leonardomaia253/lmf-universe",
   starRepositoryApi:
     "https://api.github.com/repos/leonardomaia253/lmf-universe",
-  xCreator: "@constellationos",
+  xCreator: "@mapavivo",
   xCreatorUrl: "mailto:contato@grupomaia.com.br",
   appDescription:
     "Um guia visual e animado para conhecer as empresas do grupo: o que fazem, suas historias, informacoes publicas e caminhos para clientes, fas e investidores.",
   ogAlt:
-    "Constellation OS: empresas do grupo apresentadas como planetas em uma experiencia 3D clara, animada e exploravel.",
+    "Mapa Vivo das Empresas: um jeito simples e animado de conhecer empresas, historias, informacoes publicas e oportunidades.",
 } as const;
 
 export function getSiteUrl(env = process.env): string {

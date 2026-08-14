@@ -3,7 +3,7 @@ import { readFile } from "node:fs/promises";
 import { join } from "node:path";
 import { createClient } from "@supabase/supabase-js";
 
-export const alt = "Comparação de Empresas - Constellation OS";
+export const alt = "Comparação de Empresas - Mapa Vivo";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
@@ -281,7 +281,7 @@ export default async function Image({
 
         {/* Center: VS + Stats */}
         <div
-          title="Configurar seu Anúncio - Constellation OS"
+          title="Configurar seu Anúncio - Mapa Vivo"
           style={{
             position: "absolute",
             left: 310,
@@ -408,7 +408,7 @@ export default async function Image({
         >
           <span style={{ fontSize: 24, color: cream }}>MAIA</span>
           <span style={{ fontSize: 24, color: accent }}>UNIVERSE</span>
-          <span style={{ fontSize: 16, color: muted, marginLeft: 8 }}>Constellation OS</span>
+          <span style={{ fontSize: 16, color: muted, marginLeft: 8 }}>Mapa Vivo</span>
         </div>
       </div>
     ),

@@ -181,7 +181,7 @@ const ERROR_MESSAGES: Record<string, { primary: (u: string) => string; secondary
   },
   "org": {
     primary: (u) => `"@${u}" é uma organização, não uma empresa`,
-    secondary: "Constellation OS é focado em perfis empresariais.",
+    secondary: "Mapa Vivo é focado em perfis empresariais.",
   },
   "no-activity": {
     primary: (u) => `A empresa "@${u}" não possui atividade pública ainda`,
@@ -1306,7 +1306,7 @@ function HomeContent() {
   // re-mounts the component and loads fresh data via the mount effect above.
 
   // ─── Intro text phase timing (14s total) ─────────────────────
-  const INTRO_TEXT_SCHEDULE = [0, 2000, 4500, 7000, 10000]; // Phase 0 (Welcome), 1 (The Universe), 2 (Collect PX), 3 (Welcome to Constellation OS), 4 (Done)
+  const INTRO_TEXT_SCHEDULE = [0, 2000, 4500, 7000, 10000]; // Phase 0 (Welcome), 1 (The Universe), 2 (Collect PX), 3 (Bem-vindo ao Mapa Vivo), 4 (Done)
   const INTRO_TEXTS = [
     "Bem-vindo ao",
     "O Universo das empresas",
@@ -1327,7 +1327,7 @@ function HomeContent() {
     for (let i = 0; i < INTRO_TEXT_SCHEDULE.length; i++) {
       timers.push(setTimeout(() => setIntroPhase(i), INTRO_TEXT_SCHEDULE[i]));
     }
-    // Confetti shortly after "Welcome to Constellation OS"
+    // Confetti shortly after "Bem-vindo ao Mapa Vivo"
     timers.push(setTimeout(() => setIntroConfetti(true), INTRO_TEXT_SCHEDULE[3] + 500));
 
     return () => timers.forEach(clearTimeout);

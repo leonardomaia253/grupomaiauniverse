@@ -3,18 +3,29 @@ import { getSupabaseAdmin } from "@/lib/supabase";
 
 export const dynamic = "force-dynamic";
 
+function emptyCityPayload() {
+  return {
+    companies: [],
+    stats: { total_companies: 0, total_contributions: 0 },
+  };
+}
+
 export async function GET(request: Request) {
-  const { searchParams } = new URL(request.url);
-  const from = Math.max(0, parseInt(searchParams.get("from") ?? "0", 10));
-  const to = Math.min(
-    from + 1000,
-    parseInt(searchParams.get("to") ?? "500", 10)
-  );
+  try {
+    const { searchParams } = new URL(request.url);
+    if (process.env.NODE_ENV === "development" && searchParams.get("live") !== "1") {
+      return NextResponse.json(emptyCityPayload(), { headers: { "Cache-Control": "no-store" } });
+    }
+    const from = Math.max(0, parseInt(searchParams.get("from") ?? "0", 10));
+    const to = Math.min(
+      from + 1000,
+      parseInt(searchParams.get("to") ?? "500", 10)
+    );
 
-  const sb = getSupabaseAdmin();
+    const sb = getSupabaseAdmin();
 
-  // Round 1: companies + stats in parallel
-  const [companiesResult, statsResult] = await Promise.all([
+    // Round 1: companies + stats in parallel
+    const [companiesResult, statsResult] = await Promise.all([
     sb
       .from("companies")
       .select(
@@ -25,9 +36,9 @@ export async function GET(request: Request) {
     sb.from("Universe_stats").select("*").eq("id", 1).single(),
   ]);
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const companies = (companiesResult.data ?? []) as Record<string, any>[];
-  const devIds = companies.map((d: Record<string, any>) => d.id);
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const companies = (companiesResult.data ?? []) as Record<string, any>[];
+    const devIds = companies.map((d: Record<string, any>) => d.id);
 
   if (devIds.length === 0) {
     return NextResponse.json(
@@ -157,4 +168,10 @@ export async function GET(request: Request) {
       },
     }
   );
+  } catch (error) {
+    console.warn("[city] Falling back to empty city payload", error);
+    return NextResponse.json(emptyCityPayload(), {
+      headers: { "Cache-Control": "no-store" },
+    });
+  }
 }

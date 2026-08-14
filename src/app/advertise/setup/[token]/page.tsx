@@ -8,7 +8,7 @@ export const dynamic = "force-dynamic";
 const ACCENT = "#c8e64a";
 
 export const metadata: Metadata = {
-  title: "Configurar seu Anúncio - Constellation OS",
+  title: "Configurar seu Anúncio - Mapa Vivo",
   robots: { index: false, follow: false },
 };
 

@@ -432,8 +432,8 @@ function RabbitContent() {
             <a
               href={`https://x.com/intent/tweet?text=${encodeURIComponent(
                 myPosition
-                  ? `I followed the white rabbit in Constellation OS.\nCitizen #${myPosition} to find the other side.`
-                  : `I followed the white rabbit in Constellation OS.`
+                  ? `Explorei o Mapa Vivo das Empresas.\nCitizen #${myPosition} to find the other side.`
+                  : `Explorei o Mapa Vivo das Empresas.`
               )}&url=${encodeURIComponent("https://universe.grupomaia.me/rabbit")}`}
               target="_blank"
               rel="noopener noreferrer"

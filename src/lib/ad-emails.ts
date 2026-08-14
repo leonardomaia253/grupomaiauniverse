@@ -13,7 +13,7 @@ export async function sendAdExpiringEmail(
   await resend.emails.send({
     from: FROM,
     to: email,
-    subject: `Your Constellation OS ad expires in ${daysLeft} day${daysLeft === 1 ? "" : "s"}`,
+    subject: `Your Mapa Vivo ad expires in ${daysLeft} day${daysLeft === 1 ? "" : "s"}`,
     html: `
       <div style="font-family: 'Silkscreen', monospace; max-width: 480px; margin: 0 auto; padding: 24px; background: #0a0a0e; color: #f0f0f0;">
         <h2 style="color: #c8e64a; margin-top: 0;">Heads up!</h2>
@@ -38,7 +38,7 @@ export async function sendAdExpiredEmail(
   await resend.emails.send({
     from: FROM,
     to: email,
-    subject: `Your Constellation OS ad "${escapeHtml(adBrand)}" has ended`,
+    subject: `Your Mapa Vivo ad "${escapeHtml(adBrand)}" has ended`,
     html: `
       <div style="font-family: 'Silkscreen', monospace; max-width: 480px; margin: 0 auto; padding: 24px; background: #0a0a0e; color: #f0f0f0;">
         <h2 style="color: #c8e64a; margin-top: 0;">Campaign complete</h2>

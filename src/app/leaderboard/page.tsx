@@ -16,9 +16,9 @@ export const dynamic = "force-dynamic";
 export const revalidate = 300; // ISR: regenerate every 5 min
 
 export const metadata: Metadata = {
-  title: "Leaderboard - Constellation OS",
+  title: "Leaderboard - Mapa Vivo",
   description:
-    "Top empresas do ecossistema ranked by contributions, stars, repos, achievements, and referrals in Constellation OS.",
+    "Top empresas do ecossistema ranked by contributions, stars, repos, achievements, and referrals in Mapa Vivo.",
 };
 
 interface company {
@@ -199,7 +199,7 @@ export default async function LeaderboardPage({
             Leader<span style={{ color: ACCENT }}>board</span>
           </h1>
           <p className="mt-3 text-xs text-muted normal-case">
-            Top companies ranked in Constellation OS
+            Top companies ranked in Mapa Vivo
           </p>
         </div>
 

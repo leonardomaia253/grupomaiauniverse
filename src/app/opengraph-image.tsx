@@ -2,7 +2,7 @@ import { ImageResponse } from "next/og";
 import { readFile } from "node:fs/promises";
 import { join } from "node:path";
 
-export const alt = "Constellation OS - Suas empresas como um Universo 3D";
+export const alt = "Mapa Vivo - Suas empresas como um Universo 3D";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
@@ -210,7 +210,7 @@ export default async function Image() {
               color: muted,
             }}
           >
-            Constellation OS
+            Mapa Vivo
           </div>
         </div>
       </div>

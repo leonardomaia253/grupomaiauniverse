@@ -49,7 +49,7 @@ export async function POST(request: Request) {
           price_data: {
             currency: "usd",
             product_data: {
-              name: `Constellation OS Support - $${amount}`,
+              name: `Apoio ao Mapa Vivo - $${amount}`,
             },
             unit_amount: amount * 100,
           },

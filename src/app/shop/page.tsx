@@ -7,8 +7,8 @@ import { getSupabaseAdmin } from "@/lib/supabase";
 export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
-  title: "Shop - Constellation OS",
-  description: "Customize your planet in Constellation OS with effects, structures and more",
+  title: "Shop - Mapa Vivo",
+  description: "Customize your planet in Mapa Vivo with effects, structures and more",
 };
 
 const ACCENT = "#c8e64a";

@@ -21,22 +21,22 @@ interface LoadingScreenProps {
 }
 
 const SCRIPT_LINES = [
-  "Olhe ao seu redor...",
-  "Bilhoes de mentes, conexoes e possibilidades...",
-  "Uma energia que transforma ideias em imperios.",
-  "Tecnologia em magia. Caos em sincronia.",
-  "Nos criamos o amanha.",
-  "Bem-vindo ao Constellation OS.",
+  "Todo grupo nasce de um DNA.",
+  "O DNA Maia e feito de movimento, visao e construcao.",
+  "Cada empresa e uma expressao dessa mesma origem.",
+  "Conectadas, elas formam um universo vivo de possibilidades.",
+  "Entre. Explore. Descubra o Grupo Maia.",
+  "Bem-vindo ao Mapa Vivo.",
 ];
 
 const STAGE_MESSAGES: Record<string, string> = {
   init: "Abrindo os portais...",
-  fetching: "Conectando empresas e possibilidades...",
-  generating: "Desenhando o grande grafo Maia...",
-  rendering: "Sincronizando energia coletiva...",
-  ready: "O proximo capitulo comeca agora",
-  done: "Universo pronto",
-  error: "Nao foi possivel carregar o universo",
+  fetching: "Carregando empresas do grupo...",
+  generating: "Organizando historias e informacoes publicas...",
+  rendering: "Preparando a exploracao visual...",
+  ready: "Mapa pronto para explorar",
+  done: "Mapa pronto",
+  error: "Nao foi possivel carregar o mapa",
 };
 
 const BACKDROPS = [
@@ -92,6 +92,7 @@ export default function LoadingScreen({
   const [backdropIndex, setBackdropIndex] = useState(0);
   const [audioBlocked, setAudioBlocked] = useState(false);
   const [audioEnabled, setAudioEnabled] = useState(false);
+  const [parallax, setParallax] = useState({ x: 0, y: 0 });
   const audioAttempted = useRef(false);
   const lineIndex = useIntroLine(progress);
   const isError = stage === "error";
@@ -141,6 +142,15 @@ export default function LoadingScreen({
   }, []);
 
   useEffect(() => {
+    const handlePointerMove = (event: PointerEvent) => setParallax({
+      x: ((event.clientX / window.innerWidth) - 0.5) * 18,
+      y: ((event.clientY / window.innerHeight) - 0.5) * 12,
+    });
+    window.addEventListener("pointermove", handlePointerMove, { passive: true });
+    return () => window.removeEventListener("pointermove", handlePointerMove);
+  }, []);
+
+  useEffect(() => {
     if (audioAttempted.current || isError) return;
     audioAttempted.current = true;
     const timer = window.setTimeout(() => {
@@ -184,6 +194,28 @@ export default function LoadingScreen({
         />
       ))}
 
+      <video
+        autoPlay
+        loop
+        muted
+        playsInline
+        aria-hidden="true"
+        src="https://ik.imagekit.io/lrigu76hy/tailark/dna-video.mp4?updatedAt=1745736251477"
+        className="absolute inset-0 h-full w-full object-cover opacity-30 mix-blend-screen"
+        style={{
+          transform: `translate3d(${parallax.x}px, ${parallax.y}px, 0) scale(1.08)`,
+          transition: "transform 900ms cubic-bezier(.2,.7,.2,1)",
+        }}
+      />
+      <div
+        className="pointer-events-none absolute -inset-[12%] opacity-50"
+        style={{
+          transform: `translate3d(${parallax.x * -0.45}px, ${parallax.y * -0.45}px, 0)`,
+          transition: "transform 1200ms cubic-bezier(.2,.7,.2,1)",
+          background: "radial-gradient(ellipse at center, transparent 20%, rgba(3,4,7,.5) 78%)",
+        }}
+      />
+
       <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(0,0,0,0.2),rgba(0,0,0,0.55))]" />
       <div
         className="absolute inset-0 opacity-20"
@@ -205,10 +237,10 @@ export default function LoadingScreen({
 
       <div className="relative z-10 flex min-h-[100svh] flex-col items-center justify-center px-4 py-8 text-center sm:px-6">
         <p className="font-space text-[9px] uppercase tracking-[0.26em] text-white/45 sm:text-[10px] sm:tracking-[0.32em]">
-          Constellation OS
+          Grupo Maia · Mapa Vivo
         </p>
         <h1 className="font-orbitron mt-4 max-w-[22rem] text-2xl font-semibold leading-tight text-white sm:max-w-4xl sm:text-6xl">
-          {SCRIPT_LINES[lineIndex]}
+          <span className="bg-gradient-to-r from-white via-white to-cyan-200 bg-clip-text text-transparent">{SCRIPT_LINES[lineIndex]}</span>
         </h1>
         <p className="mt-5 max-w-[20rem] text-xs leading-relaxed text-white/55 sm:max-w-xl sm:text-base">
           {message}
@@ -216,7 +248,7 @@ export default function LoadingScreen({
 
         {!isError && (
           <p className="mt-3 text-[10px] uppercase tracking-[0.2em] text-white/36">
-            {audioEnabled ? "narração + trilha ativas" : audioBlocked ? "toque para ativar áudio" : "mix cinematográfico carregando"}
+            {audioEnabled ? "narracao + trilha ativas" : audioBlocked ? "toque para ativar audio" : "audio carregando"}
           </p>
         )}
 
@@ -264,7 +296,7 @@ export default function LoadingScreen({
             className="mt-7 border border-white/20 px-6 py-3 text-[10px] font-semibold uppercase tracking-[0.2em] text-black transition hover:scale-[1.02] hover:brightness-110 sm:px-8 sm:text-xs"
             style={{ backgroundColor: accentColor, boxShadow: `0 0 34px ${accentColor}55` }}
           >
-            Entrar no universo
+            Entrar no mapa
           </button>
         )}
       </div>

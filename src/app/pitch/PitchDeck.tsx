@@ -129,7 +129,7 @@ export default function PitchDeck({ stats }: { stats: PitchStats }) {
             href="/"
             className="text-xs text-dim transition-colors hover:text-cream sm:text-sm"
           >
-            &larr; Constellation OS
+            &larr; Mapa Vivo
           </Link>
           <span className="text-sm text-muted sm:text-base">
             <span style={{ color: CREAM }}>
@@ -263,7 +263,7 @@ function SlideProblem() {
           100M+
         </p>
         <p className="mt-3 text-sm text-muted normal-case sm:text-base">
-          Constellation OS transforms every company into a unique 3D premium
+          Mapa Vivo transforma cada empresa em um planeta 3D facil de explorar
         </p>
       </div>
     </div>
@@ -275,7 +275,7 @@ function SlideSolution() {
     <div className="flex w-full max-w-4xl flex-col gap-8">
       <SlideHeader n="03" title="The Solution" />
       <p className="max-w-2xl text-base leading-relaxed text-muted normal-case sm:text-lg">
-        Constellation OS transforms every empresa do ecossistema into a unique 3D premium
+        Mapa Vivo transforma cada empresa do grupo em um planeta 3D facil de explorar
         planet. Contributions become height. Repos become width. Activity
         lights up windows. Together, they form a living Universe.
       </p>
@@ -447,7 +447,7 @@ function SlideCompetition() {
             <tr className="border-b-2 border-border text-muted">
               <th className="pb-3 pr-6 text-sm sm:text-base">Feature</th>
               <th className="pb-3 pr-6 text-sm sm:text-base" style={{ color: ACCENT }}>
-                Constellation OS
+                Mapa Vivo
               </th>
               <th className="pb-3 pr-6 text-sm sm:text-base">Outros</th>
               <th className="pb-3 text-sm sm:text-base">CodersRank</th>
@@ -463,7 +463,7 @@ function SlideCompetition() {
         </table>
       </div>
       <p className="text-sm text-dim normal-case sm:text-base">
-        No active product does what Constellation OS
+        O Mapa Vivo organiza empresas de um jeito mais facil de entender
         does.
       </p>
     </div>
@@ -603,7 +603,7 @@ function SlideContact() {
     <div className="flex w-full max-w-4xl flex-col items-center justify-center gap-10 text-center">
       <SlideHeader n="13" title="Let's Talk" />
       <p className="max-w-xl text-base leading-relaxed text-muted normal-case sm:text-lg">
-        Interested in Constellation OS? Questions, ideas, or partnership proposals?
+        Quer conhecer o Mapa Vivo? Questions, ideas, or partnership proposals?
       </p>
       <div className="flex flex-col gap-5">
         <a
