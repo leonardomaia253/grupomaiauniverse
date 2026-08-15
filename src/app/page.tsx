@@ -32,6 +32,7 @@ import InviteCard, { type InvitePreview } from "@/components/InviteCard";
 import XpBar from "@/components/XpBar";
 import { rankFromLevel, tierFromLevel, levelProgress, xpForLevel } from "@/lib/xp";
 import LoadingScreen, { type LoadingStage } from "@/components/LoadingScreen";
+import MaiaStoryIntro from "@/components/MaiaStoryIntro";
 import { getUniverseCache, setUniverseCache, clearUniverseCache } from "@/lib/UniverseCache";
 import { DEFAULT_SKY_ADS, buildAdLink, trackAdEvent, trackAdEvents, isPlanetAd } from "@/lib/skyAds";
 import { track } from "@vercel/analytics";
@@ -55,6 +56,8 @@ import {
 } from "@/lib/himetrica";
 
 import { isAdmin } from "@/lib/admin";
+
+const MAIA_STORY_INTRO_ENABLED = process.env.NEXT_PUBLIC_MAIA_STORY_INTRO !== "off";
 
 const UniverseCanvas = dynamic(() => import("@/components/UniverseCanvas"), {
   ssr: false,
@@ -407,7 +410,6 @@ function HomeContent() {
   const [flyMode, setFlyMode] = useState(false);
   const [flyVehicle, setFlyVehicle] = useState<string>("spaceship");
   const [introMode, setIntroMode] = useState(false);
-  const [introPhase, setIntroPhase] = useState(-1); // -1 = not started, 0-3 = text phases, 4 = done
   const [exploreMode, setExploreMode] = useState(false);
   const [themeIndex, setThemeIndex] = useState(0);
 
@@ -1121,7 +1123,8 @@ function HomeContent() {
   const handleLoadFadeComplete = useCallback(() => {
     setLoadStage("done");
     const hasDeepLink = searchParams.get("user") || searchParams.get("compare");
-    if (!localStorage.getItem("universe_intro_seen") && !hasDeepLink) {
+    const forceIntro = searchParams.get("intro") === "1";
+    if (MAIA_STORY_INTRO_ENABLED && (forceIntro || !localStorage.getItem("universe_intro_seen_v2")) && !hasDeepLink) {
       setIntroMode(true);
     }
   }, [searchParams]);
@@ -1151,7 +1154,7 @@ function HomeContent() {
       setBridges(cached.bridges);
       setGalaxyZones(cached.GalaxyZones);
       setStats(cached.stats);
-      setLoadStage("done");
+      handleLoadFadeComplete();
       return;
     }
 
@@ -1306,39 +1309,10 @@ function HomeContent() {
   // re-mounts the component and loads fresh data via the mount effect above.
 
   // ─── Intro text phase timing (14s total) ─────────────────────
-  const INTRO_TEXT_SCHEDULE = [0, 2000, 4500, 7000, 10000]; // Phase 0 (Welcome), 1 (The Universe), 2 (Collect PX), 3 (Bem-vindo ao Mapa Vivo), 4 (Done)
-  const INTRO_TEXTS = [
-    "Bem-vindo ao",
-    "O Universo das empresas",
-    "Navegue, Colete PX, Evolua",
-    "Bem-vindo ao mapa das empresas",
-    ""
-  ];
-  const [introConfetti, setIntroConfetti] = useState(false);
-
-  useEffect(() => {
-    if (!introMode) {
-      setIntroPhase(-1);
-      setIntroConfetti(false);
-      return;
-    }
-
-    const timers: ReturnType<typeof setTimeout>[] = [];
-    for (let i = 0; i < INTRO_TEXT_SCHEDULE.length; i++) {
-      timers.push(setTimeout(() => setIntroPhase(i), INTRO_TEXT_SCHEDULE[i]));
-    }
-    // Confetti shortly after "Bem-vindo ao Mapa Vivo"
-    timers.push(setTimeout(() => setIntroConfetti(true), INTRO_TEXT_SCHEDULE[3] + 500));
-
-    return () => timers.forEach(clearTimeout);
-  }, [introMode]);
-
-
   const endIntro = useCallback(() => {
     setIntroMode(false);
-    setIntroPhase(-1);
-    setIntroConfetti(false);
     localStorage.setItem("universe_intro_seen", "true");
+    localStorage.setItem("universe_intro_seen_v2", "true");
     // Show welcome CTA for non-logged-in users who haven't seen it
     if (!session && !localStorage.getItem("universe_welcome_seen")) {
       setWelcomeCtaVisible(true);
@@ -1348,8 +1322,6 @@ function HomeContent() {
 
   const replayIntro = useCallback(() => {
     setIntroMode(true);
-    setIntroPhase(-1);
-    setIntroConfetti(false);
   }, []);
 
   // Focus on planet from ?user= query param (skip if gift redirect, handled separately)
@@ -1935,6 +1907,12 @@ function HomeContent() {
           onRetry={handleLoadRetry}
           onFadeComplete={handleLoadFadeComplete}
         />
+      )}
+      {MAIA_STORY_INTRO_ENABLED && introMode && loadStage === "done" && <MaiaStoryIntro onComplete={endIntro} />}
+      {MAIA_STORY_INTRO_ENABLED && !introMode && loadStage === "done" && (
+        <button type="button" onClick={replayIntro} className="fixed bottom-4 left-4 z-40 rounded-full border border-white/15 bg-black/45 px-4 py-2 font-space text-[9px] normal-case tracking-[.12em] text-white/50 backdrop-blur-md transition hover:border-white/35 hover:text-white">
+          Rever experiência
+        </button>
       )}
     </main>
   );

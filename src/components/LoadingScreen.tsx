@@ -1,15 +1,8 @@
-﻿"use client";
+"use client";
 
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 
-export type LoadingStage =
-  | "init"
-  | "fetching"
-  | "generating"
-  | "rendering"
-  | "ready"
-  | "done"
-  | "error";
+export type LoadingStage = "init" | "fetching" | "generating" | "rendering" | "ready" | "done" | "error";
 
 interface LoadingScreenProps {
   stage: LoadingStage;
@@ -20,321 +13,52 @@ interface LoadingScreenProps {
   onFadeComplete: () => void;
 }
 
-const SCRIPT_LINES = [
-  "Todo grupo nasce de um DNA.",
-  "O DNA Maia e feito de movimento, visao e construcao.",
-  "Cada empresa e uma expressao dessa mesma origem.",
-  "Conectadas, elas formam um universo vivo de possibilidades.",
-  "Entre. Explore. Descubra o Grupo Maia.",
-  "Bem-vindo ao Mapa Vivo.",
-];
-
-const STAGE_MESSAGES: Record<string, string> = {
-  init: "Abrindo os portais...",
-  fetching: "Carregando empresas do grupo...",
-  generating: "Organizando historias e informacoes publicas...",
-  rendering: "Preparando a exploracao visual...",
-  ready: "Mapa pronto para explorar",
-  done: "Mapa pronto",
-  error: "Nao foi possivel carregar o mapa",
+const STAGE_MESSAGES: Record<LoadingStage, string> = {
+  init: "Abrindo os portais",
+  fetching: "Carregando empresas do grupo",
+  generating: "Organizando histórias e informações",
+  rendering: "Preparando o Mapa Vivo",
+  ready: "Universo pronto",
+  done: "Universo pronto",
+  error: "Não foi possível carregar o mapa",
 };
 
-const BACKDROPS = [
-  "radial-gradient(circle at 25% 20%, rgba(54, 211, 255, 0.28), transparent 32%), radial-gradient(circle at 72% 34%, rgba(252, 211, 77, 0.22), transparent 34%), linear-gradient(135deg, #06111f 0%, #04050b 58%, #0b0712 100%)",
-  "radial-gradient(circle at 58% 28%, rgba(160, 116, 255, 0.26), transparent 34%), radial-gradient(circle at 32% 68%, rgba(41, 211, 157, 0.18), transparent 36%), linear-gradient(145deg, #070916 0%, #05050a 64%, #110913 100%)",
-  "radial-gradient(circle at 50% 18%, rgba(255, 255, 255, 0.14), transparent 28%), radial-gradient(circle at 70% 70%, rgba(255, 198, 87, 0.18), transparent 34%), linear-gradient(160deg, #07131d 0%, #030407 66%, #080910 100%)",
-];
-
-let introAudio: HTMLAudioElement | null = null;
-let introBedAudio: HTMLAudioElement | null = null;
-let introHasPlayed = false;
-
-const VOICE_VOLUME = 0.95;
-const BED_VOLUME = 0.18;
-const BED_FADE_MS = 900;
-
-function useIntroLine(progress: number): number {
-  return Math.min(
-    SCRIPT_LINES.length - 1,
-    Math.floor((Math.max(0, progress) / 100) * SCRIPT_LINES.length),
-  );
-}
-
-function fadeOutBed() {
-  if (!introBedAudio) return;
-  const bed = introBedAudio;
-  const startVolume = bed.volume;
-  const startedAt = performance.now();
-  const fade = () => {
-    const elapsed = performance.now() - startedAt;
-    const progress = Math.min(1, elapsed / BED_FADE_MS);
-    bed.volume = startVolume * (1 - progress);
-    if (progress < 1) {
-      requestAnimationFrame(fade);
-      return;
-    }
-    bed.pause();
-    bed.currentTime = 0;
-    bed.volume = BED_VOLUME;
-  };
-  requestAnimationFrame(fade);
-}
-
-export default function LoadingScreen({
-  stage,
-  progress,
-  error,
-  accentColor,
-  onRetry,
-  onFadeComplete,
-}: LoadingScreenProps) {
+export default function LoadingScreen({ stage, progress, error, accentColor, onRetry, onFadeComplete }: LoadingScreenProps) {
   const [fading, setFading] = useState(false);
-  const [backdropIndex, setBackdropIndex] = useState(0);
-  const [audioBlocked, setAudioBlocked] = useState(false);
-  const [audioEnabled, setAudioEnabled] = useState(false);
-  const [parallax, setParallax] = useState({ x: 0, y: 0 });
-  const audioAttempted = useRef(false);
-  const lineIndex = useIntroLine(progress);
-  const isError = stage === "error";
   const isReady = stage === "ready";
-  const clampedProgress = Math.min(100, progress);
-  const message = isError ? error : (STAGE_MESSAGES[stage] ?? "");
+  const isError = stage === "error";
+  const clampedProgress = Math.max(0, Math.min(100, progress));
 
-  const finishIntro = useCallback(() => {
-    introAudio?.pause();
-    fadeOutBed();
-    setFading(true);
-  }, []);
-
-  const startIntroAudio = useCallback(async () => {
-    if (isError || introHasPlayed) return;
-    if (!introAudio) {
-      introAudio = new Audio("/audio/grupo-lmf-intro.mp3");
-      introAudio.preload = "auto";
-      introAudio.volume = VOICE_VOLUME;
-      introAudio.addEventListener("ended", () => {
-        introHasPlayed = true;
-      });
-    }
-    if (!introBedAudio) {
-      introBedAudio = new Audio("/audio/midnight-commit.mp3");
-      introBedAudio.preload = "auto";
-      introBedAudio.loop = true;
-      introBedAudio.volume = BED_VOLUME;
-    }
-
-    try {
-      await Promise.all([introBedAudio.play(), introAudio.play()]);
-      setAudioBlocked(false);
-      setAudioEnabled(true);
-    } catch {
-      setAudioBlocked(true);
-      setAudioEnabled(false);
-    }
-  }, [isError]);
+  const finish = useCallback(() => setFading(true), []);
 
   useEffect(() => {
-    const timer = setInterval(
-      () => setBackdropIndex((index) => (index + 1) % BACKDROPS.length),
-      5200,
-    );
-    return () => clearInterval(timer);
-  }, []);
-
-  useEffect(() => {
-    const handlePointerMove = (event: PointerEvent) => setParallax({
-      x: ((event.clientX / window.innerWidth) - 0.5) * 18,
-      y: ((event.clientY / window.innerHeight) - 0.5) * 12,
-    });
-    window.addEventListener("pointermove", handlePointerMove, { passive: true });
-    return () => window.removeEventListener("pointermove", handlePointerMove);
-  }, []);
-
-  useEffect(() => {
-    if (audioAttempted.current || isError) return;
-    audioAttempted.current = true;
-    const timer = window.setTimeout(() => {
-      startIntroAudio();
-    }, 0);
+    if (!isReady || fading) return;
+    const timer = window.setTimeout(finish, 500);
     return () => window.clearTimeout(timer);
-  }, [isError, startIntroAudio]);
-
-  useEffect(() => {
-    if (isError || introHasPlayed) return;
-    const unlock = () => {
-      startIntroAudio();
-    };
-    window.addEventListener("pointerdown", unlock, { passive: true });
-    window.addEventListener("keydown", unlock);
-    return () => {
-      window.removeEventListener("pointerdown", unlock);
-      window.removeEventListener("keydown", unlock);
-    };
-  }, [isError, startIntroAudio]);
-
-  const handleTransitionEnd = useCallback(() => {
-    if (fading) onFadeComplete();
-  }, [fading, onFadeComplete]);
+  }, [fading, finish, isReady]);
 
   return (
     <div
-      className={`fixed inset-0 z-100 min-h-[100svh] overflow-hidden transition-opacity duration-1000 ${fading ? "opacity-0" : "opacity-100"}`}
-      style={{ background: "#030407" }}
-      onTransitionEnd={handleTransitionEnd}
+      className={`fixed inset-0 z-[100] grid min-h-[100svh] place-items-center overflow-hidden bg-[#030407] px-6 text-center text-white transition-opacity duration-700 ${fading ? "opacity-0" : "opacity-100"}`}
+      onTransitionEnd={() => fading && onFadeComplete()}
+      role="status"
+      aria-live="polite"
     >
-      {BACKDROPS.map((backdrop, index) => (
-        <div
-          key={backdrop}
-          className="absolute inset-0 scale-105 transition-opacity duration-[1800ms]"
-          style={{
-            background: backdrop,
-            filter: "blur(10px)",
-            opacity: index === backdropIndex ? 1 : 0,
-          }}
-        />
-      ))}
-
-      <video
-        autoPlay
-        loop
-        muted
-        playsInline
-        aria-hidden="true"
-        src="https://ik.imagekit.io/lrigu76hy/tailark/dna-video.mp4?updatedAt=1745736251477"
-        className="absolute inset-0 h-full w-full object-cover opacity-30 mix-blend-screen"
-        style={{
-          transform: `translate3d(${parallax.x}px, ${parallax.y}px, 0) scale(1.08)`,
-          transition: "transform 900ms cubic-bezier(.2,.7,.2,1)",
-        }}
-      />
-      <div
-        className="pointer-events-none absolute -inset-[12%] opacity-50"
-        style={{
-          transform: `translate3d(${parallax.x * -0.45}px, ${parallax.y * -0.45}px, 0)`,
-          transition: "transform 1200ms cubic-bezier(.2,.7,.2,1)",
-          background: "radial-gradient(ellipse at center, transparent 20%, rgba(3,4,7,.5) 78%)",
-        }}
-      />
-
-      <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(0,0,0,0.2),rgba(0,0,0,0.55))]" />
-      <div
-        className="absolute inset-0 opacity-20"
-        style={{
-          backgroundImage:
-            "radial-gradient(circle at center, transparent 0, transparent 42%, rgba(0,0,0,0.84) 100%)",
-        }}
-      />
-
-      <div className="maia-motes pointer-events-none absolute inset-0" />
-
-      <button
-        type="button"
-        onClick={finishIntro}
-        className="absolute right-4 top-4 z-20 border border-white/15 bg-white/[0.05] px-3 py-2 text-[9px] font-semibold uppercase tracking-[0.16em] text-white/55 transition hover:border-white/35 hover:text-white sm:right-6 sm:top-6"
-      >
-        Pular intro
-      </button>
-
-      <div className="relative z-10 flex min-h-[100svh] flex-col items-center justify-center px-4 py-8 text-center sm:px-6">
-        <p className="font-space text-[9px] uppercase tracking-[0.26em] text-white/45 sm:text-[10px] sm:tracking-[0.32em]">
-          Grupo Maia · Mapa Vivo
-        </p>
-        <h1 className="font-orbitron mt-4 max-w-[22rem] text-2xl font-semibold leading-tight text-white sm:max-w-4xl sm:text-6xl">
-          <span className="bg-gradient-to-r from-white via-white to-cyan-200 bg-clip-text text-transparent">{SCRIPT_LINES[lineIndex]}</span>
-        </h1>
-        <p className="mt-5 max-w-[20rem] text-xs leading-relaxed text-white/55 sm:max-w-xl sm:text-base">
-          {message}
-        </p>
-
-        {!isError && (
-          <p className="mt-3 text-[10px] uppercase tracking-[0.2em] text-white/36">
-            {audioEnabled ? "narracao + trilha ativas" : audioBlocked ? "toque para ativar audio" : "audio carregando"}
-          </p>
-        )}
-
-        {!isError && (
-          <div className="mt-8 w-full max-w-[20rem] sm:mt-10 sm:max-w-md">
-            <div className="h-px w-full bg-white/15">
-              <div
-                className="h-px transition-[width] duration-500"
-                style={{
-                  width: `${clampedProgress}%`,
-                  backgroundColor: accentColor,
-                  boxShadow: `0 0 24px ${accentColor}`,
-                }}
-              />
-            </div>
-            <div className="mt-3 flex items-center justify-between text-[9px] uppercase tracking-[0.16em] text-white/38 sm:text-[10px] sm:tracking-[0.2em]">
-              <span>Sincronizando</span>
-              <span>{Math.round(clampedProgress)}%</span>
-            </div>
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_40%,rgba(64,190,255,.18),transparent_32%),linear-gradient(145deg,#06111f,#030407_60%)]" />
+      <div className="maia-loader-orbit absolute left-1/2 top-1/2 h-[min(72vw,34rem)] w-[min(72vw,34rem)] -translate-x-1/2 -translate-y-1/2 rounded-full border border-white/10" />
+      <div className="relative w-full max-w-md">
+        <p className="text-[9px] uppercase tracking-[.32em] text-white/45">Grupo Maia / Mapa Vivo</p>
+        <h1 className="mt-5 text-3xl font-medium tracking-[-.04em] sm:text-5xl">{isError ? "Conexão interrompida." : "Preparando o universo."}</h1>
+        <p className="mt-4 text-sm text-white/50">{isError ? error || STAGE_MESSAGES.error : STAGE_MESSAGES[stage]}</p>
+        {!isError ? (
+          <div className="mt-9">
+            <div className="h-px w-full bg-white/15"><div className="h-full transition-[width] duration-500" style={{ width: `${clampedProgress}%`, backgroundColor: accentColor, boxShadow: `0 0 18px ${accentColor}` }} /></div>
+            <div className="mt-3 flex justify-between text-[9px] uppercase tracking-[.2em] text-white/35"><span>Sincronizando</span><span>{Math.round(clampedProgress)}%</span></div>
           </div>
-        )}
-
-        {isError && (
-          <button
-            onClick={onRetry}
-            className="mt-8 px-6 py-3 text-[11px] font-semibold uppercase tracking-[0.16em] text-black transition hover:brightness-110 sm:px-7 sm:text-xs sm:tracking-[0.18em]"
-            style={{ backgroundColor: accentColor }}
-          >
-            Tentar novamente
-          </button>
-        )}
-
-        {!isError && !isReady && audioBlocked && (
-          <button
-            onClick={startIntroAudio}
-            className="mt-5 border border-white/20 bg-white/[0.06] px-4 py-2 text-[9px] font-semibold uppercase tracking-[0.16em] text-white/72 transition hover:border-white/35 hover:bg-white/[0.1] hover:text-white sm:px-5 sm:text-[10px] sm:tracking-[0.18em]"
-          >
-            Ativar áudio
-          </button>
-        )}
-
-        {!isError && isReady && (
-          <button
-            onClick={finishIntro}
-            className="mt-7 border border-white/20 px-6 py-3 text-[10px] font-semibold uppercase tracking-[0.2em] text-black transition hover:scale-[1.02] hover:brightness-110 sm:px-8 sm:text-xs"
-            style={{ backgroundColor: accentColor, boxShadow: `0 0 34px ${accentColor}55` }}
-          >
-            Entrar no mapa
-          </button>
+        ) : (
+          <button type="button" onClick={onRetry} className="mt-8 rounded-full px-6 py-3 text-[10px] font-semibold uppercase tracking-[.18em] text-black" style={{ backgroundColor: accentColor }}>Tentar novamente</button>
         )}
       </div>
-
-      <style>{`
-        .maia-motes {
-          background-image:
-            radial-gradient(circle at 18% 22%, rgba(255,255,255,0.42) 0 1px, transparent 2px),
-            radial-gradient(circle at 72% 18%, rgba(255,255,255,0.3) 0 1px, transparent 2px),
-            radial-gradient(circle at 38% 72%, rgba(255,255,255,0.34) 0 1px, transparent 2px),
-            radial-gradient(circle at 84% 68%, rgba(255,255,255,0.24) 0 1px, transparent 2px),
-            radial-gradient(circle at 54% 44%, rgba(255,255,255,0.18) 0 1px, transparent 2px);
-          animation: maia-mote-drift 8s ease-in-out infinite;
-        }
-        .maia-motes::before,
-        .maia-motes::after {
-          content: "";
-          position: absolute;
-          inset: 16% 30%;
-          border: 1px solid rgba(255,255,255,0.08);
-          border-radius: 999px;
-          transform: rotate(-12deg);
-          animation: maia-orbit-pulse 3.8s ease-in-out infinite;
-        }
-        .maia-motes::after {
-          inset: 26% 24%;
-          transform: rotate(16deg);
-          animation-delay: 900ms;
-        }
-        @keyframes maia-mote-drift {
-          0%, 100% { transform: translate3d(0, 0, 0); opacity: 0.45; }
-          50% { transform: translate3d(10px, -18px, 0); opacity: 0.82; }
-        }
-        @keyframes maia-orbit-pulse {
-          0%, 100% { opacity: 0.16; filter: blur(0); }
-          50% { opacity: 0.48; filter: blur(1px); }
-        }
-      `}</style>
     </div>
   );
 }

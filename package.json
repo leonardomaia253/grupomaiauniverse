@@ -26,7 +26,7 @@
     "lint": "eslint",
     "lint:ci": "eslint",
     "typecheck": "tsc --noEmit",
-    "test": "npm run typecheck",
+    "test": "npm run typecheck && node --experimental-strip-types scripts/validate-dna-maia.mts",
     "format": "prettier --write .",
     "format:check": "prettier --check ."
   },

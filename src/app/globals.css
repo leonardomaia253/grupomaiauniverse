@@ -25,6 +25,78 @@ body {
   font-family: "Space Grotesk", "Silkscreen", monospace;
 }
 
+.maia-story video,
+.maia-story__orbital {
+  transition: transform 1200ms cubic-bezier(.2,.75,.2,1), opacity 700ms ease;
+}
+.maia-story > header { padding-top: max(1.25rem, env(safe-area-inset-top)); }
+.maia-story > footer { padding-bottom: max(1.25rem, env(safe-area-inset-bottom)); }
+.maia-story video { animation: maia-video-in 1600ms cubic-bezier(.2,.75,.2,1) both; }
+
+.maia-story__grade {
+  background:
+    linear-gradient(90deg, rgba(2,3,7,.9) 0%, rgba(2,3,7,.28) 58%, rgba(2,3,7,.72) 100%),
+    radial-gradient(circle at 52% 42%, transparent 0%, rgba(2,3,7,.12) 42%, rgba(2,3,7,.9) 100%);
+}
+
+.maia-story__noise {
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.7'/%3E%3C/svg%3E");
+  mix-blend-mode: soft-light;
+}
+
+.maia-story__orbital::before,
+.maia-story__orbital::after {
+  content: "";
+  position: absolute;
+  inset: 14% 22%;
+  border: 1px solid rgba(255,255,255,.12);
+  border-radius: 50%;
+  transform: rotate(-14deg);
+  animation: maia-orbit-breathe 5s ease-in-out infinite;
+}
+
+.maia-story__orbital::after {
+  inset: 25% 14%;
+  transform: rotate(18deg);
+  animation-delay: -2.5s;
+}
+
+.maia-story__copy { animation: maia-copy-in 900ms cubic-bezier(.16,1,.3,1) both; }
+.maia-story__word { display: inline-block; animation: maia-word-in 760ms cubic-bezier(.16,1,.3,1) both; }
+.maia-story__company { animation: maia-company-in 650ms cubic-bezier(.16,1,.3,1) both; }
+.maia-story--ending { opacity: 0; transform: scale(1.025); transition: opacity 720ms ease, transform 900ms cubic-bezier(.2,.7,.2,1); }
+.maia-loader-orbit { animation: maia-loader-pulse 2.4s ease-in-out infinite; }
+
+@keyframes maia-copy-in {
+  from { opacity: 0; transform: translate3d(0, 28px, 0); filter: blur(8px); clip-path: inset(0 0 42% 0); }
+  to { opacity: 1; transform: translate3d(0, 0, 0); filter: blur(0); clip-path: inset(0 0 0 0); }
+}
+@keyframes maia-company-in {
+  from { opacity: 0; transform: translate3d(0, 9px, 0); }
+  to { opacity: .72; transform: translate3d(0, 0, 0); }
+}
+@keyframes maia-word-in {
+  from { opacity: 0; transform: translate3d(0, .55em, 0) rotate(.8deg); filter: blur(6px); }
+  to { opacity: 1; transform: translate3d(0, 0, 0) rotate(0); filter: blur(0); }
+}
+@keyframes maia-video-in {
+  from { opacity: 0; filter: blur(8px) saturate(.7); transform: scale(1.12); }
+  to { opacity: .6; filter: blur(0) saturate(1); }
+}
+@keyframes maia-orbit-breathe {
+  0%, 100% { opacity: .18; transform: rotate(-12deg) scale(.96); }
+  50% { opacity: .55; transform: rotate(-8deg) scale(1.04); }
+}
+@keyframes maia-loader-pulse {
+  0%, 100% { opacity: .2; transform: translate(-50%,-50%) scale(.92); }
+  50% { opacity: .65; transform: translate(-50%,-50%) scale(1.02); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .maia-story *, .maia-loader-orbit { animation: none !important; transition-duration: 1ms !important; }
+  .maia-story video, .maia-story__orbital { transform: none !important; }
+}
+
 .font-orbitron { font-family: "Orbitron", sans-serif; }
 .font-space    { font-family: "Space Grotesk", sans-serif; }
 .font-pixel    { font-family: "Silkscreen", monospace; }
