@@ -1,0 +1,29 @@
+- generic:
+  - region "Apresentação do Grupo Maia":
+    - generic:
+      - generic "Grupo Maia":
+        - generic: MAIA
+        - generic: Grupo
+      - button "Ir para o mapa" [active]
+    - main:
+      - paragraph:
+        - generic: "04"
+        - text: Operação e crescimento
+      - heading "Clareza para operar. Estrutura para avançar." [level=1]
+      - paragraph: Negócios diferentes, conectados pela capacidade de transformar complexidade em movimento.
+      - 'list "Empresas desta frente: Avantyp, Pipex, SmartRH, Iris, Instead"':
+        - listitem: Avantyp
+        - listitem: Pipex
+        - listitem: SmartRH
+        - listitem: Iris
+        - listitem: Instead
+    - generic:
+      - generic:
+        - button "Continuar"
+        - button "Silenciar trilha"
+        - button "Ocultar texto"
+      - button "Posição do filme"
+      - generic: 0:40 / 1:36
+      - button "Fechar apresentação"
+  - button "Open Next.js Dev Tools" [ref=e32] [cursor=pointer]
+  - alert [ref=e36]

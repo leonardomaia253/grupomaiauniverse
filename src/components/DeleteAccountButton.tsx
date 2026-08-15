@@ -16,13 +16,13 @@ export default function DeleteAccountButton() {
       const res = await fetch("/api/account/delete", { method: "POST" });
       if (!res.ok) {
         const body = await res.json().catch(() => ({}));
-        setError(body.error ?? "Something went wrong. Try again.");
+        setError(body.error ?? "Não foi possível concluir a solicitação.");
         setLoading(false);
         return;
       }
       router.push("/");
     } catch {
-      setError("Network error. Try again.");
+      setError("Falha de conexão. Tente novamente.");
       setLoading(false);
     }
   }
@@ -31,9 +31,9 @@ export default function DeleteAccountButton() {
     <>
       <button
         onClick={() => setOpen(true)}
-        className="shrink-0 border-[2px] border-red-500/60 px-4 py-2 font-pixel text-[10px] uppercase text-red-400 transition-colors hover:bg-red-500/10"
+        className="shrink-0 rounded-full border border-red-400/40 px-4 py-2 text-xs text-red-300 transition-colors hover:bg-red-500/10"
       >
-        Delete Account
+        Excluir conta
       </button>
 
       {open && (
@@ -42,37 +42,36 @@ export default function DeleteAccountButton() {
           onClick={() => !loading && setOpen(false)}
         >
           <div
-            className="w-full max-w-sm border-[3px] border-red-500/60 bg-bg-raised p-6 font-pixel uppercase"
+            className="w-full max-w-md rounded-3xl border border-white/15 bg-[#211f1b] p-7 text-white shadow-2xl"
             onClick={(e) => e.stopPropagation()}
           >
-            <h2 className="text-sm text-red-400">Delete Account</h2>
-            <p className="mt-3 text-[10px] leading-5 text-muted normal-case">
-              This will permanently delete your account, your planet, and all
-              associated data: customizations, purchases, achievements, streaks,
-              raids, and kudos.
+            <h2 className="text-2xl font-light">Excluir conta</h2>
+            <p className="mt-4 text-sm leading-6 text-white/55">
+              Esta ação remove permanentemente a conta, o perfil da empresa e os
+              dados associados armazenados pela plataforma.
             </p>
-            <p className="mt-3 text-[10px] text-red-400">
-              This action cannot be undone.
+            <p className="mt-3 text-sm text-red-300">
+              A ação não pode ser desfeita.
             </p>
 
             {error && (
-              <p className="mt-3 text-[10px] text-red-400 normal-case">{error}</p>
+              <p className="mt-3 text-sm text-red-300">{error}</p>
             )}
 
             <div className="mt-5 flex gap-3">
               <button
                 onClick={handleDelete}
                 disabled={loading}
-                className="flex-1 border-[2px] border-red-500/60 px-4 py-2 text-[10px] text-red-400 transition-colors hover:bg-red-500/10 disabled:opacity-50"
+                className="flex-1 rounded-full border border-red-400/50 px-4 py-2.5 text-xs text-red-300 transition-colors hover:bg-red-500/10 disabled:opacity-50"
               >
-                {loading ? "Deleting..." : "Yes, Delete"}
+                {loading ? "Excluindo…" : "Confirmar exclusão"}
               </button>
               <button
                 onClick={() => setOpen(false)}
                 disabled={loading}
-                className="flex-1 border-[2px] border-border px-4 py-2 text-[10px] text-muted transition-colors hover:text-cream disabled:opacity-50"
+                className="flex-1 rounded-full border border-white/15 px-4 py-2.5 text-xs text-white/65 transition-colors hover:text-white disabled:opacity-50"
               >
-                Cancel
+                Cancelar
               </button>
             </div>
           </div>

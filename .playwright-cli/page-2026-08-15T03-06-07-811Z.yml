@@ -1,0 +1,14 @@
+- generic [active] [ref=e1]:
+  - main [ref=e2]:
+    - status [ref=e3]:
+      - generic [ref=e4]:
+        - generic "Grupo Maia" [ref=e5]:
+          - generic [ref=e6]: MAIA
+          - generic [ref=e7]: Grupo
+        - heading "Organizando o mapa do grupo." [level=1] [ref=e8]
+        - paragraph [ref=e9]: Carregando empresas do grupo
+        - generic [ref=e13]:
+          - generic [ref=e14]: Carregando
+          - generic [ref=e15]: 18%
+  - button "Open Next.js Dev Tools" [ref=e21] [cursor=pointer]
+  - alert [ref=e25]

@@ -92,9 +92,9 @@ export function trackAdEvents(adId: string, eventTypes: ("impression" | "click" 
 export const DEFAULT_SKY_ADS: SkyAd[] = [
   {
     id: "lmfUniverse",
-    text: "CONSTELLATION OS - SUAS EMPRESAS EM UM UNIVERSO 3D",
+    text: "GRUPO MAIA — EMPRESAS DIFERENTES, UMA DIREÇÃO COMUM",
     brand: BRAND.name,
-    description: `A Universe built from KPIs do ${BRAND.groupName}. Search your username and find your planet among thousands of companies.`,
+    description: `Conheça o portfólio, as áreas de atuação e os indicadores públicos do ${BRAND.groupName}.`,
     color: "#f8d880",
     bgColor: "#1a1018",
     link: BRAND.baseUrl,
@@ -103,9 +103,9 @@ export const DEFAULT_SKY_ADS: SkyAd[] = [
   },
   {
     id: "advertise",
-    text: "ADD YOUR AD HERE",
-    brand: "Sky Ads",
-    description: `Want your brand flying over ${BRAND.name}? Planes, blimps, your colors. Get in touch!`,
+    text: "MÍDIA COM CONTEXTO",
+    brand: "Grupo Maia · Mídia",
+    description: `Presença de marca integrada ao conteúdo institucional de ${BRAND.name}.`,
     color: "#f8d880",
     bgColor: "#1a1018",
     link: `${BRAND.baseUrl}/advertise`,

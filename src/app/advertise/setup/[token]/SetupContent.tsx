@@ -1,106 +1,19 @@
 "use client";
 
 import { useState } from "react";
-import dynamic from "next/dynamic";
 import Link from "next/link";
 import { MAX_TEXT_LENGTH } from "@/lib/skyAds";
 
-const AdPreview = dynamic(() => import("@/components/AdPreview"), { ssr: false });
-
-const ACCENT = "#c8e64a";
-
-const VEHICLE_ICONS: Record<string, string> = {
-  plane: "\u2708",
-  blimp: "\u25C6",
-  billboard: "\uD83D\uDCCB",
-  rooftop_sign: "\uD83D\uDD04",
-  led_wrap: "\uD83D\uDCA1",
-};
-
-function ClickPreview({
-  vehicle,
-  color,
-  brand,
-  description,
-  link,
-}: {
-  vehicle: string;
+type Campaign = {
+  id: string;
+  text: string;
   color: string;
-  brand: string;
-  description: string;
-  link: string;
-}) {
-  const vehicleIcon = VEHICLE_ICONS[vehicle] ?? "\u2708";
-  const hostname = link
-    ? (() => {
-        try {
-          return new URL(link).hostname.replace("www.", "");
-        } catch {
-          return link;
-        }
-      })()
-    : null;
-  const isMailto = link?.startsWith("mailto:");
-
-  /* Matches the real Sky Ad Card from page.tsx exactly */
-  return (
-    <div className="w-full border-[3px] border-border bg-bg-raised/95 backdrop-blur-sm sm:w-85">
-      {/* Drag handle (mobile indicator) */}
-      <div className="flex justify-center py-2 sm:hidden">
-        <div className="h-1 w-10 rounded-full bg-border" />
-      </div>
-
-      {/* Header: brand + sponsored tag */}
-      <div className="flex items-center gap-3 px-4 pb-3 sm:pt-4">
-        <div
-          className="flex h-9 w-9 shrink-0 items-center justify-center border-2 text-sm font-bold"
-          style={{ borderColor: ACCENT, color: ACCENT }}
-        >
-          {brand ? brand[0].toUpperCase() : "?"}
-        </div>
-        <div className="min-w-0 flex-1">
-          {brand ? (
-            <p className="truncate text-sm text-cream">{brand}</p>
-          ) : (
-            <p className="truncate text-sm text-muted/30 normal-case">Brand name</p>
-          )}
-          <p className="text-[9px] text-dim">Sponsored</p>
-        </div>
-      </div>
-
-      {/* Divider */}
-      <div className="mx-4 mb-3 h-px bg-border" />
-
-      {/* Description */}
-      {description ? (
-        <p className="mx-4 mb-4 text-xs text-cream normal-case leading-relaxed">
-          {description}
-        </p>
-      ) : (
-        <p className="mx-4 mb-4 text-xs text-muted/30 normal-case leading-relaxed">
-          Your description will appear here
-        </p>
-      )}
-
-      {/* CTA */}
-      <div className="px-4 pb-5 sm:pb-4">
-        <span
-          className="btn-press block w-full py-2.5 text-center text-[10px] text-bg"
-          style={{
-            backgroundColor: ACCENT,
-            boxShadow: "4px 4px 0 0 #5a7a00",
-          }}
-        >
-          {link
-            ? isMailto
-              ? "Send Email \u2192"
-              : `Visit ${hostname} \u2192`
-            : "Visit yoursite.com \u2192"}
-        </span>
-      </div>
-    </div>
-  );
-}
+  bg_color: string;
+  vehicle: string;
+  brand: string | null;
+  description: string | null;
+  link: string | null;
+};
 
 export function SetupContent({
   token,
@@ -108,16 +21,7 @@ export function SetupContent({
   vehicleLabel,
 }: {
   token: string;
-  ad: {
-    id: string;
-    text: string;
-    color: string;
-    bg_color: string;
-    vehicle: string;
-    brand: string | null;
-    description: string | null;
-    link: string | null;
-  };
+  ad: Campaign;
   vehicleLabel: string;
 }) {
   const [text, setText] = useState(ad.text);
@@ -128,17 +32,14 @@ export function SetupContent({
   const [error, setError] = useState("");
 
   const textOver = text.length > MAX_TEXT_LENGTH;
-
-  const linkValid =
-    !link || link.startsWith("https://") || link.startsWith("mailto:");
+  const linkValid = !link || link.startsWith("https://") || link.startsWith("mailto:");
 
   async function handleSave() {
     if (!linkValid || textOver || !text.trim()) return;
     setSaving(true);
     setError("");
-
     try {
-      const res = await fetch("/api/sky-ads/setup", {
+      const response = await fetch("/api/sky-ads/setup", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -149,186 +50,84 @@ export function SetupContent({
           link: link || undefined,
         }),
       });
-
-      if (!res.ok) {
-        const data = await res.json();
-        setError(data.error || "Something went wrong");
+      if (!response.ok) {
+        const data = await response.json();
+        setError(data.error || "Não foi possível salvar as alterações.");
         setSaving(false);
         return;
       }
-
       window.location.href = `/advertise/track/${token}`;
     } catch {
-      setError("Network error. Please try again.");
+      setError("Falha de conexão. Tente novamente.");
       setSaving(false);
     }
   }
 
+  const fieldClass =
+    "mt-2 w-full rounded-xl border border-white/15 bg-white/[0.035] px-4 py-3 text-sm text-white outline-none transition focus:border-[#b89a62]";
+
   return (
-    <div className="mt-8 grid gap-8 lg:grid-cols-2">
-      {/* Left: Previews (sticky on desktop) */}
-      <div className="lg:sticky lg:top-8 lg:self-start space-y-6">
-        {/* 3D Preview */}
-        <AdPreview
-          vehicle={ad.vehicle}
-          text={text}
-          color={ad.color}
-          bgColor={ad.bg_color}
-          tall
-        />
-
-        {/* Live click modal preview */}
-        <div>
-          <p className="mb-2 text-xs text-muted normal-case">
-            What visitors see when they click your ad
+    <div className="mt-10 grid gap-10 lg:grid-cols-[0.9fr_1.1fr]">
+      <aside className="lg:sticky lg:top-8 lg:self-start">
+        <p className="text-[11px] uppercase tracking-[0.22em] text-[#b89a62]">Prévia da presença</p>
+        <div className="mt-4 overflow-hidden rounded-3xl border border-white/12 bg-[#eeeae0] p-7 text-[#1c1c18]">
+          <div className="flex items-center justify-between border-b border-black/15 pb-4 text-[10px] uppercase tracking-[0.18em] text-[#74664d]">
+            <span>Conteúdo patrocinado</span>
+            <span>{vehicleLabel}</span>
+          </div>
+          <p className="mt-8 text-3xl font-light leading-tight">{brand || "Nome da marca"}</p>
+          <p className="mt-4 max-w-md text-sm leading-6 text-[#5f5b53]">
+            {description || "A descrição contextual da campanha aparecerá aqui."}
           </p>
-          <ClickPreview
-            vehicle={ad.vehicle}
-            color={ad.color}
-            brand={brand}
-            description={description}
-            link={link}
-          />
+          <div
+            className="mt-8 rounded-xl px-4 py-3 text-center text-xs uppercase tracking-[0.16em]"
+            style={{ backgroundColor: ad.bg_color, color: ad.color }}
+          >
+            {text || "Mensagem da campanha"}
+          </div>
+          {link && <p className="mt-4 truncate text-xs text-[#74664d]">{link}</p>}
         </div>
-      </div>
+      </aside>
 
-      {/* Right: Setup form */}
-      <div>
-        <h2 className="text-base text-cream">
-          Add <span style={{ color: ACCENT }}>details</span>{" "}
-          <span className="text-xs text-muted normal-case">(optional)</span>
-        </h2>
-        <p className="mt-2 text-xs text-muted normal-case">
-          These show when someone clicks your ad. You can always update them
-          later.
+      <section>
+        <p className="text-[11px] uppercase tracking-[0.22em] text-[#b89a62]">Configuração</p>
+        <h2 className="mt-3 text-3xl font-light text-white">Conteúdo da campanha</h2>
+        <p className="mt-3 max-w-xl text-sm leading-6 text-white/55">
+          Atualize a mensagem e o destino apresentados aos visitantes. As alterações preservam o formato contratado.
         </p>
 
-        <div className="mt-5 space-y-5">
-          {/* Ad text (shown on planet) */}
-          <div>
-            <label className="block text-xs text-muted normal-case">
-              Ad text
-            </label>
-            <input
-              type="text"
-              value={text}
-              onChange={(e) => setText(e.target.value)}
-              maxLength={MAX_TEXT_LENGTH + 10}
-              placeholder="YOUR BRAND"
-              className="mt-1 w-full border-[3px] border-border bg-transparent px-3 py-2.5 font-pixel text-sm text-cream outline-none transition-colors focus:border-lime"
-            />
-            <p
-              className="mt-1 text-[11px] normal-case"
-              style={{ color: textOver ? "#ff6b6b" : undefined }}
-            >
-              <span className={textOver ? "" : "text-muted"}>
-                {text.length}/{MAX_TEXT_LENGTH}
-              </span>
-            </p>
-            <p className="text-[11px] text-muted normal-case">
-              This is what appears on the planet in the city
-            </p>
-          </div>
-
-          {/* Brand name */}
-          <div>
-            <label className="block text-xs text-muted normal-case">
-              Brand name
-            </label>
-            <input
-              type="text"
-              value={brand}
-              onChange={(e) => setBrand(e.target.value)}
-              maxLength={60}
-              placeholder="Your Company"
-              className="mt-1 w-full border-[3px] border-border bg-transparent px-3 py-2.5 font-pixel text-sm text-cream outline-none transition-colors focus:border-lime"
-            />
-            <p className="mt-1 text-[11px] text-muted normal-case">
-              {brand.length}/60
-            </p>
-          </div>
-
-          {/* Description */}
-          <div>
-            <label className="block text-xs text-muted normal-case">
-              Description
-            </label>
-            <textarea
-              value={description}
-              onChange={(e) => setDescription(e.target.value)}
-              maxLength={200}
-              rows={4}
-              placeholder="Tell visitors about your product or service. This shows when someone clicks your ad."
-              className="mt-1 w-full resize-y border-[3px] border-border bg-transparent px-3 py-2.5 text-sm text-cream normal-case outline-none transition-colors focus:border-lime"
-              style={{ fontFamily: "inherit", lineHeight: "1.6" }}
-            />
-            <p className="mt-1 text-[11px] text-muted normal-case">
-              {description.length}/200
-            </p>
-          </div>
-
-          {/* Link */}
-          <div>
-            <label className="block text-xs text-muted normal-case">
-              Link
-            </label>
-            <input
-              type="url"
-              value={link}
-              onChange={(e) => setLink(e.target.value)}
-              placeholder="https://yoursite.com"
-              className="mt-1 w-full border-[3px] border-border bg-transparent px-3 py-2.5 font-pixel text-sm text-cream outline-none transition-colors focus:border-lime"
-            />
-            {link && !linkValid && (
-              <p
-                className="mt-1 text-[11px] normal-case"
-                style={{ color: "#ff6b6b" }}
-              >
-                Must start with https:// or mailto:
-              </p>
-            )}
-            <p className="mt-1 text-[11px] text-muted normal-case">
-              Where should clicks go?
-            </p>
-          </div>
-
-          {/* Error */}
-          {error && (
-            <div
-              className="border-[3px] px-4 py-3 text-center text-xs normal-case"
-              style={{
-                borderColor: "#ff6b6b",
-                color: "#ff6b6b",
-                backgroundColor: "#ff6b6b10",
-              }}
-            >
-              {error}
-            </div>
-          )}
-
-          {/* CTAs */}
-          <div className="flex flex-col items-center gap-3 pt-2">
-            <button
-              type="button"
-              onClick={handleSave}
-              disabled={saving || !linkValid || textOver || !text.trim()}
-              className="btn-press w-full py-3.5 text-sm text-bg transition-opacity disabled:cursor-not-allowed disabled:opacity-40"
-              style={{
-                backgroundColor: ACCENT,
-                boxShadow: "4px 4px 0 0 #5a7a00",
-              }}
-            >
-              {saving ? "Saving..." : "Save & Go to Dashboard"}
-            </button>
-            <Link
-              href={`/advertise/track/${token}`}
-              className="text-xs text-muted normal-case transition-colors hover:text-cream"
-            >
-              Skip to dashboard &rarr;
-            </Link>
-          </div>
+        <div className="mt-8 space-y-6">
+          <label className="block text-sm text-white/70">
+            Mensagem principal
+            <input value={text} onChange={(event) => setText(event.target.value)} maxLength={MAX_TEXT_LENGTH + 10} className={fieldClass} />
+            <span className={`mt-2 block text-xs ${textOver ? "text-red-300" : "text-white/35"}`}>{text.length}/{MAX_TEXT_LENGTH}</span>
+          </label>
+          <label className="block text-sm text-white/70">
+            Nome da marca
+            <input value={brand} onChange={(event) => setBrand(event.target.value)} maxLength={60} className={fieldClass} />
+          </label>
+          <label className="block text-sm text-white/70">
+            Descrição
+            <textarea value={description} onChange={(event) => setDescription(event.target.value)} maxLength={200} rows={5} className={fieldClass} />
+          </label>
+          <label className="block text-sm text-white/70">
+            Link
+            <input value={link} onChange={(event) => setLink(event.target.value)} placeholder="https://..." className={fieldClass} />
+            {!linkValid && <span className="mt-2 block text-xs text-red-300">Use um endereço HTTPS ou mailto.</span>}
+          </label>
         </div>
-      </div>
+
+        {error && <p className="mt-5 text-sm text-red-300">{error}</p>}
+        <div className="mt-8 flex flex-wrap items-center gap-4">
+          <button type="button" onClick={handleSave} disabled={saving || textOver || !linkValid || !text.trim()} className="rounded-full bg-[#b89a62] px-6 py-3 text-sm text-[#171714] transition hover:bg-[#c9ad78] disabled:cursor-not-allowed disabled:opacity-40">
+            {saving ? "Salvando…" : "Salvar alterações"}
+          </button>
+          <Link href={`/advertise/track/${token}`} className="rounded-full border border-white/15 px-6 py-3 text-sm text-white/65 transition hover:border-white/35 hover:text-white">
+            Ver indicadores
+          </Link>
+        </div>
+      </section>
     </div>
   );
 }
+

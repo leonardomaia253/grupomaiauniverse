@@ -1,0 +1,195 @@
+- generic [active] [ref=e1]:
+  - main [ref=e2]:
+    - generic [ref=e3]:
+      - generic [ref=e5]:
+        - link "MAIA" [ref=e6] [cursor=pointer]:
+          - /url: /
+        - navigation [ref=e7]:
+          - link "Apresentação" [ref=e8] [cursor=pointer]:
+            - /url: /intro
+          - link "Contato" [ref=e9] [cursor=pointer]:
+            - /url: /support
+      - generic [ref=e10]:
+        - paragraph [ref=e11]: Portfólio do Grupo Maia
+        - generic [ref=e12]:
+          - heading "Diferentes competências. Uma visão integrada." [level=1] [ref=e13]: Diferentes competências.Uma visão integrada.
+          - paragraph [ref=e14]: Conheça as empresas, suas áreas de atuação e os dados públicos disponíveis. A organização privilegia clareza e contexto.
+        - generic [ref=e15]:
+          - generic [ref=e16]:
+            - text: Buscar
+            - textbox "Buscar" [ref=e17]:
+              - /placeholder: Empresa, setor ou atividade
+          - generic [ref=e18]:
+            - text: Área de atuação
+            - combobox "Área de atuação" [ref=e19]:
+              - option "Todos" [selected]
+              - option "Agro e IA"
+              - option "Ativo patrimonial"
+              - option "Beleza e bem-estar"
+              - option "Bilheteria e entretenimento"
+              - option "Crescimento social"
+              - option "Energia e serviços"
+              - option "Estratégia e tecnologia"
+              - option "Experiência e comunidade"
+              - option "Habitat e real estate"
+              - option "Healthtech"
+              - option "Hospitalidade"
+              - option "IA e automação"
+              - option "Imóveis"
+              - option "Investimentos"
+              - option "Mobilidade e operação"
+              - option "Mídia e distribuição"
+              - option "Operação e serviços"
+              - option "Performance e crescimento"
+              - option "Pipelines e automação"
+              - option "Plataforma digital"
+              - option "Produto digital"
+              - option "Produto e operação"
+              - option "RH e people ops"
+              - option "Saúde e fitness"
+              - option "Score e inteligência"
+              - option "Visão e inteligência"
+          - paragraph [ref=e20]: 26 empresas
+        - generic [ref=e21]:
+          - button "01 Bilheking Bilheteria e entretenimento →" [ref=e22]:
+            - generic [ref=e23]: "01"
+            - generic [ref=e24]: Bilheking
+            - generic [ref=e25]: Bilheteria e entretenimento
+            - generic [ref=e26]: →
+          - button "02 Tosi Produto digital →" [ref=e27]:
+            - generic [ref=e28]: "02"
+            - generic [ref=e29]: Tosi
+            - generic [ref=e30]: Produto digital
+            - generic [ref=e31]: →
+          - button "03 Jack it fit Saúde e fitness →" [ref=e32]:
+            - generic [ref=e33]: "03"
+            - generic [ref=e34]: Jack it fit
+            - generic [ref=e35]: Saúde e fitness
+            - generic [ref=e36]: →
+          - button "04 Spur Performance e crescimento →" [ref=e37]:
+            - generic [ref=e38]: "04"
+            - generic [ref=e39]: Spur
+            - generic [ref=e40]: Performance e crescimento
+            - generic [ref=e41]: →
+          - button "05 Volup IA e automação →" [ref=e42]:
+            - generic [ref=e43]: "05"
+            - generic [ref=e44]: Volup
+            - generic [ref=e45]: IA e automação
+            - generic [ref=e46]: →
+          - button "06 Scoreking Score e inteligência →" [ref=e47]:
+            - generic [ref=e48]: "06"
+            - generic [ref=e49]: Scoreking
+            - generic [ref=e50]: Score e inteligência
+            - generic [ref=e51]: →
+          - button "07 Instaboost Crescimento social →" [ref=e52]:
+            - generic [ref=e53]: "07"
+            - generic [ref=e54]: Instaboost
+            - generic [ref=e55]: Crescimento social
+            - generic [ref=e56]: →
+          - button "08 Kinkora Experiência e comunidade →" [ref=e57]:
+            - generic [ref=e58]: "08"
+            - generic [ref=e59]: Kinkora
+            - generic [ref=e60]: Experiência e comunidade
+            - generic [ref=e61]: →
+          - button "09 Abroo Plataforma digital →" [ref=e62]:
+            - generic [ref=e63]: "09"
+            - generic [ref=e64]: Abroo
+            - generic [ref=e65]: Plataforma digital
+            - generic [ref=e66]: →
+          - button "10 Voluclinic Healthtech →" [ref=e67]:
+            - generic [ref=e68]: "10"
+            - generic [ref=e69]: Voluclinic
+            - generic [ref=e70]: Healthtech
+            - generic [ref=e71]: →
+          - button "11 Avantyp Estratégia e tecnologia →" [ref=e72]:
+            - generic [ref=e73]: "11"
+            - generic [ref=e74]: Avantyp
+            - generic [ref=e75]: Estratégia e tecnologia
+            - generic [ref=e76]: →
+          - button "12 Boase Operação e serviços →" [ref=e77]:
+            - generic [ref=e78]: "12"
+            - generic [ref=e79]: Boase
+            - generic [ref=e80]: Operação e serviços
+            - generic [ref=e81]: →
+          - button "13 Venti Imóveis Imóveis →" [ref=e82]:
+            - generic [ref=e83]: "13"
+            - generic [ref=e84]: Venti Imóveis
+            - generic [ref=e85]: Imóveis
+            - generic [ref=e86]: →
+          - button "14 Instead Produto e operação →" [ref=e87]:
+            - generic [ref=e88]: "14"
+            - generic [ref=e89]: Instead
+            - generic [ref=e90]: Produto e operação
+            - generic [ref=e91]: →
+          - button "15 Seu Jornaleiro Mídia e distribuição →" [ref=e92]:
+            - generic [ref=e93]: "15"
+            - generic [ref=e94]: Seu Jornaleiro
+            - generic [ref=e95]: Mídia e distribuição
+            - generic [ref=e96]: →
+          - button "16 Pipex Pipelines e automação →" [ref=e97]:
+            - generic [ref=e98]: "16"
+            - generic [ref=e99]: Pipex
+            - generic [ref=e100]: Pipelines e automação
+            - generic [ref=e101]: →
+          - button "17 SmartRH RH e people ops →" [ref=e102]:
+            - generic [ref=e103]: "17"
+            - generic [ref=e104]: SmartRH
+            - generic [ref=e105]: RH e people ops
+            - generic [ref=e106]: →
+          - button "18 Iris Visão e inteligência →" [ref=e107]:
+            - generic [ref=e108]: "18"
+            - generic [ref=e109]: Iris
+            - generic [ref=e110]: Visão e inteligência
+            - generic [ref=e111]: →
+          - button "19 Gaslee Energia e serviços →" [ref=e112]:
+            - generic [ref=e113]: "19"
+            - generic [ref=e114]: Gaslee
+            - generic [ref=e115]: Energia e serviços
+            - generic [ref=e116]: →
+          - button "20 Maia GO Mobilidade e operação →" [ref=e117]:
+            - generic [ref=e118]: "20"
+            - generic [ref=e119]: Maia GO
+            - generic [ref=e120]: Mobilidade e operação
+            - generic [ref=e121]: →
+          - button "21 Minvest Investimentos →" [ref=e122]:
+            - generic [ref=e123]: "21"
+            - generic [ref=e124]: Minvest
+            - generic [ref=e125]: Investimentos
+            - generic [ref=e126]: →
+          - button "22 Habitat X Habitat e real estate →" [ref=e127]:
+            - generic [ref=e128]: "22"
+            - generic [ref=e129]: Habitat X
+            - generic [ref=e130]: Habitat e real estate
+            - generic [ref=e131]: →
+          - button "23 Tikal Beach Club Hospitalidade →" [ref=e132]:
+            - generic [ref=e133]: "23"
+            - generic [ref=e134]: Tikal Beach Club
+            - generic [ref=e135]: Hospitalidade
+            - generic [ref=e136]: →
+          - button "24 Sun & Tan Beleza e bem-estar →" [ref=e137]:
+            - generic [ref=e138]: "24"
+            - generic [ref=e139]: Sun & Tan
+            - generic [ref=e140]: Beleza e bem-estar
+            - generic [ref=e141]: →
+          - button "25 13 de Maio Ativo patrimonial →" [ref=e142]:
+            - generic [ref=e143]: "25"
+            - generic [ref=e144]: 13 de Maio
+            - generic [ref=e145]: Ativo patrimonial
+            - generic [ref=e146]: →
+          - button "26 Agrovolup Agro e IA →" [ref=e147]:
+            - generic [ref=e148]: "26"
+            - generic [ref=e149]: Agrovolup
+            - generic [ref=e150]: Agro e IA
+            - generic [ref=e151]: →
+    - status [ref=e152]:
+      - generic [ref=e153]:
+        - generic "Grupo Maia" [ref=e154]:
+          - generic [ref=e155]: MAIA
+          - generic [ref=e156]: Grupo
+        - heading "Organizando o mapa do grupo." [level=1] [ref=e157]
+        - paragraph [ref=e158]: Carregando empresas do grupo
+        - generic [ref=e162]:
+          - generic [ref=e163]: Carregando
+          - generic [ref=e164]: 18%
+  - button "Open Next.js Dev Tools" [ref=e170] [cursor=pointer]
+  - alert [ref=e174]

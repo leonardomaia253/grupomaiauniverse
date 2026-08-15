@@ -1,14 +1,7 @@
 export const DNA_MAIA_AUDIO = {
-  master: "/audio/dna-maia-theme.mp3",
-  shortMaster: "/audio/dna-maia-theme-75s.mp3",
-  mobileMaster: "/audio/dna-maia-theme-mobile.mp3",
-  mobileShortMaster: "/audio/dna-maia-theme-75s-mobile.mp3",
   instrumental: "/audio/dna-maia-instrumental.mp3",
-  sonicLogo: "/audio/dna-maia-sonic-logo.mp3",
-  fallbackVoice: "/audio/grupo-lmf-intro.mp3",
-  fallbackBed: "/audio/midnight-commit.mp3",
-  fullDuration: 195.82,
-  shortDuration: 75,
+  editorialDuration: 96,
+  shortDuration: 96,
 } as const;
 
 export type StoryMode = "short" | "full";
@@ -18,7 +11,6 @@ export type DnaMaiaCue = {
   id: string;
   chapter: StoryChapter;
   shortAt: number;
-  fullAt: number;
   title: string;
   line: string;
   accent: string;
@@ -27,14 +19,14 @@ export type DnaMaiaCue = {
 };
 
 export const DNA_MAIA_CUES: readonly DnaMaiaCue[] = [
-  { id: "pulse", chapter: "code", shortAt: 0, fullAt: 0, title: "O código", line: "Todo grupo nasce de um DNA.", accent: "#8ee7ff", visual: "Pulso, matéria e uma origem comum.", companies: [] },
-  { id: "origin", chapter: "origin", shortAt: 8, fullAt: 15.4, title: "A origem", line: "Uma visão transforma ideia em movimento.", accent: "#a9f3d1", visual: "Da célula à cidade, intenção vira construção.", companies: [] },
-  { id: "intelligence-a", chapter: "intelligence", shortAt: 19, fullAt: 49.52, title: "Inteligência", line: "Dados que enxergam. Tecnologia que aproxima.", accent: "#70b7ff", visual: "Circuitos, pessoas e decisões conectadas.", companies: ["Tosi", "Volup", "Scoreking", "Instaboost", "Abroo"] },
-  { id: "intelligence-b", chapter: "intelligence", shortAt: 25, fullAt: 65.64, title: "Crescimento", line: "Ideias ganham fluxo, clareza e escala.", accent: "#9b8cff", visual: "Sinais tornam-se caminhos e caminhos tornam-se rede.", companies: ["Avantyp", "Pipex", "SmartRH", "Iris", "Instead"] },
-  { id: "experience-a", chapter: "experience", shortAt: 44, fullAt: 115.28, title: "Experiência", line: "Movimento que atravessa produtos, pessoas e lugares.", accent: "#ff9c80", visual: "Corpo, saúde, cultura e encontros em movimento.", companies: ["Bilheking", "Jack it fit", "Spur", "Kinkora", "Voluclinic", "Boase"] },
-  { id: "experience-b", chapter: "experience", shortAt: 53, fullAt: 137.44, title: "Território", line: "Onde cada encontro abre uma nova possibilidade.", accent: "#f1cf78", visual: "Cidade, mobilidade, energia e hospitalidade.", companies: ["Seu Jornaleiro", "Venti Imóveis", "Maia GO", "Gaslee", "Tikal Beach Club", "Sun & Tan"] },
-  { id: "future", chapter: "future", shortAt: 60, fullAt: 156.96, title: "O futuro", line: "Capital, território e imaginação para o próximo ciclo.", accent: "#ffd66e", visual: "Patrimônio, agro e espaço desenham o amanhã.", companies: ["Minvest", "Habitat X", "13 de Maio", "Agrovolup"] },
-  { id: "universe", chapter: "universe", shortAt: 67, fullAt: 175.48, title: "O universo", line: "Grupo Maia — um DNA, muitos mundos.", accent: "#ffffff", visual: "Todas as órbitas tornam-se um mapa vivo.", companies: [] },
+  { id: "pulse", chapter: "code", shortAt: 0, title: "Princípio", line: "Uma origem. Diferentes maneiras de construir.", accent: "#b59a70", visual: "O Grupo Maia começa onde visão e execução se encontram.", companies: [] },
+  { id: "origin", chapter: "origin", shortAt: 12, title: "Trajetória", line: "Ideias ganham forma quando encontram direção.", accent: "#c3aa82", visual: "Cada negócio responde a uma necessidade real — com autonomia e propósito comum.", companies: [] },
+  { id: "intelligence-a", chapter: "intelligence", shortAt: 25, title: "Tecnologia e inteligência", line: "Decisões melhores começam por compreender melhor.", accent: "#af9c7d", visual: "Dados, software e estratégia a serviço de relações mais inteligentes.", companies: ["Tosi", "Volup", "Scoreking", "Instaboost", "Abroo"] },
+  { id: "intelligence-b", chapter: "intelligence", shortAt: 38, title: "Operação e crescimento", line: "Clareza para operar. Estrutura para avançar.", accent: "#ad9670", visual: "Negócios diferentes, conectados pela capacidade de transformar complexidade em movimento.", companies: ["Avantyp", "Pipex", "SmartRH", "Iris", "Instead"] },
+  { id: "experience-a", chapter: "experience", shortAt: 51, title: "Saúde e experiência", line: "O valor de uma empresa aparece na vida das pessoas.", accent: "#b28e72", visual: "Cuidado, bem-estar, cultura e experiências pensadas para permanecer.", companies: ["Bilheking", "Jack it fit", "Spur", "Kinkora", "Voluclinic", "Boase"] },
+  { id: "experience-b", chapter: "experience", shortAt: 64, title: "Território e hospitalidade", line: "Presença também se constrói em lugares.", accent: "#b29a73", visual: "Cidade, mobilidade, energia e hospitalidade reunidas em uma mesma visão de futuro.", companies: ["Seu Jornaleiro", "Venti Imóveis", "Maia GO", "Gaslee", "Tikal Beach Club", "Sun & Tan"] },
+  { id: "future", chapter: "future", shortAt: 77, title: "Capital e futuro", line: "Construir hoje é ampliar o que amanhã poderá existir.", accent: "#baa073", visual: "Patrimônio, agro e novos espaços para o próximo ciclo do grupo.", companies: ["Minvest", "Habitat X", "13 de Maio", "Agrovolup"] },
+  { id: "universe", chapter: "universe", shortAt: 89, title: "Grupo Maia", line: "Um grupo. Vinte e seis empresas. Uma visão de longo prazo.", accent: "#d8c29d", visual: "Conheça o mapa vivo de um ecossistema em construção.", companies: [] },
 ] as const;
 
 export const ALL_MAIA_COMPANIES = DNA_MAIA_CUES.flatMap((cue) => cue.companies);
@@ -48,18 +40,19 @@ export const COMPANY_IDENTITIES: Record<string, { color: string; symbol: string 
 };
 
 export function getStoryDuration(mode: StoryMode) {
-  return mode === "short" ? DNA_MAIA_AUDIO.shortDuration : DNA_MAIA_AUDIO.fullDuration;
+  void mode;
+  return DNA_MAIA_AUDIO.editorialDuration;
 }
 
-export function getStoryAudio(mode: StoryMode, mobile = false) {
-  if (mobile) return mode === "short" ? DNA_MAIA_AUDIO.mobileShortMaster : DNA_MAIA_AUDIO.mobileMaster;
-  return mode === "short" ? DNA_MAIA_AUDIO.shortMaster : DNA_MAIA_AUDIO.master;
+export function getStoryAudio(mode: StoryMode) {
+  void mode;
+  return DNA_MAIA_AUDIO.instrumental;
 }
 
 export function getDnaMaiaCue(seconds: number, mode: StoryMode = "full") {
-  const key = mode === "short" ? "shortAt" : "fullAt";
+  void mode;
   for (let index = DNA_MAIA_CUES.length - 1; index >= 0; index -= 1) {
-    if (seconds >= DNA_MAIA_CUES[index][key]) return DNA_MAIA_CUES[index];
+    if (seconds >= DNA_MAIA_CUES[index].shortAt) return DNA_MAIA_CUES[index];
   }
   return DNA_MAIA_CUES[0];
 }

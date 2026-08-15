@@ -1,7 +1,7 @@
 export const BRAND = {
-  name: "Mapa Vivo",
+  name: "Grupo Maia — Mapa Vivo",
   shortName: "Mapa Vivo",
-  groupName: "Portfolio Patrimonial",
+  groupName: "Grupo Maia",
   domain: "universe.grupomaia.me",
   baseUrl: "https://universe.grupomaia.me",
   contactEmail: "contato@grupomaia.com.br",
@@ -12,9 +12,9 @@ export const BRAND = {
   xCreator: "@mapavivo",
   xCreatorUrl: "mailto:contato@grupomaia.com.br",
   appDescription:
-    "Um guia visual e animado para conhecer as empresas do grupo: o que fazem, suas historias, informacoes publicas e caminhos para clientes, fas e investidores.",
+    "Uma visão integrada das empresas, frentes de atuação e trajetória do Grupo Maia.",
   ogAlt:
-    "Mapa Vivo das Empresas: um jeito simples e animado de conhecer empresas, historias, informacoes publicas e oportunidades.",
+    "Grupo Maia: 26 empresas conectadas por uma visão de longo prazo.",
 } as const;
 
 export function getSiteUrl(env = process.env): string {

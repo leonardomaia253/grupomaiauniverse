@@ -2,7 +2,7 @@
   "name": "lmf-universe",
   "version": "0.1.0",
   "private": true,
-  "description": "Guia animado das empresas do grupo em planetas 3D",
+  "description": "Plataforma institucional e mapa vivo das empresas do Grupo Maia",
   "homepage": "https://universe.grupomaia.me",
   "repository": {
     "type": "git",
@@ -12,10 +12,10 @@
   "license": "AGPL-3.0",
   "keywords": [
     "github",
-    "3d",
-    "visualization",
+    "portfolio",
+    "grupo empresarial",
+    "visualização",
     "three-js",
-    "pixel-art",
     "react",
     "nextjs"
   ],
@@ -31,31 +31,21 @@
     "format:check": "prettier --check ."
   },
   "dependencies": {
-    "@react-three/drei": "^10.7.7",
-    "@react-three/fiber": "^9.5.0",
-    "@react-three/postprocessing": "^3.0.4",
-    "@splinetool/react-spline": "^4.1.0",
     "@supabase/ssr": "^0.8.0",
     "@supabase/supabase-js": "^2.97.0",
-    "@types/three": "^0.183.0",
     "@vercel/analytics": "^1.6.1",
     "@vercel/speed-insights": "^1.3.1",
-    "cobe": "^2.0.1",
-    "howler": "^2.2.4",
     "lucide-react": "^0.577.0",
     "next": "16.1.6",
-    "postprocessing": "^6.38.3",
     "react": "19.2.3",
     "react-dom": "19.2.3",
     "resend": "^6.9.3",
     "server-only": "^0.0.1",
     "stripe": "^20.3.1",
-    "supabase": "^2.78.1",
-    "three": "^0.183.0"
+    "supabase": "^2.78.1"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",
-    "@types/howler": "^2.2.12",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",

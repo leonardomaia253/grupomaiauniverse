@@ -11,7 +11,7 @@ export async function POST() {
   } = await supabase.auth.getUser();
 
   if (!user) {
-    return NextResponse.json({ error: "Not authenticated" }, { status: 401 });
+    return NextResponse.json({ error: "Autenticação necessária" }, { status: 401 });
   }
 
   const companyLogin = (
@@ -22,14 +22,14 @@ export async function POST() {
 
   if (!companyLogin) {
     return NextResponse.json(
-      { error: "No GitHub username in profile" },
+      { error: "O perfil não possui um identificador compatível" },
       { status: 400 }
     );
   }
 
   const admin = getSupabaseAdmin();
 
-  // Check that the user hasn't already claimed a different planet
+  // Cada identidade pode verificar apenas um perfil de empresa.
   const { data: alreadyClaimed } = await admin
     .from("companies")
     .select("username")
@@ -38,7 +38,7 @@ export async function POST() {
 
   if (alreadyClaimed) {
     return NextResponse.json(
-      { error: "You have already claimed a planet" },
+      { error: "Esta identidade já está associada a outra empresa" },
       { status: 409 }
     );
   }
@@ -60,7 +60,7 @@ export async function POST() {
 
   if (error || !data) {
     return NextResponse.json(
-      { error: "planet not found or already claimed" },
+      { error: "Empresa não encontrada ou perfil já verificado" },
       { status: 404 }
     );
   }
@@ -74,7 +74,7 @@ export async function POST() {
 
   if (dev) {
     await admin.from("activity_feed").insert({
-      event_type: "planet_claimed",
+      event_type: "company_verified",
       actor_id: dev.id,
       metadata: { login: companyLogin },
     });

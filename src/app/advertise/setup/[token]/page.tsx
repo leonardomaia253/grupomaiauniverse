@@ -4,77 +4,37 @@ import { getSupabaseAdmin } from "@/lib/supabase";
 import { SetupContent } from "./SetupContent";
 
 export const dynamic = "force-dynamic";
+export const metadata: Metadata = { title: "Configurar campanha — Grupo Maia", robots: { index: false, follow: false } };
 
-const ACCENT = "#c8e64a";
-
-export const metadata: Metadata = {
-  title: "Configurar seu Anúncio - Mapa Vivo",
-  robots: { index: false, follow: false },
+const FORMAT_LABELS: Record<string, string> = {
+  plane: "Formato panorâmico",
+  blimp: "Formato flutuante",
+  billboard: "Painel editorial",
+  rooftop_sign: "Assinatura de destaque",
+  led_wrap: "Faixa luminosa",
 };
 
-const VEHICLE_LABELS: Record<string, string> = {
-  plane: "Plane",
-  blimp: "Blimp",
-  billboard: "Billboard",
-  rooftop_sign: "Rooftop Sign",
-  led_wrap: "LED Wrap",
-};
-
-interface Props {
-  params: Promise<{ token: string }>;
-}
-
-export default async function SetupPage({ params }: Props) {
+export default async function SetupPage({ params }: { params: Promise<{ token: string }> }) {
   const { token } = await params;
-
   if (!token || token.length < 10) notFound();
-
-  const sb = getSupabaseAdmin();
-
-  const { data: ad } = await sb
-    .from("sky_ads")
-    .select("id, text, color, bg_color, vehicle, brand, description, link, active")
-    .eq("tracking_token", token)
-    .maybeSingle();
-
+  const { data: ad } = await getSupabaseAdmin().from("sky_ads").select("id, text, color, bg_color, vehicle, brand, description, link, active").eq("tracking_token", token).maybeSingle();
   if (!ad) notFound();
 
-  // Payment not yet confirmed (e.g. PIX webhook pending)
   if (!ad.active) {
     return (
-      <main className="min-h-screen bg-bg font-pixel uppercase text-warm">
-        <div className="mx-auto max-w-md px-4 py-20 text-center">
-          <p className="text-3xl animate-pulse" style={{ color: ACCENT }}>...</p>
-          <h1 className="mt-4 text-xl text-cream">Waiting for payment</h1>
-          <p className="mt-3 text-xs text-muted normal-case">
-            Your payment is being processed. This page will refresh automatically.
-          </p>
-          <meta httpEquiv="refresh" content="5" />
-        </div>
+      <main className="flex min-h-screen items-center justify-center bg-[#171714] px-6 text-[#f1eee6]">
+        <div className="max-w-lg text-center"><p className="text-xs uppercase tracking-[0.24em] text-[#b89a62]">Grupo Maia</p><h1 className="mt-5 text-4xl font-light">Confirmação em processamento</h1><p className="mt-4 text-sm leading-6 text-white/50">Esta página será atualizada automaticamente após a confirmação do pagamento.</p><meta httpEquiv="refresh" content="5" /></div>
       </main>
     );
   }
 
-  const vehicleLabel = VEHICLE_LABELS[ad.vehicle] ?? ad.vehicle;
-
   return (
-    <main className="min-h-screen bg-bg font-pixel uppercase text-warm">
-      <div className="mx-auto max-w-5xl px-4 py-10">
-        {/* Success header */}
-        <div className="text-center">
-          <p className="text-3xl" style={{ color: ACCENT }}>
-            +
-          </p>
-          <h1 className="mt-2 text-2xl text-cream">
-            Your ad is <span style={{ color: ACCENT }}>live!</span>
-          </h1>
-          <p className="mt-3 text-xs text-muted normal-case">
-            Payment confirmed. Your ad is now running in the city.
-          </p>
-        </div>
-
-        <SetupContent token={token} ad={ad} vehicleLabel={vehicleLabel} />
+    <main className="min-h-screen bg-[#171714] text-[#f1eee6]">
+      <div className="mx-auto max-w-6xl px-5 py-10 sm:px-8 sm:py-16">
+        <div className="border-b border-white/12 pb-8"><p className="text-xs uppercase tracking-[0.24em] text-[#b89a62]">Grupo Maia · Mídia</p><h1 className="mt-4 text-4xl font-light sm:text-6xl">Campanha ativa</h1><p className="mt-4 max-w-2xl text-sm leading-6 text-white/50">Pagamento confirmado. Revise o conteúdo e acompanhe sua presença na plataforma.</p></div>
+        <SetupContent token={token} ad={ad} vehicleLabel={FORMAT_LABELS[ad.vehicle] ?? "Formato contratado"} />
       </div>
     </main>
   );
 }
+

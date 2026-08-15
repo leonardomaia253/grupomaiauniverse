@@ -31,9 +31,16 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     },
     {
       url: `${BASE_URL}/leaderboard`,
-      changeFrequency: "hourly",
+      changeFrequency: "daily",
       priority: 0.8,
     },
+    ...["intro", "roadmap", "advertise", "support", "privacy", "terms"].map(
+      (path) => ({
+        url: `${BASE_URL}/${path}`,
+        changeFrequency: "monthly" as const,
+        priority: path === "intro" ? 0.8 : 0.5,
+      })
+    ),
     ...devEntries,
   ];
 }

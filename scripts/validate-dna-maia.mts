@@ -9,8 +9,8 @@ const expected = [
 assert.equal(ALL_MAIA_COMPANIES.length, 26, "A timeline deve conter exatamente 26 empresas");
 assert.deepEqual([...new Set(ALL_MAIA_COMPANIES)].sort(), [...expected].sort(), "A lista oficial deve estar integralmente representada");
 assert.deepEqual(Object.keys(COMPANY_IDENTITIES).sort(), [...expected].sort(), "Cada empresa deve possuir identidade visual própria");
-assert.equal(getStoryDuration("short"), 75);
-assert.ok(getStoryDuration("full") >= 195 && getStoryDuration("full") < 196);
+assert.equal(getStoryDuration("short"), 96, "O corte editorial deve preservar ritmo natural em 1min36");
+assert.equal(getStoryDuration("full"), 96, "Não deve existir uma segunda faixa acelerada ou dessincronizada");
 
 const chapters = ["code", "origin", "intelligence", "experience", "future", "universe"];
 for (const chapter of chapters) {
@@ -28,13 +28,15 @@ for (const chapter of chapters) {
 const playerSource = readFileSync("src/components/MaiaStoryIntro.tsx", "utf8");
 assert.ok(!playerSource.includes("videos.pexels.com"), "O player não deve depender da Pexels em runtime");
 assert.ok(!playerSource.includes("ik.imagekit.io"), "O fallback de DNA deve ser local");
-for (const audio of ["dna-maia-theme.mp3", "dna-maia-theme-75s.mp3", "dna-maia-theme-mobile.mp3", "dna-maia-theme-75s-mobile.mp3", "dna-maia-instrumental.mp3", "dna-maia-sonic-logo.mp3"]) {
+assert.ok(playerSource.includes('getStoryAudio("short")'), "O player editorial deve usar a trilha instrumental em tempo natural");
+assert.ok(!playerSource.includes('activateMode'), "A apresentação não deve expor escolhas técnicas de duração");
+for (const audio of ["dna-maia-instrumental.mp3"]) {
   const path = `public/audio/${audio}`;
   assert.ok(existsSync(path) && statSync(path).size > 50_000, `Entrega de áudio ausente: ${audio}`);
 }
 
-for (const mode of ["short", "full"] as const) {
-  const key = mode === "short" ? "shortAt" : "fullAt";
+for (const mode of ["short"] as const) {
+  const key = "shortAt";
   let previous = -1;
   for (const cue of DNA_MAIA_CUES) {
     assert.ok(cue[key] > previous, `${key} deve ser estritamente crescente`);

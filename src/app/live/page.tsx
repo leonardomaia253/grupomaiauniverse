@@ -2,11 +2,9 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import type { LiveSession } from "@/lib/useCodingPresence";
+import EditorialPageShell from "@/components/EditorialPageShell";
 
-const CREATOR_LOGIN = "leonardomaia253";
-
-interface PresenceDev {
+interface PresenceCompany {
   companyLogin: string;
   avatarUrl: string;
   status: string;
@@ -14,131 +12,68 @@ interface PresenceDev {
 }
 
 export default function LivePage() {
-  const [companies, setcompanies] = useState<PresenceDev[]>([]);
+  const [companies, setCompanies] = useState<PresenceCompany[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchPresence = () => {
       fetch("/api/presence")
-        .then((r) => r.json())
+        .then((response) => response.json())
         .then((data) => {
-          if (data.companies) {
-            // Creator first, then alphabetical
-            const sorted = [...data.companies].sort((a: PresenceDev, b: PresenceDev) => {
-              if (a.companyLogin.toLowerCase() === CREATOR_LOGIN) return -1;
-              if (b.companyLogin.toLowerCase() === CREATOR_LOGIN) return 1;
-              return a.companyLogin.localeCompare(b.companyLogin);
-            });
-            setcompanies(sorted);
-          }
+          setCompanies(
+            Array.isArray(data.companies)
+              ? [...data.companies].sort((a: PresenceCompany, b: PresenceCompany) => a.companyLogin.localeCompare(b.companyLogin))
+              : [],
+          );
           setLoading(false);
         })
         .catch(() => setLoading(false));
     };
-
     fetchPresence();
-    const interval = setInterval(fetchPresence, 15_000);
-    return () => clearInterval(interval);
+    const interval = window.setInterval(fetchPresence, 15_000);
+    return () => window.clearInterval(interval);
   }, []);
 
   return (
-    <main className="min-h-screen bg-bg font-pixel uppercase text-warm">
-      <div className="mx-auto max-w-2xl px-4 py-12">
-        {/* Header */}
-        <div className="mb-10">
-          <Link
-            href="/"
-            className="mb-5 inline-block text-xs text-muted transition-colors hover:text-cream"
-          >
-            &larr; Back to Universe
-          </Link>
-          <div className="flex items-center gap-3">
-            <span className="live-dot h-3 w-3 rounded-full bg-[#4ade80]" />
-            <h1 className="text-2xl text-cream">Live Now</h1>
-            <span className="text-xs text-muted">
-              {companies.length} company{companies.length !== 1 ? "s" : ""} coding
-            </span>
-          </div>
-          <p className="mt-3 text-xs normal-case text-muted">
-            These companies are keeping the Universe alive. Their planets are glowing right now.
-          </p>
-          <p className="mt-1 text-[10px] normal-case text-muted/60">
-            Only username and language are shown. companies control what they share via VS Code settings.
-          </p>
-        </div>
-
-        {/* List */}
-        {loading ? (
-          <div className="py-12 text-center text-sm text-muted">Loading...</div>
-        ) : companies.length === 0 ? (
-          <div className="border-[3px] border-border bg-bg/50 p-10 text-center">
-            <p className="mb-2 text-sm text-cream">The Universe is dark right now</p>
-            <p className="text-xs normal-case text-muted">
-              No one is coding. Install Pulse to be the first to light it up.
-            </p>
-          </div>
-        ) : (
-          <div className="space-y-2">
-            {companies.map((dev) => {
-              const isCreator = dev.companyLogin.toLowerCase() === CREATOR_LOGIN;
-              return (
-                <Link
-                  key={dev.companyLogin}
-                  href={`/?focus=${dev.companyLogin}`}
-                  className="flex items-center gap-4 border-[3px] border-border bg-bg/50 px-5 py-4 transition-colors hover:border-border-light"
-                >
-                  <div className="relative shrink-0">
-                    <img
-                      src={dev.avatarUrl}
-                      alt=""
-                      className="h-10 w-10 rounded-full"
-                      style={isCreator ? { boxShadow: "0 0 8px #fbbf24" } : undefined}
-                    />
-                    <span
-                      className={`absolute -bottom-0.5 -right-0.5 h-3 w-3 rounded-full border-2 border-bg ${isCreator ? "bg-[#fbbf24]" : "bg-[#4ade80]"}`}
-                    />
-                  </div>
-                  <div className="min-w-0 flex-1">
-                    <div className="flex items-center gap-2">
-                      <span className={`text-sm ${isCreator ? "text-[#fbbf24]" : "text-cream"}`}>
-                        {dev.companyLogin}
-                      </span>
-                      {isCreator && (
-                        <span className="text-[9px] text-[#fbbf24]/70">CREATOR</span>
-                      )}
-                      {dev.status === "idle" && (
-                        <span className="text-[9px] text-muted">IDLE</span>
-                      )}
-                    </div>
-                    <div className="text-[10px] normal-case text-muted">
-                      {isCreator ? "planet the Universe" : dev.language || "coding"}
-                    </div>
-                  </div>
-                  <span className="text-xs text-muted">&rarr;</span>
-                </Link>
-              );
-            })}
-          </div>
-        )}
-
-        {/* CTA */}
-        <div className="mt-10 border-[3px] border-border bg-bg/50 p-8 text-center">
-          <p className="mb-2 text-sm text-cream">The Universe needs your signal</p>
-          <p className="mb-5 text-xs normal-case text-muted">
-            Every dev who codes keeps a planet lit. Install Pulse to power yours.
-          </p>
-          <a
-            href="https://marketplace.visualstudio.com/items?itemName=git-Universe.constellationOS"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="btn-press inline-block px-8 py-3 text-xs text-bg"
-            style={{ backgroundColor: "#4ade80", boxShadow: "2px 2px 0 0 #16a34a" }}
-          >
-            Get Pulse for VS Code
-          </a>
-        </div>
+    <EditorialPageShell
+      eyebrow="Operação"
+      title="Atividade em tempo real"
+      intro="Uma leitura simples das operações que optaram por compartilhar presença de desenvolvimento. Nenhum conteúdo de código é coletado."
+    >
+      <div className="mb-8 flex items-center justify-between border-y border-white/13 py-4 text-sm">
+        <span className="flex items-center gap-2 text-white/62"><span className="h-2 w-2 rounded-full bg-emerald-400" /> Atualização automática</span>
+        <span className="tabular-nums text-white/38">{companies.length} {companies.length === 1 ? "operação ativa" : "operações ativas"}</span>
       </div>
-    </main>
+
+      {loading ? (
+        <p className="py-16 text-sm text-white/40">Consultando atividade…</p>
+      ) : companies.length === 0 ? (
+        <div className="border border-white/13 p-8 sm:p-12">
+          <h2 className="text-2xl tracking-[-.03em]">Nenhuma atividade compartilhada agora.</h2>
+          <p className="mt-3 max-w-xl text-sm leading-6 text-white/48">A ausência de sinal não indica indisponibilidade das empresas; mostra apenas que nenhuma operação está transmitindo presença neste momento.</p>
+        </div>
+      ) : (
+        <div className="border-t border-white/13">
+          {companies.map((company, index) => (
+            <Link key={company.companyLogin} href={`/?user=${company.companyLogin}`} className="group grid grid-cols-[2rem_2.75rem_1fr_auto] items-center gap-4 border-b border-white/13 py-4 transition hover:bg-white/[.03] sm:px-3">
+              <span className="text-[10px] tabular-nums text-white/25">{String(index + 1).padStart(2, "0")}</span>
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img src={company.avatarUrl} alt="" className="h-11 w-11 rounded-full grayscale" />
+              <div>
+                <p className="text-base text-white/82">{company.companyLogin}</p>
+                <p className="mt-1 text-xs text-white/38">{company.language || "Tecnologia não informada"} · {company.status === "idle" ? "em pausa" : "em atividade"}</p>
+              </div>
+              <span className="text-white/30 transition-transform group-hover:translate-x-1 group-hover:text-white">→</span>
+            </Link>
+          ))}
+        </div>
+      )}
+
+      <div className="mt-14 border-t border-white/13 pt-8">
+        <h2 className="text-2xl tracking-[-.03em]">Compartilhamento voluntário</h2>
+        <p className="mt-3 max-w-2xl text-sm leading-6 text-white/48">A integração exibe somente identificador, estado e linguagem informada. Cada operação controla quando a presença fica ativa.</p>
+        <a href="https://marketplace.visualstudio.com/items?itemName=git-Universe.constellationOS" target="_blank" rel="noopener noreferrer" className="mt-6 inline-flex rounded-full border border-white/18 px-5 py-3 text-xs text-white/70 transition hover:border-white/38 hover:text-white">Conhecer a integração</a>
+      </div>
+    </EditorialPageShell>
   );
 }
-

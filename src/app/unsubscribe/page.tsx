@@ -9,12 +9,12 @@ export default async function UnsubscribePage({
   const error = params.error;
 
   const categoryLabels: Record<string, string> = {
-    all: "all emails",
-    social: "social notifications",
-    digest: "digest emails",
-    marketing: "marketing emails",
-    streak_reminders: "streak reminders",
-    transactional: "transactional emails",
+    all: "todas as mensagens",
+    social: "notificações de atividade",
+    digest: "resumos periódicos",
+    marketing: "comunicações institucionais",
+    streak_reminders: "lembretes de atividade",
+    transactional: "mensagens transacionais",
   };
 
   return (
@@ -24,9 +24,9 @@ export default async function UnsubscribePage({
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
-        background: "#0a0a0e",
-        fontFamily: "'Silkscreen', monospace",
-        color: "#f0f0f0",
+        background: "#eeeae0",
+        fontFamily: "Arial, sans-serif",
+        color: "#1c1c18",
         padding: 24,
       }}
     >
@@ -34,20 +34,20 @@ export default async function UnsubscribePage({
         style={{
           maxWidth: 440,
           textAlign: "center",
-          background: "#0a0a0e",
+          background: "#eeeae0",
           padding: "40px 32px",
-          border: "1px solid #1c1c20",
+          border: "1px solid #b8b0a0",
         }}
       >
         <h1
           style={{
             fontSize: 28,
             letterSpacing: 4,
-            color: "#c8e64a",
+            color: "#74664d",
             marginTop: 0,
           }}
         >
-          MAIA Universe
+          MAIA
         </h1>
 
         <div
@@ -60,28 +60,27 @@ export default async function UnsubscribePage({
 
         {error ? (
           <>
-            <p style={{ fontSize: 18, color: "#ff6b6b" }}>Invalid or expired link</p>
+            <p style={{ fontSize: 18, color: "#8d3e35" }}>Link inválido ou expirado</p>
             <p style={{ color: "#666", fontSize: 14 }}>
-              This unsubscribe link may have expired or is invalid.
-              You can manage your notifications from your Mapa Vivo settings.
+              Solicite um novo link ou gerencie as preferências nas configurações.
             </p>
           </>
         ) : success ? (
           <>
             <p style={{ fontSize: 18 }}>
-              You&apos;ve been unsubscribed from{" "}
-              <strong style={{ color: "#c8e64a" }}>
+              A inscrição foi removida de{" "}
+              <strong style={{ color: "#74664d" }}>
                 {categoryLabels[category] ?? category}
               </strong>
               .
             </p>
             <p style={{ color: "#666", fontSize: 14 }}>
-              You can re-enable notifications anytime from your Mapa Vivo settings.
+              As preferências podem ser alteradas novamente a qualquer momento.
             </p>
           </>
         ) : (
           <p style={{ color: "#666", fontSize: 14 }}>
-            Use the link in your email to manage your notification preferences.
+            Use o link enviado por e-mail para gerenciar suas preferências.
           </p>
         )}
 
@@ -95,7 +94,7 @@ export default async function UnsubscribePage({
 
         <a
           href="https://universe.grupomaia.me"
-          style={{ color: "#c8e64a", fontSize: 14, textDecoration: "underline" }}
+          style={{ color: "#74664d", fontSize: 14, textDecoration: "underline" }}
         >
           Voltar ao Mapa Vivo
         </a>

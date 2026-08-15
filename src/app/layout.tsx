@@ -2,13 +2,12 @@ import type { Metadata } from "next";
 import Script from "next/script";
 import { Analytics } from "@vercel/analytics/next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
-import GlobalRadio from "@/components/GlobalRadio";
 import { BRAND, getSiteUrl } from "@/lib/brand";
 import "./globals.css";
 
 export const metadata: Metadata = {
   metadataBase: new URL(getSiteUrl()),
-  title: "Mapa Vivo das Empresas - Guia animado",
+  title: "Grupo Maia — Mapa Vivo",
   description: BRAND.appDescription,
   keywords: [
     "empresas do grupo",
@@ -19,7 +18,7 @@ export const metadata: Metadata = {
     "investidores",
   ],
   openGraph: {
-    title: "Mapa Vivo das Empresas - Guia animado",
+    title: "Grupo Maia — Mapa Vivo",
     description: BRAND.appDescription,
     siteName: BRAND.name,
     type: "website",
@@ -83,14 +82,9 @@ export default function RootLayout({
           href="https://fonts.gstatic.com"
           crossOrigin="anonymous"
         />
-        <link
-          href="https://fonts.googleapis.com/css2?family=Silkscreen&display=swap"
-          rel="stylesheet"
-        />
       </head>
-      <body className="bg-bg font-pixel text-warm" suppressHydrationWarning>
+      <body className="bg-bg text-warm" suppressHydrationWarning>
         {children}
-        <GlobalRadio />
         <Analytics />
         <SpeedInsights />
         {process.env.NEXT_PUBLIC_HIMETRICA_API_KEY && (

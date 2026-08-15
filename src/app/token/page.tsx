@@ -1,109 +1,25 @@
-"use client";
+import EditorialPageShell, { EditorialSection } from "@/components/EditorialPageShell";
 
-import Link from "next/link";
+const CONTRACT = "0xd523f92f5f313288cf69ac9ca456b8a7d7a6dba3";
 
-const GITC_CA = "0xd523f92f5f313288cf69ac9ca456b8a7d7a6dba3";
-const ACCENT = "#c8e64a";
-
-function A({ children }: { children: React.ReactNode }) {
-  return <span style={{ color: ACCENT }}>{children}</span>;
-}
-
-export default function TokenPage() {
+export default function TokenNoticePage() {
   return (
-    <main className="min-h-screen bg-bg font-pixel uppercase text-warm">
-      <div className="mx-auto max-w-3xl px-4 py-10">
-        <Link
-          href="/"
-          className="mb-6 inline-block text-sm text-muted transition-colors hover:text-cream sm:mb-8"
-        >
-          &larr; Back to Universe
-        </Link>
-
-        <h1 className="text-2xl text-cream sm:text-3xl">
-          token comunit?rio <span style={{ color: ACCENT }}>Token</span>
-        </h1>
-
-        {/* The story */}
-        <div className="mt-8 border-[3px] border-border bg-bg-raised p-5 sm:p-8">
-          <p className="text-base text-cream sm:text-lg">About token comunit?rio</p>
-          <div className="mt-4 flex flex-col gap-4 text-sm leading-relaxed text-muted normal-case sm:text-base">
-            <p>
-              Mapa Vivo is operated independently. The <A>community created</A> the token comunit?rio.
-              I did <A>not create, launch, or request</A> the creation of this
-              token.
-            </p>
-            <p>
-              I receive <A>transaction fees</A> from the token, which help
-              support the development of Mapa Vivo. The team is grateful to the
-              community for believing in this project and supporting it.
-            </p>
-            <p>
-              That said, I <A>don&apos;t control</A> the token. Not the supply,
-              not the price, not the listings, not any aspect of its market. My
-              focus is <A>planet Mapa Vivo</A>. The community manages the token.
-            </p>
-          </div>
-        </div>
-
-        {/* What I don't do */}
-        <div className="mt-5 border-[3px] border-border bg-bg-raised p-5 sm:p-8">
-          <p className="text-base text-cream sm:text-lg">What I don&apos;t do</p>
-          <div className="mt-4 flex flex-col gap-2 text-sm text-muted normal-case sm:text-base">
-            <p><span style={{ color: ACCENT }}>+</span> Make price predictions or promises about the token&apos;s future</p>
-            <p><span style={{ color: ACCENT }}>+</span> Manage or endorse groups, channels, or communities related to the token</p>
-            <p><span style={{ color: ACCENT }}>+</span> Handle listings, partnerships, or marketing for the token</p>
-            <p><span style={{ color: ACCENT }}>+</span> Provide financial advice of any kind</p>
-          </div>
-        </div>
-
-        {/* Disclaimer */}
-        <div className="mt-5 border-[3px] border-border bg-bg-raised p-5 sm:p-8">
-          <p className="text-base text-cream sm:text-lg">Disclaimer</p>
-          <div className="mt-4 flex flex-col gap-4 text-sm leading-relaxed text-muted normal-case sm:text-base">
-            <p>
-              This is <A>not financial advice</A>. The token can{" "}
-              <A>lose all of its value</A>. If you choose to interact with the
-              token, you do so entirely <A>at your own risk</A>.
-            </p>
-            <p>
-              Mapa Vivo makes no promises, guarantees, or representations about
-              the token&apos;s value, future performance, or utility.
-            </p>
-            <p>
-              Be aware that <A>scam tokens</A> may exist using similar names.
-              The only contract address recognized by this page is the one listed
-              below. Always verify before interacting with any token.
-            </p>
-          </div>
-        </div>
-
-        {/* Token info */}
-        <div className="mt-5 border-[3px] border-border bg-bg-raised p-5 sm:p-8">
-          <p className="text-base text-cream sm:text-lg">Token Info</p>
-          <div className="mt-4 flex flex-col gap-3 text-sm text-muted normal-case sm:text-base">
-            <div className="flex items-start gap-3">
-              <span className="shrink-0" style={{ color: ACCENT }}>Network</span>
-              <span>Base</span>
-            </div>
-            <div className="flex items-start gap-3">
-              <span className="shrink-0" style={{ color: ACCENT }}>CA</span>
-              <span className="break-all">{GITC_CA}</span>
-            </div>
-            <div className="flex items-start gap-3">
-              <span className="shrink-0" style={{ color: ACCENT }}>Chart</span>
-              <a
-                href={`https://dexscreener.com/base/${GITC_CA}`}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="transition-colors hover:text-cream"
-              >
-                DexScreener &rarr;
-              </a>
-            </div>
-          </div>
-        </div>
+    <EditorialPageShell eyebrow="Aviso público" title="Ativo comunitário não oficial" intro="Informações de transparência sobre um token criado por terceiros e sem vínculo societário, financeiro ou operacional com o Grupo Maia.">
+      <div className="border-b border-white/13">
+        <EditorialSection index={1} title="Sem emissão pelo grupo">
+          <p>O Grupo Maia e o Mapa Vivo não criaram, solicitaram ou administram esse ativo. Não controlam oferta, preço, liquidez, listagens ou comunidades relacionadas.</p>
+        </EditorialSection>
+        <EditorialSection index={2} title="Sem recomendação">
+          <p>Esta página não constitui oferta, publicidade, promessa de retorno ou aconselhamento financeiro. Ativos digitais podem perder integralmente seu valor.</p>
+        </EditorialSection>
+        <EditorialSection index={3} title="Risco de terceiros">
+          <p>Qualquer interação ocorre por decisão e risco exclusivos do usuário. Nomes semelhantes podem ser usados em fraudes; verifique fontes independentes antes de qualquer operação.</p>
+        </EditorialSection>
+        <EditorialSection index={4} title="Registro informado">
+          <p>Rede declarada: Base.</p>
+          <p className="break-all font-mono text-xs text-white/42">Contrato informado por terceiros: {CONTRACT}</p>
+        </EditorialSection>
       </div>
-    </main>
+    </EditorialPageShell>
   );
 }

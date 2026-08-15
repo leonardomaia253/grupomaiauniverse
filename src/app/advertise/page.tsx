@@ -1,410 +1,51 @@
 import type { Metadata } from "next";
-import Link from "next/link";
-import { getSupabaseAdmin } from "@/lib/supabase";
-import { AdvertisePageTracker } from "./tracking";
-import { AdPurchaseForm } from "./AdPurchaseForm";
-
-const ACCENT = "#c8e64a";
-
-export const dynamic = "force-dynamic";
+import EditorialPageShell from "@/components/EditorialPageShell";
 
 export const metadata: Metadata = {
-  title: "Anunciar no Mapa Vivo",
-  description:
-    "Reach 9,000+ empresas do ecossistema. Planes, blimps, and billboards in a 3D Universe. 1%+ CTR (2x industry avg). From $29/mo.",
-  openGraph: {
-    title: "Anunciar no Mapa Vivo",
-    description:
-      "Reach 9,000+ empresas do ecossistema. Planes, blimps, and billboards in a 3D Universe. 1%+ CTR (2x industry avg). From $29/mo.",
-    siteName: "Mapa Vivo",
-    type: "website",
-    locale: "en_US",
-  },
-  twitter: {
-    card: "summary_large_image",
-    creator: "contato institucional",
-    site: "contato institucional",
-  },
+  title: "Parcerias de mídia — Grupo Maia",
+  description: "Projetos de mídia e presença institucional no ecossistema do Grupo Maia.",
 };
 
-function formatK(n: number): string {
-  if (n >= 1_000_000) return `${(n / 1_000_000).toFixed(1)}M`;
-  if (n >= 1_000) return `${Math.floor(n / 1_000)}K`;
-  return n.toLocaleString();
-}
+const formats = [
+  ["Conteúdo institucional", "Narrativas editoriais sobre negócios, tecnologia, território e inovação, com identificação clara de parceria."],
+  ["Presença no diretório", "Destaques contextuais em áreas adequadas da plataforma, sem interromper a navegação ou simular conteúdo orgânico."],
+  ["Projetos especiais", "Experiências, estudos e ativações desenvolvidos sob medida para objetivos e públicos definidos."],
+] as const;
 
-async function getStats() {
-  if (!process.env.NEXT_PUBLIC_SUPABASE_URL || !process.env.ADMIN_PROXY_SECRET) {
-    return { devCount: 0, monthlyImpressions: 0, monthlyClicks: 0, ctr: 0 };
-  }
-  const supabase = getSupabaseAdmin();
-  const thirtyDaysAgo = new Date(Date.now() - 30 * 86_400_000).toISOString();
-
-  const [devResult, impressionResult, clickResult] = await Promise.all([
-    supabase
-      .from("companies")
-      .select("id", { count: "exact", head: true }),
-    supabase
-      .from("sky_ad_events")
-      .select("id", { count: "exact", head: true })
-      .eq("event_type", "impression")
-      .gte("created_at", thirtyDaysAgo),
-    supabase
-      .from("sky_ad_events")
-      .select("id", { count: "exact", head: true })
-      .in("event_type", ["click", "cta_click"])
-      .gte("created_at", thirtyDaysAgo),
-  ]);
-
-  const impressions = impressionResult.count ?? 0;
-  const clicks = clickResult.count ?? 0;
-  const ctr = impressions > 0 ? (clicks / impressions) * 100 : 0;
-
-  return { devCount: devResult.count ?? 0, monthlyImpressions: impressions, monthlyClicks: clicks, ctr };
-}
-
-const COMPETITORS = [
-  { name: "X (Twitter)", ctr: 0.8 },
-  { name: "Google Display", ctr: 0.5 },
-  { name: "LinkedIn", ctr: 0.4 },
-  { name: "Avg banner ad", ctr: 0.46 },
-];
-
-export default async function AdvertisePage() {
-  const { devCount, monthlyImpressions, monthlyClicks, ctr } = await getStats();
-
-  const statCards = [
-    { value: `${formatK(monthlyImpressions)}+`, label: "monthly impressions" },
-    { value: `${formatK(monthlyClicks)}+`, label: "monthly ad clicks" },
-    {
-      value: `${ctr.toFixed(1)}%`,
-      label: "avg click rate",
-      sub: ctr > 0.9 ? "2x+ industry avg" : undefined,
-    },
-    { value: `${formatK(devCount)}+`, label: "empresas do ecossistema" },
-  ];
-
-  const barMax = Math.max(ctr, 1.2);
-
+export default function MediaPartnershipsPage() {
   return (
-    <main className="min-h-screen bg-bg font-pixel uppercase text-warm">
-      <AdvertisePageTracker />
-
-      <div className="mx-auto max-w-3xl px-4 pt-6 pb-12">
-        {/* Nav */}
-        <Link
-          href="/"
-          className="text-sm text-muted transition-colors hover:text-cream"
-        >
-          &larr; Back to Universe
-        </Link>
-
-        {/* ── Hero ── */}
-        <div className="mt-10 text-center">
-          <h1 className="text-3xl text-cream sm:text-4xl">
-            Advertise where companies{" "}
-            <span style={{ color: ACCENT }}>actually look</span>
-          </h1>
-          <p className="mx-auto mt-4 max-w-lg text-sm leading-relaxed text-muted normal-case">
-            Planes fly across the sky. Blimps float between planets.
-            Billboards light up orbital placements. {devCount.toLocaleString()}+ real
-            empresas do ecossistema explore this Universe every week. Your ad lives inside it.
-          </p>
-        </div>
-
-        {/* ── Stats ── */}
-        <div className="mt-10 grid grid-cols-2 gap-3 sm:grid-cols-4">
-          {statCards.map((s) => (
-            <div
-              key={s.label}
-              className="border-[3px] border-border p-4 text-center"
-            >
-              <p className="text-2xl" style={{ color: ACCENT }}>
-                {s.value}
-              </p>
-              <p className="mt-1 text-xs leading-tight text-muted normal-case">
-                {s.label}
-              </p>
-              {s.sub && (
-                <p
-                  className="mt-1 text-[10px] normal-case"
-                  style={{ color: ACCENT }}
-                >
-                  {s.sub}
-                </p>
-              )}
-            </div>
-          ))}
-        </div>
-
-        {/* ── Your audience ── */}
-        <div className="mt-8 grid gap-4 sm:grid-cols-[1fr_0.9fr]">
-          <div className="border-[3px] border-border p-5 sm:p-6">
-            <p className="text-base text-cream">Live placement preview</p>
-            <p className="mt-2 text-xs leading-relaxed text-muted normal-case">
-              Your ad is not a throwaway banner. It becomes scenery: plane, blimp, orbital billboard, or planet-side placement.
-            </p>
-            <div className="relative mt-5 h-44 overflow-hidden border border-border bg-[#05070b]">
-              <div className="absolute inset-0 opacity-70" style={{ background: "radial-gradient(circle at 22% 24%, rgba(200,230,74,0.28), transparent 25%), radial-gradient(circle at 74% 70%, rgba(96,144,224,0.22), transparent 30%)" }} />
-              <div className="absolute left-8 top-12 h-16 w-16 rounded-full" style={{ background: `radial-gradient(circle at 30% 22%, white, ${ACCENT} 45%, #071006 100%)`, boxShadow: `0 0 38px ${ACCENT}66` }} />
-              <div className="absolute right-8 top-7 border border-white/15 bg-black/70 px-4 py-2 text-[10px] text-cream backdrop-blur">
-                YOUR BRAND ✦ LAUNCH
-              </div>
-              <div className="absolute bottom-8 left-1/2 h-8 w-44 -translate-x-1/2 border border-white/15 bg-black/80 px-3 py-2 text-center text-[10px] text-muted">
-                planet billboard
-              </div>
-            </div>
-          </div>
-
-          <div className="border-[3px] border-border p-5 sm:p-6">
-            <p className="text-base text-cream">What you can track</p>
-            <div className="mt-4 space-y-3">
-              {[
-                ["Impressions", "how many times the creative appeared"],
-                ["Clicks", "planet, CTA, and vehicle clicks"],
-                ["CTR", "campaign click-through rate"],
-                ["Period", "start, end, and campaign status"],
-              ].map(([label, text]) => (
-                <div key={label} className="flex items-start justify-between gap-4 border-b border-border/60 pb-3">
-                  <span className="text-xs text-cream">{label}</span>
-                  <span className="max-w-[11rem] text-right text-[10px] leading-relaxed text-muted normal-case">{text}</span>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-
-        <div className="mt-8 border-[3px] border-border p-5 sm:p-6">
-          <p className="text-base text-cream">Your audience</p>
-          <div className="mt-4 grid gap-3 sm:grid-cols-2">
-            {[
-              "Verified empresas do ecossistema, not bots",
-              "Software engineers, CTOs, indie hackers",
-              "Premium demographic: avg $120K+ salary",
-              "Minutes of engagement per session, not seconds",
-              "Global reach: US, EU, Brazil, India",
-              "100% viewability. No ad blockers. No scroll-past",
-            ].map((f) => (
-              <p
-                key={f}
-                className="flex items-start gap-2 text-sm text-muted normal-case"
-              >
-                <span className="mt-px" style={{ color: ACCENT }}>
-                  +
-                </span>
-                {f}
-              </p>
-            ))}
-          </div>
-        </div>
-
-        {/* ── CTR comparison ── */}
-        {ctr > 0.5 && (
-          <div className="mt-8 border-[3px] border-border p-5 sm:p-6">
-            <p className="text-base text-cream">
-              Mapa Vivo vs midia tradicional
-            </p>
-            <p className="mt-1 text-xs text-muted normal-case">
-              Click-through rate comparison (30-day average)
-            </p>
-
-            <div className="mt-5 space-y-3">
-              {/* Mapa Vivo bar */}
-              <div className="flex items-center gap-3">
-                <span className="w-28 shrink-0 text-xs text-cream normal-case sm:w-32">
-                  Mapa Vivo
-                </span>
-                <div className="relative h-6 flex-1 overflow-hidden rounded-sm">
-                  <div
-                    className="absolute inset-y-0 left-0 rounded-sm"
-                    style={{
-                      width: `${(ctr / barMax) * 100}%`,
-                      backgroundColor: ACCENT,
-                    }}
-                  />
-                </div>
-                <span
-                  className="w-14 text-right text-sm font-bold"
-                  style={{ color: ACCENT }}
-                >
-                  {ctr.toFixed(1)}%
-                </span>
-              </div>
-
-              {/* Competitor bars */}
-              {COMPETITORS.map((p) => (
-                <div key={p.name} className="flex items-center gap-3">
-                  <span className="w-28 shrink-0 text-xs text-muted normal-case sm:w-32">
-                    {p.name}
-                  </span>
-                  <div className="relative h-6 flex-1 overflow-hidden rounded-sm">
-                    <div
-                      className="absolute inset-y-0 left-0 rounded-sm bg-border"
-                      style={{ width: `${(p.ctr / barMax) * 100}%` }}
-                    />
-                  </div>
-                  <span className="w-14 text-right text-sm text-muted">
-                    {p.ctr}%
-                  </span>
-                </div>
-              ))}
-            </div>
-
-            <p className="mt-4 text-xs text-dim normal-case">
-              3D ads inside the world, not banners people train
-              themselves to ignore.
-            </p>
-          </div>
-        )}
-
-        {/* ── Purchase form ── */}
-        <div className="mt-10">
-          <AdPurchaseForm />
-        </div>
+    <EditorialPageShell
+      eyebrow="Parcerias"
+      title="Mídia com contexto."
+      intro="O Grupo Maia avalia projetos que façam sentido para sua audiência e para a integridade da plataforma. Não comercializamos tráfego artificial, formatos intrusivos ou promessas de desempenho sem evidência."
+      wide
+    >
+      <div className="grid border-l border-t border-white/13 md:grid-cols-3">
+        {formats.map(([title, description], index) => (
+          <section key={title} className="min-h-72 border-b border-r border-white/13 p-7">
+            <span className="text-[10px] tabular-nums text-white/25">{String(index + 1).padStart(2, "0")}</span>
+            <h2 className="mt-12 text-2xl tracking-[-.035em] text-white/82">{title}</h2>
+            <p className="mt-4 text-sm leading-6 text-white/43">{description}</p>
+          </section>
+        ))}
       </div>
 
-      {/* ═══════════════════════════════════════════
-          ZONE 2: HOW IT WORKS + FAQ
-          ═══════════════════════════════════════════ */}
-      <div
-        className="border-t-[3px] border-border"
-        style={{ backgroundColor: "#080e1c" }}
-      >
-        <div className="mx-auto max-w-3xl px-4 py-16">
-          {/* How it works */}
-          <div className="grid gap-8 sm:grid-cols-4">
-            {[
-              { n: "01", t: "Pick", d: "Sky or planet ads. 5 formats, starting at $29/mo" },
-              {
-                n: "02",
-                t: "Design",
-                d: "Your text, your colors. Live 3D preview",
-              },
-              {
-                n: "03",
-                t: "Pay",
-                d: "Stripe checkout. No account needed. 30 seconds",
-              },
-              {
-                n: "04",
-                t: "Track",
-                d: "Real-time impressions, clicks, and CTR",
-              },
-            ].map((s) => (
-              <div key={s.n}>
-                <span className="text-2xl" style={{ color: ACCENT }}>
-                  {s.n}
-                </span>
-                <h3 className="mt-1 text-base text-cream">{s.t}</h3>
-                <p className="mt-1 text-sm leading-relaxed text-muted normal-case">
-                  {s.d}
-                </p>
-              </div>
-            ))}
-          </div>
-
-          {/* Every ad includes */}
-          <div className="mt-14 grid gap-x-8 gap-y-3 sm:grid-cols-2">
-            <p className="mb-2 text-base text-cream sm:col-span-2">
-              Every ad includes
-            </p>
-            {[
-              "Your text, your colors, your link",
-              "Live 3D preview before you buy",
-              "Clickable CTA with UTM tracking",
-              "Real-time impressions and click dashboard",
-              "Goes live within minutes",
-              "Change your ad anytime, no extra cost",
-            ].map((f) => (
-              <p
-                key={f}
-                className="flex items-center gap-2 text-sm text-muted normal-case"
-              >
-                <span style={{ color: ACCENT }}>+</span>
-                {f}
-              </p>
-            ))}
-          </div>
-
-          {/* FAQ */}
-          <div className="mt-14">
-            <p className="mb-5 text-base text-cream">FAQ</p>
-            <div className="space-y-3">
-              {[
-                {
-                  q: "How many people will see my ad?",
-                  a: `${formatK(monthlyImpressions)}+ monthly impressions across ${devCount.toLocaleString()}+ company planets. Sky ads cross the orbital field. Planet ads sit directly beside high-attention planets. There is no way to visit the Universe without seeing your ad.`,
-                },
-                {
-                  q: "What's the click-through rate?",
-                  a: `${ctr.toFixed(1)}% average CTR. That's 2x+ the industry average for display ads (0.46%). People click because the ads are part of the world, not something to scroll past.`,
-                },
-                {
-                  q: "Who is the audience?",
-                  a: "100% empresas do ecossistema. Software engineers, CTOs, indie hackers, operadores, gestores e equipes. Every planet is a real perfil da empresa with real contribution data. No bots, no fake traffic.",
-                },
-                {
-                  q: "What formats are available?",
-                  a: "Sky: planes trailing LED banners, blimps with scrolling LED screens. Planet: orbital billboards, rotating signs, full LED wraps. All rendered in dot-matrix pixel style.",
-                },
-                {
-                  q: "Do I get analytics?",
-                  a: "Yes. After purchase you get a private tracking dashboard with real-time impressions, clicks, and CTA clicks. Bookmark it and check anytime.",
-                },
-                {
-                  q: "How many ad slots are available?",
-                  a: "15 plane slots, 8 blimp slots, 10 each for billboard, rooftop, and LED wrap. Limited inventory keeps your ad visible.",
-                },
-                {
-                  q: "How do I pay?",
-                  a: "Credit card, Apple Pay, or Google Pay via Stripe. Monthly subscription, cancel anytime. No account needed.",
-                },
-                {
-                  q: "Can I change my ad after buying?",
-                  a: "Yes. You get a setup page where you can update your text, brand name, description, and link anytime. Unlimited changes, no extra cost.",
-                },
-                {
-                  q: "What if I want to cancel?",
-                  a: "You can cancel your subscription anytime. Your ad stays active until the end of the current billing period. Contact contato@grupomaia.com.br if you need help.",
-                },
-              ].map((item) => (
-                <div key={item.q} className="border-2 border-border p-5">
-                  <h3 className="text-sm text-cream">{item.q}</h3>
-                  <p className="mt-2 text-sm leading-relaxed text-muted normal-case">
-                    {item.a}
-                  </p>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          {/* Footer */}
-          <div className="mt-14 text-center">
-            <p className="text-xs text-muted normal-case">
-              Questions?{" "}
-              <a
-                href="mailto:contato@grupomaia.com.br"
-                className="transition-colors hover:text-cream"
-                style={{ color: ACCENT }}
-              >
-                contato@grupomaia.com.br
-              </a>
-            </p>
-            <p className="mt-4 text-xs text-muted normal-case">
-              built by{" "}
-              <a
-                href="mailto:contato@grupomaia.com.br"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="transition-colors hover:text-cream"
-                style={{ color: ACCENT }}
-              >
-                contato institucional
-              </a>
-            </p>
-          </div>
-        </div>
+      <div className="mt-14 grid gap-10 border-t border-white/13 pt-9 lg:grid-cols-[1fr_1fr]">
+        <section>
+          <p className="text-[10px] font-semibold uppercase tracking-[.16em] text-[#bda57e]">Princípios</p>
+          <ul className="mt-5 space-y-3 text-sm leading-6 text-white/48">
+            <li>Identificação explícita de conteúdo patrocinado.</li>
+            <li>Adequação editorial e reputacional.</li>
+            <li>Métricas definidas antes da contratação.</li>
+            <li>Proteção da experiência e dos dados da audiência.</li>
+          </ul>
+        </section>
+        <section>
+          <p className="text-[10px] font-semibold uppercase tracking-[.16em] text-[#bda57e]">Enviar proposta</p>
+          <p className="mt-5 max-w-lg text-sm leading-6 text-white/48">Informe marca, objetivo, público, período e formato pretendido. A equipe avaliará aderência, disponibilidade e condições comerciais.</p>
+          <a href="mailto:contato@grupomaia.com.br?subject=Parceria%20de%20m%C3%ADdia" className="mt-6 inline-flex rounded-full bg-[#eee9df] px-5 py-3 text-xs font-medium text-[#171512]">Falar com a equipe</a>
+        </section>
       </div>
-    </main>
+    </EditorialPageShell>
   );
 }

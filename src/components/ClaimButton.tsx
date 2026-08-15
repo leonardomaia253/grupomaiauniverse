@@ -14,7 +14,7 @@ export default function ClaimButton({ companyLogin, claimed }: Props) {
   const [loading, setLoading] = useState(false);
   const [isOwner, setIsOwner] = useState(false);
 
-  const accent = "#c8e64a";
+  const accent = "#b89a62";
 
   useEffect(() => {
     const supabase = createBrowserSupabase();
@@ -32,10 +32,10 @@ export default function ClaimButton({ companyLogin, claimed }: Props) {
   if (isClaimed) {
     return (
       <div
-        className="inline-block border-2 px-3 py-1 text-[10px]"
+        className="inline-block rounded-full border px-3 py-1 text-[10px]"
         style={{ borderColor: accent, color: accent }}
       >
-        CLAIMED
+        Perfil verificado
       </div>
     );
   }
@@ -56,13 +56,10 @@ export default function ClaimButton({ companyLogin, claimed }: Props) {
     <button
       onClick={handleClaim}
       disabled={loading}
-      className="btn-press px-4 py-2 text-[10px] text-bg disabled:opacity-40"
-      style={{
-        backgroundColor: accent,
-        boxShadow: "4px 4px 0 0 #5a7a00",
-      }}
+      className="rounded-full px-5 py-2.5 text-xs text-[#171714] disabled:opacity-40"
+      style={{ backgroundColor: accent }}
     >
-      {loading ? "Claiming..." : "Claim My planet"}
+      {loading ? "Confirmando…" : "Verificar perfil"}
     </button>
   );
 }

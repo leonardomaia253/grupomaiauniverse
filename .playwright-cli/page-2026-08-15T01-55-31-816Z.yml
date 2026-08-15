@@ -1,0 +1,23 @@
+- generic [active]:
+  - region "Apresentação do Grupo Maia" [ref=e1]:
+    - generic [ref=e4]:
+      - generic "Grupo Maia" [ref=e5]:
+        - generic [ref=e6]: MAIA
+        - generic [ref=e7]: Grupo
+      - button "Ir para o mapa" [ref=e8]
+    - main [ref=e37]:
+      - paragraph [ref=e38]:
+        - generic [ref=e39]: "01"
+        - text: Princípio
+      - heading "Uma origem. Diferentes maneiras de construir." [level=1] [ref=e40]
+      - paragraph [ref=e41]: O Grupo Maia começa onde visão e execução se encontram.
+    - generic [ref=e42]:
+      - generic [ref=e43]:
+        - button "Pausar" [ref=e44]
+        - button "Silenciar trilha" [ref=e48]
+        - button "Ocultar texto" [ref=e53]
+      - button "Posição do filme" [ref=e57]
+      - generic [ref=e58]: 0:00 / 1:36
+      - button "Fechar apresentação" [ref=e59]
+  - button "Open Next.js Dev Tools" [ref=e32] [cursor=pointer]
+  - alert [ref=e36]

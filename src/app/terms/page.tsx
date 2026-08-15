@@ -1,171 +1,33 @@
-import Link from "next/link";
 import type { Metadata } from "next";
+import EditorialPageShell, { EditorialSection } from "@/components/EditorialPageShell";
 
 export const metadata: Metadata = {
-  title: "Terms of Service - Mapa Vivo",
-  description: "Terms of Service for Mapa Vivo.",
+  title: "Termos de uso — Grupo Maia",
+  description: "Termos de uso do Mapa Vivo do Grupo Maia.",
 };
 
-const ACCENT = "#c8e64a";
+/* Static content nodes are subsequently keyed by their section title. */
+/* eslint-disable react/jsx-key */
+const terms = [
+  ["A plataforma", <p>O Mapa Vivo é uma plataforma de apresentação e consulta que organiza empresas, áreas de atuação e informações públicas. Ao utilizar o serviço, você concorda com estes termos.</p>],
+  ["Conta e acesso", <><p>A autenticação pode ocorrer por meio do GitHub. Consultamos apenas os dados públicos e permissões informadas durante o acesso.</p><p>Você é responsável por proteger suas credenciais e por comunicar qualquer uso não autorizado.</p></>],
+  ["Uso responsável", <p>Não é permitido tentar interromper o serviço, explorar falhas, automatizar contas falsas, inflar indicadores, coletar dados sem autorização ou se passar por terceiros.</p>],
+  ["Propriedade intelectual", <p>Marca, interface, textos e materiais institucionais pertencem aos seus respectivos titulares. Dados públicos de terceiros permanecem sujeitos às licenças e regras das fontes originais.</p>],
+  ["Serviços e pagamentos", <p>Contratações opcionais são processadas por fornecedores especializados. Condições, valores, cancelamentos e reembolsos devem ser apresentados antes da confirmação de cada operação e observar a legislação aplicável.</p>],
+  ["Disponibilidade", <p>A plataforma é oferecida conforme disponibilidade técnica. Integrações externas, manutenção e incidentes podem afetar temporariamente o acesso ou a atualização dos dados.</p>],
+  ["Responsabilidade", <p>Indicadores e informações públicas têm finalidade informativa e não constituem recomendação financeira, jurídica ou comercial. Decisões devem considerar fontes oficiais e análise independente.</p>],
+  ["Serviços de terceiros", <p>Links e integrações externas seguem termos próprios. O Grupo Maia não controla alterações, disponibilidade ou práticas adotadas por esses fornecedores.</p>],
+  ["Alterações", <p>Estes termos podem ser atualizados em razão de mudanças legais, técnicas ou operacionais. A versão vigente e sua data de revisão permanecerão disponíveis nesta página.</p>],
+  ["Contato", <p>Dúvidas podem ser encaminhadas para <a className="text-[#c5aa7d] underline decoration-white/20 underline-offset-4" href="mailto:contato@grupomaia.com.br">contato@grupomaia.com.br</a>.</p>],
+] as const;
+/* eslint-enable react/jsx-key */
 
 export default function TermsPage() {
   return (
-    <main className="min-h-screen bg-bg font-pixel uppercase text-warm">
-      <div className="mx-auto max-w-3xl px-4 py-10">
-        <Link
-          href="/"
-          className="mb-6 inline-block text-sm text-muted transition-colors hover:text-cream sm:mb-8"
-        >
-          &larr; Back to Universe
-        </Link>
-
-        <h1 className="text-2xl text-cream sm:text-3xl">
-          Terms of <span style={{ color: ACCENT }}>Service</span>
-        </h1>
-        <p className="mt-2 text-[10px] text-muted normal-case">
-          Last updated: March 1, 2026
-        </p>
-
-        <div className="mt-8 flex flex-col gap-5">
-          <Section n={1} title="The Service">
-            <p>
-              Mapa Vivo is a web application that visualizes perfis de empresas as 3D
-              planets in a virtual Universe. By using Mapa Vivo, you agree to these
-              terms.
-            </p>
-          </Section>
-
-          <Section n={2} title="Account & Access">
-            <p>
-              You sign in via autenticacao segura. We access your public dados do portfolio
-              (profile, repositories, contribution count) to generate your
-              planet. We do not access private repositories or modify any data
-              on your GitHub account.
-            </p>
-            <p>
-              You are responsible for the security of your GitHub account. We are
-              not liable for unauthorized access resulting from compromised
-              GitHub credentials.
-            </p>
-          </Section>
-
-          <Section n={3} title="User Conduct">
-            <p>You agree not to:</p>
-            <ul className="mt-1 flex flex-col gap-1">
-              <Li>Abuse, exploit, or attempt to disrupt the service</Li>
-              <Li>Scrape or collect data from Mapa Vivo without permission</Li>
-              <Li>Use automated systems to create fake accounts or inflate metrics</Li>
-              <Li>Impersonate other users or misrepresent your identity</Li>
-            </ul>
-          </Section>
-
-          <Section n={4} title="Intellectual Property">
-            <p>
-              Mapa Vivo, its code, design, and branding are operated by the portfolio team
-              Your dados do portfolio remains yours. By using the service, you
-              grant us a limited license to display your public dados do portfolio as
-              part of the Universe visualization.
-            </p>
-          </Section>
-
-          <Section n={5} title="Purchases & Shop">
-            <p>
-              Mapa Vivo offers optional cosmetic items for purchase. All purchases
-              are final and non-refundable unless required by applicable law.
-              Cosmetic items have no real-world value and exist only within Git
-              Universe.
-            </p>
-          </Section>
-
-          <Section n={6} title="Disclaimer of Warranties">
-            <p>
-              Mapa Vivo is provided &quot;as is&quot; and &quot;as
-              available&quot; without warranties of any kind, express or implied.
-              We do not guarantee uptime, accuracy of data, or uninterrupted
-              access. GitHub API limitations or outages may affect the service.
-            </p>
-          </Section>
-
-          <Section n={7} title="Limitation of Liability">
-            <p>
-              To the maximum extent permitted by law, the portfolio team and Mapa Vivo
-              shall not be liable for any indirect, incidental, special, or
-              consequential damages arising from your use of the service.
-            </p>
-          </Section>
-
-          <Section n={8} title="Third-Party Token">
-            <p>
-              A token called token comunit?rio exists on the Base blockchain. This token was
-              created by the community, not by Mapa Vivo or the portfolio team. We do
-              not control, manage, or endorse the token. Any interaction with the
-              token is entirely at your own risk. See the{" "}
-              <a
-                href="/token"
-                className="transition-colors hover:text-cream"
-                style={{ color: ACCENT }}
-              >
-                token page
-              </a>{" "}
-              for more information.
-            </p>
-          </Section>
-
-          <Section n={9} title="Changes to Terms">
-            <p>
-              We may update these terms at any time. Continued use of Mapa Vivo
-              after changes constitutes acceptance of the updated terms.
-            </p>
-          </Section>
-
-          <Section n={10} title="Contact">
-            <p>
-              Questions? Reach out at{" "}
-              <a
-                href="mailto:contato@grupomaia.com.br"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="transition-colors hover:text-cream"
-                style={{ color: ACCENT }}
-              >
-                contato institucional
-              </a>{" "}
-              on X.
-            </p>
-          </Section>
-        </div>
+    <EditorialPageShell eyebrow="Governança" title="Termos de uso" intro="Condições para acesso e utilização responsável do Mapa Vivo. Última revisão: 15 de agosto de 2026.">
+      <div className="border-b border-white/13">
+        {terms.map(([title, content], index) => <EditorialSection key={title} index={index + 1} title={title}>{content}</EditorialSection>)}
       </div>
-    </main>
-  );
-}
-
-function Section({
-  n,
-  title,
-  children,
-}: {
-  n: number;
-  title: string;
-  children: React.ReactNode;
-}) {
-  return (
-    <div className="border-[3px] border-border bg-bg-raised p-5 sm:p-6">
-      <p className="text-sm text-cream">
-        <span style={{ color: "#c8e64a" }}>{String(n).padStart(2, "0")}.</span>{" "}
-        {title}
-      </p>
-      <div className="mt-3 flex flex-col gap-2 text-xs leading-relaxed text-muted normal-case">
-        {children}
-      </div>
-    </div>
-  );
-}
-
-function Li({ children }: { children: React.ReactNode }) {
-  return (
-    <li className="flex items-start gap-2">
-      <span style={{ color: "#c8e64a" }}>+</span>
-      <span>{children}</span>
-    </li>
+    </EditorialPageShell>
   );
 }

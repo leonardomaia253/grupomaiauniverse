@@ -1,252 +1,39 @@
-"use client";
-
-import Link from "next/link";
 import { ROADMAP_PHASES } from "@/lib/roadmap-data";
-import type { RoadmapPhase, RoadmapItem, ItemStatus } from "@/lib/roadmap-data";
+import EditorialPageShell from "@/components/EditorialPageShell";
 
-const ACCENT = "#c8e64a";
-const CREAM = "#e8dcc8";
-const MUTED = "#8c8c9c";
+const statusLabel = { done: "Concluído", active: "Em desenvolvimento", planned: "Planejado" } as const;
 
-/* ─── status config ─── */
-const STATUS_CONFIG: Record<
-  ItemStatus,
-  { label: string; color: string; bg: string; border: string }
-> = {
-  done: {
-    label: "DONE",
-    color: "#4ade80",
-    bg: "rgba(74, 222, 128, 0.08)",
-    border: "#2d6a3f",
-  },
-  planet: {
-    label: "planet",
-    color: ACCENT,
-    bg: "rgba(200, 230, 74, 0.08)",
-    border: ACCENT,
-  },
-  planned: {
-    label: "PLANNED",
-    color: MUTED,
-    bg: "rgba(140, 140, 156, 0.05)",
-    border: "#2a2a30",
-  },
-};
-
-/* ─── helpers ─── */
-function totalItems() {
-  return ROADMAP_PHASES.reduce((sum, p) => sum + p.items.length, 0);
-}
-
-function doneItems() {
-  return ROADMAP_PHASES.reduce(
-    (sum, p) => sum + p.items.filter((i) => i.status === "done").length,
-    0
-  );
-}
-
-/* ─── main component ─── */
-interface Props {
-  voteCounts: Record<string, number>;
-  userVotes: string[];
-  isLoggedIn: boolean;
-}
-
-export default function RoadmapClient({
-  voteCounts,
-  userVotes,
-  isLoggedIn,
-}: Props) {
-  const total = totalItems();
-  const done = doneItems();
-  const pct = Math.round((done / total) * 100);
+export default function RoadmapClient() {
+  const total = ROADMAP_PHASES.reduce((sum, phase) => sum + phase.items.length, 0);
+  const done = ROADMAP_PHASES.reduce((sum, phase) => sum + phase.items.filter((item) => item.status === "done").length, 0);
 
   return (
-    <main className="min-h-screen bg-bg font-pixel uppercase text-warm">
-      <div className="mx-auto max-w-2xl px-4 py-10">
-        {/* Header */}
-        <div className="flex items-center justify-between">
-          <Link
-            href="/"
-            className="text-xs text-muted transition-colors hover:text-cream"
-          >
-            &larr; Back to Universe
-          </Link>
-        </div>
-
-        <div className="mt-6 text-center">
-          <h1 className="text-3xl text-cream md:text-4xl">
-            Road<span style={{ color: ACCENT }}>map</span>
-          </h1>
-          <p className="mt-3 text-xs text-muted normal-case">
-            What we've built, what we're planet, and what's coming next
-          </p>
-        </div>
-
-        {/* Progress bar */}
-        <div className="mt-8 border-[3px] border-border bg-bg-card p-4">
-          <div className="flex items-center justify-between text-[10px]">
-            <span className="text-muted">Overall Progress</span>
-            <span style={{ color: ACCENT }}>
-              {done}/{total} features ({pct}%)
-            </span>
-          </div>
-          <div className="mt-2 h-3 border-2 border-border bg-bg">
-            <div
-              className="h-full transition-all duration-500"
-              style={{
-                width: `${pct}%`,
-                backgroundColor: ACCENT,
-                imageRendering: "pixelated",
-              }}
-            />
-          </div>
-        </div>
-
-        {/* Timeline */}
-        <div className="relative mt-10">
-          {/* Vertical line */}
-          <div
-            className="absolute left-2.75 top-0 h-full w-0.75"
-            style={{ backgroundColor: "#2a2a30" }}
-          />
-
-          {ROADMAP_PHASES.map((phase, phaseIdx) => (
-            <PhaseBlock
-              key={phase.id}
-              phase={phase}
-              isLast={phaseIdx === ROADMAP_PHASES.length - 1}
-            />
-          ))}
-        </div>
-
-        {/* Footer */}
-        <div className="mt-10 text-center">
-          <Link
-            href="/"
-            className="btn-press pixel-shadow-lime inline-block px-7 py-3.5 text-sm text-bg"
-            style={{ backgroundColor: ACCENT }}
-          >
-            Enter the Universe
-          </Link>
-
-          <p className="mt-6 text-[9px] text-muted normal-case">
-            built by{" "}
-            <a
-              href="mailto:contato@grupomaia.com.br"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="transition-colors hover:text-cream"
-              style={{ color: ACCENT }}
-            >
-              contato institucional
-            </a>
-          </p>
-        </div>
+    <EditorialPageShell eyebrow="Produto" title="Evolução da plataforma" intro="O que já foi entregue, o que está em desenvolvimento e quais frentes permanecem planejadas para o Mapa Vivo." wide>
+      <div className="mb-14 flex items-end justify-between border-y border-white/13 py-5">
+        <p className="text-sm text-white/48">Progresso documentado</p>
+        <p className="text-3xl tracking-[-.04em] text-white/82">{done}<span className="text-base text-white/30"> / {total}</span></p>
       </div>
-    </main>
-  );
-}
-
-/* ─── Phase Block ─── */
-function PhaseBlock({
-  phase,
-  isLast,
-}: {
-  phase: RoadmapPhase;
-  isLast: boolean;
-}) {
-  const cfg = STATUS_CONFIG[phase.status];
-  const isplanet = phase.status === "planet";
-
-  return (
-    <div className={`relative pb-10 ${isLast ? "pb-0" : ""}`}>
-      {/* Timeline node */}
-      <div
-        className="absolute left-0 top-0 z-10 h-6.25 w-6.25 border-[3px]"
-        style={{
-          backgroundColor: "#0d0d0f",
-          borderColor: cfg.border,
-          ...(isplanet
-            ? {
-                animation: "pulse-node 2s ease-in-out infinite",
-                boxShadow: `0 0 12px ${ACCENT}44`,
-              }
-            : {}),
-        }}
-      />
-
-      {/* Phase header */}
-      <div className="ml-10">
-        <div className="flex flex-wrap items-center gap-2">
-          <h2 className="text-lg text-cream">{phase.title}</h2>
-          <span className="text-[10px] text-muted">{phase.quarter}</span>
-          <span
-            className="border-2 px-2 py-0.5 text-[9px]"
-            style={{
-              color: cfg.color,
-              borderColor: cfg.border,
-              backgroundColor: cfg.bg,
-            }}
-          >
-            {cfg.label}
-          </span>
-        </div>
-
-        {/* Items */}
-        <div className="mt-3 space-y-1">
-          {phase.items.map((item) => (
-            <ItemRow
-              key={item.id}
-              item={item}
-            />
-          ))}
-        </div>
+      <div className="border-t border-white/13">
+        {ROADMAP_PHASES.map((phase, phaseIndex) => (
+          <section key={phase.id} className="grid gap-5 border-b border-white/13 py-8 lg:grid-cols-[4rem_16rem_1fr]">
+            <span className="text-[10px] tabular-nums text-white/25">{String(phaseIndex + 1).padStart(2, "0")}</span>
+            <div>
+              <h2 className="text-2xl tracking-[-.03em] text-white/84">{phase.title}</h2>
+              <p className="mt-2 text-xs text-white/35">{phase.quarter}</p>
+              <span className="mt-4 inline-flex rounded-full border border-white/15 px-3 py-1.5 text-[10px] text-[#c5aa7d]">{statusLabel[phase.status]}</span>
+            </div>
+            <ul>
+              {phase.items.map((item) => (
+                <li key={item.id} className="grid grid-cols-[1rem_1fr_auto] gap-3 border-b border-white/10 py-3 last:border-0">
+                  <span className={`mt-1.5 h-1.5 w-1.5 rounded-full ${item.status === "done" ? "bg-[#c5aa7d]" : "border border-white/25"}`} />
+                  <span><strong className="block text-sm font-normal text-white/70">{item.name}</strong>{item.description && <small className="mt-1 block text-xs leading-5 text-white/35">{item.description}</small>}</span>
+                  <span className="text-[10px] text-white/28">{statusLabel[item.status]}</span>
+                </li>
+              ))}
+            </ul>
+          </section>
+        ))}
       </div>
-    </div>
-  );
-}
-
-/* ─── Item Row ─── */
-function ItemRow({
-  item,
-}: {
-  item: RoadmapItem;
-}) {
-  const isDone = item.status === "done";
-  const isMystery = item.mystery;
-
-  return (
-    <div
-      className="flex items-start gap-3 border-b border-border/30 py-2.5 last:border-b-0"
-      style={{ opacity: isDone ? 0.55 : 1 }}
-    >
-      {/* Checkbox */}
-      <span className="mt-0.5 flex h-4 w-4 shrink-0 items-center justify-center border-2 border-border text-[8px]">
-        {isDone ? (
-          <span style={{ color: "#4ade80" }}>&#10003;</span>
-        ) : item.status === "planet" ? (
-          <span className="blink-dot block h-1.5 w-1.5" style={{ backgroundColor: ACCENT }} />
-        ) : null}
-      </span>
-
-      {/* Text */}
-      <div className="min-w-0 flex-1">
-        <p
-          className="text-xs"
-          style={{
-            color: isMystery ? MUTED : isDone ? MUTED : CREAM,
-            fontStyle: isMystery ? "italic" : "normal",
-          }}
-        >
-          {item.name}
-        </p>
-        {item.description && (
-          <p className="mt-0.5 text-[9px] text-muted normal-case">
-            {item.description}
-          </p>
-        )}
-      </div>
-    </div>
+    </EditorialPageShell>
   );
 }

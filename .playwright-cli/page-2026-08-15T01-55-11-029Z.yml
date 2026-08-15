@@ -1,0 +1,26 @@
+- generic [active]:
+  - region "Apresentação do Grupo Maia" [ref=e1]:
+    - generic [ref=e4]:
+      - generic "Grupo Maia" [ref=e5]:
+        - generic [ref=e6]: MAIA
+        - generic [ref=e7]: Grupo
+      - button "Ir para o mapa" [ref=e8]
+    - generic [ref=e11]:
+      - paragraph [ref=e12]: Apresentação institucional · 2026
+      - heading [level=1] [ref=e13]:
+        - text: Empresas diferentes.
+        - emphasis [ref=e14]: Uma direção comum.
+      - paragraph [ref=e15]: Um grupo brasileiro que reúne tecnologia, serviços, experiências e patrimônio sob uma visão de longo prazo.
+      - generic [ref=e16]:
+        - button "Assistir ao manifesto 1min36" [ref=e17]:
+          - text: Assistir ao manifesto
+          - generic [ref=e20]: 1min36
+        - button "Conhecer as empresas" [ref=e21]
+      - generic "26 empresas em quatro frentes de atuação" [ref=e22]:
+        - generic [ref=e23]:
+          - strong [ref=e24]: "26"
+          - text: empresas
+        - generic [ref=e25]: 4 frentes de atuação
+        - generic [ref=e26]: 1 visão de longo prazo
+  - button "Open Next.js Dev Tools" [ref=e32] [cursor=pointer]
+  - alert [ref=e36]

@@ -1,28 +1,29 @@
-@import url("https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700;900&family=Space+Grotesk:wght@300;400;500;600&display=swap");
 @import "tailwindcss";
 
 @theme inline {
-  --color-bg: #0d0d0f;
-  --color-bg-raised: #161618;
-  --color-bg-card: #1c1c20;
-  --color-cream: #e8dcc8;
-  --color-cream-dark: #c8b89c;
-  --color-border: #2a2a30;
-  --color-border-light: #3a3a44;
-  --color-dim: #5c5c6c;
-  --color-muted: #8c8c9c;
-  --color-warm: #d4cfc4;
-  --color-lime: #c8e64a;
-  --color-lime-dark: #8aaa1a;
-  --font-pixel: "Silkscreen", monospace;
-  --font-orbitron: "Orbitron", sans-serif;
-  --font-space: "Space Grotesk", sans-serif;
+  --color-bg: #12110f;
+  --color-bg-raised: #1b1916;
+  --color-bg-card: #24211d;
+  --color-cream: #f2eee6;
+  --color-cream-dark: #d8d0c2;
+  --color-border: #39352f;
+  --color-border-light: #585147;
+  --color-dim: #746d63;
+  --color-muted: #9d9589;
+  --color-warm: #ebe5da;
+  --color-lime: #b79a6c;
+  --color-lime-dark: #806846;
+  --font-pixel: Arial, Helvetica, sans-serif;
+  --font-orbitron: Arial, Helvetica, sans-serif;
+  --font-space: Arial, Helvetica, sans-serif;
 }
 
 body {
-  background: #0d0d0f;
-  color: #d4cfc4;
-  font-family: "Space Grotesk", "Silkscreen", monospace;
+  background: #12110f;
+  color: #ebe5da;
+  font-family: Arial, Helvetica, sans-serif;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
 }
 
 .maia-story video,
@@ -377,6 +378,251 @@ body {
   animation: holo-border-rotate 4s linear infinite;
   z-index: -1;
 }
+
+/* Grupo Maia — editorial system
+   Inspired by the restrained cinematic, interactive-list and filter-grid
+   patterns selected through 21st.dev. */
+.maia-loading {
+  background: #eeeae2;
+  color: #171512;
+}
+
+.maia-wordmark {
+  display: flex;
+  align-items: baseline;
+  gap: .55rem;
+  color: inherit;
+  letter-spacing: -.055em;
+}
+.maia-wordmark span { font-size: 1.05rem; font-weight: 700; }
+.maia-wordmark small { font-family: Georgia, "Times New Roman", serif; font-size: .9rem; font-style: italic; letter-spacing: 0; opacity: .65; }
+
+.maia-film {
+  --film-gutter: clamp(1.25rem, 4vw, 4.5rem);
+  font-family: Arial, Helvetica, sans-serif;
+  text-transform: none;
+  isolation: isolate;
+  transition: opacity 520ms ease;
+}
+.maia-film--ending { opacity: 0; pointer-events: none; }
+.maia-film__video {
+  position: absolute;
+  inset: -2%;
+  width: 104%;
+  height: 104%;
+  object-fit: cover;
+  filter: saturate(.32) contrast(1.03);
+  opacity: .72;
+  animation: maia-documentary-in 1400ms cubic-bezier(.2,.7,.2,1) both;
+}
+.maia-film__wash {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(90deg, rgba(17,15,13,.92) 0%, rgba(17,15,13,.55) 53%, rgba(17,15,13,.22) 100%),
+    linear-gradient(0deg, rgba(17,15,13,.72), transparent 52%);
+}
+.maia-film__header {
+  position: relative;
+  z-index: 3;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: max(1.4rem, env(safe-area-inset-top)) var(--film-gutter);
+  border-bottom: 1px solid rgba(244,240,232,.16);
+}
+.maia-text-action {
+  display: inline-flex;
+  align-items: center;
+  gap: .7rem;
+  color: rgba(244,240,232,.76);
+  font-size: .76rem;
+  transition: color 180ms ease;
+}
+.maia-text-action:hover { color: #fff; }
+.maia-film__cover,
+.maia-film__story {
+  position: absolute;
+  z-index: 2;
+  left: var(--film-gutter);
+  right: var(--film-gutter);
+  bottom: clamp(5rem, 12vh, 8.5rem);
+  max-width: 72rem;
+  animation: maia-editorial-rise 800ms cubic-bezier(.2,.7,.2,1) both;
+}
+.maia-kicker {
+  display: flex;
+  gap: 1rem;
+  margin: 0 0 1.35rem;
+  color: rgba(244,240,232,.64);
+  font-size: .68rem;
+  font-weight: 600;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+}
+.maia-kicker span { color: #c8ad82; }
+.maia-film h1 {
+  max-width: 15ch;
+  margin: 0;
+  font-size: clamp(3rem, 7.7vw, 8.5rem);
+  font-weight: 400;
+  line-height: .91;
+  letter-spacing: -.07em;
+  text-wrap: balance;
+}
+.maia-film h1 em {
+  color: #d2b98e;
+  font-family: Georgia, "Times New Roman", serif;
+  font-weight: 400;
+}
+.maia-film__story h1 { font-size: clamp(2.8rem, 6.7vw, 7.2rem); }
+.maia-film__lead {
+  max-width: 40rem;
+  margin: 1.6rem 0 0;
+  color: rgba(244,240,232,.68);
+  font-size: clamp(.95rem, 1.25vw, 1.15rem);
+  line-height: 1.55;
+  text-wrap: pretty;
+}
+.maia-film__actions { display: flex; align-items: center; gap: .75rem; margin-top: 2.2rem; }
+.maia-primary-action,
+.maia-secondary-action {
+  display: inline-flex;
+  min-height: 3.25rem;
+  align-items: center;
+  justify-content: center;
+  gap: .7rem;
+  padding: 0 1.25rem;
+  border: 1px solid rgba(244,240,232,.3);
+  border-radius: 999px;
+  font-size: .78rem;
+  transition: background 180ms ease, color 180ms ease, border-color 180ms ease;
+}
+.maia-primary-action { background: #f1ede5; color: #171512; border-color: #f1ede5; }
+.maia-primary-action span { color: rgba(23,21,18,.48); font-variant-numeric: tabular-nums; }
+.maia-secondary-action { color: #f1ede5; }
+.maia-secondary-action:hover { border-color: #f1ede5; }
+.maia-film__proof {
+  display: flex;
+  gap: clamp(1.2rem, 4vw, 3.5rem);
+  margin-top: 2.5rem;
+  color: rgba(244,240,232,.52);
+  font-size: .72rem;
+}
+.maia-film__proof span { padding-top: .8rem; border-top: 1px solid rgba(244,240,232,.22); }
+.maia-film__proof strong { color: #f4f0e8; font-size: 1rem; font-weight: 500; }
+.maia-film__companies {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .6rem 1.4rem;
+  max-width: 52rem;
+  margin: 1.8rem 0 0;
+  padding: 0;
+  list-style: none;
+}
+.maia-film__companies li {
+  color: rgba(244,240,232,.76);
+  font-size: .75rem;
+  letter-spacing: .04em;
+}
+.maia-film__controls {
+  position: absolute;
+  z-index: 4;
+  left: var(--film-gutter);
+  right: var(--film-gutter);
+  bottom: max(1.3rem, env(safe-area-inset-bottom));
+  display: grid;
+  grid-template-columns: auto 1fr auto auto;
+  align-items: center;
+  gap: 1.1rem;
+}
+.maia-film__transport { display: flex; align-items: center; gap: .35rem; }
+.maia-film__transport button,
+.maia-film__close {
+  display: grid;
+  width: 2.35rem;
+  height: 2.35rem;
+  place-items: center;
+  border: 1px solid rgba(244,240,232,.2);
+  border-radius: 50%;
+  color: rgba(244,240,232,.78);
+}
+.maia-film__timeline {
+  position: relative;
+  height: 1.25rem;
+}
+.maia-film__timeline::before,
+.maia-film__timeline span {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 0;
+  height: 1px;
+  transform: translateY(-50%);
+}
+.maia-film__timeline::before { width: 100%; background: rgba(244,240,232,.22); }
+.maia-film__timeline span { background: #d1b789; }
+.maia-film__time { color: rgba(244,240,232,.5); font-size: .68rem; font-variant-numeric: tabular-nums; }
+.maia-map-film-button {
+  position: fixed;
+  z-index: 40;
+  left: 1.25rem;
+  bottom: 1.25rem;
+  display: inline-flex;
+  align-items: center;
+  gap: .65rem;
+  padding: .75rem 1rem;
+  border: 1px solid rgba(244,240,232,.2);
+  border-radius: 999px;
+  background: rgba(18,17,15,.78);
+  color: rgba(244,240,232,.72);
+  font-size: .72rem;
+  text-transform: none;
+  backdrop-filter: blur(14px);
+}
+
+@keyframes maia-documentary-in {
+  from { opacity: 0; transform: scale(1.035); }
+  to { opacity: .72; transform: scale(1); }
+}
+@keyframes maia-editorial-rise {
+  from { opacity: 0; transform: translateY(1.4rem); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@media (max-width: 640px) {
+  .maia-film__wash { background: linear-gradient(0deg, rgba(17,15,13,.94) 8%, rgba(17,15,13,.38) 74%, rgba(17,15,13,.5)); }
+  .maia-film__cover, .maia-film__story { bottom: 6.2rem; }
+  .maia-film h1 { font-size: clamp(2.75rem, 13.5vw, 4.5rem); line-height: .94; }
+  .maia-film__lead { max-width: 31rem; font-size: .9rem; }
+  .maia-film__actions { align-items: stretch; flex-direction: column; }
+  .maia-primary-action, .maia-secondary-action { width: 100%; }
+  .maia-film__proof { display: none; }
+  .maia-film__companies { gap: .45rem 1rem; margin-top: 1.2rem; }
+  .maia-film__companies li { font-size: .68rem; }
+  .maia-film__controls { grid-template-columns: auto 1fr auto; }
+  .maia-film__time { display: none; }
+  .maia-map-film-button { left: auto; right: 1rem; bottom: 1rem; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .maia-film__video, .maia-film__cover, .maia-film__story { animation: none; }
+}
+
+/* Compatibility layer for legacy product surfaces. These selectors keep
+   behavior intact while removing the arcade treatment from shared controls. */
+.pixel-shadow,
+.pixel-shadow-lime { box-shadow: 0 1px 0 rgba(255,255,255,.06), 0 10px 30px rgba(0,0,0,.18); }
+.btn-press { transition: opacity 160ms ease, background-color 160ms ease, border-color 160ms ease; }
+.btn-press:hover,
+.btn-press:active,
+.btn-press:hover.pixel-shadow-lime { transform: none; box-shadow: none; opacity: .82; }
+.glitch-text,
+.holo-scan,
+.energy-pulse,
+.hud-dot-glow,
+.neon-text { animation: none !important; text-shadow: none !important; }
+.holo-border::before { display: none; }
 @keyframes holo-border-rotate {
   0%   { background-position: 0% 50%; }
   50%  { background-position: 100% 50%; }
