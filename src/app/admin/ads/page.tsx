@@ -5,7 +5,7 @@ import { AdsDashboard } from "./_components/ads-dashboard";
 
 function DashboardFallback() {
   return (
-    <div className="min-h-screen bg-bg p-4 sm:p-6 lg:p-8">
+    <div className="maia-editorial-shell min-h-screen bg-bg p-4 sm:p-6 lg:p-8">
       <div className="mx-auto max-w-7xl">
         <div className="mb-8">
           <div className="h-8 w-24 animate-pulse rounded bg-border" />

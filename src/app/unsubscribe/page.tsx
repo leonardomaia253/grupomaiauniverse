@@ -1,3 +1,6 @@
+import Link from "next/link";
+import EditorialPageShell from "@/components/EditorialPageShell";
+
 export default async function UnsubscribePage({
   searchParams,
 }: {
@@ -18,87 +21,37 @@ export default async function UnsubscribePage({
   };
 
   return (
-    <div
-      style={{
-        minHeight: "100vh",
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        background: "#eeeae0",
-        fontFamily: "Arial, sans-serif",
-        color: "#1c1c18",
-        padding: 24,
-      }}
-    >
-      <div
-        style={{
-          maxWidth: 440,
-          textAlign: "center",
-          background: "#eeeae0",
-          padding: "40px 32px",
-          border: "1px solid #b8b0a0",
-        }}
-      >
-        <h1
-          style={{
-            fontSize: 28,
-            letterSpacing: 4,
-            color: "#74664d",
-            marginTop: 0,
-          }}
-        >
-          MAIA
-        </h1>
-
-        <div
-          style={{
-            height: 2,
-            background: "linear-gradient(90deg, transparent, #c8e64a, transparent)",
-            margin: "20px 0",
-          }}
-        />
-
+    <EditorialPageShell eyebrow="Preferências de comunicação" title="Sua caixa de entrada, sob controle" intro="Confirmação e gestão das mensagens enviadas pelo Grupo Maia.">
+      <section className="max-w-2xl border-y border-white/12 py-8">
         {error ? (
           <>
-            <p style={{ fontSize: 18, color: "#8d3e35" }}>Link inválido ou expirado</p>
-            <p style={{ color: "#666", fontSize: 14 }}>
+            <p className="text-2xl tracking-[-.03em] text-red-300">Link inválido ou expirado</p>
+            <p className="mt-4 text-sm leading-6 text-white/45">
               Solicite um novo link ou gerencie as preferências nas configurações.
             </p>
           </>
         ) : success ? (
           <>
-            <p style={{ fontSize: 18 }}>
+            <p className="text-2xl leading-9 tracking-[-.03em] text-white/80">
               A inscrição foi removida de{" "}
-              <strong style={{ color: "#74664d" }}>
+              <strong className="font-normal text-[#b79a6c]">
                 {categoryLabels[category] ?? category}
               </strong>
               .
             </p>
-            <p style={{ color: "#666", fontSize: 14 }}>
+            <p className="mt-4 text-sm leading-6 text-white/45">
               As preferências podem ser alteradas novamente a qualquer momento.
             </p>
           </>
         ) : (
-          <p style={{ color: "#666", fontSize: 14 }}>
+          <p className="text-sm leading-6 text-white/45">
             Use o link enviado por e-mail para gerenciar suas preferências.
           </p>
         )}
-
-        <div
-          style={{
-            height: 2,
-            background: "linear-gradient(90deg, transparent, #1c1c20, transparent)",
-            margin: "20px 0",
-          }}
-        />
-
-        <a
-          href="https://universe.grupomaia.me"
-          style={{ color: "#74664d", fontSize: 14, textDecoration: "underline" }}
-        >
+        <Link href="/" className="mt-8 inline-flex min-h-11 items-center border border-white/15 px-5 text-xs text-white/65 transition hover:border-[#b79a6c] hover:text-white">
           Voltar ao Mapa Vivo
-        </a>
-      </div>
-    </div>
+        </Link>
+      </section>
+    </EditorialPageShell>
   );
 }

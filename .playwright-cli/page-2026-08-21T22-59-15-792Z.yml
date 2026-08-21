@@ -1,0 +1,189 @@
+- generic [active] [ref=e1]:
+  - main [ref=e2]:
+    - generic [ref=e3]:
+      - generic [ref=e5]:
+        - link "Grupo Maia — início" [ref=e6] [cursor=pointer]:
+          - /url: /
+          - generic [ref=e7]: MAIA
+          - generic [ref=e8]: Grupo
+        - link "Contato" [ref=e138] [cursor=pointer]:
+          - /url: /support
+      - main [ref=e16]:
+        - region "Índice de Empresas" [ref=e139]:
+          - generic [ref=e140]:
+            - generic [ref=e141]:
+              - generic [ref=e142]:
+                - paragraph [ref=e143]: Índice de Empresas
+                - paragraph [ref=e144]: 26 empresas
+              - group "Modo de visualização" [ref=e145]:
+                - button "Mapa" [ref=e146]
+                - button "Índice" [pressed] [ref=e147]
+            - generic [ref=e148]:
+              - generic [ref=e149]: Buscar por empresa ou setor
+              - searchbox "Buscar por empresa ou setor" [ref=e150]
+            - generic [ref=e151]:
+              - generic [ref=e152]: Filtrar por setor
+              - combobox "Filtrar por setor" [ref=e153]:
+                - option "Todos" [selected]
+                - option "Agro e IA"
+                - option "Ativo patrimonial"
+                - option "Beleza e bem-estar"
+                - option "Bilheteria e entretenimento"
+                - option "Crescimento social"
+                - option "Energia e serviços"
+                - option "Estratégia e tecnologia"
+                - option "Experiência e comunidade"
+                - option "Habitat e real estate"
+                - option "Healthtech"
+                - option "Hospitalidade"
+                - option "IA e automação"
+                - option "Imóveis"
+                - option "Investimentos"
+                - option "Mobilidade e operação"
+                - option "Mídia e distribuição"
+                - option "Operação e serviços"
+                - option "Performance e crescimento"
+                - option "Pipelines e automação"
+                - option "Plataforma digital"
+                - option "Produto digital"
+                - option "Produto e operação"
+                - option "RH e people ops"
+                - option "Saúde e fitness"
+                - option "Score e inteligência"
+                - option "Visão e inteligência"
+          - generic [ref=e154]:
+            - button "01 Bilheking Bilheteria e entretenimento" [ref=e155]:
+              - generic [ref=e156]: "01"
+              - generic [ref=e157]:
+                - strong [ref=e158]: Bilheking
+                - generic [ref=e159]: Bilheteria e entretenimento
+            - button "02 Tosi Produto digital" [ref=e163]:
+              - generic [ref=e164]: "02"
+              - generic [ref=e165]:
+                - strong [ref=e166]: Tosi
+                - generic [ref=e167]: Produto digital
+            - button "03 Jack it fit Saúde e fitness" [ref=e170]:
+              - generic [ref=e171]: "03"
+              - generic [ref=e172]:
+                - strong [ref=e173]: Jack it fit
+                - generic [ref=e174]: Saúde e fitness
+            - button "04 Spur Performance e crescimento" [ref=e177]:
+              - generic [ref=e178]: "04"
+              - generic [ref=e179]:
+                - strong [ref=e180]: Spur
+                - generic [ref=e181]: Performance e crescimento
+            - button "05 Volup IA e automação" [ref=e184]:
+              - generic [ref=e185]: "05"
+              - generic [ref=e186]:
+                - strong [ref=e187]: Volup
+                - generic [ref=e188]: IA e automação
+            - button "06 Scoreking Score e inteligência" [ref=e191]:
+              - generic [ref=e192]: "06"
+              - generic [ref=e193]:
+                - strong [ref=e194]: Scoreking
+                - generic [ref=e195]: Score e inteligência
+            - button "07 Instaboost Crescimento social" [ref=e198]:
+              - generic [ref=e199]: "07"
+              - generic [ref=e200]:
+                - strong [ref=e201]: Instaboost
+                - generic [ref=e202]: Crescimento social
+            - button "08 Kinkora Experiência e comunidade" [ref=e205]:
+              - generic [ref=e206]: "08"
+              - generic [ref=e207]:
+                - strong [ref=e208]: Kinkora
+                - generic [ref=e209]: Experiência e comunidade
+            - button "09 Abroo Plataforma digital" [ref=e212]:
+              - generic [ref=e213]: "09"
+              - generic [ref=e214]:
+                - strong [ref=e215]: Abroo
+                - generic [ref=e216]: Plataforma digital
+            - button "10 Voluclinic Healthtech" [ref=e219]:
+              - generic [ref=e220]: "10"
+              - generic [ref=e221]:
+                - strong [ref=e222]: Voluclinic
+                - generic [ref=e223]: Healthtech
+            - button "11 Avantyp Estratégia e tecnologia" [ref=e226]:
+              - generic [ref=e227]: "11"
+              - generic [ref=e228]:
+                - strong [ref=e229]: Avantyp
+                - generic [ref=e230]: Estratégia e tecnologia
+            - button "12 Boase Operação e serviços" [ref=e233]:
+              - generic [ref=e234]: "12"
+              - generic [ref=e235]:
+                - strong [ref=e236]: Boase
+                - generic [ref=e237]: Operação e serviços
+            - button "13 Venti Imóveis Imóveis" [ref=e240]:
+              - generic [ref=e241]: "13"
+              - generic [ref=e242]:
+                - strong [ref=e243]: Venti Imóveis
+                - generic [ref=e244]: Imóveis
+            - button "14 Instead Produto e operação" [ref=e247]:
+              - generic [ref=e248]: "14"
+              - generic [ref=e249]:
+                - strong [ref=e250]: Instead
+                - generic [ref=e251]: Produto e operação
+            - button "15 Seu Jornaleiro Mídia e distribuição" [ref=e254]:
+              - generic [ref=e255]: "15"
+              - generic [ref=e256]:
+                - strong [ref=e257]: Seu Jornaleiro
+                - generic [ref=e258]: Mídia e distribuição
+            - button "16 Pipex Pipelines e automação" [ref=e261]:
+              - generic [ref=e262]: "16"
+              - generic [ref=e263]:
+                - strong [ref=e264]: Pipex
+                - generic [ref=e265]: Pipelines e automação
+            - button "17 SmartRH RH e people ops" [ref=e268]:
+              - generic [ref=e269]: "17"
+              - generic [ref=e270]:
+                - strong [ref=e271]: SmartRH
+                - generic [ref=e272]: RH e people ops
+            - button "18 Iris Visão e inteligência" [ref=e275]:
+              - generic [ref=e276]: "18"
+              - generic [ref=e277]:
+                - strong [ref=e278]: Iris
+                - generic [ref=e279]: Visão e inteligência
+            - button "19 Gaslee Energia e serviços" [ref=e282]:
+              - generic [ref=e283]: "19"
+              - generic [ref=e284]:
+                - strong [ref=e285]: Gaslee
+                - generic [ref=e286]: Energia e serviços
+            - button "20 Maia GO Mobilidade e operação" [ref=e289]:
+              - generic [ref=e290]: "20"
+              - generic [ref=e291]:
+                - strong [ref=e292]: Maia GO
+                - generic [ref=e293]: Mobilidade e operação
+            - button "21 Minvest Investimentos" [ref=e296]:
+              - generic [ref=e297]: "21"
+              - generic [ref=e298]:
+                - strong [ref=e299]: Minvest
+                - generic [ref=e300]: Investimentos
+            - button "22 Habitat X Habitat e real estate" [ref=e303]:
+              - generic [ref=e304]: "22"
+              - generic [ref=e305]:
+                - strong [ref=e306]: Habitat X
+                - generic [ref=e307]: Habitat e real estate
+            - button "23 Tikal Beach Club Hospitalidade" [ref=e310]:
+              - generic [ref=e311]: "23"
+              - generic [ref=e312]:
+                - strong [ref=e313]: Tikal Beach Club
+                - generic [ref=e314]: Hospitalidade
+            - button "24 Sun & Tan Beleza e bem-estar" [ref=e317]:
+              - generic [ref=e318]: "24"
+              - generic [ref=e319]:
+                - strong [ref=e320]: Sun & Tan
+                - generic [ref=e321]: Beleza e bem-estar
+            - button "25 13 de Maio Ativo patrimonial" [ref=e324]:
+              - generic [ref=e325]: "25"
+              - generic [ref=e326]:
+                - strong [ref=e327]: 13 de Maio
+                - generic [ref=e328]: Ativo patrimonial
+            - button "26 Agrovolup Agro e IA" [ref=e331]:
+              - generic [ref=e332]: "26"
+              - generic [ref=e333]:
+                - strong [ref=e334]: Agrovolup
+                - generic [ref=e335]: Agro e IA
+    - button "Apresentação do grupo" [ref=e136]:
+      - generic [ref=e137]: ▶
+      - text: Apresentação do grupo
+  - button "Open Next.js Dev Tools" [ref=e132] [cursor=pointer]
+  - alert [ref=e100]

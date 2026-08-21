@@ -3,14 +3,14 @@ import { existsSync, readFileSync, statSync } from "node:fs";
 import { ALL_MAIA_COMPANIES, COMPANY_IDENTITIES, DNA_MAIA_CUES, getDnaMaiaCue, getStoryDuration } from "../src/lib/dna-maia-theme.ts";
 
 const expected = [
-  "Bilheking", "Tosi", "Jack it fit", "Spur", "Volup", "Scoreking", "Instaboost", "Kinkora", "Abroo", "Voluclinic", "Avantyp", "Boase", "Venti Imóveis", "Instead", "Seu Jornaleiro", "Pipex", "SmartRH", "Iris", "Gaslee", "Maia GO", "Minvest", "Habitat X", "Tikal Beach Club", "Sun & Tan", "13 de Maio", "Agrovolup",
+  "Bilheking", "Tosi", "Jack it fit", "Spur", "Volup", "Scoreking", "Instaboost", "Kinkora", "Abroo", "Voluclinic", "Avantyp", "Boase", "Venti Imóveis", "Instead", "Seu Jornaleiro", "Pipex", "SmartRH", "Iris", "Gaslee", "Maia GO", "Minvest", "Habitat X", "Tikal Beach Club", "Sun & Tan", "13 de Maio", "Agrovolup", "The Maia",
 ];
 
-assert.equal(ALL_MAIA_COMPANIES.length, 26, "A timeline deve conter exatamente 26 empresas");
+assert.equal(ALL_MAIA_COMPANIES.length, 27, "A timeline deve conter exatamente 27 empresas");
 assert.deepEqual([...new Set(ALL_MAIA_COMPANIES)].sort(), [...expected].sort(), "A lista oficial deve estar integralmente representada");
 assert.deepEqual(Object.keys(COMPANY_IDENTITIES).sort(), [...expected].sort(), "Cada empresa deve possuir identidade visual própria");
-assert.equal(getStoryDuration("short"), 96, "O corte editorial deve preservar ritmo natural em 1min36");
-assert.equal(getStoryDuration("full"), 96, "Não deve existir uma segunda faixa acelerada ou dessincronizada");
+assert.equal(getStoryDuration("short"), 150, "O filme deve preservar a montagem de 2min30");
+assert.equal(getStoryDuration("full"), 150, "A timeline visual e narrativa deve permanecer sincronizada");
 
 const chapters = ["code", "origin", "intelligence", "experience", "future", "universe"];
 for (const chapter of chapters) {
@@ -46,4 +46,4 @@ for (const mode of ["short"] as const) {
   assert.ok(previous < getStoryDuration(mode), `A última cena deve começar antes do fim em ${mode}`);
 }
 
-console.log("DNA Maia: timeline, durações e 26 empresas validadas.");
+console.log("DNA Maia: timeline, durações e 27 empresas validadas.");

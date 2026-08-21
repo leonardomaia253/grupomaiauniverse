@@ -42,7 +42,7 @@ export default function DeleteAccountButton() {
           onClick={() => !loading && setOpen(false)}
         >
           <div
-            className="w-full max-w-md rounded-3xl border border-white/15 bg-[#211f1b] p-7 text-white shadow-2xl"
+            className="w-full max-w-md border border-white/15 bg-[#1b1916] p-7 text-white shadow-2xl"
             onClick={(e) => e.stopPropagation()}
           >
             <h2 className="text-2xl font-light">Excluir conta</h2>

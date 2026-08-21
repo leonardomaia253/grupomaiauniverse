@@ -33,14 +33,15 @@ export default async function AdminBrandPage() {
   if (login !== OWNER_LOGIN) redirect("/");
 
   return (
-    <main className="min-h-screen bg-bg px-4 py-8 text-cream sm:px-6 lg:px-8">
-      <div className="mx-auto max-w-4xl">
+    <main className="maia-editorial-shell min-h-screen bg-bg px-4 py-8 text-cream sm:px-6 lg:px-8">
+      <div className="relative z-10 mx-auto max-w-4xl">
         <div className="mb-8 flex flex-col gap-2">
           <p className="text-[10px] uppercase tracking-[0.24em] text-muted">
             Admin
           </p>
-          <h1 className="text-2xl text-lime sm:text-3xl">
+          <h1 className="text-3xl tracking-[-.04em] text-cream sm:text-5xl">
             Configuracao de marca
+            <span className="text-lime">.</span>
           </h1>
           <p className="max-w-2xl text-sm leading-6 text-muted">
             Estes valores alimentam metadata, emails, links canonicos e textos

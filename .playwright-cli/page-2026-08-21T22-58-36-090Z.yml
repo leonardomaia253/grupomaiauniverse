@@ -1,0 +1,77 @@
+- generic [active] [ref=e1]:
+  - main [ref=e2]:
+    - generic [ref=e3]:
+      - generic [ref=e5]:
+        - link "Grupo Maia — início" [ref=e6] [cursor=pointer]:
+          - /url: /
+          - generic [ref=e7]: MAIA
+          - generic [ref=e8]: Grupo
+        - navigation "Navegação principal" [ref=e9]:
+          - link "Empresas" [ref=e10] [cursor=pointer]:
+            - /url: "#empresas"
+          - link "Apresentação do grupo" [ref=e11] [cursor=pointer]:
+            - /url: /intro
+          - link "Contato" [ref=e12] [cursor=pointer]:
+            - /url: /support
+      - main [ref=e16]:
+        - region "Mapa Vivo das Empresas" [ref=e18]:
+          - generic [ref=e19]:
+            - generic [ref=e20]:
+              - generic [ref=e21]:
+                - paragraph [ref=e22]: Mapa Vivo das Empresas
+                - heading "Negócios distintos. Uma estrutura conectada." [level=1] [ref=e23]: Negócios distintos.Uma estrutura conectada.
+                - paragraph [ref=e24]: Explore as empresas por nome ou área de atuação. Mapa e índice apresentam duas leituras do mesmo portfólio.
+              - group "Modo de visualização" [ref=e25]:
+                - button "Mapa" [pressed] [ref=e26]
+                - button "Índice" [ref=e27]
+            - generic [ref=e28]:
+              - button "Selecionar Bilheking" [ref=e29]:
+                - generic [ref=e31]: Bilheking
+                - generic [ref=e32]: Bilheteria e entretenimento
+              - button "Selecionar Tosi" [ref=e33]:
+                - generic [ref=e35]: Tosi
+                - generic [ref=e36]: Produto digital
+              - button "Selecionar Jack it fit" [ref=e37]:
+                - generic [ref=e39]: Jack it fit
+                - generic [ref=e40]: Saúde e fitness
+              - button "Selecionar Spur" [ref=e41]:
+                - generic [ref=e43]: Spur
+                - generic [ref=e44]: Performance e crescimento
+              - button "Selecionar Volup" [ref=e45]:
+                - generic [ref=e47]: Volup
+                - generic [ref=e48]: IA e automação
+              - button "Selecionar Scoreking" [ref=e49]:
+                - generic [ref=e51]: Scoreking
+                - generic [ref=e52]: Score e inteligência
+              - button "Selecionar Instaboost" [ref=e53]:
+                - generic [ref=e55]: Instaboost
+                - generic [ref=e56]: Crescimento social
+              - button "Selecionar Kinkora" [ref=e57]:
+                - generic [ref=e59]: Kinkora
+                - generic [ref=e60]: Experiência e comunidade
+              - button "Selecionar Abroo" [ref=e61]:
+                - generic [ref=e63]: Abroo
+                - generic [ref=e64]: Plataforma digital
+              - button "Selecionar Voluclinic" [ref=e65]:
+                - generic [ref=e67]: Voluclinic
+                - generic [ref=e68]: Healthtech
+              - button "Selecionar Avantyp" [ref=e69]:
+                - generic [ref=e71]: Avantyp
+                - generic [ref=e72]: Estratégia e tecnologia
+              - button "Selecionar Boase" [ref=e73]:
+                - generic [ref=e75]: Boase
+                - generic [ref=e76]: Operação e serviços
+            - complementary [ref=e77]:
+              - generic [ref=e78]:
+                - generic [ref=e79]:
+                  - generic [ref=e80]: "01"
+                  - paragraph [ref=e81]: Bilheteria e entretenimento
+                - heading "Bilheking" [level=2] [ref=e82]
+                - paragraph [ref=e83]: Tecnologia comercial para eventos, vendas, recorrência e relacionamento com públicos.
+              - link "Conhecer empresa" [ref=e84] [cursor=pointer]:
+                - /url: /dev/bilheking
+    - button "Apresentação do grupo" [ref=e136]:
+      - generic [ref=e137]: ▶
+      - text: Apresentação do grupo
+  - button "Open Next.js Dev Tools" [ref=e132] [cursor=pointer]
+  - alert [ref=e100]

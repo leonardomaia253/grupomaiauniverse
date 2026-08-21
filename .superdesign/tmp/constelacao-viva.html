@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="view-transition" content="same-origin">
+  <title>Grupo Maia Universe — Constelação Viva</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            bg: '#12110F',
+            raised: '#1B1916',
+            card: '#24211D',
+            cream: '#F2EEE6',
+            warm: '#EBE5DA',
+            gold: '#B79A6C',
+            dim: '#746D63',
+            muted: '#9D9589'
+          },
+          fontFamily: {
+            sans: ['Arial', 'Helvetica', 'sans-serif'],
+            serif: ['Georgia', 'Times New Roman', 'serif']
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    @view-transition { navigation: auto; }
+    ::view-transition-old(root),
+    ::view-transition-new(root) {
+      animation-duration: 0.4s;
+      animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    ::view-transition-old(root) { animation-name: fade-out; }
+    ::view-transition-new(root) { animation-name: fade-in; }
+    @keyframes fade-out {
+      from { opacity: 1; transform: scale(1); }
+      to { opacity: 0; transform: scale(.98); }
+    }
+    @keyframes fade-in {
+      from { opacity: 0; transform: scale(1.02); }
+      to { opacity: 1; transform: scale(1); }
+    }
+    @keyframes constellation-pulse {
+      0%, 100% { opacity: .35; transform: scale(.92); }
+      50% { opacity: .8; transform: scale(1.08); }
+    }
+    @keyframes constellation-drift {
+      0%, 100% { transform: translate3d(0, 0, 0); }
+      50% { transform: translate3d(0, -7px, 0); }
+    }
+    .map-node-dot { animation: constellation-pulse 4.5s ease-in-out infinite; }
+    .map-node { animation: constellation-drift 8s ease-in-out infinite; }
+    .map-node:nth-of-type(2n) { animation-delay: -2s; }
+    .map-node:nth-of-type(3n) { animation-delay: -4s; }
+    .global-header { view-transition-name: global-header; }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { animation-duration: 1ms !important; animation-iteration-count: 1 !important; scroll-behavior: auto !important; }
+    }
+  </style>
+</head>
+<body>
+  <div class="min-h-screen overflow-x-hidden bg-bg font-sans text-warm selection:bg-gold/30 selection:text-cream">
+    <header class="global-header relative z-40 h-[72px] border-b border-white/10 bg-bg px-5 sm:px-8 lg:px-10">
+      <div class="mx-auto flex h-full max-w-[1440px] items-center justify-between gap-6">
+        <a id="brand-home-link" href="/" class="flex min-h-[44px] items-center gap-2.5 text-cream focus:outline-none focus:ring-1 focus:ring-gold">
+          <span class="text-[17px] font-semibold tracking-[-0.07em]">MAIA</span>
+          <span class="font-serif text-[15px] italic text-cream/65">Grupo</span>
+        </a>
+
+        <nav aria-label="Navegação principal" class="hidden items-center gap-7 text-[11px] text-cream/55 md:flex">
+          <a id="nav-companies-link" href="#indice" class="flex min-h-[44px] items-center transition-colors duration-200 hover:text-cream focus:outline-none focus:ring-1 focus:ring-gold">Empresas</a>
+          <a id="nav-presentation-link" href="#apresentacao" class="flex min-h-[44px] items-center transition-colors duration-200 hover:text-cream focus:outline-none focus:ring-1 focus:ring-gold">Apresentação do grupo</a>
+          <a id="nav-contact-link" href="/support" class="inline-flex min-h-[44px] items-center border-l border-white/10 pl-7 text-cream/75 transition-colors duration-200 hover:text-gold focus:outline-none focus:ring-1 focus:ring-gold">Contato <iconify-icon icon="lucide:arrow-up-right" class="ml-2 text-sm"></iconify-icon></a>
+        </nav>
+
+        <a id="mobile-contact-link" href="/support" class="inline-flex min-h-[44px] items-center text-[11px] text-cream/70 focus:outline-none focus:ring-1 focus:ring-gold md:hidden">Contato</a>
+      </div>
+    </header>
+
+    <main class="relative mx-auto min-h-[828px] max-w-[1440px] lg:h-[calc(100vh-72px)] lg:min-h-[720px] lg:overflow-hidden">
+      <div class="grid min-h-[828px] lg:h-full lg:min-h-0 lg:grid-cols-[57%_43%]">
+        <section aria-label="Mapa Vivo das Empresas" class="relative min-h-[660px] overflow-hidden border-b border-white/10 bg-bg lg:min-h-0 lg:border-b-0 lg:border-r">
+          <div class="pointer-events-none absolute inset-0">
+            <div class="absolute left-[12%] top-[14%] h-[320px] w-[320px] rounded-full border border-gold/10"></div>
+            <div class="absolute left-[28%] top-[22%] h-[470px] w-[470px] rounded-full border border-white/[0.04]"></div>
+            <div class="absolute right-[-9%] top-[8%] h-[420px] w-[420px] rounded-full border border-gold/[0.08]"></div>
+            <div class="absolute left-[16%] top-[27%] h-px w-[30%] origin-left rotate-[19deg] bg-white/10"></div>
+            <div class="absolute left-[43%] top-[35%] h-px w-[32%] origin-left -rotate-[23deg] bg-white/10"></div>
+            <div class="absolute left-[29%] top-[58%] h-px w-[35%] origin-left -rotate-[10deg] bg-white/10"></div>
+            <div class="absolute left-[53%] top-[46%] h-px w-[26%] origin-left rotate-[31deg] bg-gold/15"></div>
+            <div class="absolute left-[12%] top-[45%] h-px w-[27%] origin-left rotate-[44deg] bg-white/10"></div>
+            <div class="absolute left-[35%] top-[25%] h-[43%] w-px rotate-[7deg] bg-white/[0.06]"></div>
+          </div>
+
+          <div class="relative z-10 flex h-full flex-col p-5 sm:p-8 lg:p-10">
+            <div class="flex flex-col gap-6 xl:flex-row xl:items-start xl:justify-between">
+              <div class="max-w-[430px]">
+                <p class="text-[10px] font-semibold uppercase tracking-[0.22em] text-gold">Mapa Vivo das Empresas</p>
+                <h1 class="mt-3 text-[34px] font-normal leading-[1.02] tracking-[-0.055em] text-cream sm:text-[42px]">
+                  Negócios distintos.<br><span class="font-serif italic text-gold">Uma estrutura conectada.</span>
+                </h1>
+                <p class="mt-4 max-w-[390px] text-[13px] leading-6 text-cream/50">Explore as empresas por nome ou área de atuação. Mapa e índice apresentam duas leituras do mesmo portfólio.</p>
+              </div>
+
+              <div class="flex w-full max-w-[270px] border border-white/15 p-1 text-[11px]" aria-label="Modo de visualização">
+                <button type="button" aria-pressed="true" class="min-h-[40px] flex-1 bg-cream text-bg focus:outline-none focus:ring-1 focus:ring-gold">Mapa</button>
+                <button type="button" aria-pressed="false" class="min-h-[40px] flex-1 text-cream/50 transition-colors duration-200 hover:text-cream focus:outline-none focus:ring-1 focus:ring-gold">Índice</button>
+              </div>
+            </div>
+
+            <div class="relative mt-5 min-h-[330px] flex-1 sm:mt-2">
+              <button type="button" data-company="Bilheking" class="map-node group absolute left-[13%] top-[24%] min-h-[44px] text-left focus:outline-none" aria-label="Selecionar Bilheking">
+                <span class="map-node-dot absolute left-0 top-[17px] h-2 w-2 rounded-full bg-gold ring-4 ring-gold/10"></span>
+                <span class="ml-5 block text-[12px] text-cream transition-colors group-hover:text-gold">Bilheking</span>
+                <span class="ml-5 mt-1 block text-[9px] uppercase tracking-[0.14em] text-cream/30">Entretenimento</span>
+              </button>
+              <button type="button" data-company="Gaslee" class="map-node group absolute left-[43%] top-[17%] min-h-[44px] text-left focus:outline-none" aria-label="Selecionar Gaslee">
+                <span class="map-node-dot absolute left-0 top-[17px] h-1.5 w-1.5 rounded-full bg-cream/55 ring-4 ring-white/5"></span>
+                <span class="ml-5 block text-[12px] text-cream/70 transition-colors group-hover:text-gold">Gaslee</span>
+                <span class="ml-5 mt-1 block text-[9px] uppercase tracking-[0.14em] text-cream/25">Energia</span>
+              </button>
+              <button type="button" data-company="Maia GO" class="map-node group absolute right-[12%] top-[30%] min-h-[44px] text-left focus:outline-none" aria-label="Selecionar Maia GO">
+                <span class="map-node-dot absolute left-0 top-[17px] h-1.5 w-1.5 rounded-full bg-cream/55 ring-4 ring-white/5"></span>
+                <span class="ml-5 block text-[12px] text-cream/70 transition-colors group-hover:text-gold">Maia GO</span>
+                <span class="ml-5 mt-1 block text-[9px] uppercase tracking-[0.14em] text-cream/25">Mobilidade</span>
+              </button>
+              <button type="button" data-company="Spur" class="map-node group absolute left-[28%] top-[52%] min-h-[44px] text-left focus:outline-none" aria-label="Selecionar Spur">
+                <span class="map-node-dot absolute left-0 top-[17px] h-1.5 w-1.5 rounded-full bg-cream/55 ring-4 ring-white/5"></span>
+                <span class="ml-5 block text-[12px] text-cream/70 transition-colors group-hover:text-gold">Spur</span>
+                <span class="ml-5 mt-1 block text-[9px] uppercase tracking-[0.14em] text-cream/25">Crescimento</span>
+              </button>
+              <button type="button" data-company="Minvest" class="map-node group absolute right-[25%] top-[58%] min-h-[44px] text-left focus:outline-none" aria-label="Selecionar Minvest">
+                <span class="map-node-dot absolute left-0 top-[17px] h-1.5 w-1.5 rounded-full bg-cream/55 ring-4 ring-white/5"></span>
+                <span class="ml-5 block text-[12px] text-cream/70 transition-colors group-hover:text-gold">Minvest</span>
+                <span class="ml-5 mt-1 block text-[9px] uppercase tracking-[0.14em] text-cream/25">Investimentos</span>
+              </button>
+              <button type="button" data-company="Tosi" class="map-node group absolute bottom-[10%] left-[15%] min-h-[44px] text-left focus:outline-none" aria-label="Selecionar Tosi">
+                <span class="map-node-dot absolute left-0 top-[17px] h-1.5 w-1.5 rounded-full bg-cream/55 ring-4 ring-white/5"></span>
+                <span class="ml-5 block text-[12px] text-cream/70 transition-colors group-hover:text-gold">Tosi</span>
+                <span class="ml-5 mt-1 block text-[9px] uppercase tracking-[0.14em] text-cream/25">Produto digital</span>
+              </button>
+              <button type="button" data-company="Pipex" class="map-node group absolute bottom-[5%] right-[9%] min-h-[44px] text-left focus:outline-none" aria-label="Selecionar Pipex">
+                <span class="map-node-dot absolute left-0 top-[17px] h-1.5 w-1.5 rounded-full bg-cream/55 ring-4 ring-white/5"></span>
+                <span class="ml-5 block text-[12px] text-cream/70 transition-colors group-hover:text-gold">Pipex</span>
+                <span class="ml-5 mt-1 block text-[9px] uppercase tracking-[0.14em] text-cream/25">Automação</span>
+              </button>
+            </div>
+
+            <aside aria-live="polite" class="relative mt-5 grid border-y border-white/10 py-5 sm:grid-cols-[1fr_auto] sm:items-end sm:gap-8">
+              <div>
+                <div class="flex items-center gap-3">
+                  <span class="text-[9px] tabular-nums text-gold">01</span>
+                  <p id="selected-sector" class="text-[9px] font-semibold uppercase tracking-[0.2em] text-gold">Bilheteria e entretenimento</p>
+                </div>
+                <h2 id="selected-name" class="mt-2 text-[28px] font-normal tracking-[-0.045em] text-cream">Bilheking</h2>
+                <p id="selected-description" class="mt-2 max-w-[500px] text-[12px] leading-5 text-cream/45">Tecnologia comercial para eventos, vendas, recorrência e relacionamento com públicos.</p>
+              </div>
+              <button type="button" class="mt-4 inline-flex min-h-[44px] items-center gap-3 text-[11px] text-cream/70 transition-colors duration-200 hover:text-gold focus:outline-none focus:ring-1 focus:ring-gold sm:mt-0">
+                Conhecer empresa <iconify-icon icon="lucide:arrow-right" class="text-base"></iconify-icon>
+              </button>
+            </aside>
+          </div>
+        </section>
+
+        <section id="indice" aria-label="Índice de Empresas" class="flex min-h-[720px] flex-col bg-bg lg:min-h-0">
+          <div class="border-b border-white/10 px-5 py-6 sm:px-8 lg:px-9">
+            <div class="flex items-end justify-between gap-4">
+              <div>
+                <p class="text-[10px] font-semibold uppercase tracking-[0.22em] text-gold">Índice de Empresas</p>
+                <p id="result-count" class="mt-2 text-[12px] text-cream/40">7 empresas</p>
+              </div>
+              <p class="hidden text-right text-[10px] leading-4 text-cream/30 sm:block">Selecione uma empresa<br>para ver seu contexto no mapa</p>
+            </div>
+
+            <label class="relative mt-5 block">
+              <span class="sr-only">Buscar por empresa ou setor</span>
+              <iconify-icon icon="lucide:search" class="pointer-events-none absolute left-0 top-1/2 -translate-y-1/2 text-base text-cream/35"></iconify-icon>
+              <input id="portfolio-search" type="search" placeholder="Buscar por empresa ou setor" class="h-[48px] w-full border-0 border-b border-white/15 bg-bg pl-7 pr-3 text-[14px] text-cream outline-none placeholder:text-cream/30 transition-colors duration-200 focus:border-gold">
+            </label>
+
+            <div class="mt-4 flex gap-2 overflow-x-auto pb-1" aria-label="Filtrar por setor">
+              <button type="button" data-sector="todos" aria-pressed="true" class="sector-filter min-h-[36px] shrink-0 rounded-full border border-cream bg-cream px-4 text-[10px] text-bg focus:outline-none focus:ring-1 focus:ring-gold">Todos</button>
+              <button type="button" data-sector="tecnologia" aria-pressed="false" class="sector-filter min-h-[36px] shrink-0 rounded-full border border-white/15 px-4 text-[10px] text-cream/50 transition-colors duration-200 hover:border-gold hover:text-cream focus:outline-none focus:ring-1 focus:ring-gold">Tecnologia</button>
+              <button type="button" data-sector="serviços" aria-pressed="false" class="sector-filter min-h-[36px] shrink-0 rounded-full border border-white/15 px-4 text-[10px] text-cream/50 transition-colors duration-200 hover:border-gold hover:text-cream focus:outline-none focus:ring-1 focus:ring-gold">Serviços</button>
+              <button type="button" data-sector="investimentos" aria-pressed="false" class="sector-filter min-h-[36px] shrink-0 rounded-full border border-white/15 px-4 text-[10px] text-cream/50 transition-colors duration-200 hover:border-gold hover:text-cream focus:outline-none focus:ring-1 focus:ring-gold">Investimentos</button>
+            </div>
+          </div>
+
+          <div id="company-list" class="min-h-0 flex-1 overflow-y-auto">
+            <button type="button" data-company="Bilheking" data-sector="tecnologia" data-search="bilheking bilheteria e entretenimento tecnologia" class="company-row group grid min-h-[76px] w-full grid-cols-[38px_1fr_auto] items-center border-b border-white/10 px-5 text-left transition-colors duration-200 hover:bg-white/[0.025] focus:bg-white/[0.035] focus:outline-none sm:px-8">
+              <span class="text-[9px] tabular-nums text-gold">01</span><span><strong class="block text-[20px] font-normal tracking-[-0.035em] text-cream">Bilheking</strong><small class="mt-1 block text-[11px] text-cream/35">Bilheteria e entretenimento</small></span><iconify-icon icon="lucide:arrow-up-right" class="text-lg text-gold"></iconify-icon>
+            </button>
+            <button type="button" data-company="Gaslee" data-sector="serviços" data-search="gaslee energia e serviços" class="company-row group grid min-h-[76px] w-full grid-cols-[38px_1fr_auto] items-center border-b border-white/10 px-5 text-left transition-colors duration-200 hover:bg-white/[0.025] focus:bg-white/[0.035] focus:outline-none sm:px-8">
+              <span class="text-[9px] tabular-nums text-cream/25">02</span><span><strong class="block text-[20px] font-normal tracking-[-0.035em] text-cream/85">Gaslee</strong><small class="mt-1 block text-[11px] text-cream/35">Energia e serviços</small></span><iconify-icon icon="lucide:arrow-right" class="text-lg text-cream/25 transition-transform duration-200 group-hover:translate-x-1 group-hover:text-gold"></iconify-icon>
+            </button>
+            <button type="button" data-company="Maia GO" data-sector="serviços" data-search="maia go mobilidade e operação serviços" class="company-row group grid min-h-[76px] w-full grid-cols-[38px_1fr_auto] items-center border-b border-white/10 px-5 text-left transition-colors duration-200 hover:bg-white/[0.025] focus:bg-white/[0.035] focus:outline-none sm:px-8">
+              <span class="text-[9px] tabular-nums text-cream/25">03</span><span><strong class="block text-[20px] font-normal tracking-[-0.035em] text-cream/85">Maia GO</strong><small class="mt-1 block text-[11px] text-cream/35">Mobilidade e operação</small></span><iconify-icon icon="lucide:arrow-right" class="text-lg text-cream/25 transition-transform duration-200 group-hover:translate-x-1 group-hover:text-gold"></iconify-icon>
+            </button>
+            <button type="button" data-company="Spur" data-sector="serviços" data-search="spur performance e crescimento serviços" class="company-row group grid min-h-[76px] w-full grid-cols-[38px_1fr_auto] items-center border-b border-white/10 px-5 text-left transition-colors duration-200 hover:bg-white/[0.025] focus:bg-white/[0.035] focus:outline-none sm:px-8">
+              <span class="text-[9px] tabular-nums text-cream/25">04</span><span><strong class="block text-[20px] font-normal tracking-[-0.035em] text-cream/85">Spur</strong><small class="mt-1 block text-[11px] text-cream/35">Performance e crescimento</small></span><iconify-icon icon="lucide:arrow-right" class="text-lg text-cream/25 transition-transform duration-200 group-hover:translate-x-1 group-hover:text-gold"></iconify-icon>
+            </button>
+            <button type="button" data-company="Minvest" data-sector="investimentos" data-search="minvest investimentos" class="company-row group grid min-h-[76px] w-full grid-cols-[38px_1fr_auto] items-center border-b border-white/10 px-5 text-left transition-colors duration-200 hover:bg-white/[0.025] focus:bg-white/[0.035] focus:outline-none sm:px-8">
+              <span class="text-[9px] tabular-nums text-cream/25">05</span><span><strong class="block text-[20px] font-normal tracking-[-0.035em] text-cream/85">Minvest</strong><small class="mt-1 block text-[11px] text-cream/35">Investimentos</small></span><iconify-icon icon="lucide:arrow-right" class="text-lg text-cream/25 transition-transform duration-200 group-hover:translate-x-1 group-hover:text-gold"></iconify-icon>
+            </button>
+            <button type="button" data-company="Tosi" data-sector="tecnologia" data-search="tosi produto digital tecnologia" class="company-row group grid min-h-[76px] w-full grid-cols-[38px_1fr_auto] items-center border-b border-white/10 px-5 text-left transition-colors duration-200 hover:bg-white/[0.025] focus:bg-white/[0.035] focus:outline-none sm:px-8">
+              <span class="text-[9px] tabular-nums text-cream/25">06</span><span><strong class="block text-[20px] font-normal tracking-[-0.035em] text-cream/85">Tosi</strong><small class="mt-1 block text-[11px] text-cream/35">Produto digital</small></span><iconify-icon icon="lucide:arrow-right" class="text-lg text-cream/25 transition-transform duration-200 group-hover:translate-x-1 group-hover:text-gold"></iconify-icon>
+            </button>
+            <button type="button" data-company="Pipex" data-sector="tecnologia" data-search="pipex pipelines e automação tecnologia" class="company-row group grid min-h-[76px] w-full grid-cols-[38px_1fr_auto] items-center border-b border-white/10 px-5 text-left transition-colors duration-200 hover:bg-white/[0.025] focus:bg-white/[0.035] focus:outline-none sm:px-8">
+              <span class="text-[9px] tabular-nums text-cream/25">07</span><span><strong class="block text-[20px] font-normal tracking-[-0.035em] text-cream/85">Pipex</strong><small class="mt-1 block text-[11px] text-cream/35">Pipelines e automação</small></span><iconify-icon icon="lucide:arrow-right" class="text-lg text-cream/25 transition-transform duration-200 group-hover:translate-x-1 group-hover:text-gold"></iconify-icon>
+            </button>
+            <p id="empty-state" class="hidden border-b border-white/10 px-8 py-12 text-sm text-cream/45">Nenhuma empresa corresponde à busca.</p>
+          </div>
+        </section>
+      </div>
+    </main>
+
+    <button id="apresentacao" type="button" class="fixed bottom-5 left-5 z-40 inline-flex min-h-[44px] items-center gap-2 rounded-full border border-white/20 bg-bg px-2.5 pr-4 text-[11px] text-cream/75 transition-colors duration-200 hover:border-gold hover:text-cream focus:outline-none focus:ring-1 focus:ring-gold">
+      <span class="grid h-8 w-8 place-items-center overflow-hidden rounded-full border border-white/15 bg-raised">
+        <img src="https://vgbujcuwptvheqijyjbe.supabase.co/storage/v1/object/public/hmac-uploads/projects/453e8870-eb75-4753-8980-9ff43c6f2df3/brand-assets/brand-app-icon/icon-512-transparent.png" alt="" class="h-7 w-7 object-cover">
+      </span>
+      Apresentação do grupo
+    </button>
+  </div>
+
+  <script>
+    const companyData = {
+      'Bilheking': { sector: 'Bilheteria e entretenimento', description: 'Tecnologia comercial para eventos, vendas, recorrência e relacionamento com públicos.', index: '01' },
+      'Gaslee': { sector: 'Energia e serviços', description: 'Serviços cotidianos de energia com eficiência comercial.', index: '02' },
+      'Maia GO': { sector: 'Mobilidade e operação', description: 'Mobilidade, execução e conexão entre operações.', index: '03' },
+      'Spur': { sector: 'Performance e crescimento', description: 'Execução, produção e estratégia comercial para negócios em expansão.', index: '04' },
+      'Minvest': { sector: 'Investimentos', description: 'Inteligência de capital e perspectiva patrimonial de longo prazo.', index: '05' },
+      'Tosi': { sector: 'Produto digital', description: 'Produto, tecnologia e operação orientados à eficiência e à construção de margem.', index: '06' },
+      'Pipex': { sector: 'Pipelines e automação', description: 'Fluxos, integrações e cadência entre áreas de negócio.', index: '07' }
+    };
+
+    const searchInput = document.getElementById('portfolio-search');
+    const rows = Array.from(document.querySelectorAll('.company-row'));
+    const companyTriggers = Array.from(document.querySelectorAll('[data-company]'));
+    const sectorFilters = Array.from(document.querySelectorAll('.sector-filter'));
+    const emptyState = document.getElementById('empty-state');
+    const resultCount = document.getElementById('result-count');
+    const selectedName = document.getElementById('selected-name');
+    const selectedSector = document.getElementById('selected-sector');
+    const selectedDescription = document.getElementById('selected-description');
+    let activeSector = 'todos';
+
+    const normalizeText = (value) => value.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
+
+    function selectCompany(name) {
+      const company = companyData[name];
+      if (!company) return;
+      selectedName.textContent = name;
+      selectedSector.textContent = company.sector;
+      selectedDescription.textContent = company.description;
+
+      rows.forEach((row) => {
+        const active = row.dataset.company === name;
+        row.classList.toggle('bg-white/[0.025]', active);
+        const index = row.querySelector('span');
+        if (index) {
+          index.classList.toggle('text-gold', active);
+          index.classList.toggle('text-cream/25', !active);
+        }
+      });
+    }
+
+    function filterCompanies() {
+      const query = normalizeText(searchInput.value.trim());
+      let visibleCount = 0;
+      rows.forEach((row) => {
+        const matchesSearch = !query || normalizeText(row.dataset.search).includes(query);
+        const matchesSector = activeSector === 'todos' || row.dataset.sector === activeSector;
+        const visible = matchesSearch && matchesSector;
+        row.classList.toggle('hidden', !visible);
+        if (visible) visibleCount += 1;
+      });
+      resultCount.textContent = `${visibleCount} ${visibleCount === 1 ? 'empresa' : 'empresas'}`;
+      emptyState.classList.toggle('hidden', visibleCount !== 0);
+    }
+
+    companyTriggers.forEach((trigger) => trigger.addEventListener('click', () => selectCompany(trigger.dataset.company)));
+    searchInput.addEventListener('input', filterCompanies);
+
+    sectorFilters.forEach((button) => {
+      button.addEventListener('click', () => {
+        activeSector = button.dataset.sector;
+        sectorFilters.forEach((item) => {
+          const active = item === button;
+          item.setAttribute('aria-pressed', String(active));
+          item.classList.toggle('bg-cream', active);
+          item.classList.toggle('text-bg', active);
+          item.classList.toggle('border-cream', active);
+          item.classList.toggle('text-cream/50', !active);
+          item.classList.toggle('border-white/15', !active);
+        });
+        filterCompanies();
+      });
+    });
+  </script>
+</body>
+</html>

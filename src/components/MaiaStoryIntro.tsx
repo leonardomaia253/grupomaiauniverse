@@ -1,11 +1,11 @@
 "use client";
 
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState, type CSSProperties } from "react";
 import { ArrowRight, Captions, Pause, Play, Volume2, VolumeX, X } from "lucide-react";
 import { track } from "@vercel/analytics";
-import { ALL_MAIA_COMPANIES, DNA_MAIA_CUES, getDnaMaiaCue, getStoryAudio } from "@/lib/dna-maia-theme";
+import { ALL_MAIA_COMPANIES, DNA_MAIA_CUES, getDnaMaiaCue, getStoryAudio, getStoryDuration } from "@/lib/dna-maia-theme";
 
-const FILM_DURATION = 96;
+const FILM_DURATION = getStoryDuration("full");
 type PlaybackState = "cover" | "playing" | "paused" | "ending";
 type MediaQuality = "480" | "720" | "1080";
 
@@ -25,6 +25,7 @@ export default function MaiaStoryIntro({ onComplete }: { onComplete: () => void 
   const videoRef = useRef<HTMLVideoElement | null>(null);
   const rafRef = useRef<number | null>(null);
   const finishTimerRef = useRef<number | null>(null);
+  const clockOriginRef = useRef(0);
   const [state, setState] = useState<PlaybackState>("cover");
   const [time, setTime] = useState(0);
   const [muted, setMuted] = useState(false);
@@ -45,23 +46,24 @@ export default function MaiaStoryIntro({ onComplete }: { onComplete: () => void 
   }, [onComplete, progress, state]);
 
   const tick = useCallback(function update() {
-    const audio = audioRef.current;
-    if (!audio || audio.paused) return;
-    const current = Math.min(FILM_DURATION, audio.currentTime);
+    if (state !== "playing") return;
+    const current = Math.min(FILM_DURATION, (performance.now() - clockOriginRef.current) / 1000);
     setTime(current);
     if (current >= FILM_DURATION) finish("complete");
     else rafRef.current = requestAnimationFrame(update);
-  }, [finish]);
+  }, [finish, state]);
 
   const startFilm = useCallback(async () => {
     let audio = audioRef.current;
     if (!audio) {
       audio = new Audio(getStoryAudio("short"));
       audio.preload = "auto";
+      audio.loop = true;
       audio.volume = muted ? 0 : 0.48;
       audioRef.current = audio;
     }
     try {
+      clockOriginRef.current = performance.now() - time * 1000;
       await audio.play();
       await videoRef.current?.play().catch(() => undefined);
       setState("playing");
@@ -71,7 +73,7 @@ export default function MaiaStoryIntro({ onComplete }: { onComplete: () => void 
       setState("playing");
       await videoRef.current?.play().catch(() => undefined);
     }
-  }, [muted]);
+  }, [muted, time]);
 
   const togglePlayback = useCallback(() => {
     if (state === "playing") {
@@ -83,7 +85,8 @@ export default function MaiaStoryIntro({ onComplete }: { onComplete: () => void 
 
   const seek = useCallback((next: number) => {
     const value = Math.max(0, Math.min(FILM_DURATION - 0.1, next));
-    if (audioRef.current) audioRef.current.currentTime = value;
+    clockOriginRef.current = performance.now() - value * 1000;
+    if (audioRef.current?.duration) audioRef.current.currentTime = value % audioRef.current.duration;
     setTime(value);
   }, []);
 
@@ -137,20 +140,20 @@ export default function MaiaStoryIntro({ onComplete }: { onComplete: () => void 
 
       {state === "cover" ? (
         <div className="maia-film__cover">
-          <p className="maia-kicker">Apresentação institucional · 2026</p>
-          <h1>Empresas diferentes.<br /><em>Uma direção comum.</em></h1>
-          <p className="maia-film__lead">Um grupo brasileiro que reúne tecnologia, serviços, experiências e patrimônio sob uma visão de longo prazo.</p>
+          <p className="maia-kicker">Filme institucional · Grupo Maia</p>
+          <h1>27 negócios.<br /><em>Uma visão.</em></h1>
+          <p className="maia-film__lead">Uma jornada cinematográfica pelo ecossistema que conecta tecnologia, comércio, experiências, território e futuro.</p>
           <div className="maia-film__actions">
-            <button type="button" className="maia-primary-action" onClick={() => void startFilm()}><Play size={15} fill="currentColor" /> Assistir ao manifesto <span>1min36</span></button>
+            <button type="button" className="maia-primary-action" onClick={() => void startFilm()}><Play size={15} fill="currentColor" /> Entrar no ecossistema <span>2min30</span></button>
             <button type="button" className="maia-secondary-action" onClick={() => finish("skip")}>Conhecer as empresas</button>
           </div>
           <div className="maia-film__proof" aria-label={`${ALL_MAIA_COMPANIES.length} empresas em quatro frentes de atuação`}>
-            <span><strong>{ALL_MAIA_COMPANIES.length}</strong> empresas</span><span>4 frentes de atuação</span><span>1 visão de longo prazo</span>
+            <span><strong>{ALL_MAIA_COMPANIES.length}</strong> negócios</span><span>17 movimentos</span><span>1 visão</span>
           </div>
         </div>
       ) : (
         <>
-          <main key={cue.id} className="maia-film__story" aria-live="polite">
+          <main key={cue.id} className="maia-film__story" aria-live="polite" style={{ "--cue-accent": cue.accent } as CSSProperties}>
             <p className="maia-kicker"><span>{String(cueIndex + 1).padStart(2, "0")}</span> {cue.title}</p>
             {captions && <h1>{cue.line}</h1>}
             <p className="maia-film__lead">{cue.visual}</p>

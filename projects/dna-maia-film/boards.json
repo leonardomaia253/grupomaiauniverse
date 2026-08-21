@@ -1,0 +1,25 @@
+{
+  "project": "dna-maia-film",
+  "tasks": [
+    {
+      "id": "board-01",
+      "label": "Opening look lock",
+      "cmd": "pixverse create image --model qwen-image --quality 1080p --aspect-ratio 16:9 --prompt projects/dna-maia-film/prompts/board-01-opening.txt"
+    },
+    {
+      "id": "board-09",
+      "label": "Lifestyle look lock",
+      "cmd": "pixverse create image --model qwen-image --quality 1080p --aspect-ratio 16:9 --prompt projects/dna-maia-film/prompts/board-09-lifestyle.txt"
+    },
+    {
+      "id": "board-13",
+      "label": "Agritech look lock",
+      "cmd": "pixverse create image --model qwen-image --quality 1080p --aspect-ratio 16:9 --prompt projects/dna-maia-film/prompts/board-13-agro.txt"
+    },
+    {
+      "id": "board-15",
+      "label": "Convergence look lock",
+      "cmd": "pixverse create image --model qwen-image --quality 1080p --aspect-ratio 16:9 --prompt projects/dna-maia-film/prompts/board-15-convergence.txt"
+    }
+  ]
+}

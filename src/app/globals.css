@@ -397,6 +397,44 @@ body {
 .maia-wordmark span { font-size: 1.05rem; font-weight: 700; }
 .maia-wordmark small { font-family: Georgia, "Times New Roman", serif; font-size: .9rem; font-style: italic; letter-spacing: 0; opacity: .65; }
 
+.maia-constellation-field {
+  background:
+    radial-gradient(circle at 18% 24%, rgba(183,154,108,.08), transparent 28%),
+    radial-gradient(circle at 74% 40%, rgba(255,255,255,.035), transparent 34%),
+    repeating-radial-gradient(circle at 42% 48%, transparent 0 118px, rgba(255,255,255,.035) 119px 120px);
+}
+.maia-constellation-field::before,
+.maia-constellation-field::after {
+  content: "";
+  position: absolute;
+  inset: 16% 10%;
+  background: linear-gradient(21deg, transparent 49.85%, rgba(255,255,255,.09) 50%, transparent 50.15%);
+  transform: rotate(-8deg);
+}
+.maia-constellation-field::after { transform: rotate(34deg); opacity: .65; }
+.maia-constellation-node { animation: maia-constellation-drift 8s ease-in-out infinite; }
+.maia-constellation-node:nth-child(2n) { animation-delay: -2.5s; }
+.maia-constellation-node:nth-child(3n) { animation-delay: -5s; }
+
+.maia-editorial-shell::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(circle at 82% 14%, rgba(183,154,108,.07), transparent 24rem),
+    repeating-radial-gradient(circle at 88% 18%, transparent 0 116px, rgba(255,255,255,.025) 117px 118px);
+  mask-image: linear-gradient(to bottom, #000 0 44rem, transparent 72rem);
+}
+
+::selection { background: rgba(183,154,108,.3); color: #f2eee6; }
+:focus-visible { outline: 1px solid #b79a6c; outline-offset: 3px; }
+
+@keyframes maia-constellation-drift {
+  0%, 100% { transform: translate3d(0, 0, 0); }
+  50% { transform: translate3d(0, -6px, 0); }
+}
+
 .maia-film {
   --film-gutter: clamp(1.25rem, 4vw, 4.5rem);
   font-family: Arial, Helvetica, sans-serif;

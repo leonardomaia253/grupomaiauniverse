@@ -1,0 +1,41 @@
+[   15061ms] [INFO] %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold @ http://127.0.0.1:3001/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[   15544ms] [LOG] [HMR] connected @ http://127.0.0.1:3001/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[   15553ms] [LOG] %c[Vercel Speed Insights]%c Debug mode is enabled by default in development. No requests will be sent to the server. color: rgb(120, 120, 120) color: inherit @ http://127.0.0.1:3001/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[   15559ms] [LOG] %c[Vercel Web Analytics]%c Debug mode is enabled by default in development. No requests will be sent to the server. color: rgb(120, 120, 120) color: inherit @ http://127.0.0.1:3001/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[   15560ms] [LOG] %c[Vercel Web Analytics]%c Running queued event color: rgb(120, 120, 120) color: inherit pageview {route: /, path: /} @ http://127.0.0.1:3001/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[   15562ms] [LOG] %c[Vercel Web Analytics]%c [view] http://127.0.0.1:3001/ color: rgb(120, 120, 120) color: inherit {o: http://127.0.0.1:3001/, sv: 0.1.3, sdkn: @vercel/analytics/next, sdkv: 1.6.1, ts: 1787353084024} /_vercel/insights/view @ http://127.0.0.1:3001/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[   46520ms] [LOG] %c[Vercel Web Analytics]%c [event] maia_editorial_intro_finished color: rgb(120, 120, 120) color: inherit {o: http://127.0.0.1:3001/, sv: 0.1.3, sdkn: @vercel/analytics/next, sdkv: 1.6.1, ts: 1787353114974} /_vercel/insights/event @ http://127.0.0.1:3001/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[   47736ms] [LOG] [Fast Refresh] rebuilding @ http://127.0.0.1:3001/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[   47857ms] [LOG] [Fast Refresh] done in 220ms @ http://127.0.0.1:3001/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[   51268ms] [LOG] [Fast Refresh] rebuilding @ http://127.0.0.1:3001/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[   51411ms] [LOG] [Fast Refresh] done in 244ms @ http://127.0.0.1:3001/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[   65822ms] [LOG] [Fast Refresh] rebuilding @ http://127.0.0.1:3001/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[   65894ms] [LOG] [Fast Refresh] done in 172ms @ http://127.0.0.1:3001/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[   87436ms] [LOG] [Fast Refresh] rebuilding @ http://127.0.0.1:3001/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[   87492ms] [LOG] [Fast Refresh] done in 156ms @ http://127.0.0.1:3001/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[   89861ms] [LOG] [Fast Refresh] rebuilding @ http://127.0.0.1:3001/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[   89932ms] [LOG] [Fast Refresh] done in 172ms @ http://127.0.0.1:3001/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[  124259ms] [LOG] [Fast Refresh] rebuilding @ http://127.0.0.1:3001/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[  124310ms] [LOG] [Fast Refresh] done in 152ms @ http://127.0.0.1:3001/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[  124524ms] [LOG] [Fast Refresh] rebuilding @ http://127.0.0.1:3001/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[  124525ms] [LOG] [Fast Refresh] done in 105ms @ http://127.0.0.1:3001/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[  124784ms] [LOG] [Fast Refresh] rebuilding @ http://127.0.0.1:3001/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[  124811ms] [LOG] [Fast Refresh] done in 128ms @ http://127.0.0.1:3001/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[  125001ms] [LOG] [Fast Refresh] rebuilding @ http://127.0.0.1:3001/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[  125059ms] [LOG] [Fast Refresh] done in 165ms @ http://127.0.0.1:3001/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[  172850ms] [LOG] [Fast Refresh] rebuilding @ http://127.0.0.1:3001/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[  172893ms] [LOG] [Fast Refresh] done in 144ms @ http://127.0.0.1:3001/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[  193380ms] [LOG] [Fast Refresh] rebuilding @ http://127.0.0.1:3001/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[  193426ms] [LOG] [Fast Refresh] done in 145ms @ http://127.0.0.1:3001/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[  199372ms] [ERROR] WebSocket connection to 'ws://127.0.0.1:3001/_next/webpack-hmr?id=MPEhh1mCFYDjddgcFELNf' failed: Error in connection establishment: net::ERR_CONNECTION_REFUSED @ http://127.0.0.1:3001/_next/static/chunks/node_modules_next_dist_client_17643121._.js:10878
+[  202378ms] [ERROR] WebSocket connection to 'ws://127.0.0.1:3001/_next/webpack-hmr?id=MPEhh1mCFYDjddgcFELNf' failed: Error in connection establishment: net::ERR_CONNECTION_REFUSED @ http://127.0.0.1:3001/_next/static/chunks/node_modules_next_dist_client_17643121._.js:10878
+[  205384ms] [ERROR] WebSocket connection to 'ws://127.0.0.1:3001/_next/webpack-hmr?id=MPEhh1mCFYDjddgcFELNf' failed: Error in connection establishment: net::ERR_CONNECTION_REFUSED @ http://127.0.0.1:3001/_next/static/chunks/node_modules_next_dist_client_17643121._.js:10878
+[  208394ms] [ERROR] WebSocket connection to 'ws://127.0.0.1:3001/_next/webpack-hmr?id=MPEhh1mCFYDjddgcFELNf' failed: Error in connection establishment: net::ERR_CONNECTION_REFUSED @ http://127.0.0.1:3001/_next/static/chunks/node_modules_next_dist_client_17643121._.js:10878
+[  211399ms] [ERROR] WebSocket connection to 'ws://127.0.0.1:3001/_next/webpack-hmr?id=MPEhh1mCFYDjddgcFELNf' failed: Error in connection establishment: net::ERR_CONNECTION_REFUSED @ http://127.0.0.1:3001/_next/static/chunks/node_modules_next_dist_client_17643121._.js:10878
+[  218404ms] [ERROR] WebSocket connection to 'ws://127.0.0.1:3001/_next/webpack-hmr?id=MPEhh1mCFYDjddgcFELNf' failed: Error in connection establishment: net::ERR_CONNECTION_REFUSED @ http://127.0.0.1:3001/_next/static/chunks/node_modules_next_dist_client_17643121._.js:10878
+[  225412ms] [ERROR] WebSocket connection to 'ws://127.0.0.1:3001/_next/webpack-hmr?id=MPEhh1mCFYDjddgcFELNf' failed: Error in connection establishment: net::ERR_CONNECTION_REFUSED @ http://127.0.0.1:3001/_next/static/chunks/node_modules_next_dist_client_17643121._.js:10878
+[  232418ms] [ERROR] WebSocket connection to 'ws://127.0.0.1:3001/_next/webpack-hmr?id=MPEhh1mCFYDjddgcFELNf' failed: Error in connection establishment: net::ERR_CONNECTION_REFUSED @ http://127.0.0.1:3001/_next/static/chunks/node_modules_next_dist_client_17643121._.js:10878
+[  239425ms] [ERROR] WebSocket connection to 'ws://127.0.0.1:3001/_next/webpack-hmr?id=MPEhh1mCFYDjddgcFELNf' failed: Error in connection establishment: net::ERR_CONNECTION_REFUSED @ http://127.0.0.1:3001/_next/static/chunks/node_modules_next_dist_client_17643121._.js:10878
+[  246433ms] [ERROR] WebSocket connection to 'ws://127.0.0.1:3001/_next/webpack-hmr?id=MPEhh1mCFYDjddgcFELNf' failed: Error in connection establishment: net::ERR_CONNECTION_REFUSED @ http://127.0.0.1:3001/_next/static/chunks/node_modules_next_dist_client_17643121._.js:10878
+[  253443ms] [ERROR] WebSocket connection to 'ws://127.0.0.1:3001/_next/webpack-hmr?id=MPEhh1mCFYDjddgcFELNf' failed: Error in connection establishment: net::ERR_CONNECTION_REFUSED @ http://127.0.0.1:3001/_next/static/chunks/node_modules_next_dist_client_17643121._.js:10878
+[  260448ms] [ERROR] WebSocket connection to 'ws://127.0.0.1:3001/_next/webpack-hmr?id=MPEhh1mCFYDjddgcFELNf' failed: Error in connection establishment: net::ERR_CONNECTION_REFUSED @ http://127.0.0.1:3001/_next/static/chunks/node_modules_next_dist_client_17643121._.js:10878

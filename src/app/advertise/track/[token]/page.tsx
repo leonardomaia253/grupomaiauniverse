@@ -42,21 +42,20 @@ export default async function TrackingPage({ params }: { params: Promise<{ token
   const status: keyof typeof STATUS = !ad.active && !ad.starts_at ? "pending" : ad.active && !expired ? "active" : "expired";
 
   return (
-    <main className="min-h-screen bg-[#eeeae0] text-[#1c1c18]">
+    <main className="maia-editorial-shell min-h-screen bg-[#12110f] text-[#eee9df]">
       <div className="mx-auto max-w-5xl px-5 py-10 sm:px-8 sm:py-16">
-        <div className="flex items-center justify-between border-b border-black/15 pb-6"><Link href="/advertise" className="text-sm text-[#74664d]">← Mídia</Link><span className="text-xs uppercase tracking-[0.2em] text-[#74664d]">{STATUS[status]}</span></div>
-        <div className="mt-12 grid gap-8 md:grid-cols-[1fr_auto] md:items-end"><div><p className="text-xs uppercase tracking-[0.22em] text-[#74664d]">Acompanhamento</p><h1 className="mt-4 text-5xl font-light sm:text-7xl">{ad.brand || "Campanha"}</h1><p className="mt-5 max-w-xl text-base leading-7 text-[#656158]">{ad.text}</p></div><Link href={`/advertise/setup/${token}`} className="rounded-full border border-black/20 px-5 py-3 text-sm">Editar conteúdo</Link></div>
-        <div className="mt-14 grid gap-px overflow-hidden rounded-2xl border border-black/12 bg-black/12 sm:grid-cols-3">{metrics.map((metric) => <div key={metric.label} className="bg-[#eeeae0] p-7"><p className="text-4xl font-light">{metric.value.toLocaleString("pt-BR")}</p><p className="mt-2 text-xs uppercase tracking-[0.14em] text-[#74664d]">{metric.label}</p></div>)}</div>
-        <div className="mt-12 border-t border-black/15 pt-7"><h2 className="text-xl">Informações da veiculação</h2><dl className="mt-6 grid gap-5 text-sm sm:grid-cols-2">{[
+        <div className="relative z-10 flex items-center justify-between border-b border-white/10 pb-6"><Link href="/advertise" className="text-sm text-white/45">← Mídia</Link><span className="text-xs uppercase tracking-[0.2em] text-[#b79a6c]">{STATUS[status]}</span></div>
+        <div className="relative z-10 mt-12 grid gap-8 md:grid-cols-[1fr_auto] md:items-end"><div><p className="text-xs uppercase tracking-[0.22em] text-[#b79a6c]">Acompanhamento</p><h1 className="mt-4 text-5xl font-light text-[#f2eee6] sm:text-7xl">{ad.brand || "Campanha"}<span className="text-[#b79a6c]">.</span></h1><p className="mt-5 max-w-xl text-base leading-7 text-white/50">{ad.text}</p></div><Link href={`/advertise/setup/${token}`} className="border border-white/15 px-5 py-3 text-sm text-white/70">Editar conteúdo</Link></div>
+        <div className="relative z-10 mt-14 grid border-l border-t border-white/10 sm:grid-cols-3">{metrics.map((metric) => <div key={metric.label} className="border-b border-r border-white/10 bg-white/[.015] p-7"><p className="text-4xl font-light text-[#f2eee6]">{metric.value.toLocaleString("pt-BR")}</p><p className="mt-2 text-xs uppercase tracking-[0.14em] text-white/35">{metric.label}</p></div>)}</div>
+        <div className="relative z-10 mt-12 border-t border-white/10 pt-7"><h2 className="text-xl">Informações da veiculação</h2><dl className="mt-6 grid gap-5 text-sm sm:grid-cols-2">{[
           ["Formato", FORMAT_LABELS[ad.vehicle] ?? "Formato contratado"],
           ["Plano", ad.plan_id?.replaceAll("_", " ") ?? "—"],
           ["Criação", formatDate(ad.created_at)],
           ["Início", formatDate(ad.starts_at)],
           ["Encerramento", formatDate(ad.ends_at)],
-        ].map(([label, value]) => <div key={label} className="flex justify-between border-b border-black/10 pb-3"><dt className="text-[#74664d]">{label}</dt><dd>{value}</dd></div>)}</dl></div>
-        <p className="mt-10 text-xs leading-5 text-[#74664d]">Os indicadores são atualizados conforme as interações registradas pela plataforma.</p>
+        ].map(([label, value]) => <div key={label} className="flex justify-between border-b border-white/10 pb-3"><dt className="text-white/35">{label}</dt><dd>{value}</dd></div>)}</dl></div>
+        <p className="relative z-10 mt-10 text-xs leading-5 text-white/35">Os indicadores são atualizados conforme as interações registradas pela plataforma.</p>
       </div>
     </main>
   );
 }
-

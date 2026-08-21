@@ -64,13 +64,13 @@ export function SetupContent({
   }
 
   const fieldClass =
-    "mt-2 w-full rounded-xl border border-white/15 bg-white/[0.035] px-4 py-3 text-sm text-white outline-none transition focus:border-[#b89a62]";
+    "mt-2 w-full border border-white/15 bg-white/[0.025] px-4 py-3 text-sm text-white outline-none transition focus:border-[#b89a62]";
 
   return (
     <div className="mt-10 grid gap-10 lg:grid-cols-[0.9fr_1.1fr]">
       <aside className="lg:sticky lg:top-8 lg:self-start">
         <p className="text-[11px] uppercase tracking-[0.22em] text-[#b89a62]">Prévia da presença</p>
-        <div className="mt-4 overflow-hidden rounded-3xl border border-white/12 bg-[#eeeae0] p-7 text-[#1c1c18]">
+        <div className="mt-4 overflow-hidden border border-white/12 bg-[#eeeae0] p-7 text-[#1c1c18]">
           <div className="flex items-center justify-between border-b border-black/15 pb-4 text-[10px] uppercase tracking-[0.18em] text-[#74664d]">
             <span>Conteúdo patrocinado</span>
             <span>{vehicleLabel}</span>
@@ -80,7 +80,7 @@ export function SetupContent({
             {description || "A descrição contextual da campanha aparecerá aqui."}
           </p>
           <div
-            className="mt-8 rounded-xl px-4 py-3 text-center text-xs uppercase tracking-[0.16em]"
+            className="mt-8 px-4 py-3 text-center text-xs uppercase tracking-[0.16em]"
             style={{ backgroundColor: ad.bg_color, color: ad.color }}
           >
             {text || "Mensagem da campanha"}
@@ -130,4 +130,3 @@ export function SetupContent({
     </div>
   );
 }
-

@@ -131,8 +131,8 @@ export function AdsDashboard() {
   }, [selectedIds, handleBatch]);
 
   return (
-    <div className="min-h-screen bg-bg p-4 sm:p-6 lg:p-8">
-      <div className="mx-auto max-w-7xl">
+    <div className="maia-editorial-shell min-h-screen bg-bg p-4 sm:p-6 lg:p-8">
+      <div className="relative z-10 mx-auto max-w-7xl">
         {/* Toast */}
         <ToastContainer toasts={toasts} onDismiss={dismissToast} />
 

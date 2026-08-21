@@ -2,6 +2,7 @@
 
 import { useMemo, useState } from "react";
 import Link from "next/link";
+import { ArrowRight, ArrowUpRight, Search, X } from "lucide-react";
 
 export type CompanyRecord = {
   id: number;
@@ -75,7 +76,8 @@ function findRecord(profile: CompanyProfile, records: CompanyRecord[]) {
 export default function UniverseCanvas({ companies }: { companies: CompanyRecord[] }) {
   const [query, setQuery] = useState("");
   const [sector, setSector] = useState("Todos");
-  const [selected, setSelected] = useState<CompanyProfile | null>(null);
+  const [selected, setSelected] = useState<CompanyProfile>(PROFILES[0]);
+  const [mobileMode, setMobileMode] = useState<"map" | "index">("map");
 
   const sectors = useMemo(() => ["Todos", ...Array.from(new Set(PROFILES.map((profile) => profile.sector))).sort()], []);
   const visible = useMemo(() => {
@@ -87,64 +89,77 @@ export default function UniverseCanvas({ companies }: { companies: CompanyRecord
     });
   }, [query, sector]);
 
-  const selectedRecord = selected ? findRecord(selected, companies) : undefined;
+  const selectedRecord = findRecord(selected, companies);
+
+  const selectCompany = (profile: CompanyProfile) => {
+    setSelected(profile);
+    if (window.matchMedia("(max-width: 1023px)").matches) setMobileMode("map");
+  };
 
   return (
-    <section className="min-h-screen bg-[#eeeae0] text-[#1c1c18]">
-      <header className="border-b border-black/15 px-5 py-6 sm:px-10">
-        <div className="mx-auto flex max-w-7xl items-center justify-between">
-          <Link href="/" className="text-sm tracking-[0.22em]">MAIA</Link>
-          <nav className="flex gap-5 text-xs text-[#6d675c]"><Link href="/intro">Apresentação</Link><Link href="/support">Contato</Link></nav>
+    <section className="min-h-screen overflow-x-hidden bg-[#12110f] text-[#eee9df] selection:bg-[#b79a6c]/30">
+      <header className="relative z-30 h-[72px] border-b border-white/10 bg-[#12110f] px-5 sm:px-8 lg:px-10">
+        <div className="mx-auto flex h-full max-w-[1440px] items-center justify-between gap-6">
+          <Link href="/" className="maia-wordmark min-h-11 focus-visible:outline focus-visible:outline-1 focus-visible:outline-[#b79a6c]" aria-label="Grupo Maia — início"><span>MAIA</span><small>Grupo</small></Link>
+          <nav className="hidden h-full items-center gap-7 text-[11px] text-white/55 md:flex" aria-label="Navegação principal">
+            <a href="#empresas" className="flex h-full items-center transition hover:text-white">Empresas</a>
+            <Link href="/intro" className="flex h-full items-center transition hover:text-white">Apresentação do grupo</Link>
+            <Link href="/support" className="flex h-full items-center gap-2 border-l border-white/10 pl-7 text-white/75 transition hover:text-[#b79a6c]">Contato <ArrowUpRight size={14} /></Link>
+          </nav>
+          <Link href="/support" className="flex min-h-11 items-center text-[11px] text-white/70 md:hidden">Contato</Link>
         </div>
       </header>
 
-      <div className="mx-auto max-w-7xl px-5 py-14 sm:px-10 sm:py-20">
-        <p className="text-xs uppercase tracking-[0.22em] text-[#74664d]">Portfólio do Grupo Maia</p>
-        <div className="mt-5 grid gap-8 lg:grid-cols-[1.25fr_.75fr] lg:items-end">
-          <h1 className="max-w-4xl text-5xl font-light leading-[.98] tracking-[-.05em] sm:text-7xl">Diferentes competências.<br /><span className="font-serif italic text-[#8a7045]">Uma visão integrada.</span></h1>
-          <p className="max-w-lg text-sm leading-7 text-[#68635a]">Conheça as empresas, suas áreas de atuação e os dados públicos disponíveis. A organização privilegia clareza e contexto.</p>
-        </div>
+      <main className="mx-auto min-h-[calc(100vh-72px)] max-w-[1440px] lg:h-[calc(100vh-72px)] lg:min-h-[720px] lg:overflow-hidden">
+        <div className="grid min-h-[calc(100vh-72px)] lg:h-full lg:grid-cols-[57%_43%]">
+          <section aria-label="Mapa Vivo das Empresas" className={`${mobileMode === "index" ? "hidden lg:flex" : "flex"} relative min-h-[calc(100svh-72px)] flex-col overflow-hidden border-white/10 lg:min-h-0 lg:border-r`}>
+            <div className="pointer-events-none absolute inset-0 maia-constellation-field" aria-hidden="true" />
+            <div className="relative z-10 flex h-full flex-col p-5 sm:p-8 lg:p-10">
+              <div className="flex flex-col gap-6 xl:flex-row xl:items-start xl:justify-between">
+                <div className="max-w-[440px]">
+                  <p className="text-[10px] font-semibold uppercase tracking-[.22em] text-[#b79a6c]">Mapa Vivo das Empresas</p>
+                  <h1 className="mt-3 text-[34px] font-normal leading-[1.02] tracking-[-.055em] text-[#f2eee6] sm:text-[42px]">Negócios distintos.<br /><span className="font-serif italic text-[#b79a6c]">Uma estrutura conectada.</span></h1>
+                  <p className="mt-4 max-w-[390px] text-[13px] leading-6 text-white/50">Explore as empresas por nome ou área de atuação. Mapa e índice apresentam duas leituras do mesmo portfólio.</p>
+                </div>
+                <ModeSwitcher mode={mobileMode} onChange={setMobileMode} />
+              </div>
 
-        <div className="mt-14 grid gap-4 border-y border-black/15 py-5 md:grid-cols-[1fr_1fr_auto]">
-          <label className="text-xs uppercase tracking-[0.15em] text-[#74664d]">Buscar
-            <input value={query} onChange={(event) => setQuery(event.target.value)} placeholder="Empresa, setor ou atividade" className="mt-2 block w-full border-0 border-b border-black/20 bg-transparent py-2 text-base normal-case tracking-normal text-[#1c1c18] outline-none focus:border-[#8a7045]" />
-          </label>
-          <label className="text-xs uppercase tracking-[0.15em] text-[#74664d]">Área de atuação
-            <select value={sector} onChange={(event) => setSector(event.target.value)} className="mt-2 block w-full border-0 border-b border-black/20 bg-transparent py-2 text-base normal-case tracking-normal outline-none">{sectors.map((item) => <option key={item}>{item}</option>)}</select>
-          </label>
-          <p className="self-end pb-2 text-sm text-[#74664d]">{visible.length} empresas</p>
-        </div>
+              <div className="relative mt-4 min-h-[330px] flex-1">
+                {PROFILES.slice(0, 12).map((profile, index) => {
+                  const positions = ["left-[5%] top-[20%]", "left-[39%] top-[11%]", "right-[5%] top-[26%]", "left-[22%] top-[48%]", "right-[24%] top-[53%]", "bottom-[9%] left-[8%]", "bottom-[4%] right-[5%]", "left-[58%] top-[34%]", "left-[5%] top-[66%]", "right-[8%] top-[72%]", "left-[42%] top-[72%]", "right-[32%] top-[5%]"];
+                  const isSelected = selected.login === profile.login;
+                  return <button key={profile.login} type="button" onClick={() => setSelected(profile)} className={`maia-constellation-node group absolute ${positions[index]} min-h-11 text-left`} aria-label={`Selecionar ${profile.name}`}>
+                    <span className={`absolute left-0 top-[17px] h-2 w-2 rounded-full ${isSelected ? "bg-[#b79a6c] ring-4 ring-[#b79a6c]/15" : "bg-white/55 ring-4 ring-white/5"}`} />
+                    <span className={`ml-5 block text-[12px] transition ${isSelected ? "text-[#f2eee6]" : "text-white/60 group-hover:text-[#b79a6c]"}`}>{profile.name}</span>
+                    <span className="ml-5 mt-1 block max-w-28 truncate text-[9px] uppercase tracking-[.12em] text-white/25">{profile.sector}</span>
+                  </button>;
+                })}
+              </div>
 
-        <div className="mt-4 border-t border-black/15">
-          {visible.map((profile, index) => (
-            <button key={profile.login} type="button" onClick={() => setSelected(profile)} className="group grid w-full grid-cols-[2.5rem_1fr_auto] items-center gap-4 border-b border-black/15 py-5 text-left transition hover:bg-black/[0.025] sm:grid-cols-[3rem_1.1fr_1fr_auto]">
-              <span className="text-xs tabular-nums text-[#948b7b]">{String(index + 1).padStart(2, "0")}</span>
-              <span className="text-xl tracking-[-.02em] sm:text-2xl">{profile.name}</span>
-              <span className="hidden text-sm text-[#746f66] sm:block">{profile.sector}</span>
-              <span className="text-xl text-[#8a7045] transition-transform group-hover:translate-x-1">→</span>
-            </button>
-          ))}
-          {visible.length === 0 && <p className="py-14 text-sm text-[#74664d]">Nenhuma empresa corresponde aos filtros selecionados.</p>}
-        </div>
-      </div>
+              <aside aria-live="polite" className="relative mt-5 grid border-y border-white/10 py-5 sm:grid-cols-[1fr_auto] sm:items-end sm:gap-8">
+                <div><div className="flex items-center gap-3"><span className="text-[9px] tabular-nums text-[#b79a6c]">{String(PROFILES.indexOf(selected) + 1).padStart(2, "0")}</span><p className="text-[9px] font-semibold uppercase tracking-[.2em] text-[#b79a6c]">{selected.sector}</p></div><h2 className="mt-2 text-[28px] font-normal tracking-[-.045em] text-[#f2eee6]">{selected.name}</h2><p className="mt-2 max-w-[520px] text-[12px] leading-5 text-white/45">{selected.description}</p></div>
+                <Link href={`/dev/${selectedRecord?.username ?? selected.login}`} className="mt-4 inline-flex min-h-11 items-center gap-3 text-[11px] text-white/70 transition hover:text-[#b79a6c] sm:mt-0">Conhecer empresa <ArrowRight size={16} /></Link>
+              </aside>
+            </div>
+          </section>
 
-      {selected && (
-        <div className="fixed inset-0 z-50 flex justify-end bg-black/45" onClick={() => setSelected(null)}>
-          <aside className="h-full w-full max-w-xl overflow-y-auto bg-[#171714] p-7 text-[#f1eee6] sm:p-10" onClick={(event) => event.stopPropagation()}>
-            <div className="flex items-center justify-between"><span className="text-xs uppercase tracking-[0.2em] text-[#b89a62]">{selected.sector}</span><button onClick={() => setSelected(null)} aria-label="Fechar" className="text-2xl text-white/55">×</button></div>
-            <h2 className="mt-12 text-5xl font-light tracking-[-.04em]">{selected.name}</h2>
-            <p className="mt-6 text-base leading-7 text-white/58">{selected.description}</p>
-            <dl className="mt-12 border-t border-white/15 text-sm">
-              <div className="grid grid-cols-[8rem_1fr] border-b border-white/12 py-4"><dt className="text-white/35">Participação</dt><dd>{selected.ownership}</dd></div>
-              <div className="grid grid-cols-[8rem_1fr] border-b border-white/12 py-4"><dt className="text-white/35">Situação</dt><dd>{selected.status ?? "Em operação"}</dd></div>
-              <div className="grid grid-cols-[8rem_1fr] border-b border-white/12 py-4"><dt className="text-white/35">Contribuições</dt><dd>{Math.max(selectedRecord?.contributions_total ?? 0, selectedRecord?.contributions ?? 0).toLocaleString("pt-BR")}</dd></div>
-              <div className="grid grid-cols-[8rem_1fr] border-b border-white/12 py-4"><dt className="text-white/35">Repositórios</dt><dd>{(selectedRecord?.public_repos ?? 0).toLocaleString("pt-BR")}</dd></div>
-            </dl>
-            <div className="mt-10 flex flex-wrap gap-3"><Link href={`/dev/${selectedRecord?.username ?? selected.login}`} className="rounded-full bg-[#f1eee6] px-5 py-3 text-sm text-[#171714]">Ver perfil</Link><Link href="/support" className="rounded-full border border-white/20 px-5 py-3 text-sm text-white/70">Falar com o grupo</Link></div>
-          </aside>
+          <section id="empresas" aria-label="Índice de Empresas" className={`${mobileMode === "map" ? "hidden lg:flex" : "flex"} min-h-[calc(100svh-72px)] flex-col bg-[#12110f] lg:min-h-0`}>
+            <div className="border-b border-white/10 px-5 py-6 sm:px-8 lg:px-9">
+              <div className="flex items-end justify-between gap-4"><div><p className="text-[10px] font-semibold uppercase tracking-[.22em] text-[#b79a6c]">Índice de Empresas</p><p className="mt-2 text-[12px] text-white/40">{visible.length} {visible.length === 1 ? "empresa" : "empresas"}</p></div><ModeSwitcher mode={mobileMode} onChange={setMobileMode} compact /></div>
+              <label className="relative mt-5 block"><span className="sr-only">Buscar por empresa ou setor</span><Search size={16} className="pointer-events-none absolute left-0 top-1/2 -translate-y-1/2 text-white/35" /><input value={query} onChange={(event) => setQuery(event.target.value)} type="search" placeholder="Buscar por empresa ou setor" className="h-12 w-full border-0 border-b border-white/15 bg-transparent pl-7 pr-3 text-sm text-[#f2eee6] outline-none placeholder:text-white/30 focus:border-[#b79a6c]" /></label>
+              <label className="mt-4 block"><span className="sr-only">Filtrar por setor</span><select value={sector} onChange={(event) => setSector(event.target.value)} className="min-h-10 w-full border border-white/15 bg-[#12110f] px-3 text-[11px] text-white/60 outline-none focus:border-[#b79a6c]">{sectors.map((item) => <option key={item}>{item}</option>)}</select></label>
+            </div>
+            <div className="min-h-0 flex-1 overflow-y-auto">
+              {visible.map((profile, index) => <button key={profile.login} type="button" onClick={() => selectCompany(profile)} className={`group grid min-h-[76px] w-full grid-cols-[38px_1fr_auto] items-center border-b border-white/10 px-5 text-left transition hover:bg-white/[.025] focus-visible:bg-white/[.04] focus-visible:outline-none sm:px-8 ${selected.login === profile.login ? "bg-white/[.025]" : ""}`}><span className={`text-[9px] tabular-nums ${selected.login === profile.login ? "text-[#b79a6c]" : "text-white/25"}`}>{String(index + 1).padStart(2, "0")}</span><span><strong className="block text-[20px] font-normal tracking-[-.035em] text-[#f2eee6]">{profile.name}</strong><small className="mt-1 block text-[11px] text-white/35">{profile.sector}</small></span>{selected.login === profile.login ? <ArrowUpRight size={18} className="text-[#b79a6c]" /> : <ArrowRight size={18} className="text-white/25 transition group-hover:translate-x-1 group-hover:text-[#b79a6c]" />}</button>)}
+              {visible.length === 0 && <div className="px-8 py-12 text-sm text-white/45"><p>Nenhuma empresa corresponde à busca.</p><button type="button" onClick={() => { setQuery(""); setSector("Todos"); }} className="mt-4 inline-flex min-h-11 items-center gap-2 text-[#b79a6c]">Limpar filtros <X size={14} /></button></div>}
+            </div>
+          </section>
         </div>
-      )}
+      </main>
     </section>
   );
 }
 
+function ModeSwitcher({ mode, onChange, compact = false }: { mode: "map" | "index"; onChange: (mode: "map" | "index") => void; compact?: boolean }) {
+  return <div className={`${compact ? "flex lg:hidden" : "flex"} w-full max-w-[270px] border border-white/15 p-1 text-[11px]`} role="group" aria-label="Modo de visualização"><button type="button" aria-pressed={mode === "map"} onClick={() => onChange("map")} className={`min-h-10 flex-1 transition ${mode === "map" ? "bg-[#f2eee6] text-[#12110f]" : "text-white/50 hover:text-white"}`}>Mapa</button><button type="button" aria-pressed={mode === "index"} onClick={() => onChange("index")} className={`min-h-10 flex-1 transition ${mode === "index" ? "bg-[#f2eee6] text-[#12110f]" : "text-white/50 hover:text-white"}`}>Índice</button></div>;
+}
