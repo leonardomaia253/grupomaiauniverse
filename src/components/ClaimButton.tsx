@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import type { User } from "@supabase/supabase-js";
 import { createBrowserSupabase } from "@/lib/supabase";
+import { hasPublicSupabaseConfig } from "@/lib/env";
 
 interface Props {
   companyLogin: string;
@@ -17,6 +18,7 @@ export default function ClaimButton({ companyLogin, claimed }: Props) {
   const accent = "#b89a62";
 
   useEffect(() => {
+    if (!hasPublicSupabaseConfig()) return;
     const supabase = createBrowserSupabase();
     supabase.auth.getUser().then(({ data: { user } }: { data: { user: User | null } }) => {
       if (!user) return;
