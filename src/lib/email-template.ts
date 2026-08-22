@@ -1,7 +1,6 @@
 import { BRAND } from "./brand";
 
 const BASE_URL = BRAND.baseUrl;
-const FONT = `'Silkscreen', monospace`;
 const FONT_IMPORT = `@import url('https://fonts.googleapis.com/css2?family=Silkscreen:wght@400;700&display=swap');`;
 
 export function wrapInBaseTemplate(bodyHtml: string, unsubscribeUrl?: string): string {
@@ -86,7 +85,7 @@ export function buildButton(text: string, url: string): string {
 
 export function buildStatRow(label: string, value: string | number): string {
   return `<tr>
-  <td style="padding: 10px 14px; border: 1px solid #eeeeee; color: #111111; font-size: 20px; font-weight: bold; font-family: Helvetica, Arial, sans-serif;">${value}</td>
+  <td style="padding: 10px 14px; border: 1px solid #eeeeee; color: #111111; font-size: 20px; font-weight: bold; font-family: Helvetica, Arial, sans-serif;">${escapeHtml(String(value))}</td>
   <td style="padding: 10px 14px; border: 1px solid #eeeeee; color: #555555; font-family: Helvetica, Arial, sans-serif; font-size: 14px;">${escapeHtml(String(label))}</td>
 </tr>`;
 }

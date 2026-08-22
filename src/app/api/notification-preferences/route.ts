@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { createServerSupabase } from "@/lib/supabase-server";
 import { getSupabaseAdmin } from "@/lib/supabase";
+import { requireSameOrigin } from "@/lib/security";
 
 export const dynamic = "force-dynamic";
 
@@ -78,6 +79,8 @@ export async function GET() {
  * `transactional` cannot be disabled (purchase receipts always send).
  */
 export async function PATCH(request: Request) {
+  const invalidOrigin = requireSameOrigin(request);
+  if (invalidOrigin) return invalidOrigin;
   const supabase = await createServerSupabase();
   const { data: { user } } = await supabase.auth.getUser();
 

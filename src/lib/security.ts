@@ -31,3 +31,12 @@ export function requireCronRequest(authHeader: string | null): NextResponse | nu
 export function getUnsubscribeHmacSecret(): string {
   return process.env.UNSUBSCRIBE_HMAC_SECRET || requireEnv("CRON_SECRET");
 }
+
+export function requireSameOrigin(request: Request): NextResponse | null {
+  const origin = request.headers.get("origin");
+  const expectedOrigin = new URL(request.url).origin;
+  if (!origin || origin !== expectedOrigin) {
+    return NextResponse.json({ error: "Invalid request origin" }, { status: 403 });
+  }
+  return null;
+}

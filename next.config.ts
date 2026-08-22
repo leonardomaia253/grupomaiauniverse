@@ -1,6 +1,25 @@
 import type { NextConfig } from "next";
 
 const securityHeaders = [
+  {
+    key: "Content-Security-Policy",
+    value: [
+      "default-src 'self'",
+      "base-uri 'self'",
+      "object-src 'none'",
+      "frame-ancestors 'none'",
+      "form-action 'self' https://checkout.stripe.com",
+      "script-src 'self' 'unsafe-inline' https://cdn.himetrica.com",
+      "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
+      "font-src 'self' https://fonts.gstatic.com data:",
+      "img-src 'self' data: blob: https://avatars.githubusercontent.com https://*.supabase.co",
+      "media-src 'self' blob:",
+      "connect-src 'self' https://*.supabase.co wss://*.supabase.co https://*.vercel-insights.com https://cdn.himetrica.com",
+      "worker-src 'self' blob:",
+      "manifest-src 'self'",
+      "upgrade-insecure-requests",
+    ].join("; "),
+  },
   // Prevent clickjacking – block all framing
   { key: "X-Frame-Options", value: "DENY" },
   // Block MIME-type sniffing (e.g. treating a .txt as script)
@@ -14,6 +33,8 @@ const securityHeaders = [
   },
   // Enable DNS prefetch for faster navigation
   { key: "X-DNS-Prefetch-Control", value: "on" },
+  { key: "Cross-Origin-Opener-Policy", value: "same-origin" },
+  { key: "Cross-Origin-Resource-Policy", value: "same-origin" },
   // Force HTTPS (browsers cache this for 2 years)
   {
     key: "Strict-Transport-Security",

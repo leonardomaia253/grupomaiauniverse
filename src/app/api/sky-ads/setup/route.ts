@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getSupabaseAdmin } from "@/lib/supabase";
-import { rateLimit } from "@/lib/rate-limit";
+import { rateLimitAsync } from "@/lib/rate-limit";
 import { MAX_TEXT_LENGTH } from "@/lib/skyAds";
 import { containsBlockedContent, isSuspiciousLink } from "@/lib/ad-moderation";
 
@@ -14,7 +14,7 @@ export async function POST(request: NextRequest) {
     request.headers.get("x-real-ip") ??
     "unknown";
 
-  const { ok } = rateLimit(`setup:${ip}`, 1, 5_000);
+  const { ok } = await rateLimitAsync(`setup:${ip}`, 1, 5_000);
   if (!ok) {
     return NextResponse.json(
       { error: "Too many requests. Try again in a few seconds." },

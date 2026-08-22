@@ -44,7 +44,7 @@ export default async function CompanyIdentityPage({ params }: Props) {
           </dl>
           <div className="mt-8 border-t border-white/13 pt-8">
             <p className="max-w-2xl text-sm leading-6 text-white/45">Para preservar consistência editorial e segurança, alterações de marca, descrição e vínculos são revisadas pela equipe responsável.</p>
-            <a href={`mailto:contato@grupomaia.com.br?subject=${encodeURIComponent(`Atualização do perfil ${company.username}`)}`} className="mt-6 inline-flex rounded-full bg-[#eee9df] px-5 py-3 text-xs font-medium text-[#171512]">Solicitar atualização</a>
+            <a href={`mailto:contato@grupomaia.me?subject=${encodeURIComponent(`Atualização do perfil ${company.username}`)}`} className="mt-6 inline-flex rounded-full bg-[#eee9df] px-5 py-3 text-xs font-medium text-[#171512]">Solicitar atualização</a>
           </div>
         </>
       )}

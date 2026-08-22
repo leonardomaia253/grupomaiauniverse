@@ -18,7 +18,7 @@ const terms = [
   ["Responsabilidade", <p>Indicadores e informações públicas têm finalidade informativa e não constituem recomendação financeira, jurídica ou comercial. Decisões devem considerar fontes oficiais e análise independente.</p>],
   ["Serviços de terceiros", <p>Links e integrações externas seguem termos próprios. O Grupo Maia não controla alterações, disponibilidade ou práticas adotadas por esses fornecedores.</p>],
   ["Alterações", <p>Estes termos podem ser atualizados em razão de mudanças legais, técnicas ou operacionais. A versão vigente e sua data de revisão permanecerão disponíveis nesta página.</p>],
-  ["Contato", <p>Dúvidas podem ser encaminhadas para <a className="text-[#c5aa7d] underline decoration-white/20 underline-offset-4" href="mailto:contato@grupomaia.com.br">contato@grupomaia.com.br</a>.</p>],
+  ["Contato", <p>Dúvidas podem ser encaminhadas para <a className="text-[#c5aa7d] underline decoration-white/20 underline-offset-4" href="mailto:contato@grupomaia.me">contato@grupomaia.me</a>.</p>],
 ] as const;
 /* eslint-enable react/jsx-key */
 

@@ -4,13 +4,13 @@ export const BRAND = {
   groupName: "Grupo Maia",
   domain: "universe.grupomaia.me",
   baseUrl: "https://universe.grupomaia.me",
-  contactEmail: "contato@grupomaia.com.br",
+  contactEmail: "contato@grupomaia.me",
   fromEmail: "noreply@universe.grupomaia.me",
   repository: "https://github.com/leonardomaia253/lmf-universe",
   starRepositoryApi:
     "https://api.github.com/repos/leonardomaia253/lmf-universe",
   xCreator: "@mapavivo",
-  xCreatorUrl: "mailto:contato@grupomaia.com.br",
+  xCreatorUrl: "mailto:contato@grupomaia.me",
   appDescription:
     "Uma visão integrada das empresas, frentes de atuação e trajetória do Grupo Maia.",
   ogAlt:

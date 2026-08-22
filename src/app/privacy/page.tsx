@@ -18,7 +18,7 @@ const items = [
   ["Segurança", <p>Adotamos conexões criptografadas, controle de acesso, políticas de segurança em banco de dados e autenticação por fornecedores especializados. Nenhum sistema conectado à internet é absolutamente imune a riscos.</p>],
   ["Menores de idade", <p>A plataforma não é dirigida a menores de 13 anos e não coleta intencionalmente informações de crianças.</p>],
   ["Atualizações", <p>Esta política poderá ser atualizada para refletir mudanças legais, técnicas ou operacionais. A data de revisão será sempre indicada nesta página.</p>],
-  ["Contato", <p>Dúvidas ou solicitações relacionadas a dados pessoais podem ser enviadas para <a className="text-[#c5aa7d] underline decoration-white/20 underline-offset-4" href="mailto:contato@grupomaia.com.br">contato@grupomaia.com.br</a>.</p>],
+  ["Contato", <p>Dúvidas ou solicitações relacionadas a dados pessoais podem ser enviadas para <a className="text-[#c5aa7d] underline decoration-white/20 underline-offset-4" href="mailto:contato@grupomaia.me">contato@grupomaia.me</a>.</p>],
 ] as const;
 /* eslint-enable react/jsx-key */
 

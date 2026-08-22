@@ -1,5 +1,7 @@
 import { NextResponse } from "next/server";
 import { getSupabaseAdmin } from "@/lib/supabase";
+import { getResend } from "@/lib/resend";
+import { claimWebhookEvent } from "@/lib/webhook-events";
 
 export const dynamic = "force-dynamic";
 
@@ -9,28 +11,52 @@ export const dynamic = "force-dynamic";
  * Updates notification_log delivery lifecycle and notification_suppressions.
  */
 export async function POST(request: Request) {
-  // Verify webhook secret (set in Resend dashboard)
   const webhookSecret = process.env.RESEND_WEBHOOK_SECRET;
-  if (webhookSecret) {
-    const sig = request.headers.get("svix-signature");
-    if (!sig) {
-      return NextResponse.json({ error: "Missing signature" }, { status: 401 });
-    }
-    // For production, use Resend's webhook verification SDK.
-    // For now, we rely on the webhook URL being secret.
+  if (!webhookSecret) {
+    console.error("[webhook:resend] RESEND_WEBHOOK_SECRET is not configured");
+    return NextResponse.json({ error: "Webhook unavailable" }, { status: 503 });
+  }
+
+  const webhookId = request.headers.get("svix-id");
+  const webhookTimestamp = request.headers.get("svix-timestamp");
+  const webhookSignature = request.headers.get("svix-signature");
+  if (!webhookId || !webhookTimestamp || !webhookSignature) {
+    return NextResponse.json({ error: "Missing webhook signature" }, { status: 401 });
+  }
+
+  const contentLength = Number(request.headers.get("content-length") ?? 0);
+  if (contentLength > 1_000_000) {
+    return NextResponse.json({ error: "Payload too large" }, { status: 413 });
+  }
+
+  const payload = await request.text();
+  if (payload.length > 1_000_000) {
+    return NextResponse.json({ error: "Payload too large" }, { status: 413 });
   }
 
   let body: { type: string; data: Record<string, unknown> };
   try {
-    body = await request.json();
+    body = getResend().webhooks.verify({
+      payload,
+      webhookSecret,
+      headers: {
+        id: webhookId,
+        timestamp: webhookTimestamp,
+        signature: webhookSignature,
+      },
+    }) as unknown as { type: string; data: Record<string, unknown> };
   } catch {
-    return NextResponse.json({ error: "Invalid body" }, { status: 400 });
+    return NextResponse.json({ error: "Invalid signature" }, { status: 401 });
   }
 
   const sb = getSupabaseAdmin();
   const now = new Date().toISOString();
 
   try {
+    if (!(await claimWebhookEvent(sb, "resend", webhookId, body.type))) {
+      return NextResponse.json({ received: true, duplicate: true });
+    }
+
     switch (body.type) {
       case "email.bounced": {
         const email = (body.data.to as string[])?.[0];

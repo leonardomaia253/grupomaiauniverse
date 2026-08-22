@@ -134,4 +134,4 @@ Run `npm install` to pick up any new dependencies, then `npm run lint` to surfac
 
 ## Questions?
 
-Open an issue or reach out on [X/Twitter](mailto:contato@grupomaia.com.br).
+Open an issue or contact us at [contato@grupomaia.me](mailto:contato@grupomaia.me).

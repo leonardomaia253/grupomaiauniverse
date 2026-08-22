@@ -36,7 +36,7 @@ export default function SupportPage() {
         {channels.map((channel, index) => (
           <a
             key={channel.title}
-            href={`mailto:contato@grupomaia.com.br?subject=${encodeURIComponent(channel.subject)}`}
+            href={`mailto:contato@grupomaia.me?subject=${encodeURIComponent(channel.subject)}`}
             className="group min-h-52 border-b border-r border-white/13 p-6 transition-colors hover:bg-white/[.035] sm:p-8"
           >
             <span className="text-[10px] tabular-nums text-white/25">{String(index + 1).padStart(2, "0")}</span>
@@ -50,7 +50,7 @@ export default function SupportPage() {
       <div className="mt-14 grid gap-8 border-t border-white/13 pt-8 sm:grid-cols-2">
         <div>
           <p className="text-[10px] font-semibold uppercase tracking-[.16em] text-[#bda57e]">Canal geral</p>
-          <a className="mt-3 block text-xl text-white/80" href="mailto:contato@grupomaia.com.br">contato@grupomaia.com.br</a>
+          <a className="mt-3 block text-xl text-white/80" href="mailto:contato@grupomaia.me">contato@grupomaia.me</a>
         </div>
         <div>
           <p className="text-[10px] font-semibold uppercase tracking-[.16em] text-[#bda57e]">Antes de escrever</p>

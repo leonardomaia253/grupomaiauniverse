@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { createServerSupabase } from "@/lib/supabase-server";
 import { getSupabaseAdmin } from "@/lib/supabase";
 import crypto from "crypto";
+import { requireSameOrigin } from "@/lib/security";
 
 export const dynamic = "force-dynamic";
 
@@ -42,14 +43,17 @@ export async function GET() {
   const sb = getSupabaseAdmin();
   const { data: dev } = await sb
     .from("companies")
-    .select("vscode_api_key")
+    .select("vscode_api_key_hash")
     .eq("id", auth.devId)
     .single();
 
-  return NextResponse.json({ key: dev?.vscode_api_key ?? null });
+  return NextResponse.json({ configured: Boolean(dev?.vscode_api_key_hash) });
 }
 
-export async function POST() {
+export async function POST(request: Request) {
+  const invalidOrigin = requireSameOrigin(request);
+  if (invalidOrigin) return invalidOrigin;
+
   const auth = await getAuthenticatedDevId();
   if ("error" in auth) {
     return NextResponse.json({ error: auth.error }, { status: auth.status });
@@ -57,23 +61,12 @@ export async function POST() {
 
   const sb = getSupabaseAdmin();
 
-  // Check if key already exists
-  const { data: existing } = await sb
-    .from("companies")
-    .select("vscode_api_key")
-    .eq("id", auth.devId)
-    .single();
-
-  if (existing?.vscode_api_key) {
-    return NextResponse.json({ key: existing.vscode_api_key });
-  }
-
+  // API keys are shown only once. Calling POST rotates any existing key.
   const newKey = crypto.randomBytes(32).toString("base64url");
 
   const { error } = await sb
     .from("companies")
     .update({
-      vscode_api_key: newKey,
       vscode_api_key_hash: hashKey(newKey),
     })
     .eq("id", auth.devId);

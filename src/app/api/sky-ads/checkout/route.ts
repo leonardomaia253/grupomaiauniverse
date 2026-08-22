@@ -3,7 +3,7 @@ import { getStripe } from "@/lib/stripe";
 import { getSupabaseAdmin } from "@/lib/supabase";
 import { SKY_AD_PLANS, isValidPlanId, getPriceCents, type AdCurrency } from "@/lib/skyAdPlans";
 import { MAX_TEXT_LENGTH } from "@/lib/skyAds";
-import { rateLimit } from "@/lib/rate-limit";
+import { rateLimitAsync } from "@/lib/rate-limit";
 import { containsBlockedContent } from "@/lib/ad-moderation";
 
 export const dynamic = "force-dynamic";
@@ -30,7 +30,7 @@ export async function POST(request: NextRequest) {
     request.headers.get("x-real-ip") ??
     "unknown";
 
-  const { ok } = rateLimit(`checkout:${ip}`, 1, 10_000);
+  const { ok } = await rateLimitAsync(`checkout:${ip}`, 1, 10_000);
   if (!ok) {
     return NextResponse.json(
       { error: "Too many requests. Try again in a few seconds." },

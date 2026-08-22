@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { createServerSupabase } from "@/lib/supabase-server";
 import { getSupabaseAdmin } from "@/lib/supabase";
+import { requireSameOrigin } from "@/lib/security";
 
 export const dynamic = "force-dynamic";
 
@@ -28,6 +29,8 @@ async function checkAdmin() {
 
 // Create a new ad
 export async function POST(request: Request) {
+  const invalidOrigin = requireSameOrigin(request);
+  if (invalidOrigin) return invalidOrigin;
   if (!(await checkAdmin())) {
     return NextResponse.json({ error: "Forbidden" }, { status: 403 });
   }
@@ -77,6 +80,8 @@ const ALLOWED_UPDATE_FIELDS = new Set([
 ]);
 
 export async function PUT(request: Request) {
+  const invalidOrigin = requireSameOrigin(request);
+  if (invalidOrigin) return invalidOrigin;
   if (!(await checkAdmin())) {
     return NextResponse.json({ error: "Forbidden" }, { status: 403 });
   }
@@ -115,6 +120,8 @@ export async function PUT(request: Request) {
 
 // Hard delete ad row
 export async function DELETE(request: Request) {
+  const invalidOrigin = requireSameOrigin(request);
+  if (invalidOrigin) return invalidOrigin;
   if (!(await checkAdmin())) {
     return NextResponse.json({ error: "Forbidden" }, { status: 403 });
   }
@@ -141,6 +148,8 @@ export async function DELETE(request: Request) {
 
 // Batch operations: pause, resume, or delete multiple ads
 export async function PATCH(request: Request) {
+  const invalidOrigin = requireSameOrigin(request);
+  if (invalidOrigin) return invalidOrigin;
   if (!(await checkAdmin())) {
     return NextResponse.json({ error: "Forbidden" }, { status: 403 });
   }

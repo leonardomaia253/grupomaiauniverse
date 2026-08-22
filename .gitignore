@@ -57,6 +57,7 @@ docs/
 *.mov
 
 .vscode
+.security-db-push/
 
 # vscode extension build artifacts
 packages/vscode-extension/dist/

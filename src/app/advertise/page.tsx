@@ -43,7 +43,7 @@ export default function MediaPartnershipsPage() {
         <section>
           <p className="text-[10px] font-semibold uppercase tracking-[.16em] text-[#bda57e]">Enviar proposta</p>
           <p className="mt-5 max-w-lg text-sm leading-6 text-white/48">Informe marca, objetivo, público, período e formato pretendido. A equipe avaliará aderência, disponibilidade e condições comerciais.</p>
-          <a href="mailto:contato@grupomaia.com.br?subject=Parceria%20de%20m%C3%ADdia" className="mt-6 inline-flex rounded-full bg-[#eee9df] px-5 py-3 text-xs font-medium text-[#171512]">Falar com a equipe</a>
+          <a href="mailto:contato@grupomaia.me?subject=Parceria%20de%20m%C3%ADdia" className="mt-6 inline-flex rounded-full bg-[#eee9df] px-5 py-3 text-xs font-medium text-[#171512]">Falar com a equipe</a>
         </section>
       </div>
     </EditorialPageShell>

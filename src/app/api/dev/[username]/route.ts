@@ -17,7 +17,7 @@ export async function GET(
 
   const { data: cached } = await sb
     .from("companies")
-    .select("*")
+    .select("id, username, name, avatar_url, bio, contributions, contributions_total, public_repos, total_stars, primary_language, top_repos, rank, fetched_at, claimed, category, employee_count, applications_count, total_prs, total_reviews, followers, provider")
     .eq("username", username.toLowerCase())
     .single();
 
