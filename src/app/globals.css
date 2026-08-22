@@ -399,22 +399,170 @@ body {
 
 .maia-constellation-field {
   background:
-    radial-gradient(circle at 18% 24%, rgba(183,154,108,.08), transparent 28%),
-    radial-gradient(circle at 74% 40%, rgba(255,255,255,.035), transparent 34%),
-    repeating-radial-gradient(circle at 42% 48%, transparent 0 118px, rgba(255,255,255,.035) 119px 120px);
+    radial-gradient(circle at 48% 52%, rgba(183,154,108,.11), transparent 34%),
+    radial-gradient(circle at 18% 24%, rgba(183,154,108,.055), transparent 25%),
+    repeating-radial-gradient(circle at 48% 52%, transparent 0 118px, rgba(255,255,255,.026) 119px 120px);
 }
-.maia-constellation-field::before,
-.maia-constellation-field::after {
-  content: "";
+.maia-living-constellation {
+  isolation: isolate;
+  transform: translateZ(0);
+}
+.maia-constellation-grain {
   position: absolute;
-  inset: 16% 10%;
-  background: linear-gradient(21deg, transparent 49.85%, rgba(255,255,255,.09) 50%, transparent 50.15%);
-  transform: rotate(-8deg);
+  inset: 2% 0;
+  pointer-events: none;
+  opacity: .3;
+  background-image: radial-gradient(rgba(232,204,158,.9) .55px, transparent .8px);
+  background-size: 10px 10px;
+  mask-image: radial-gradient(ellipse at 49% 52%, #000 0 16%, rgba(0,0,0,.72) 42%, transparent 78%);
+  transform: translate3d(calc(var(--maia-parallax-x) * -.35), calc(var(--maia-parallax-y) * -.35), 0);
+  transition: transform 240ms ease-out;
 }
-.maia-constellation-field::after { transform: rotate(34deg); opacity: .65; }
-.maia-constellation-node { animation: maia-constellation-drift 8s ease-in-out infinite; }
-.maia-constellation-node:nth-child(2n) { animation-delay: -2.5s; }
-.maia-constellation-node:nth-child(3n) { animation-delay: -5s; }
+.maia-constellation-scan {
+  position: absolute;
+  z-index: 1;
+  left: 0;
+  right: 0;
+  top: 4%;
+  height: 22%;
+  pointer-events: none;
+  opacity: .48;
+  background: linear-gradient(180deg, transparent, rgba(183,154,108,.03), rgba(222,190,137,.12), rgba(183,154,108,.03), transparent);
+  filter: blur(9px);
+  animation: maia-constellation-scan 9s ease-in-out infinite;
+}
+.maia-constellation-status {
+  position: absolute;
+  z-index: 5;
+  top: .35rem;
+  right: .25rem;
+  display: flex;
+  gap: 1rem;
+  color: rgba(255,255,255,.28);
+  font-size: 8px;
+  letter-spacing: .13em;
+  text-transform: uppercase;
+}
+.maia-constellation-status span::before {
+  content: "";
+  display: inline-block;
+  width: 4px;
+  height: 4px;
+  margin-right: 6px;
+  border-radius: 999px;
+  background: #b79a6c;
+  box-shadow: 0 0 10px rgba(183,154,108,.85);
+}
+.maia-constellation-network {
+  position: absolute;
+  z-index: 2;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  pointer-events: none;
+  transform: translate3d(var(--maia-parallax-x), var(--maia-parallax-y), 0);
+  transition: transform 240ms ease-out;
+}
+.maia-orbit {
+  fill: none;
+  stroke: rgba(255,255,255,.07);
+  stroke-width: .16;
+  stroke-dasharray: .45 1.5;
+  vector-effect: non-scaling-stroke;
+}
+.maia-orbit--inner { opacity: .62; stroke-dasharray: .25 1.2; }
+.maia-constellation-link {
+  stroke: rgba(224,211,188,.22);
+  stroke-width: .55;
+  vector-effect: non-scaling-stroke;
+  transition: stroke 380ms ease, opacity 380ms ease, stroke-width 380ms ease;
+}
+.maia-constellation-link.is-active {
+  stroke: rgba(215,184,132,.78);
+  stroke-width: 1.05;
+  filter: drop-shadow(0 0 3px rgba(183,154,108,.7));
+}
+.maia-energy-pulse {
+  fill: #f0cf98;
+  filter: drop-shadow(0 0 2px #d8ae6e);
+}
+.maia-constellation-node {
+  z-index: 4;
+  min-width: 2.25rem;
+  padding: .7rem .65rem .7rem 1.2rem;
+  border-radius: 999px;
+  transform: translate3d(calc(var(--node-anchor-x, -50%) + var(--maia-parallax-x)), calc(-50% + var(--maia-parallax-y)), 0);
+}
+.maia-node-dot {
+  position: absolute;
+  left: .42rem;
+  top: 1.08rem;
+  width: 5px;
+  height: 5px;
+  border-radius: 999px;
+  background: rgba(255,255,255,.58);
+  box-shadow: 0 0 0 4px rgba(255,255,255,.035);
+  animation: maia-constellation-drift 8s ease-in-out var(--node-delay, 0s) infinite;
+  transition: all 260ms ease;
+}
+.maia-node-label {
+  display: block;
+  color: rgba(255,255,255,.53);
+  font-size: 10px;
+  line-height: 1.1;
+  white-space: nowrap;
+  transition: color 220ms ease, transform 220ms ease;
+}
+.maia-node-sector {
+  display: block;
+  max-width: 7.5rem;
+  margin-top: .28rem;
+  overflow: hidden;
+  color: rgba(255,255,255,.26);
+  font-size: 7px;
+  letter-spacing: .1em;
+  line-height: 1.2;
+  opacity: 0;
+  text-overflow: ellipsis;
+  text-transform: uppercase;
+  white-space: nowrap;
+  transform: translateY(-2px);
+  transition: opacity 220ms ease, transform 220ms ease;
+}
+.maia-constellation-node:hover,
+.maia-constellation-node:focus-visible,
+.maia-constellation-node.is-selected { z-index: 8; background: rgba(18,17,15,.74); }
+.maia-constellation-node:hover .maia-node-label,
+.maia-constellation-node:focus-visible .maia-node-label,
+.maia-constellation-node.is-selected .maia-node-label { color: #f2eee6; transform: translateX(2px); }
+.maia-constellation-node:hover .maia-node-sector,
+.maia-constellation-node:focus-visible .maia-node-sector,
+.maia-constellation-node.is-selected .maia-node-sector { opacity: 1; transform: translateY(0); }
+.maia-constellation-node.is-selected .maia-node-dot {
+  width: 9px;
+  height: 9px;
+  left: .3rem;
+  top: .95rem;
+  background: #dfc28d;
+  box-shadow: 0 0 0 6px rgba(183,154,108,.14), 0 0 25px rgba(214,174,107,.88);
+}
+
+@media (max-width: 640px) {
+  .maia-constellation-status { display: none; }
+  .maia-constellation-node { padding-inline: 1rem .4rem; }
+  .maia-node-label { opacity: 0 !important; font-size: 9px; }
+  .maia-node-sector { display: none; }
+  .maia-constellation-node:nth-of-type(1) .maia-node-label,
+  .maia-constellation-node:nth-of-type(3) .maia-node-label,
+  .maia-constellation-node:nth-of-type(5) .maia-node-label,
+  .maia-constellation-node:nth-of-type(8) .maia-node-label,
+  .maia-constellation-node:nth-of-type(11) .maia-node-label,
+  .maia-constellation-node:nth-of-type(15) .maia-node-label,
+  .maia-constellation-node:nth-of-type(20) .maia-node-label,
+  .maia-constellation-node:nth-of-type(26) .maia-node-label,
+  .maia-constellation-node.is-selected .maia-node-label { opacity: 1 !important; }
+}
 
 .maia-editorial-shell::before {
   content: "";
@@ -431,8 +579,12 @@ body {
 :focus-visible { outline: 1px solid #b79a6c; outline-offset: 3px; }
 
 @keyframes maia-constellation-drift {
-  0%, 100% { transform: translate3d(0, 0, 0); }
-  50% { transform: translate3d(0, -6px, 0); }
+  0%, 100% { translate: 0 0; }
+  50% { translate: 0 -5px; }
+}
+@keyframes maia-constellation-scan {
+  0%, 100% { top: 2%; opacity: .22; }
+  50% { top: 76%; opacity: .58; }
 }
 
 .maia-film {
@@ -645,6 +797,9 @@ body {
 
 @media (prefers-reduced-motion: reduce) {
   .maia-film__video, .maia-film__cover, .maia-film__story { animation: none; }
+  .maia-node-dot, .maia-constellation-scan { animation: none; }
+  .maia-energy-pulse { display: none; }
+  .maia-constellation-network, .maia-constellation-grain, .maia-constellation-node { transition: none; }
 }
 
 /* Compatibility layer for legacy product surfaces. These selectors keep

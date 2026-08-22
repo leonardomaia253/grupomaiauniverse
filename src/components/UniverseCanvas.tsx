@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState, type CSSProperties } from "react";
 import Link from "next/link";
 import { ArrowRight, ArrowUpRight, Search, X } from "lucide-react";
 
@@ -61,6 +61,23 @@ const PROFILES: CompanyProfile[] = [
   { login: "13-de-maio", name: "13 de Maio", match: ["13 de maio"], sector: "Ativo patrimonial", description: "Participação patrimonial do Grupo Maia.", ownership: "10% Leonardo" },
   { login: "agrovolup", name: "Agrovolup", match: ["agrovolup", "agro volup"], sector: "Agro e IA", description: "Tecnologia e inteligência aplicadas ao agronegócio.", ownership: "Leonardo e Volup", status: "Estrutura societária reservada" },
 ];
+
+const CONSTELLATION_POSITIONS = [
+  [11, 22], [28, 12], [48, 18], [69, 11], [87, 24], [20, 40], [40, 37],
+  [61, 34], [79, 43], [92, 57], [71, 58], [50, 54], [29, 57], [9, 61],
+  [18, 79], [38, 74], [58, 78], [80, 76], [91, 88], [69, 91], [48, 89],
+  [28, 94], [7, 91], [4, 43], [53, 6], [86, 8],
+] as const;
+
+const CONSTELLATION_EDGES = [
+  [0, 1], [0, 5], [0, 6], [1, 2], [1, 6], [2, 3], [2, 6], [2, 7], [2, 24],
+  [3, 4], [3, 7], [3, 24], [4, 8], [4, 25], [5, 6], [5, 12], [5, 13],
+  [6, 7], [6, 11], [6, 12], [7, 8], [7, 10], [7, 11], [8, 9], [8, 10],
+  [9, 10], [9, 17], [10, 11], [10, 16], [10, 17], [11, 12], [11, 15], [11, 16],
+  [12, 13], [12, 14], [12, 15], [13, 14], [13, 23], [14, 15], [14, 22],
+  [15, 16], [15, 20], [15, 21], [16, 17], [16, 19], [16, 20], [17, 18],
+  [17, 19], [18, 19], [19, 20], [20, 21], [21, 22], [22, 23], [23, 5],
+] as const;
 
 function normalize(value: string) {
   return value.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
@@ -124,17 +141,7 @@ export default function UniverseCanvas({ companies }: { companies: CompanyRecord
                 <ModeSwitcher mode={mobileMode} onChange={setMobileMode} />
               </div>
 
-              <div className="relative mt-4 min-h-[330px] flex-1">
-                {PROFILES.slice(0, 12).map((profile, index) => {
-                  const positions = ["left-[5%] top-[20%]", "left-[39%] top-[11%]", "right-[5%] top-[26%]", "left-[22%] top-[48%]", "right-[24%] top-[53%]", "bottom-[9%] left-[8%]", "bottom-[4%] right-[5%]", "left-[58%] top-[34%]", "left-[5%] top-[66%]", "right-[8%] top-[72%]", "left-[42%] top-[72%]", "right-[32%] top-[5%]"];
-                  const isSelected = selected.login === profile.login;
-                  return <button key={profile.login} type="button" onClick={() => setSelected(profile)} className={`maia-constellation-node group absolute ${positions[index]} min-h-11 text-left`} aria-label={`Selecionar ${profile.name}`}>
-                    <span className={`absolute left-0 top-[17px] h-2 w-2 rounded-full ${isSelected ? "bg-[#b79a6c] ring-4 ring-[#b79a6c]/15" : "bg-white/55 ring-4 ring-white/5"}`} />
-                    <span className={`ml-5 block text-[12px] transition ${isSelected ? "text-[#f2eee6]" : "text-white/60 group-hover:text-[#b79a6c]"}`}>{profile.name}</span>
-                    <span className="ml-5 mt-1 block max-w-28 truncate text-[9px] uppercase tracking-[.12em] text-white/25">{profile.sector}</span>
-                  </button>;
-                })}
-              </div>
+              <LivingConstellation profiles={PROFILES} selected={selected} onSelect={setSelected} />
 
               <aside aria-live="polite" className="relative mt-5 grid border-y border-white/10 py-5 sm:grid-cols-[1fr_auto] sm:items-end sm:gap-8">
                 <div><div className="flex items-center gap-3"><span className="text-[9px] tabular-nums text-[#b79a6c]">{String(PROFILES.indexOf(selected) + 1).padStart(2, "0")}</span><p className="text-[9px] font-semibold uppercase tracking-[.2em] text-[#b79a6c]">{selected.sector}</p></div><h2 className="mt-2 text-[28px] font-normal tracking-[-.045em] text-[#f2eee6]">{selected.name}</h2><p className="mt-2 max-w-[520px] text-[12px] leading-5 text-white/45">{selected.description}</p></div>
@@ -157,6 +164,80 @@ export default function UniverseCanvas({ companies }: { companies: CompanyRecord
         </div>
       </main>
     </section>
+  );
+}
+
+function LivingConstellation({ profiles, selected, onSelect }: { profiles: CompanyProfile[]; selected: CompanyProfile; onSelect: (profile: CompanyProfile) => void }) {
+  const fieldRef = useRef<HTMLDivElement>(null);
+  const [pointer, setPointer] = useState({ x: 0, y: 0 });
+  const selectedIndex = profiles.findIndex((profile) => profile.login === selected.login);
+
+  useEffect(() => {
+    const field = fieldRef.current;
+    if (!field) return;
+    const media = window.matchMedia("(prefers-reduced-motion: reduce)");
+    if (media.matches) return;
+
+    const move = (event: PointerEvent) => {
+      const bounds = field.getBoundingClientRect();
+      setPointer({
+        x: ((event.clientX - bounds.left) / bounds.width - 0.5) * 2,
+        y: ((event.clientY - bounds.top) / bounds.height - 0.5) * 2,
+      });
+    };
+    const leave = () => setPointer({ x: 0, y: 0 });
+    field.addEventListener("pointermove", move, { passive: true });
+    field.addEventListener("pointerleave", leave);
+    return () => {
+      field.removeEventListener("pointermove", move);
+      field.removeEventListener("pointerleave", leave);
+    };
+  }, []);
+
+  const relatedEdges = useMemo(() => new Set(CONSTELLATION_EDGES.flatMap(([from, to], index) => from === selectedIndex || to === selectedIndex ? [index] : [])), [selectedIndex]);
+  const depthStyle = { "--maia-parallax-x": `${pointer.x * 7}px`, "--maia-parallax-y": `${pointer.y * 5}px` } as CSSProperties;
+
+  return (
+    <div ref={fieldRef} className="maia-living-constellation relative mt-4 min-h-[350px] flex-1" style={depthStyle}>
+      <div className="maia-constellation-grain" aria-hidden="true" />
+      <div className="maia-constellation-scan" aria-hidden="true" />
+      <div className="maia-constellation-status" aria-hidden="true"><span>{profiles.length} empresas</span><span>Conexões ativas</span></div>
+      <svg className="maia-constellation-network" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+        <ellipse className="maia-orbit" cx="49" cy="52" rx="43" ry="39" />
+        <ellipse className="maia-orbit maia-orbit--inner" cx="49" cy="52" rx="28" ry="25" />
+        {CONSTELLATION_EDGES.map(([from, to], index) => {
+          const a = CONSTELLATION_POSITIONS[from];
+          const b = CONSTELLATION_POSITIONS[to];
+          return <line key={`${from}-${to}`} className={`maia-constellation-link ${relatedEdges.has(index) ? "is-active" : ""}`} x1={a[0]} y1={a[1]} x2={b[0]} y2={b[1]} />;
+        })}
+        {CONSTELLATION_EDGES.slice(0, 10).map(([from, to], index) => {
+          const a = CONSTELLATION_POSITIONS[from];
+          const b = CONSTELLATION_POSITIONS[to];
+          return <circle key={`pulse-${from}-${to}`} className="maia-energy-pulse" r="0.45"><animate attributeName="cx" values={`${a[0]};${b[0]}`} dur={`${4.5 + (index % 4) * 0.8}s`} begin={`${index * -0.7}s`} repeatCount="indefinite" /><animate attributeName="cy" values={`${a[1]};${b[1]}`} dur={`${4.5 + (index % 4) * 0.8}s`} begin={`${index * -0.7}s`} repeatCount="indefinite" /></circle>;
+        })}
+      </svg>
+
+      {profiles.map((profile, index) => {
+        const [x, y] = CONSTELLATION_POSITIONS[index];
+        const isSelected = selected.login === profile.login;
+        const anchorX = x < 12 ? "0%" : x > 88 ? "-100%" : "-50%";
+        return (
+          <button
+            key={profile.login}
+            type="button"
+            onClick={() => onSelect(profile)}
+            className={`maia-constellation-node group absolute min-h-11 text-left ${isSelected ? "is-selected" : ""}`}
+            style={{ left: `${x}%`, top: `${y}%`, "--node-delay": `${-(index % 7) * 0.9}s`, "--node-anchor-x": anchorX } as CSSProperties}
+            aria-label={`Selecionar ${profile.name}, ${profile.sector}`}
+            aria-pressed={isSelected}
+          >
+            <span className="maia-node-dot" aria-hidden="true" />
+            <span className="maia-node-label">{profile.name}</span>
+            <span className="maia-node-sector">{profile.sector}</span>
+          </button>
+        );
+      })}
+    </div>
   );
 }
 

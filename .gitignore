@@ -58,6 +58,7 @@ docs/
 
 .vscode
 .security-db-push/
+.superdesign/tmp/
 
 # vscode extension build artifacts
 packages/vscode-extension/dist/
