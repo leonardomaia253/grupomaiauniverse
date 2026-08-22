@@ -1,5 +1,7 @@
 @import "tailwindcss";
 
+/* Grupo Maia interface foundation — editorial, restrained, accessible. */
+
 @theme inline {
   --color-bg: #12110f;
   --color-bg-raised: #1b1916;
@@ -21,10 +23,14 @@
 body {
   background: #12110f;
   color: #ebe5da;
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
 }
+
+html { scrollbar-gutter: stable; }
+button, input, textarea, select { font: inherit; }
+a, button { -webkit-tap-highlight-color: transparent; }
 
 .maia-story video,
 .maia-story__orbital {
@@ -575,8 +581,66 @@ body {
   mask-image: linear-gradient(to bottom, #000 0 44rem, transparent 72rem);
 }
 
+.maia-editorial-header {
+  backdrop-filter: blur(16px) saturate(.8);
+  -webkit-backdrop-filter: blur(16px) saturate(.8);
+}
+.maia-editorial-heading h1 { text-wrap: balance; }
+.maia-editorial-heading p { text-wrap: pretty; }
+.maia-editorial-nav a {
+  position: relative;
+  padding-block: .35rem;
+  transition: color 180ms ease;
+}
+.maia-editorial-nav a::after {
+  content: "";
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  height: 1px;
+  background: #b79a6c;
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform 220ms cubic-bezier(.2,.7,.2,1);
+}
+.maia-editorial-nav a:hover { color: rgba(255,255,255,.92); }
+.maia-editorial-nav a:hover::after,
+.maia-editorial-nav a:focus-visible::after { transform: scaleX(1); transform-origin: left; }
+.maia-skip-link {
+  position: fixed;
+  z-index: 1000;
+  top: .75rem;
+  left: .75rem;
+  padding: .7rem 1rem;
+  background: #f2eee6;
+  color: #12110f;
+  font-size: .75rem;
+  transform: translateY(-160%);
+  transition: transform 160ms ease;
+}
+.maia-skip-link:focus { transform: translateY(0); }
+.maia-status-label {
+  align-items: center;
+  gap: .55rem;
+  letter-spacing: .04em;
+}
+.maia-status-label::before { content: ""; width: 1.75rem; height: 1px; background: currentColor; opacity: .65; }
+.maia-play-mark {
+  width: 0;
+  height: 0;
+  border-top: .3rem solid transparent;
+  border-bottom: .3rem solid transparent;
+  border-left: .45rem solid currentColor;
+}
+
 ::selection { background: rgba(183,154,108,.3); color: #f2eee6; }
 :focus-visible { outline: 1px solid #b79a6c; outline-offset: 3px; }
+
+@media (max-width: 639px) {
+  .maia-editorial-content { margin-top: 2.75rem; }
+  .maia-editorial-nav { gap: 1rem; }
+}
 
 @keyframes maia-constellation-drift {
   0%, 100% { translate: 0 0; }

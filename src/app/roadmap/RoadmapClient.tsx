@@ -20,14 +20,14 @@ export default function RoadmapClient() {
             <div>
               <h2 className="text-2xl tracking-[-.03em] text-white/84">{phase.title}</h2>
               <p className="mt-2 text-xs text-white/35">{phase.quarter}</p>
-              <span className="mt-4 inline-flex rounded-full border border-white/15 px-3 py-1.5 text-[10px] text-[#c5aa7d]">{statusLabel[phase.status]}</span>
+              <span className="maia-status-label mt-4 inline-flex text-[10px] text-[#c5aa7d]">{statusLabel[phase.status]}</span>
             </div>
             <ul>
               {phase.items.map((item) => (
-                <li key={item.id} className="grid grid-cols-[1rem_1fr_auto] gap-3 border-b border-white/10 py-3 last:border-0">
-                  <span className={`mt-1.5 h-1.5 w-1.5 rounded-full ${item.status === "done" ? "bg-[#c5aa7d]" : "border border-white/25"}`} />
+                <li key={item.id} className="grid grid-cols-[1rem_1fr] gap-3 border-b border-white/10 py-3 last:border-0 sm:grid-cols-[1rem_1fr_auto]">
+                  <span aria-hidden="true" className={`mt-1.5 h-1.5 w-1.5 rotate-45 ${item.status === "done" ? "bg-[#c5aa7d]" : "border border-white/25"}`} />
                   <span><strong className="block text-sm font-normal text-white/70">{item.name}</strong>{item.description && <small className="mt-1 block text-xs leading-5 text-white/35">{item.description}</small>}</span>
-                  <span className="text-[10px] text-white/28">{statusLabel[item.status]}</span>
+                  <span className="col-start-2 text-[10px] text-white/28 sm:col-start-auto">{statusLabel[item.status]}</span>
                 </li>
               ))}
             </ul>

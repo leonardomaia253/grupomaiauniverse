@@ -87,7 +87,7 @@ function HomeContent() {
 
       {INTRO_ENABLED && !introOpen && loadStage === "done" && (
         <button type="button" onClick={() => setIntroOpen(true)} className="maia-map-film-button">
-          <span aria-hidden="true">▶</span> Apresentação do grupo
+          <span className="maia-play-mark" aria-hidden="true" /> Apresentação do grupo
         </button>
       )}
     </main>
