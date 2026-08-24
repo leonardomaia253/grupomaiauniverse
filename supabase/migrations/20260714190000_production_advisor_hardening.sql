@@ -98,7 +98,7 @@ CREATE POLICY "Owner reads own purchases"
   USING (
     (select auth.uid()) IS NOT NULL
     AND company_id IN (
-      SELECT id FROM public.developers WHERE claimed_by = (select auth.uid())
+      SELECT id FROM public.companies WHERE claimed_by = (select auth.uid())
     )
   );
 
@@ -110,7 +110,7 @@ CREATE POLICY "Owner reads own customizations"
   USING (
     (select auth.uid()) IS NOT NULL
     AND company_id IN (
-      SELECT id FROM public.developers WHERE claimed_by = (select auth.uid())
+      SELECT id FROM public.companies WHERE claimed_by = (select auth.uid())
     )
   );
 

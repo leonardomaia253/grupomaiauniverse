@@ -1,0 +1,35 @@
+-- Raise achievement thresholds (old values were too easy)
+
+-- Item-unlock achievements
+update achievements set threshold = 1000  where id = 'committed';
+update achievements set threshold = 2500  where id = 'grinder';
+update achievements set threshold = 25    where id = 'builder';
+update achievements set threshold = 75    where id = 'architect';
+update achievements set threshold = 100   where id = 'rising_star';
+update achievements set threshold = 10    where id = 'recruiter';
+
+-- Badge-only achievements
+update achievements set threshold = 5000  where id = 'machine';
+update achievements set threshold = 15000 where id = 'legend';
+update achievements set threshold = 30000 where id = 'god_mode';
+update achievements set threshold = 150   where id = 'factory';
+update achievements set threshold = 500   where id = 'popular';
+update achievements set threshold = 5000  where id = 'famous';
+update achievements set threshold = 30    where id = 'influencer';
+update achievements set threshold = 100   where id = 'mayor';
+
+-- Update descriptions
+update achievements set description = 'Reach 1,000 contributions'         where id = 'committed';
+update achievements set description = 'Reach 2,500 contributions'         where id = 'grinder';
+update achievements set description = 'Have 25 public repositories'       where id = 'builder';
+update achievements set description = 'Have 75 public repositories'       where id = 'architect';
+update achievements set description = 'Collect 100 stars across repos'    where id = 'rising_star';
+update achievements set description = 'Refer 10 companies to Git City'    where id = 'recruiter';
+update achievements set description = 'Reach 5,000 contributions'         where id = 'machine';
+update achievements set description = 'Reach 15,000 contributions'        where id = 'legend';
+update achievements set description = 'Reach 30,000 contributions'        where id = 'god_mode';
+update achievements set description = 'Have 150 public repositories'      where id = 'factory';
+update achievements set description = 'Collect 500 stars across repos'    where id = 'popular';
+update achievements set description = 'Collect 5,000 stars across repos'  where id = 'famous';
+update achievements set description = 'Refer 30 companies to Git City'    where id = 'influencer';
+update achievements set description = 'Refer 100 companies to Git City'   where id = 'mayor';;
