@@ -66,6 +66,9 @@ npm run lint:ci
 npm run build
 ```
 
+Production operations, database migration, backup/restore and rollback procedures
+are documented in [docs/PRODUCTION-RUNBOOK.md](docs/PRODUCTION-RUNBOOK.md).
+
 ## License
 
 [AGPL-3.0](LICENSE) — public deployments must share the corresponding source code.

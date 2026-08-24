@@ -1,0 +1,62 @@
+name: Production gates
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  quality:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      CI: "true"
+      SKIP_ENV_VALIDATION: "true"
+      NEXT_PUBLIC_BASE_URL: https://ci.invalid
+      NEXT_PUBLIC_APP_URL: https://ci.invalid
+      NEXT_PUBLIC_SUPABASE_URL: https://example.supabase.co
+      NEXT_PUBLIC_SUPABASE_ANON_KEY: ci-placeholder-anon-key
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+      - run: npm ci
+      - run: npm run lint:ci
+      - run: npm test
+      - run: npm run build
+      - name: Integration smoke test
+        shell: bash
+        run: |
+          npm start -- -p 3001 > /tmp/grupo-maia-next.log 2>&1 &
+          server_pid=$!
+          trap 'kill $server_pid || true; cat /tmp/grupo-maia-next.log' EXIT
+          for attempt in {1..30}; do
+            curl --fail --silent http://127.0.0.1:3001/api/health/live && break
+            sleep 1
+          done
+          npm run test:smoke
+      - run: npm audit --omit=dev --audit-level=high
+
+  database:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+      - run: npm ci
+      - run: npx supabase start
+      - run: npm run test:db
+      - if: always()
+        run: npx supabase stop --no-backup

@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { MAX_TEXT_LENGTH } from "@/lib/skyAds";
 
 type Campaign = {
@@ -24,6 +25,7 @@ export function SetupContent({
   ad: Campaign;
   vehicleLabel: string;
 }) {
+  const router = useRouter();
   const [text, setText] = useState(ad.text);
   const [brand, setBrand] = useState(ad.brand ?? "");
   const [description, setDescription] = useState(ad.description ?? "");
@@ -56,7 +58,7 @@ export function SetupContent({
         setSaving(false);
         return;
       }
-      window.location.href = `/advertise/track/${token}`;
+      router.push(`/advertise/track/${token}`);
     } catch {
       setError("Falha de conexão. Tente novamente.");
       setSaving(false);
@@ -93,36 +95,72 @@ export function SetupContent({
         <p className="text-[11px] uppercase tracking-[0.22em] text-[#b89a62]">Configuração</p>
         <h2 className="mt-3 text-3xl font-light text-white">Conteúdo da campanha</h2>
         <p className="mt-3 max-w-xl text-sm leading-6 text-white/55">
-          Atualize a mensagem e o destino apresentados aos visitantes. As alterações preservam o formato contratado.
+          Atualize a mensagem e o destino apresentados aos visitantes. As alterações preservam o
+          formato contratado.
         </p>
 
         <div className="mt-8 space-y-6">
           <label className="block text-sm text-white/70">
             Mensagem principal
-            <input value={text} onChange={(event) => setText(event.target.value)} maxLength={MAX_TEXT_LENGTH + 10} className={fieldClass} />
-            <span className={`mt-2 block text-xs ${textOver ? "text-red-300" : "text-white/35"}`}>{text.length}/{MAX_TEXT_LENGTH}</span>
+            <input
+              value={text}
+              onChange={(event) => setText(event.target.value)}
+              maxLength={MAX_TEXT_LENGTH + 10}
+              className={fieldClass}
+            />
+            <span className={`mt-2 block text-xs ${textOver ? "text-red-300" : "text-white/35"}`}>
+              {text.length}/{MAX_TEXT_LENGTH}
+            </span>
           </label>
           <label className="block text-sm text-white/70">
             Nome da marca
-            <input value={brand} onChange={(event) => setBrand(event.target.value)} maxLength={60} className={fieldClass} />
+            <input
+              value={brand}
+              onChange={(event) => setBrand(event.target.value)}
+              maxLength={60}
+              className={fieldClass}
+            />
           </label>
           <label className="block text-sm text-white/70">
             Descrição
-            <textarea value={description} onChange={(event) => setDescription(event.target.value)} maxLength={200} rows={5} className={fieldClass} />
+            <textarea
+              value={description}
+              onChange={(event) => setDescription(event.target.value)}
+              maxLength={200}
+              rows={5}
+              className={fieldClass}
+            />
           </label>
           <label className="block text-sm text-white/70">
             Link
-            <input value={link} onChange={(event) => setLink(event.target.value)} placeholder="https://..." className={fieldClass} />
-            {!linkValid && <span className="mt-2 block text-xs text-red-300">Use um endereço HTTPS ou mailto.</span>}
+            <input
+              value={link}
+              onChange={(event) => setLink(event.target.value)}
+              placeholder="https://..."
+              className={fieldClass}
+            />
+            {!linkValid && (
+              <span className="mt-2 block text-xs text-red-300">
+                Use um endereço HTTPS ou mailto.
+              </span>
+            )}
           </label>
         </div>
 
         {error && <p className="mt-5 text-sm text-red-300">{error}</p>}
         <div className="mt-8 flex flex-wrap items-center gap-4">
-          <button type="button" onClick={handleSave} disabled={saving || textOver || !linkValid || !text.trim()} className="rounded-full bg-[#b89a62] px-6 py-3 text-sm text-[#171714] transition hover:bg-[#c9ad78] disabled:cursor-not-allowed disabled:opacity-40">
+          <button
+            type="button"
+            onClick={handleSave}
+            disabled={saving || textOver || !linkValid || !text.trim()}
+            className="rounded-full bg-[#b89a62] px-6 py-3 text-sm text-[#171714] transition hover:bg-[#c9ad78] disabled:cursor-not-allowed disabled:opacity-40"
+          >
             {saving ? "Salvando…" : "Salvar alterações"}
           </button>
-          <Link href={`/advertise/track/${token}`} className="rounded-full border border-white/15 px-6 py-3 text-sm text-white/65 transition hover:border-white/35 hover:text-white">
+          <Link
+            href={`/advertise/track/${token}`}
+            className="rounded-full border border-white/15 px-6 py-3 text-sm text-white/65 transition hover:border-white/35 hover:text-white"
+          >
             Ver indicadores
           </Link>
         </div>

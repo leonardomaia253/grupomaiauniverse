@@ -4,3 +4,8 @@ node_modules/
 .next/
 docs/plans/
 docs/tiktok/
+.env
+.env.*
+!.env.example
+tmp/
+output/
