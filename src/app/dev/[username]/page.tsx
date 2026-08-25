@@ -14,9 +14,17 @@ export const revalidate = 3600;
 
 interface Props { params: Promise<{ username: string }> }
 
+const PUBLIC_COMPANY_FIELDS = "id,username,name,avatar_url,bio,contributions,contributions_total,public_repos,total_stars,primary_language,rank,fetched_at,claimed";
+
 const getCompany = cache(async (username: string) => {
   const supabase = await createServerSupabase();
-  const { data } = await supabase.from("companies").select("*").eq("username", username.toLowerCase()).single();
+  const { data, error } = await supabase
+    .from("companies")
+    .select(PUBLIC_COMPANY_FIELDS)
+    .eq("username", username.toLowerCase())
+    .maybeSingle();
+
+  if (error) throw error;
   return data;
 });
 
