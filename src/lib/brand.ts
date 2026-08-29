@@ -1,6 +1,6 @@
 export const BRAND = {
-  name: "Grupo Maia — Mapa Vivo",
-  shortName: "Mapa Vivo",
+  name: "Grupo Maia Universe",
+  shortName: "Universe",
   groupName: "Grupo Maia",
   domain: "universe.grupomaia.me",
   baseUrl: "https://universe.grupomaia.me",
@@ -9,12 +9,12 @@ export const BRAND = {
   repository: "https://github.com/leonardomaia253/lmf-universe",
   starRepositoryApi:
     "https://api.github.com/repos/leonardomaia253/lmf-universe",
-  xCreator: "@mapavivo",
+  xCreator: "@grupomaia",
   xCreatorUrl: "mailto:contato@grupomaia.me",
   appDescription:
-    "Uma visão integrada das empresas, frentes de atuação e trajetória do Grupo Maia.",
+    "Visualize as 29 empresas do Grupo Maia, seus setores e as conexões que formam o ecossistema da holding.",
   ogAlt:
-    "Grupo Maia: 26 empresas conectadas por uma visão de longo prazo.",
+    "Grupo Maia Universe: 29 empresas conectadas por governança, capital e operação.",
 } as const;
 
 export function getSiteUrl(env = process.env): string {

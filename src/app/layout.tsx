@@ -1,41 +1,60 @@
 import type { Metadata } from "next";
+import { Crimson_Pro, Public_Sans } from "next/font/google";
 import Script from "next/script";
 import { Analytics } from "@vercel/analytics/next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { BRAND, getSiteUrl } from "@/lib/brand";
 import "./globals.css";
 
+const publicSans = Public_Sans({ subsets: ["latin"], variable: "--font-public-sans", display: "swap" });
+const crimsonPro = Crimson_Pro({ subsets: ["latin"], variable: "--font-crimson-pro", display: "swap" });
+
 export const metadata: Metadata = {
   metadataBase: new URL(getSiteUrl()),
-  title: "Grupo Maia — Mapa Vivo",
+  title: {
+    default: "Grupo Maia Universe — 29 empresas conectadas",
+    template: "%s | Grupo Maia Universe",
+  },
   description: BRAND.appDescription,
   keywords: [
-    "empresas do grupo",
-    "guia visual",
-    "historias empresariais",
-    "informacoes publicas",
-    "clientes",
-    "investidores",
+    "Grupo Maia",
+    "Grupo Maia Universe",
+    "holding empresarial",
+    "portfólio de empresas",
+    "ecossistema empresarial",
+    "empresas Grupo Maia",
   ],
+  alternates: {
+    canonical: "/",
+    languages: { "pt-BR": "/" },
+  },
   openGraph: {
-    title: "Grupo Maia — Mapa Vivo",
+    title: "Grupo Maia Universe — 29 empresas conectadas",
     description: BRAND.appDescription,
     siteName: BRAND.name,
     type: "website",
     locale: "pt_BR",
     images: [
       {
-        url: "/og-image.png",
+        url: "/opengraph-image",
+        width: 1200,
+        height: 630,
         alt: BRAND.ogAlt,
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
+    title: "Grupo Maia Universe — 29 empresas conectadas",
+    description: BRAND.appDescription,
+    images: ["/opengraph-image"],
     creator: BRAND.xCreator,
     site: BRAND.xCreator,
   },
-  authors: [{ name: "Equipe do produto", url: BRAND.xCreatorUrl }],
+  authors: [{ name: "Grupo Maia", url: "https://grupomaia.me" }],
+  creator: "Grupo Maia",
+  publisher: "Grupo Maia",
+  category: "Business",
   icons: {
     icon: "/favicon.ico",
     apple: "/apple-icon.png",
@@ -46,21 +65,21 @@ const BASE_URL = getSiteUrl();
 
 const jsonLd = {
   "@context": "https://schema.org",
-  "@type": "WebApplication",
+  "@type": "CollectionPage",
   name: BRAND.name,
   description: BRAND.ogAlt,
   url: BASE_URL,
-  applicationCategory: "BusinessApplication",
-  operatingSystem: "Web",
-  author: {
-    "@type": "Organization",
-    name: "Equipe do produto",
-    url: BRAND.xCreatorUrl,
+  inLanguage: "pt-BR",
+  isPartOf: {
+    "@type": "WebSite",
+    name: "Grupo Maia",
+    url: "https://grupomaia.me",
   },
-  offers: {
-    "@type": "Offer",
-    price: "0",
-    priceCurrency: "USD",
+  publisher: {
+    "@type": "Organization",
+    name: "Grupo Maia",
+    url: "https://grupomaia.me",
+    logo: `${BASE_URL}/brand/grupo-maia-symbol-reverse.svg`,
   },
 };
 
@@ -83,7 +102,7 @@ export default function RootLayout({
           crossOrigin="anonymous"
         />
       </head>
-      <body className="bg-bg text-warm" suppressHydrationWarning>
+      <body className={`${publicSans.variable} ${crimsonPro.variable} bg-bg text-warm`} suppressHydrationWarning>
         {children}
         <Analytics />
         <SpeedInsights />

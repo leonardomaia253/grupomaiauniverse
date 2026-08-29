@@ -3,27 +3,27 @@
 /* Grupo Maia interface foundation — editorial, restrained, accessible. */
 
 @theme inline {
-  --color-bg: #12110f;
-  --color-bg-raised: #1b1916;
-  --color-bg-card: #24211d;
-  --color-cream: #f2eee6;
-  --color-cream-dark: #d8d0c2;
-  --color-border: #39352f;
-  --color-border-light: #585147;
-  --color-dim: #746d63;
-  --color-muted: #9d9589;
-  --color-warm: #ebe5da;
-  --color-lime: #b79a6c;
-  --color-lime-dark: #806846;
+  --color-bg: #101713;
+  --color-bg-raised: #172019;
+  --color-bg-card: #1d2820;
+  --color-cream: #f4f1e9;
+  --color-cream-dark: #dbe7cf;
+  --color-border: #2f3d33;
+  --color-border-light: #57734b;
+  --color-dim: #68716b;
+  --color-muted: #b7c7a9;
+  --color-warm: #f4f1e9;
+  --color-lime: #57734b;
+  --color-lime-dark: #405d39;
   --font-pixel: Arial, Helvetica, sans-serif;
   --font-orbitron: Arial, Helvetica, sans-serif;
   --font-space: Arial, Helvetica, sans-serif;
 }
 
 body {
-  background: #12110f;
-  color: #ebe5da;
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  background: #101713;
+  color: #f4f1e9;
+  font-family: var(--font-public-sans), system-ui, sans-serif;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
 }
@@ -389,19 +389,29 @@ a, button { -webkit-tap-highlight-color: transparent; }
    Inspired by the restrained cinematic, interactive-list and filter-grid
    patterns selected through 21st.dev. */
 .maia-loading {
-  background: #eeeae2;
-  color: #171512;
+  background: #101713;
+  color: #f4f1e9;
 }
 
 .maia-wordmark {
   display: flex;
-  align-items: baseline;
-  gap: .55rem;
+  align-items: center;
+  gap: .75rem;
   color: inherit;
-  letter-spacing: -.055em;
+  letter-spacing: 0;
 }
-.maia-wordmark span { font-size: 1.05rem; font-weight: 700; }
-.maia-wordmark small { font-family: Georgia, "Times New Roman", serif; font-size: .9rem; font-style: italic; letter-spacing: 0; opacity: .65; }
+.maia-wordmark > span { display: flex; flex-direction: column; line-height: 1; }
+.maia-wordmark strong { font-size: .9rem; font-weight: 700; }
+.maia-wordmark small { margin-top: .3rem; color: #b7c7a9; font-size: .55rem; font-weight: 600; letter-spacing: .18em; text-transform: uppercase; }
+.maia-splash-symbol { animation: maia-brand-pulse 2.8s ease-in-out infinite; }
+.maia-splash-wordmark { display: flex; flex-direction: column; align-items: center; line-height: 1; }
+.maia-splash-wordmark strong { font-size: 1.15rem; }
+.maia-splash-wordmark span { margin-top: .55rem; color: #b7c7a9; font-size: .62rem; font-weight: 600; letter-spacing: .24em; text-transform: uppercase; }
+
+@keyframes maia-brand-pulse {
+  0%, 100% { opacity: .8; transform: scale(.98); }
+  50% { opacity: 1; transform: scale(1.02); }
+}
 
 .maia-constellation-field {
   background:

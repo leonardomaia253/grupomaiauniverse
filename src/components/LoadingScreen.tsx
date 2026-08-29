@@ -1,6 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useState } from "react";
+import Image from "next/image";
 
 export type LoadingStage = "init" | "fetching" | "generating" | "rendering" | "ready" | "done" | "error";
 
@@ -14,10 +15,10 @@ interface LoadingScreenProps {
 }
 
 const STAGE_MESSAGES: Record<LoadingStage, string> = {
-  init: "Abrindo os portais",
+  init: "Preparando o ecossistema",
   fetching: "Carregando empresas do grupo",
-  generating: "Organizando histórias e informações",
-  rendering: "Preparando o Mapa Vivo",
+  generating: "Organizando relações e setores",
+  rendering: "Desenhando a teia de empresas",
   ready: "Universo pronto",
   done: "Universo pronto",
   error: "Não foi possível carregar o mapa",
@@ -45,16 +46,17 @@ export default function LoadingScreen({ stage, progress, error, accentColor, onR
       aria-live="polite"
     >
       <div className="relative w-full max-w-md">
-        <div className="maia-wordmark justify-center" aria-label="Grupo Maia"><span>MAIA</span><small>Grupo</small></div>
-        <h1 className="mt-10 text-3xl font-normal tracking-[-.04em] sm:text-5xl">{isError ? "Não foi possível abrir o mapa." : "Organizando o mapa do grupo."}</h1>
-        <p className="mt-4 text-sm text-black/50">{isError ? error || STAGE_MESSAGES.error : STAGE_MESSAGES[stage]}</p>
+        <Image className="maia-splash-symbol mx-auto" src="/brand/grupo-maia-symbol-reverse.svg" alt="Símbolo do Grupo Maia" width={112} height={112} priority />
+        <div className="maia-splash-wordmark mt-7" aria-label="Grupo Maia Universe"><strong>Grupo Maia</strong><span>Universe</span></div>
+        <h1 className="sr-only">{isError ? "Não foi possível abrir o mapa." : "Carregando o Grupo Maia Universe"}</h1>
+        <p className="mt-8 text-[11px] uppercase tracking-[.16em] text-white/48">{isError ? error || STAGE_MESSAGES.error : STAGE_MESSAGES[stage]}</p>
         {!isError ? (
           <div className="mt-9">
-            <div className="h-px w-full bg-black/15"><div className="h-full bg-[#9b7b4f] transition-[width] duration-500" style={{ width: `${clampedProgress}%` }} /></div>
-            <div className="mt-3 flex justify-between text-[10px] tracking-[.08em] text-black/40"><span>Carregando</span><span>{Math.round(clampedProgress)}%</span></div>
+            <div className="h-px w-full bg-white/12"><div className="h-full bg-[#dbe7cf] transition-[width] duration-500" style={{ width: `${clampedProgress}%` }} /></div>
+            <div className="mt-3 flex justify-between text-[10px] uppercase tracking-[.12em] text-white/35"><span>29 empresas conectadas</span><span>{Math.round(clampedProgress)}%</span></div>
           </div>
         ) : (
-          <button type="button" onClick={onRetry} className="mt-8 rounded-full px-6 py-3 text-[10px] font-semibold uppercase tracking-[.18em] text-black" style={{ backgroundColor: accentColor }}>Tentar novamente</button>
+          <button type="button" onClick={onRetry} className="mt-8 border border-[#dbe7cf] px-6 py-3 text-[10px] font-semibold uppercase tracking-[.18em] text-[#f4f1e9]" style={{ borderColor: accentColor }}>Tentar novamente</button>
         )}
       </div>
     </div>

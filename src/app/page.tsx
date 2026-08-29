@@ -77,7 +77,7 @@ function HomeContent() {
           stage={loadStage}
           progress={progress}
           error={loadError}
-          accentColor="#b79a6c"
+          accentColor="#dbe7cf"
           onRetry={() => void loadCompanies()}
           onFadeComplete={finishLoading}
         />

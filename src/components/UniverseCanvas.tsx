@@ -2,6 +2,7 @@
 
 import { useEffect, useMemo, useRef, useState, type CSSProperties } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { ArrowRight, ArrowUpRight, Search, X } from "lucide-react";
 
 export type CompanyRecord = {
@@ -34,39 +35,42 @@ type CompanyProfile = {
 };
 
 const PROFILES: CompanyProfile[] = [
-  { login: "bilheking", name: "Bilheking", match: ["bilheking"], sector: "Bilheteria e entretenimento", description: "Tecnologia comercial para eventos, vendas, recorrência e relacionamento com públicos.", ownership: "66% Leonardo / 34% Jodelle" },
-  { login: "tosi", name: "Tosi", match: ["tosi"], sector: "Produto digital", description: "Produto, tecnologia e operação orientados à eficiência e à construção de margem.", ownership: "100% Leonardo" },
-  { login: "jack-it-fit", name: "Jack it fit", match: ["jackitfit", "jack it fit"], sector: "Saúde e fitness", description: "Operação recorrente dedicada à performance, ao cuidado e ao bem-estar.", ownership: "100% Leonardo" },
-  { login: "spur", name: "Spur", match: ["spur"], sector: "Performance e crescimento", description: "Execução, produção e estratégia comercial para negócios em expansão.", ownership: "80% Leonardo / 20% Jodelle" },
-  { login: "volup", name: "Volup", match: ["volup"], sector: "IA e automação", description: "Inteligência aplicada a produtos, operações e novas capacidades para o grupo.", ownership: "100% Leonardo" },
-  { login: "scoreking", name: "Scoreking", match: ["scoreking"], sector: "Score e inteligência", description: "Dados para leitura de performance, risco e tomada de decisão.", ownership: "100% Leonardo" },
-  { login: "instaboost", name: "Instaboost", match: ["instaboost"], sector: "Crescimento social", description: "Operação de alcance, distribuição e crescimento em canais sociais.", ownership: "100% Leonardo", status: "Operacional MVP" },
-  { login: "kinkora", name: "Kinkora", match: ["kinkora"], sector: "Experiência e comunidade", description: "Marca, relacionamento e construção de comunidade.", ownership: "90% Leonardo / 10% Jodelle" },
-  { login: "abroo", name: "Abroo", match: ["abroo"], sector: "Plataforma digital", description: "Estrutura modular para novas frentes de produto e serviço.", ownership: "100% Leonardo" },
-  { login: "voluclinic", name: "Voluclinic", match: ["voluclinic"], sector: "Healthtech", description: "Tecnologia aplicada a atendimento, agenda e operação clínica.", ownership: "100% Leonardo" },
-  { login: "avantyp", name: "Avantyp", match: ["avantyp"], sector: "Estratégia e tecnologia", description: "Estrutura estratégica dedicada à tecnologia aplicada.", ownership: "100% Leonardo" },
-  { login: "boase", name: "Boase", match: ["boase"], sector: "Operação e serviços", description: "Serviços orientados à consistência, conexão e execução.", ownership: "100% Leonardo" },
-  { login: "venti-imoveis", name: "Venti Imóveis", match: ["venti", "venti imoveis"], sector: "Imóveis", description: "Atuação imobiliária com leitura patrimonial, territorial e comercial.", ownership: "100% Leonardo" },
-  { login: "instead", name: "Instead", match: ["instead"], sector: "Produto e operação", description: "Produtos e processos concebidos para reduzir atrito operacional.", ownership: "100% Leonardo" },
-  { login: "seu-jornaleiro", name: "Seu Jornaleiro", match: ["seujornaleiro", "seu jornaleiro"], sector: "Mídia e distribuição", description: "Conteúdo, distribuição e presença local em uma operação integrada.", ownership: "50% Leonardo / 50% Jodelle" },
-  { login: "pipex", name: "Pipex", match: ["pipex"], sector: "Pipelines e automação", description: "Fluxos, integrações e cadência entre áreas de negócio.", ownership: "100% Leonardo" },
-  { login: "smartrh", name: "SmartRH", match: ["smartrh", "smart rh"], sector: "RH e people ops", description: "Gente, processos e inteligência de contratação em uma mesma plataforma.", ownership: "100% Leonardo" },
-  { login: "iris", name: "Iris", match: ["iris"], sector: "Visão e inteligência", description: "Tecnologia de leitura, percepção e clareza operacional.", ownership: "100% Leonardo" },
-  { login: "gaslee", name: "Gaslee", match: ["gaslee"], sector: "Energia e serviços", description: "Serviços cotidianos de energia com eficiência comercial.", ownership: "100% Leonardo" },
-  { login: "maia-go", name: "Maia GO", match: ["maia go", "maiago"], sector: "Mobilidade e operação", description: "Mobilidade, execução e conexão entre operações.", ownership: "100% Leonardo" },
-  { login: "minvest", name: "Minvest", match: ["minvest"], sector: "Investimentos", description: "Inteligência de capital e perspectiva patrimonial de longo prazo.", ownership: "100% Leonardo" },
-  { login: "habitat-x", name: "Habitat X", match: ["habitat x", "habitatx"], sector: "Habitat e real estate", description: "Espaços, moradia e produto imobiliário com identidade própria.", ownership: "100% Leonardo" },
-  { login: "tikal-beach-club", name: "Tikal Beach Club", match: ["tikal"], sector: "Hospitalidade", description: "Experiência, lazer e hospitalidade com posicionamento premium.", ownership: "100% Leonardo" },
-  { login: "sun-and-tan", name: "Sun & Tan", match: ["sun tan", "sun & tan"], sector: "Beleza e bem-estar", description: "Marca direta ao consumidor, conectando presença física e canais digitais.", ownership: "100% Leonardo" },
-  { login: "13-de-maio", name: "13 de Maio", match: ["13 de maio"], sector: "Ativo patrimonial", description: "Participação patrimonial do Grupo Maia.", ownership: "10% Leonardo" },
-  { login: "agrovolup", name: "Agrovolup", match: ["agrovolup", "agro volup"], sector: "Agro e IA", description: "Tecnologia e inteligência aplicadas ao agronegócio.", ownership: "Leonardo e Volup", status: "Estrutura societária reservada" },
+  { login: "13-de-maio", name: "13 de Maio", match: ["13 de maio"], sector: "Imóveis", description: "Ativo patrimonial imobiliário do Grupo Maia.", ownership: "Grupo Maia" },
+  { login: "abroo", name: "Abroo", match: ["abroo"], sector: "Plataforma Digital", description: "Estrutura modular para novas frentes de produto e serviço.", ownership: "Grupo Maia" },
+  { login: "agrovolup", name: "Agrovolup", match: ["agrovolup", "agro volup"], sector: "Agro & IA", description: "Tecnologia e inteligência aplicadas ao agronegócio.", ownership: "Grupo Maia" },
+  { login: "avantyp", name: "Avantyp", match: ["avantyp"], sector: "Estratégia & Tech", description: "Estrutura estratégica dedicada à tecnologia aplicada.", ownership: "Grupo Maia" },
+  { login: "bilheking", name: "Bilheking", match: ["bilheking"], sector: "Entretenimento", description: "Tecnologia comercial para eventos, vendas e relacionamento com públicos.", ownership: "Grupo Maia" },
+  { login: "boase", name: "Boase", match: ["boase"], sector: "Operação & Serv.", description: "Serviços orientados à consistência, conexão e execução.", ownership: "Grupo Maia" },
+  { login: "gaslee", name: "Gaslee", match: ["gaslee"], sector: "Energia", description: "Serviços cotidianos de energia com eficiência comercial.", ownership: "Grupo Maia" },
+  { login: "grupo-maia", name: "Grupo Maia", match: ["grupo maia", "holding insight hub"], sector: "Holding", description: "Governança, capital e capacidades compartilhadas para todo o ecossistema.", ownership: "Holding" },
+  { login: "habitat-x", name: "Habitat X", match: ["habitat x", "habitatx"], sector: "Imóveis", description: "Espaços, moradia e produto imobiliário com identidade própria.", ownership: "Grupo Maia" },
+  { login: "influarc", name: "Influarc", match: ["influarc"], sector: "Mídia", description: "Influência, conteúdo e distribuição digital.", ownership: "Grupo Maia" },
+  { login: "instaboost", name: "Instaboost", match: ["instaboost"], sector: "Crescimento Social", description: "Operação de alcance e crescimento em canais sociais.", ownership: "Grupo Maia", status: "MVP" },
+  { login: "iris", name: "Iris", match: ["iris", "auto law orchestra"], sector: "IA & Automação", description: "Tecnologia de leitura, percepção e clareza operacional.", ownership: "Grupo Maia" },
+  { login: "jack-it-fit", name: "Jack it fit", match: ["jackitfit", "jack it fit"], sector: "Performance", description: "Operação dedicada à performance, ao cuidado e ao bem-estar.", ownership: "Grupo Maia" },
+  { login: "kinkora", name: "Kinkora", match: ["kinkora", "hotjob creator hub"], sector: "Comunidade", description: "Marca, relacionamento e construção de comunidade.", ownership: "Grupo Maia" },
+  { login: "lmaia", name: "LMAIA", match: ["lmaia", "leonardomaia"], sector: "Holding", description: "Estrutura de capital e governança patrimonial da família Maia.", ownership: "Grupo Maia" },
+  { login: "maia-go", name: "Maia Go", match: ["maia go", "maiago", "maia smart market"], sector: "Mobilidade", description: "Mobilidade, execução e conexão entre operações.", ownership: "Grupo Maia" },
+  { login: "minvest", name: "Minvest", match: ["minvest"], sector: "Investimentos", description: "Inteligência de capital e perspectiva patrimonial de longo prazo.", ownership: "Grupo Maia" },
+  { login: "pipex", name: "Pipex", match: ["pipex", "leadsmaia"], sector: "Automação", description: "Fluxos, integrações e cadência entre áreas de negócio.", ownership: "Grupo Maia" },
+  { login: "proto-rh", name: "PROTO.RH", match: ["proto.rh", "protorh", "smartrh"], sector: "RH & People", description: "Gente, processos e inteligência de contratação em uma plataforma.", ownership: "Grupo Maia" },
+  { login: "scoreking", name: "Scoreking", match: ["scoreking"], sector: "IA & Automação", description: "Dados para leitura de performance, risco e tomada de decisão.", ownership: "Grupo Maia" },
+  { login: "seu-jornaleiro", name: "Seu Jornaleiro", match: ["seujornaleiro", "seu jornaleiro"], sector: "Mídia", description: "Conteúdo, distribuição e presença local em uma operação integrada.", ownership: "Grupo Maia" },
+  { login: "spur", name: "Spur", match: ["spur"], sector: "Performance", description: "Execução, produção e estratégia comercial para negócios em expansão.", ownership: "Grupo Maia" },
+  { login: "sun-and-tan", name: "Sun & Tan", match: ["sun tan", "sun & tan"], sector: "Saúde", description: "Beleza e bem-estar conectando presença física e canais digitais.", ownership: "Grupo Maia" },
+  { login: "the-maia", name: "The Maia", match: ["the maia", "themaia"], sector: "Holding", description: "Marca e identidade institucional do ecossistema.", ownership: "Grupo Maia" },
+  { login: "tikal-beach-club", name: "Tikal Beach Club", match: ["tikal"], sector: "Hospitalidade", description: "Experiência, lazer e hospitalidade com posicionamento premium.", ownership: "Grupo Maia" },
+  { login: "tosi", name: "Tosi", match: ["tosi", "tech style match"], sector: "Produto Digital", description: "Produto e tecnologia orientados à eficiência e à construção de margem.", ownership: "Grupo Maia" },
+  { login: "venti", name: "Venti", match: ["venti", "imoveisventi"], sector: "Imóveis", description: "Atuação imobiliária com leitura patrimonial, territorial e comercial.", ownership: "Grupo Maia" },
+  { login: "voluclinic", name: "Voluclinic", match: ["voluclinic", "volup clinic"], sector: "Saúde", description: "Tecnologia aplicada a atendimento, agenda e operação clínica.", ownership: "Grupo Maia" },
+  { login: "volup-ai", name: "Volup AI", match: ["volup ai", "volup-ai"], sector: "IA & Automação", description: "Inteligência aplicada a produtos, operações e novas capacidades.", ownership: "Grupo Maia" },
 ];
 
 const CONSTELLATION_POSITIONS = [
   [11, 22], [28, 12], [48, 18], [69, 11], [87, 24], [20, 40], [40, 37],
   [61, 34], [79, 43], [92, 57], [71, 58], [50, 54], [29, 57], [9, 61],
   [18, 79], [38, 74], [58, 78], [80, 76], [91, 88], [69, 91], [48, 89],
-  [28, 94], [7, 91], [4, 43], [53, 6], [86, 8],
+  [28, 94], [7, 91], [4, 43], [53, 6], [86, 8], [37, 5], [95, 35], [57, 95],
 ] as const;
 
 const CONSTELLATION_EDGES = [
@@ -77,6 +81,7 @@ const CONSTELLATION_EDGES = [
   [12, 13], [12, 14], [12, 15], [13, 14], [13, 23], [14, 15], [14, 22],
   [15, 16], [15, 20], [15, 21], [16, 17], [16, 19], [16, 20], [17, 18],
   [17, 19], [18, 19], [19, 20], [20, 21], [21, 22], [22, 23], [23, 5],
+  [7, 26], [7, 27], [7, 28], [12, 22], [23, 24], [26, 28],
 ] as const;
 
 function normalize(value: string) {
@@ -93,7 +98,7 @@ function findRecord(profile: CompanyProfile, records: CompanyRecord[]) {
 export default function UniverseCanvas({ companies }: { companies: CompanyRecord[] }) {
   const [query, setQuery] = useState("");
   const [sector, setSector] = useState("Todos");
-  const [selected, setSelected] = useState<CompanyProfile>(PROFILES[0]);
+  const [selected, setSelected] = useState<CompanyProfile>(() => PROFILES.find((profile) => profile.name === "Grupo Maia") ?? PROFILES[0]);
   const [mobileMode, setMobileMode] = useState<"map" | "index">("map");
 
   const sectors = useMemo(() => ["Todos", ...Array.from(new Set(PROFILES.map((profile) => profile.sector))).sort()], []);
@@ -114,10 +119,10 @@ export default function UniverseCanvas({ companies }: { companies: CompanyRecord
   };
 
   return (
-    <section className="min-h-screen overflow-x-hidden bg-[#12110f] text-[#eee9df] selection:bg-[#b79a6c]/30">
-      <header className="relative z-30 h-[72px] border-b border-white/10 bg-[#12110f] px-5 sm:px-8 lg:px-10">
+    <section className="min-h-screen overflow-x-hidden bg-[#101713] text-[#f4f1e9] selection:bg-[#dbe7cf]/30">
+      <header className="relative z-30 h-[72px] border-b border-white/10 bg-[#101713] px-5 sm:px-8 lg:px-10">
         <div className="mx-auto flex h-full max-w-[1440px] items-center justify-between gap-6">
-          <Link href="/" className="maia-wordmark min-h-11 focus-visible:outline focus-visible:outline-1 focus-visible:outline-[#b79a6c]" aria-label="Grupo Maia — início"><span>MAIA</span><small>Grupo</small></Link>
+          <Link href="/" className="maia-wordmark min-h-11 focus-visible:outline focus-visible:outline-1 focus-visible:outline-[#dbe7cf]" aria-label="Grupo Maia Universe — início"><Image src="/brand/grupo-maia-symbol-reverse.svg" alt="" width={30} height={30} priority /><span><strong>Grupo Maia</strong><small>Universe</small></span></Link>
           <nav className="hidden h-full items-center gap-7 text-[11px] text-white/55 md:flex" aria-label="Navegação principal">
             <a href="#empresas" className="flex h-full items-center transition hover:text-white">Empresas</a>
             <Link href="/intro" className="flex h-full items-center transition hover:text-white">Apresentação do grupo</Link>
@@ -134,9 +139,9 @@ export default function UniverseCanvas({ companies }: { companies: CompanyRecord
             <div className="relative z-10 flex h-full flex-col p-5 sm:p-8 lg:p-10">
               <div className="flex flex-col gap-6 xl:flex-row xl:items-start xl:justify-between">
                 <div className="max-w-[440px]">
-                  <p className="text-[10px] font-semibold uppercase tracking-[.22em] text-[#b79a6c]">Mapa Vivo das Empresas</p>
-                  <h1 className="mt-3 text-[34px] font-normal leading-[1.02] tracking-[-.055em] text-[#f2eee6] sm:text-[42px]">Negócios distintos.<br /><span className="font-serif italic text-[#b79a6c]">Uma estrutura conectada.</span></h1>
-                  <p className="mt-4 max-w-[390px] text-[13px] leading-6 text-white/50">Explore as empresas por nome ou área de atuação. Mapa e índice apresentam duas leituras do mesmo portfólio.</p>
+                  <p className="text-[10px] font-semibold uppercase tracking-[.22em] text-[#b7c7a9]">Grupo Maia Universe · 29 empresas</p>
+                  <h1 className="mt-3 text-[34px] font-normal leading-[1.02] tracking-[-.055em] text-[#f4f1e9] sm:text-[42px]">Empresas autônomas.<br /><span className="font-serif text-[#b7c7a9]">Direção compartilhada.</span></h1>
+                  <p className="mt-4 max-w-[390px] text-[13px] leading-6 text-white/50">Explore setores, relações e empresas que compõem o ecossistema do Grupo Maia.</p>
                 </div>
                 <ModeSwitcher mode={mobileMode} onChange={setMobileMode} />
               </div>
