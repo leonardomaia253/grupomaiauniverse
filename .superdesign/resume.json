@@ -3,35 +3,35 @@
   "targets": {
     "/": {
       "targetKind": "existing-ui",
-      "projectId": "e4b792de-51f4-4e85-a982-c34096371573",
-      "activeDraftId": "fde590ed-1dad-436c-88b6-410d6ca64250",
+      "projectId": "ee482928-8a6b-4f1e-9d8d-be41b175d635",
+      "activeDraftId": "9f402ef7-e7b9-4450-9f20-a0a14f6310fd",
       "designSystemPath": ".superdesign/website/grupomaia.me/design.md",
-      "referenceIds": ["24ce52ee-b153-416a-a458-bec0b4856e74", "grupo-maia-symbol-official"],
+      "referenceIds": ["3b16231d-e47b-4b92-b278-6bedf87d24d8", "grupo-maia-symbol-official"],
       "brandAssets": {
         "logo": {
           "assetKey": "grupo-maia-symbol-official",
-          "url": "https://vgbujcuwptvheqijyjbe.supabase.co/storage/v1/object/public/hmac-uploads/projects/e4b792de-51f4-4e85-a982-c34096371573/brand-assets/grupo-maia-symbol-official/symbol-reverse.svg",
+          "url": "https://vgbujcuwptvheqijyjbe.supabase.co/storage/v1/object/public/hmac-uploads/projects/ee482928-8a6b-4f1e-9d8d-be41b175d635/brand-assets/grupo-maia-symbol-official/symbol-reverse.svg",
           "sourcePath": ".superdesign/website/grupomaia.me/brand/symbol-reverse.svg"
         }
       },
       "contextFiles": [
         ".superdesign/website/grupomaia.me/design.md",
-        ".superdesign/website/grupomaia.me/content-structure.md",
-        "src/components/UniverseCanvas.tsx"
+        "src/components/UniverseCanvas.tsx",
+        "src/components/LoadingScreen.tsx"
       ],
       "fingerprints": {
         ".superdesign/website/grupomaia.me/design.md": "0a5b81137a34b8b73f5d07bcdef39b2e45f6801ef029e3e10a241f6b5d52e123",
-        ".superdesign/website/grupomaia.me/content-structure.md": "1df20247032e7bedb694d3690576ba3ed5d71ba2e9d768920ab335980cbdb434",
-        "src/components/UniverseCanvas.tsx": "1aee998471df89237460ad44c59864bcba87911ec6dea9a579b1ffaa74d24da6"
+        "src/components/UniverseCanvas.tsx": "1aee998471df89237460ad44c59864bcba87911ec6dea9a579b1ffaa74d24da6",
+        "src/components/LoadingScreen.tsx": "ce1c2da56f616179a223d8264085a139219ca3f3a186068c823d9ad7db80fa53"
       },
       "drafts": {
-        "fde590ed-1dad-436c-88b6-410d6ca64250": {
-          "title": "Grupo Maia — Sistema Editorial de Governança",
-          "visualDirection": "sistema editorial institucional fiel a grupomaia.me, com diagrama ortogonal de governança e ledger de 27 marcas",
-          "currentVersion": 3
+        "9f402ef7-e7b9-4450-9f20-a0a14f6310fd": {
+          "title": "Grupo Maia Universe — 29 Empresas",
+          "visualDirection": "splash oficial seguida de teia fullscreen com 29 empresas, macrofamílias visuais e setores operacionais detalhados",
+          "currentVersion": 4
         }
       },
-      "updatedAt": "2026-08-29T17:58:30Z"
+      "updatedAt": "2026-08-29T18:20:00Z"
     }
   }
 }

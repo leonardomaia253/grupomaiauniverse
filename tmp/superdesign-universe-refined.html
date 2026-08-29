@@ -1,0 +1,1051 @@
+<!DOCTYPE html><html lang="pt-BR"><head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Grupo Maia Universe</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&amp;family=Public+Sans:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { width: 100%; height: 100%; overflow: hidden; background: #101713; }
+
+  :root {
+    --bg: #101713;
+    --bg2: #172019;
+    --ivory: #F4F1E9;
+    --ivory2: #FBFAF6;
+    --green: #57734B;
+    --sage: #DBE7CF;
+    --gold: #B79A6C;
+    --border: rgba(255,255,255,0.10);
+    --text: #FBFAF6;
+    --text-muted: rgba(251,250,246,0.45);
+    --text-dim: rgba(251,250,246,0.25);
+  }
+
+  body { font-family: 'Public Sans', sans-serif; color: var(--text); }
+
+  /* ===== SPLASH ===== */
+  #splash {
+    position: fixed; inset: 0; z-index: 200;
+    background: #101713;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    gap: 0;
+    transition: opacity 0.7s ease;
+  }
+  #splash.fade-out { opacity: 0; pointer-events: none; }
+
+  .splash-symbol {
+    width: 72px; height: 72px;
+    animation: splashPulse 2.8s ease-in-out infinite;
+  }
+  @keyframes splashPulse {
+    0%, 100% { transform: scale(0.98); opacity: 0.80; }
+    50% { transform: scale(1.02); opacity: 1; }
+  }
+
+  .splash-wordmark {
+    margin-top: 20px;
+    font-family: 'Public Sans', sans-serif;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--ivory);
+    opacity: 0.7;
+  }
+  .splash-wordmark span { color: var(--green); margin-right: 6px; }
+
+  .splash-sub {
+    margin-top: 8px;
+    font-family: 'Public Sans', sans-serif;
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    color: rgba(251,250,246,0.3);
+    text-transform: uppercase;
+  }
+
+  .splash-progress-wrap {
+    margin-top: 40px;
+    width: 200px;
+  }
+  .splash-track {
+    height: 1px;
+    background: rgba(255,255,255,0.12);
+    position: relative;
+    overflow: hidden;
+  }
+  .splash-bar {
+    position: absolute; left: 0; top: 0; height: 100%;
+    background: var(--green);
+    transition: width 0.4s ease;
+  }
+  .splash-label {
+    margin-top: 10px;
+    display: flex; justify-content: space-between;
+    font-size: 9px; letter-spacing: 0.12em;
+    color: rgba(251,250,246,0.3);
+    text-transform: uppercase;
+  }
+
+  /* ===== APP ===== */
+  #app {
+    position: fixed; inset: 0;
+    display: flex; flex-direction: column;
+    opacity: 0;
+    transition: opacity 0.6s ease;
+    background: var(--bg);
+  }
+  #app.visible { opacity: 1; }
+
+  /* ===== HEADER ===== */
+  #header {
+    height: 64px;
+    border-bottom: 1px solid var(--border);
+    display: flex; align-items: center;
+    padding: 0 32px;
+    gap: 0;
+    flex-shrink: 0;
+    background: var(--bg);
+    z-index: 50;
+  }
+  .h-brand {
+    display: flex; align-items: center; gap: 10px;
+    text-decoration: none;
+  }
+  .h-brand img { width: 26px; height: 26px; }
+  .h-brand-text {
+    font-family: 'Public Sans', sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    color: var(--ivory);
+    text-transform: uppercase;
+  }
+  .h-brand-text small {
+    display: block;
+    font-size: 8px;
+    font-weight: 400;
+    letter-spacing: 0.22em;
+    color: var(--green);
+    text-transform: uppercase;
+    margin-top: 1px;
+  }
+
+  .h-search {
+    margin-left: 32px;
+    flex: 1;
+    max-width: 320px;
+    position: relative;
+  }
+  .h-search input {
+    width: 100%;
+    height: 34px;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid var(--border);
+    color: var(--ivory);
+    font-family: 'Public Sans', sans-serif;
+    font-size: 12px;
+    padding: 0 12px 0 32px;
+    outline: none;
+    border-radius: 0;
+    transition: border-color 0.15s;
+  }
+  .h-search input::placeholder { color: var(--text-dim); }
+  .h-search input:focus { border-color: var(--green); }
+  .h-search-icon {
+    position: absolute; left: 10px; top: 50%; transform: translateY(-50%);
+    color: var(--text-dim);
+    font-size: 13px;
+    pointer-events: none;
+  }
+
+  .h-spacer { flex: 1; }
+
+  .h-mode {
+    display: flex;
+    border: 1px solid var(--border);
+  }
+  .h-mode-btn {
+    height: 32px; padding: 0 18px;
+    font-family: 'Public Sans', sans-serif;
+    font-size: 11px; font-weight: 500;
+    letter-spacing: 0.08em;
+    color: var(--text-muted);
+    background: transparent;
+    border: none; cursor: pointer;
+    transition: background 0.15s, color 0.15s;
+  }
+  .h-mode-btn.active {
+    background: var(--ivory2);
+    color: var(--bg);
+  }
+  .h-mode-btn:not(.active):hover { color: var(--text); }
+
+  .h-inst {
+    margin-left: 24px;
+    font-family: 'Public Sans', sans-serif;
+    font-size: 10px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    text-decoration: none;
+    transition: color 0.15s;
+  }
+  .h-inst:hover { color: var(--green); }
+
+  /* ===== FILTERS ===== */
+  #filters {
+    height: 44px;
+    border-bottom: 1px solid var(--border);
+    display: flex; align-items: center;
+    padding: 0 32px;
+    gap: 0;
+    flex-shrink: 0;
+    overflow-x: auto;
+  }
+  #filters::-webkit-scrollbar { display: none; }
+  .filter-label {
+    font-size: 9px; font-weight: 600;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    margin-right: 16px;
+    white-space: nowrap;
+  }
+  .filter-btn {
+    height: 28px; padding: 0 14px;
+    font-family: 'Public Sans', sans-serif;
+    font-size: 10px; font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    background: transparent;
+    border: 1px solid transparent;
+    cursor: pointer;
+    transition: all 0.15s;
+    white-space: nowrap;
+    margin-right: 2px;
+  }
+  .filter-btn:hover { color: var(--text); border-color: var(--border); }
+  .filter-btn.active {
+    color: var(--green);
+    border-color: var(--green);
+    background: rgba(87,115,75,0.08);
+  }
+
+  /* ===== BODY ===== */
+  #body {
+    flex: 1;
+    display: flex;
+    overflow: hidden;
+    position: relative;
+  }
+
+  /* ===== MAP PANEL ===== */
+  #map-panel {
+    flex: 1;
+    position: relative;
+    overflow: hidden;
+  }
+
+  #network-svg {
+    width: 100%; height: 100%;
+    display: block;
+  }
+
+  /* SVG nodes */
+  .node-group { cursor: pointer; }
+  .node-group .node-ring {
+    fill: none;
+    stroke: var(--border);
+    stroke-width: 1;
+    transition: stroke 0.2s, opacity 0.2s;
+  }
+  .node-group .node-fill {
+    transition: fill 0.2s, opacity 0.2s;
+  }
+  .node-group .node-label {
+    font-family: 'Public Sans', sans-serif;
+    font-size: 9px;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    fill: var(--ivory);
+    text-anchor: middle;
+    pointer-events: none;
+    transition: opacity 0.2s;
+  }
+  .node-group .node-sector {
+    font-family: 'Public Sans', sans-serif;
+    font-size: 7.5px;
+    fill: rgba(251,250,246,0.4);
+    text-anchor: middle;
+    pointer-events: none;
+    transition: opacity 0.2s;
+  }
+  .node-group.dimmed .node-label { opacity: 0.2; }
+  .node-group.dimmed .node-sector { opacity: 0.1; }
+  .node-group.dimmed .node-fill { opacity: 0.2; }
+  .node-group.dimmed .node-ring { opacity: 0.1; }
+  .node-group.highlighted .node-ring { stroke: var(--green); }
+  .node-group.highlighted .node-fill { fill: var(--green); }
+  .node-group.selected .node-ring { stroke: var(--sage); stroke-width: 1.5; }
+  .node-group.selected .node-fill { fill: var(--green); }
+  .node-group.selected .node-label { font-weight: 700; }
+
+  .edge-line {
+    stroke: rgba(255,255,255,0.10);
+    stroke-width: 0.8;
+    transition: stroke 0.2s, opacity 0.2s, stroke-width 0.2s;
+  }
+  .edge-line.active { stroke: rgba(87,115,75,0.55); stroke-width: 1.2; }
+  .edge-line.dimmed { opacity: 0.06; }
+
+  /* Central node */
+  .central-ring {
+    fill: none;
+    stroke: rgba(87,115,75,0.4);
+    stroke-width: 1;
+  }
+  .central-fill {
+    fill: var(--green);
+  }
+  .central-label {
+    font-family: 'Public Sans', sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    fill: var(--ivory);
+    text-anchor: middle;
+  }
+  .central-sub {
+    font-family: 'Public Sans', sans-serif;
+    font-size: 8px;
+    fill: rgba(87,115,75,0.9);
+    text-anchor: middle;
+  }
+
+  /* Legend */
+  #legend {
+    position: absolute;
+    bottom: 20px; left: 24px;
+    display: flex; flex-direction: column; gap: 6px;
+  }
+  .legend-title {
+    font-size: 8px; font-weight: 600;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    margin-bottom: 4px;
+  }
+  .legend-item {
+    display: flex; align-items: center; gap: 8px;
+    font-size: 9px; color: var(--text-muted);
+    letter-spacing: 0.06em;
+  }
+  .legend-dot {
+    width: 8px; height: 8px;
+    border-radius: 0;
+    flex-shrink: 0;
+  }
+  .legend-center {
+    width: 8px; height: 8px;
+    background: var(--green);
+  }
+
+  /* Count indicator */
+  #node-count {
+    position: absolute;
+    bottom: 20px; right: 24px;
+    font-size: 9px; letter-spacing: 0.12em;
+    color: var(--text-dim);
+    text-transform: uppercase;
+  }
+
+  /* ===== CONTEXT PANEL ===== */
+  #context-panel {
+    width: 340px;
+    flex-shrink: 0;
+    border-left: 1px solid var(--border);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    background: var(--bg);
+  }
+  .cp-header {
+    padding: 24px 28px 20px;
+    border-bottom: 1px solid var(--border);
+    flex-shrink: 0;
+  }
+  .cp-num {
+    font-size: 9px; font-weight: 600;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--green);
+    margin-bottom: 8px;
+  }
+  .cp-name {
+    font-family: 'Crimson Pro', serif;
+    font-size: 32px;
+    font-weight: 400;
+    line-height: 1;
+    letter-spacing: -1.2px;
+    color: var(--ivory2);
+    margin-bottom: 6px;
+  }
+  .cp-sector {
+    font-size: 10px; font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+  }
+  .cp-body {
+    flex: 1; overflow-y: auto;
+    padding: 20px 28px;
+  }
+  .cp-body::-webkit-scrollbar { width: 4px; }
+  .cp-body::-webkit-scrollbar-track { background: transparent; }
+  .cp-body::-webkit-scrollbar-thumb { background: var(--border); }
+  .cp-field-label {
+    font-size: 9px; font-weight: 600;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    margin-bottom: 6px;
+  }
+  .cp-field-val {
+    font-size: 13px; line-height: 1.6;
+    color: var(--text-muted);
+    margin-bottom: 18px;
+  }
+  .cp-stage {
+    display: inline-block;
+    padding: 2px 10px;
+    font-size: 9px; font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--green);
+    border: 1px solid rgba(87,115,75,0.4);
+    margin-bottom: 18px;
+  }
+  .cp-related {
+    display: flex; flex-wrap: wrap; gap: 6px;
+    margin-bottom: 18px;
+  }
+  .cp-related-tag {
+    padding: 4px 10px;
+    font-size: 9px; font-weight: 500;
+    letter-spacing: 0.08em;
+    color: var(--text-muted);
+    border: 1px solid var(--border);
+    cursor: pointer;
+    transition: border-color 0.15s, color 0.15s;
+    background: rgba(255,255,255,0.02);
+  }
+  .cp-related-tag:hover { color: var(--green); border-color: var(--green); }
+  .cp-action {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-size: 11px; font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ivory);
+    text-decoration: none;
+    padding-bottom: 2px;
+    border-bottom: 1px solid var(--green);
+    transition: color 0.15s;
+    margin-top: 4px;
+  }
+  .cp-action:hover { color: var(--green); }
+
+  .cp-empty {
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    height: 100%;
+    color: var(--text-dim);
+    font-size: 12px;
+    gap: 8px;
+    padding: 32px;
+    text-align: center;
+  }
+  .cp-empty-icon { font-size: 28px; opacity: 0.3; }
+
+  /* ===== INDEX VIEW ===== */
+  #index-view {
+    flex: 1;
+    display: none;
+    flex-direction: column;
+    overflow: hidden;
+  }
+  #index-view.active {
+    display: flex;
+  }
+  #map-view {
+    flex: 1;
+    display: flex;
+    overflow: hidden;
+  }
+  #map-view.hidden { display: none; }
+
+  .index-table {
+    flex: 1; overflow-y: auto;
+    padding: 0;
+  }
+  .index-table::-webkit-scrollbar { width: 4px; }
+  .index-table::-webkit-scrollbar-track { background: transparent; }
+  .index-table::-webkit-scrollbar-thumb { background: var(--border); }
+  .index-header {
+    display: grid;
+    grid-template-columns: 48px 1fr 180px 120px;
+    padding: 0 32px;
+    height: 36px;
+    border-bottom: 1px solid var(--border);
+    align-items: center;
+    position: sticky; top: 0;
+    background: var(--bg2);
+    z-index: 2;
+  }
+  .index-th {
+    font-size: 8px; font-weight: 600;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+  }
+  .index-row {
+    display: grid;
+    grid-template-columns: 48px 1fr 180px 120px;
+    padding: 0 32px;
+    min-height: 56px;
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+    align-items: center;
+    cursor: pointer;
+    transition: background 0.15s;
+  }
+  .index-row:hover { background: rgba(255,255,255,0.03); }
+  .index-row.selected { background: rgba(87,115,75,0.06); }
+  .index-num {
+    font-size: 9px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    color: var(--text-dim);
+    font-variant-numeric: tabular-nums;
+  }
+  .index-name {
+    font-family: 'Crimson Pro', serif;
+    font-size: 20px;
+    font-weight: 400;
+    letter-spacing: -0.4px;
+    color: var(--ivory2);
+  }
+  .index-sector-cell {
+    font-size: 10px;
+    color: var(--text-muted);
+    letter-spacing: 0.04em;
+  }
+  .index-cat-badge {
+    font-size: 8px; font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--green);
+  }
+
+  /* Monogram */
+  .monogram {
+    width: 26px; height: 26px;
+    display: inline-flex; align-items: center; justify-content: center;
+    font-family: 'Public Sans', sans-serif;
+    font-size: 10px; font-weight: 700;
+    letter-spacing: 0.04em;
+    color: var(--ivory);
+    border: 1px solid rgba(255,255,255,0.15);
+    flex-shrink: 0;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .splash-symbol { animation: none !important; opacity: 1 !important; }
+    * { transition-duration: 0ms !important; }
+  }
+</style>
+</head>
+<body>
+<div id="root" data-sd-id="1">
+
+<!-- SPLASH -->
+<div id="splash" data-sd-id="2">
+  <img src="https://vgbujcuwptvheqijyjbe.supabase.co/storage/v1/object/public/hmac-uploads/projects/ee482928-8a6b-4f1e-9d8d-be41b175d635/brand-assets/grupo-maia-symbol-official/symbol-reverse.svg" class="splash-symbol" alt="Grupo Maia" data-sd-id="3">
+  <div class="splash-wordmark" data-sd-id="4"><span data-sd-id="5">·</span>GRUPO MAIA</div>
+  <div class="splash-sub" data-sd-id="6">Universe</div>
+  <div class="splash-progress-wrap" data-sd-id="7">
+    <div class="splash-track" data-sd-id="8"><div class="splash-bar" id="splash-bar" style="width:0%" data-sd-id="9"></div></div>
+    <div class="splash-label" data-sd-id="10"><span data-sd-id="11">27 empresas conectadas</span><span id="splash-pct" data-sd-id="12">0%</span></div>
+  </div>
+</div>
+
+<!-- APP -->
+<div id="app" data-sd-id="13">
+
+  <!-- HEADER -->
+  <header id="header" data-sd-id="14">
+    <a href="#" class="h-brand" id="header-brand-link" aria-label="Grupo Maia Universe" data-sd-id="15">
+      <img src="https://vgbujcuwptvheqijyjbe.supabase.co/storage/v1/object/public/hmac-uploads/projects/ee482928-8a6b-4f1e-9d8d-be41b175d635/brand-assets/grupo-maia-symbol-official/symbol-reverse.svg" alt="Símbolo Grupo Maia" data-sd-id="16">
+      <div class="h-brand-text" data-sd-id="17">Grupo Maia<small>Universe</small></div>
+    </a>
+    <div class="h-search" data-sd-id="18">
+      <iconify-icon icon="lucide:search" class="h-search-icon"></iconify-icon>
+      <input type="search" id="search-input" placeholder="Buscar empresa ou setor…" autocomplete="off" data-sd-id="19">
+    </div>
+    <div class="h-spacer" data-sd-id="20"></div>
+    <div class="h-mode" role="group" aria-label="Modo de visualização" data-sd-id="21">
+      <button class="h-mode-btn active" id="btn-map" onclick="switchMode('map')" data-sd-id="22">Mapa</button>
+      <button class="h-mode-btn" id="btn-index" onclick="switchMode('index')" data-sd-id="23">Índice</button>
+    </div>
+    <a href="#" id="header-inst-link" class="h-inst" data-sd-id="24">Institucional</a>
+  </header>
+
+  <!-- FILTERS -->
+  <div id="filters" data-sd-id="25">
+    <div class="filter-label" data-sd-id="26">Família</div>
+    <button class="filter-btn active" data-filter="Todas" onclick="setFilter('Todas', this)" id="filter-todas" data-sd-id="27">Todas</button>
+    <button class="filter-btn" data-filter="Tecnologia" onclick="setFilter('Tecnologia', this)" id="filter-tec" data-sd-id="28">Tecnologia</button>
+    <button class="filter-btn" data-filter="Capital" onclick="setFilter('Capital', this)" id="filter-cap" data-sd-id="29">Capital</button>
+    <button class="filter-btn" data-filter="Experiências" onclick="setFilter('Experiências', this)" id="filter-exp" data-sd-id="30">Experiências</button>
+    <button class="filter-btn" data-filter="Território" onclick="setFilter('Território', this)" id="filter-ter" data-sd-id="31">Território</button>
+    <button class="filter-btn" data-filter="Operações" onclick="setFilter('Operações', this)" id="filter-ops" data-sd-id="32">Operações</button>
+  </div>
+
+  <!-- BODY -->
+  <div id="body" data-sd-id="33">
+
+    <!-- MAP VIEW -->
+    <div id="map-view" data-sd-id="34">
+      <div id="map-panel" data-sd-id="35">
+        <svg id="network-svg" viewBox="0 0 900 680" preserveAspectRatio="xMidYMid meet" data-sd-id="36">
+          <defs>
+            <radialGradient id="bg-grad" cx="60%" cy="20%" r="50%">
+              <stop offset="0%" stop-color="rgba(87,115,75,0.06)"></stop>
+              <stop offset="100%" stop-color="rgba(0,0,0,0)"></stop>
+            </radialGradient>
+          </defs>
+          <rect width="900" height="680" fill="url(#bg-grad)"></rect>
+          <g id="edges-layer"></g>
+          <g id="nodes-layer"></g>
+        </svg>
+        <div id="legend" data-sd-id="37">
+          <div class="legend-title" data-sd-id="38">Família</div>
+          <div class="legend-item" data-sd-id="39"><div class="legend-dot" style="background:#57734B" data-sd-id="40"></div>Tecnologia</div>
+          <div class="legend-item" data-sd-id="41"><div class="legend-dot" style="background:#8B6914" data-sd-id="42"></div>Capital</div>
+          <div class="legend-item" data-sd-id="43"><div class="legend-dot" style="background:#6B4B3A" data-sd-id="44"></div>Experiências</div>
+          <div class="legend-item" data-sd-id="45"><div class="legend-dot" style="background:#3A5A6B" data-sd-id="46"></div>Território</div>
+          <div class="legend-item" data-sd-id="47"><div class="legend-dot" style="background:#5A4B7A" data-sd-id="48"></div>Operações</div>
+          <div class="legend-item" data-sd-id="49"><div class="legend-dot" style="background:#57734B;border:2px solid #DBE7CF" data-sd-id="50"></div>Coordenador</div>
+        </div>
+        <div id="node-count" data-sd-id="51">27 empresas · 1 coordenador</div>
+      </div>
+
+      <!-- CONTEXT PANEL -->
+      <div id="context-panel" data-sd-id="52">
+        <div id="cp-content" data-sd-id="53">
+          <div class="cp-header" data-sd-id="54">
+            <div class="cp-num" id="cp-num" data-sd-id="55">—</div>
+            <div class="cp-name" id="cp-name" data-sd-id="56">Grupo Maia</div>
+            <div class="cp-sector" id="cp-sector" data-sd-id="57">Coordenador do Ecossistema</div>
+          </div>
+          <div class="cp-body" data-sd-id="58">
+            <div class="cp-field-label" data-sd-id="59">Tese</div>
+            <div class="cp-field-val" id="cp-tese" data-sd-id="60">Nó coordenador do universo: governa capital, execução e estratégia de longo prazo entre todas as empresas do ecossistema.</div>
+            <div class="cp-field-label" data-sd-id="61">Estágio</div>
+            <div class="cp-stage" id="cp-stage" data-sd-id="62">Holding Ativa</div>
+            <div class="cp-field-label" id="cp-rel-label" style="display:none" data-sd-id="63">Relacionadas</div>
+            <div class="cp-related" id="cp-related" data-sd-id="64"></div>
+            <a href="#" class="cp-action" id="cp-action-link" data-sd-id="65">Abrir empresa <iconify-icon icon="lucide:arrow-up-right" style="font-size:13px"></iconify-icon></a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- INDEX VIEW -->
+    <div id="index-view" data-sd-id="66">
+      <div class="index-table" data-sd-id="67">
+        <div class="index-header" data-sd-id="68">
+          <div class="index-th" data-sd-id="69">Nº</div>
+          <div class="index-th" data-sd-id="70">Empresa</div>
+          <div class="index-th" data-sd-id="71">Setor</div>
+          <div class="index-th" data-sd-id="72">Família</div>
+        </div>
+        <div id="index-rows" data-sd-id="73"></div>
+      </div>
+      <div id="context-panel-index" style="width:340px;flex-shrink:0;border-left:1px solid var(--border);display:flex;flex-direction:column;overflow:hidden;background:var(--bg)" data-sd-id="74">
+        <div class="cp-header" data-sd-id="75">
+          <div class="cp-num" id="cpi-num" data-sd-id="76">—</div>
+          <div class="cp-name" id="cpi-name" style="font-family:'Crimson Pro',serif;font-size:32px;font-weight:400;line-height:1;letter-spacing:-1.2px;color:var(--ivory2)" data-sd-id="77">Selecione</div>
+          <div class="cp-sector" id="cpi-sector" style="font-size:10px;font-weight:500;letter-spacing:0.14em;text-transform:uppercase;color:var(--text-dim)" data-sd-id="78">uma empresa</div>
+        </div>
+        <div class="cp-body" data-sd-id="79">
+          <div class="cp-field-label" data-sd-id="80">Tese</div>
+          <div class="cp-field-val" id="cpi-tese" data-sd-id="81">Selecione uma empresa do índice para ver detalhes.</div>
+          <div class="cp-field-label" data-sd-id="82">Família</div>
+          <div class="cp-field-val" id="cpi-family" data-sd-id="83">—</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+</div>
+
+<script>
+// ===== DATA =====
+const FAMILIES = {
+  'Tecnologia': { color: '#57734B', dim: 'rgba(87,115,75,0.18)' },
+  'Capital': { color: '#8B6914', dim: 'rgba(139,105,20,0.18)' },
+  'Experiências': { color: '#6B4B3A', dim: 'rgba(107,75,58,0.18)' },
+  'Território': { color: '#3A5A6B', dim: 'rgba(58,90,107,0.18)' },
+  'Operações': { color: '#5A4B7A', dim: 'rgba(90,75,122,0.18)' },
+};
+
+const COMPANIES = [
+  { id: 0, name: 'Grupo Maia', sector: 'Holding', family: null, tese: 'Nó coordenador: governa capital, execução e estratégia de longo prazo.', stage: 'Holding Ativa', isCenter: true },
+  { id: 1, name: 'Volup AI', sector: 'IA e automação', family: 'Tecnologia', tese: 'Inteligência aplicada a produtos, operações e novas capacidades para o grupo.', stage: 'Ativo' },
+  { id: 2, name: 'Abroo', sector: 'Plataforma digital', family: 'Tecnologia', tese: 'Estrutura modular para novas frentes de produto e serviço.', stage: 'Ativo' },
+  { id: 3, name: 'Avantyp', sector: 'Estratégia e tecnologia', family: 'Tecnologia', tese: 'Estrutura estratégica dedicada à tecnologia aplicada.', stage: 'Ativo' },
+  { id: 4, name: 'Pipex', sector: 'Pipelines e automação', family: 'Tecnologia', tese: 'Fluxos, integrações e cadência entre áreas de negócio.', stage: 'Ativo' },
+  { id: 5, name: 'Iris', sector: 'Visão e inteligência', family: 'Tecnologia', tese: 'Tecnologia de leitura, percepção e clareza operacional.', stage: 'Ativo' },
+  { id: 6, name: 'Scoreking', sector: 'Score e inteligência', family: 'Tecnologia', tese: 'Dados para leitura de performance, risco e tomada de decisão.', stage: 'Ativo' },
+  { id: 7, name: 'PROTO.RH', sector: 'RH e people ops', family: 'Tecnologia', tese: 'Gente, processos e inteligência de contratação em uma mesma plataforma.', stage: 'MVP' },
+  { id: 8, name: 'Tosi', sector: 'Produto digital', family: 'Tecnologia', tese: 'Produto, tecnologia e operação orientados à eficiência e à construção de margem.', stage: 'Ativo' },
+  { id: 9, name: 'Minvest', sector: 'Investimentos', family: 'Capital', tese: 'Inteligência de capital e perspectiva patrimonial de longo prazo.', stage: 'Ativo' },
+  { id: 10, name: 'LMAIA', sector: 'Capital familiar', family: 'Capital', tese: 'Estrutura de capital e governança patrimonial da família Maia.', stage: 'Ativo' },
+  { id: 11, name: '13 de Maio', sector: 'Ativo patrimonial', family: 'Capital', tese: 'Participação patrimonial do Grupo Maia.', stage: 'Participação' },
+  { id: 12, name: 'The Maia', sector: 'Marca e identidade', family: 'Capital', tese: 'Marca guarda-chuva e identidade institucional do ecossistema.', stage: 'Ativo' },
+  { id: 13, name: 'Tikal Beach Club', sector: 'Hospitalidade', family: 'Experiências', tese: 'Experiência, lazer e hospitalidade com posicionamento premium.', stage: 'Ativo' },
+  { id: 14, name: 'Bilheking', sector: 'Bilheteria e entretenimento', family: 'Experiências', tese: 'Tecnologia comercial para eventos, vendas, recorrência e relacionamento com públicos.', stage: 'Ativo' },
+  { id: 15, name: 'Kinkora', sector: 'Experiência e comunidade', family: 'Experiências', tese: 'Marca, relacionamento e construção de comunidade.', stage: 'Ativo' },
+  { id: 18, name: 'Venti', sector: 'Imóveis', family: 'Território', tese: 'Atuação imobiliária com leitura patrimonial, territorial e comercial.', stage: 'Ativo' },
+  { id: 19, name: 'Habitat X', sector: 'Habitat e real estate', family: 'Território', tese: 'Espaços, moradia e produto imobiliário com identidade própria.', stage: 'Ativo' },
+  { id: 20, name: 'Agrovolup', sector: 'Agro e IA', family: 'Território', tese: 'Tecnologia e inteligência aplicadas ao agronegócio.', stage: 'Estruturação' },
+  { id: 21, name: 'MAIA GO', sector: 'Mobilidade e operação', family: 'Operações', tese: 'Mobilidade, execução e conexão entre operações.', stage: 'Ativo' },
+  { id: 22, name: 'Spur', sector: 'Performance e crescimento', family: 'Operações', tese: 'Execução, produção e estratégia comercial para negócios em expansão.', stage: 'Ativo' },
+  { id: 23, name: 'Boase', sector: 'Operação e serviços', family: 'Operações', tese: 'Serviços orientados à consistência, conexão e execução.', stage: 'Ativo' },
+  { id: 24, name: 'Instaboost', sector: 'Crescimento social', family: 'Operações', tese: 'Operação de alcance, distribuição e crescimento em canais sociais.', stage: 'MVP' },
+  { id: 25, name: 'Gaslee', sector: 'Energia e serviços', family: 'Operações', tese: 'Serviços cotidianos de energia com eficiência comercial.', stage: 'Ativo' },
+  { id: 26, name: 'Seu Jornaleiro', sector: 'Mídia e distribuição', family: 'Operações', tese: 'Conteúdo, distribuição e presença local em uma operação integrada.', stage: 'Ativo' },
+  { id: 27, name: 'Influarc', sector: 'Influência e mídia', family: 'Operações', tese: 'Estrutura de influência, conteúdo e distribuição digital.', stage: 'Ativo' },
+  { id: 28, name: 'Voluclinic', sector: 'Healthtech', family: 'Tecnologia', tese: 'Tecnologia aplicada a atendimento, agenda e operação clínica.', stage: 'Ativo' },
+];
+
+// Edges: [from_id, to_id]
+const EDGES = [
+  // Center to all family heads
+  [0,1],[0,9],[0,13],[0,18],[0,21],[0,12],[0,8],
+  // Tecnologia cluster
+  [1,2],[1,3],[1,4],[1,5],[1,6],[1,7],[1,8],[1,28],[3,4],[5,6],[7,8],
+  // Capital cluster
+  [9,10],[9,11],[9,12],[10,11],[12,0],
+  // Experiências cluster
+  [13,14],[13,15],[14,15],
+  // Território cluster
+  [18,19],[18,20],[19,20],
+  // Operações cluster
+  [21,22],[21,23],[21,24],[21,25],[21,26],[21,27],[22,23],[24,27],[25,26],
+  // Cross-family connections
+  [1,22],[4,26],[6,9],[8,22],[14,24],[20,1],[12,9],
+];
+
+// Node positions in SVG viewBox 900x680
+// Center: Grupo Maia at 450, 340
+const POSITIONS = {
+  0:  [450, 340], // Grupo Maia (center)
+  // Tecnologia (upper-left cluster)
+  1:  [220, 180], // Volup AI
+  2:  [110, 120], // Abroo
+  3:  [160, 250], // Avantyp
+  4:  [90,  220], // Pipex
+  5:  [200, 100], // Iris
+  6:  [310, 110], // Scoreking
+  7:  [135, 310], // PROTO.RH
+  8:  [270, 270], // Tosi
+  28: [330, 180], // Voluclinic
+  // Capital (upper-right cluster)
+  9:  [680, 160], // Minvest
+  10: [800, 100], // LMAIA
+  11: [790, 220], // 13 de Maio
+  12: [580, 100], // The Maia
+  // Experiências (lower-right cluster)
+  13: [760, 460], // Tikal
+  14: [820, 350], // Bilheking
+  15: [860, 540], // Kinkora
+  16: [730, 560], // Jack it Fit
+  17: [820, 610], // Sun & Tan
+  // Território (lower-left cluster)
+  18: [180, 530], // Venti
+  19: [110, 610], // Habitat X
+  20: [260, 600], // Agrovolup
+  // Operações (bottom center cluster)
+  21: [450, 560], // MAIA GO
+  22: [360, 490], // Spur
+  23: [340, 600], // Boase
+  24: [530, 490], // Instaboost
+  25: [570, 600], // Gaslee
+  26: [490, 650], // Seu Jornaleiro
+  27: [630, 530], // Influarc
+};
+
+const FAMILY_COLORS = {
+  'Tecnologia':  '#57734B',
+  'Capital':     '#8B6914',
+  'Experiências':'#6B4B3A',
+  'Território':  '#3A5A6B',
+  'Operações':   '#5A4B7A',
+  null:          '#57734B',
+};
+
+let selectedId = null;
+let activeFilter = 'Todas';
+let searchQuery = '';
+
+// ===== BUILD SVG =====
+function buildNetwork() {
+  const edgesLayer = document.getElementById('edges-layer');
+  const nodesLayer = document.getElementById('nodes-layer');
+
+  EDGES.forEach(([a, b], idx) => {
+    const pa = POSITIONS[a], pb = POSITIONS[b];
+    const line = document.createElementNS('http://www.w3.org/2000/svg','line');
+    line.setAttribute('x1', pa[0]); line.setAttribute('y1', pa[1]);
+    line.setAttribute('x2', pb[0]); line.setAttribute('y2', pb[1]);
+    line.setAttribute('class','edge-line');
+    line.setAttribute('data-edge', `${a}-${b}`);
+    // Animate draw
+    const len = Math.hypot(pb[0]-pa[0], pb[1]-pa[1]);
+    line.setAttribute('stroke-dasharray', len);
+    line.setAttribute('stroke-dashoffset', len);
+    edgesLayer.appendChild(line);
+    setTimeout(() => {
+      line.style.transition = `stroke-dashoffset 0.6s cubic-bezier(0.4,0,0.2,1) ${idx*18}ms`;
+      line.style.strokeDashoffset = '0';
+    }, 100);
+  });
+
+  COMPANIES.forEach(company => {
+    const [cx, cy] = POSITIONS[company.id];
+    const g = document.createElementNS('http://www.w3.org/2000/svg','g');
+    g.setAttribute('class', company.isCenter ? 'node-group central' : 'node-group');
+    g.setAttribute('data-id', company.id);
+    g.setAttribute('data-family', company.family || '');
+    g.setAttribute('tabindex','0');
+    g.setAttribute('role','button');
+    g.setAttribute('aria-label', `${company.name}, ${company.sector}`);
+
+    if (company.isCenter) {
+      // Central node — larger
+      const r1 = document.createElementNS('http://www.w3.org/2000/svg','circle');
+      r1.setAttribute('cx',cx); r1.setAttribute('cy',cy); r1.setAttribute('r','28');
+      r1.setAttribute('class','central-ring');
+      const r2 = document.createElementNS('http://www.w3.org/2000/svg','circle');
+      r2.setAttribute('cx',cx); r2.setAttribute('cy',cy); r2.setAttribute('r','22');
+      r2.setAttribute('fill', '#172019');
+      const rfill = document.createElementNS('http://www.w3.org/2000/svg','circle');
+      rfill.setAttribute('cx',cx); rfill.setAttribute('cy',cy); rfill.setAttribute('r','18');
+      rfill.setAttribute('fill','#57734B'); rfill.setAttribute('class','node-fill');
+      const imgEl = document.createElementNS('http://www.w3.org/2000/svg','image');
+      imgEl.setAttribute('href','https://vgbujcuwptvheqijyjbe.supabase.co/storage/v1/object/public/hmac-uploads/projects/ee482928-8a6b-4f1e-9d8d-be41b175d635/brand-assets/grupo-maia-symbol-official/symbol-reverse.svg');
+      imgEl.setAttribute('x', cx-10); imgEl.setAttribute('y', cy-10);
+      imgEl.setAttribute('width','20'); imgEl.setAttribute('height','20');
+      const label = document.createElementNS('http://www.w3.org/2000/svg','text');
+      label.setAttribute('x',cx); label.setAttribute('y', cy+38);
+      label.setAttribute('class','central-label'); label.textContent='GRUPO MAIA';
+      const sub = document.createElementNS('http://www.w3.org/2000/svg','text');
+      sub.setAttribute('x',cx); sub.setAttribute('y', cy+50);
+      sub.setAttribute('class','central-sub'); sub.textContent='Coordenador';
+      g.appendChild(r1); g.appendChild(r2); g.appendChild(rfill);
+      g.appendChild(imgEl); g.appendChild(label); g.appendChild(sub);
+    } else {
+      const color = FAMILY_COLORS[company.family];
+      const ring = document.createElementNS('http://www.w3.org/2000/svg','circle');
+      ring.setAttribute('cx',cx); ring.setAttribute('cy',cy); ring.setAttribute('r','14');
+      ring.setAttribute('class','node-ring');
+      const fill = document.createElementNS('http://www.w3.org/2000/svg','circle');
+      fill.setAttribute('cx',cx); fill.setAttribute('cy',cy); fill.setAttribute('r','9');
+      fill.setAttribute('fill', color); fill.setAttribute('class','node-fill');
+      const label = document.createElementNS('http://www.w3.org/2000/svg','text');
+      // Position label to avoid overlap
+      const lx = cx, ly = cy + 24;
+      label.setAttribute('x',lx); label.setAttribute('y',ly);
+      label.setAttribute('class','node-label');
+      // Abbreviate long names
+      const shortName = company.name.length > 12 ? company.name.split(' ').map(w=>w[0]).join('').substring(0,4) : company.name;
+      label.textContent = company.name.length > 12 ? company.name : company.name;
+      g.appendChild(ring); g.appendChild(fill); g.appendChild(label);
+    }
+
+    g.addEventListener('click', () => selectCompany(company.id));
+    g.addEventListener('keydown', e => { if(e.key==='Enter'||e.key===' ') selectCompany(company.id); });
+    nodesLayer.appendChild(g);
+  });
+
+  // Default selection
+  selectCompany(0);
+}
+
+function selectCompany(id) {
+  selectedId = id;
+  const company = COMPANIES.find(c=>c.id===id);
+  if(!company) return;
+
+  // Update node states
+  const connectedIds = new Set([id]);
+  EDGES.forEach(([a,b])=>{ if(a===id) connectedIds.add(b); if(b===id) connectedIds.add(a); });
+
+  document.querySelectorAll('.node-group').forEach(g=>{
+    const gid = parseInt(g.getAttribute('data-id'));
+    g.classList.remove('selected','highlighted','dimmed');
+    if(gid===id) g.classList.add('selected');
+    else if(connectedIds.has(gid)) g.classList.add('highlighted');
+    else g.classList.add('dimmed');
+  });
+
+  document.querySelectorAll('.edge-line').forEach(l=>{
+    const [a,b] = l.getAttribute('data-edge').split('-').map(Number);
+    l.classList.remove('active','dimmed');
+    if(a===id||b===id) l.classList.add('active');
+    else l.classList.add('dimmed');
+  });
+
+  // Update panel
+  const idx = COMPANIES.filter(c=>!c.isCenter).findIndex(c=>c.id===id);
+  document.getElementById('cp-num').textContent = company.isCenter ? 'Coordenador' : String(idx+1).padStart(2,'0');
+  document.getElementById('cp-name').textContent = company.name;
+  document.getElementById('cp-sector').textContent = company.sector;
+  document.getElementById('cp-tese').textContent = company.tese;
+  document.getElementById('cp-stage').textContent = company.stage;
+
+  const related = COMPANIES.filter(c=>{ if(c.id===id) return false; return EDGES.some(([a,b])=>(a===id&&b===c.id)||(b===id&&a===c.id)); });
+  const relDiv = document.getElementById('cp-related');
+  const relLabel = document.getElementById('cp-rel-label');
+  relDiv.innerHTML = '';
+  if(related.length>0) {
+    relLabel.style.display='block';
+    related.slice(0,6).forEach(r=>{
+      const tag = document.createElement('button');
+      tag.className='cp-related-tag';
+      tag.textContent=r.name;
+      tag.onclick=()=>selectCompany(r.id);
+      relDiv.appendChild(tag);
+    });
+  } else { relLabel.style.display='none'; }
+}
+
+function setFilter(filter, btn) {
+  activeFilter = filter;
+  document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  applyFilterAndSearch();
+}
+
+function applyFilterAndSearch() {
+  const q = searchQuery.toLowerCase();
+  document.querySelectorAll('.node-group').forEach(g=>{
+    const gid = parseInt(g.getAttribute('data-id'));
+    const company = COMPANIES.find(c=>c.id===gid);
+    if(!company) return;
+    const matchFilter = activeFilter==='Todas' || company.family===activeFilter || company.isCenter;
+    const matchSearch = !q || company.name.toLowerCase().includes(q) || (company.sector||'').toLowerCase().includes(q);
+    g.style.opacity = (matchFilter && matchSearch) ? '' : '0.12';
+    g.style.pointerEvents = (matchFilter && matchSearch) ? '' : 'none';
+  });
+  document.querySelectorAll('.edge-line').forEach(l=>{
+    const [a,b] = l.getAttribute('data-edge').split('-').map(Number);
+    const ca = COMPANIES.find(c=>c.id===a);
+    const cb = COMPANIES.find(c=>c.id===b);
+    const aOk = activeFilter==='Todas'||ca?.family===activeFilter||ca?.isCenter;
+    const bOk = activeFilter==='Todas'||cb?.family===activeFilter||cb?.isCenter;
+    l.style.opacity = (aOk && bOk) ? '' : '0.04';
+  });
+  // Index rows
+  document.querySelectorAll('.index-row').forEach(row=>{
+    const rid = parseInt(row.getAttribute('data-id'));
+    const company = COMPANIES.find(c=>c.id===rid);
+    if(!company) return;
+    const matchFilter = activeFilter==='Todas' || company.family===activeFilter;
+    const matchSearch = !q || company.name.toLowerCase().includes(q) || (company.sector||'').toLowerCase().includes(q);
+    row.style.display = (matchFilter && matchSearch) ? '' : 'none';
+  });
+}
+
+function switchMode(mode) {
+  const mapView = document.getElementById('map-view');
+  const indexView = document.getElementById('index-view');
+  const btnMap = document.getElementById('btn-map');
+  const btnIndex = document.getElementById('btn-index');
+  if(mode==='map') {
+    mapView.classList.remove('hidden'); indexView.classList.remove('active');
+    btnMap.classList.add('active'); btnIndex.classList.remove('active');
+  } else {
+    mapView.classList.add('hidden'); indexView.classList.add('active');
+    btnMap.classList.remove('active'); btnIndex.classList.add('active');
+  }
+}
+
+function buildIndex() {
+  const container = document.getElementById('index-rows');
+  const nonCenter = COMPANIES.filter(c=>!c.isCenter);
+  nonCenter.forEach((company, idx) => {
+    const row = document.createElement('div');
+    row.className = 'index-row';
+    row.setAttribute('data-id', company.id);
+    const color = FAMILY_COLORS[company.family];
+    row.innerHTML = `
+      <div class="index-num">${String(idx+1).padStart(2,'0')}</div>
+      <div style="display:flex;align-items:center;gap:12px">
+        <div class="monogram" style="border-color:${color}40;color:${color}">${company.name.split(' ').map(w=>w[0]).join('').substring(0,2).toUpperCase()}</div>
+        <div class="index-name">${company.name}</div>
+      </div>
+      <div class="index-sector-cell">${company.sector}</div>
+      <div class="index-cat-badge" style="color:${color}">${company.family||'—'}</div>
+    `;
+    row.addEventListener('click',()=>{
+      document.querySelectorAll('.index-row').forEach(r=>r.classList.remove('selected'));
+      row.classList.add('selected');
+      // Update index panel
+      document.getElementById('cpi-num').textContent = String(idx+1).padStart(2,'0');
+      document.getElementById('cpi-name').textContent = company.name;
+      document.getElementById('cpi-sector').textContent = company.sector;
+      document.getElementById('cpi-tese').textContent = company.tese;
+      document.getElementById('cpi-family').textContent = company.family||'—';
+    });
+    container.appendChild(row);
+  });
+}
+
+// Search
+document.getElementById('search-input').addEventListener('input', function(){
+  searchQuery = this.value.trim();
+  applyFilterAndSearch();
+});
+
+// ===== SPLASH LOGIC =====
+let progress = 0;
+const bar = document.getElementById('splash-bar');
+const pct = document.getElementById('splash-pct');
+const splash = document.getElementById('splash');
+const appEl = document.getElementById('app');
+
+const interval = setInterval(()=>{
+  progress += Math.random()*18 + 4;
+  if(progress >= 100) { progress = 100; clearInterval(interval); }
+  bar.style.width = progress + '%';
+  pct.textContent = Math.round(progress) + '%';
+  if(progress>=100) {
+    setTimeout(()=>{
+      splash.classList.add('fade-out');
+      appEl.classList.add('visible');
+      buildNetwork();
+      buildIndex();
+      setTimeout(()=>{ splash.style.display='none'; }, 750);
+    }, 300);
+  }
+}, 120);
+</script>
+
+</body></html>
