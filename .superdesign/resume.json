@@ -3,25 +3,35 @@
   "targets": {
     "/": {
       "targetKind": "existing-ui",
-      "projectId": "5d50c071-9c81-408c-a9a8-c6b4035b5aa2",
-      "activeDraftId": "50643902-4bd1-4254-a2b1-652deb92cd5f",
-      "designSystemPath": ".superdesign/design-system.md",
-      "referenceIds": ["brand-app-icon"],
-      "brandAssets": { "logo": { "assetKey": "brand-app-icon", "url": "https://vgbujcuwptvheqijyjbe.supabase.co/storage/v1/object/public/hmac-uploads/projects/5d50c071-9c81-408c-a9a8-c6b4035b5aa2/brand-assets/brand-app-icon/icon-512-transparent.png", "sourcePath": "public/icon-512-transparent.png" } },
-      "contextFiles": [".superdesign/design-system.md", "src/app/page.tsx", "src/components/UniverseCanvas.tsx", "src/components/LoadingScreen.tsx", "src/components/MaiaStoryIntro.tsx", "src/lib/dna-maia-theme.ts", "src/app/globals.css"],
+      "projectId": "e4b792de-51f4-4e85-a982-c34096371573",
+      "activeDraftId": "fde590ed-1dad-436c-88b6-410d6ca64250",
+      "designSystemPath": ".superdesign/website/grupomaia.me/design.md",
+      "referenceIds": ["24ce52ee-b153-416a-a458-bec0b4856e74", "grupo-maia-symbol-official"],
+      "brandAssets": {
+        "logo": {
+          "assetKey": "grupo-maia-symbol-official",
+          "url": "https://vgbujcuwptvheqijyjbe.supabase.co/storage/v1/object/public/hmac-uploads/projects/e4b792de-51f4-4e85-a982-c34096371573/brand-assets/grupo-maia-symbol-official/symbol-reverse.svg",
+          "sourcePath": ".superdesign/website/grupomaia.me/brand/symbol-reverse.svg"
+        }
+      },
+      "contextFiles": [
+        ".superdesign/website/grupomaia.me/design.md",
+        ".superdesign/website/grupomaia.me/content-structure.md",
+        "src/components/UniverseCanvas.tsx"
+      ],
       "fingerprints": {
-        ".superdesign/design-system.md": "44dfda51c28f38795b9e0f57971ebc50062d2a8310f5bca6405cc7dcd74266fc",
-        "src/app/page.tsx": "517ba316a856ddd05ab7d6b70b5ff1dc348ee2e29af23c1e880768e9ba1638d0",
-        "src/components/UniverseCanvas.tsx": "1aee998471df89237460ad44c59864bcba87911ec6dea9a579b1ffaa74d24da6",
-        "src/components/LoadingScreen.tsx": "ce1c2da56f616179a223d8264085a139219ca3f3a186068c823d9ad7db80fa53",
-        "src/components/MaiaStoryIntro.tsx": "8b9976b0c3e6dbf8bb81448f2486787dbe45fce276e525ed93a9d99bc00a8382",
-        "src/lib/dna-maia-theme.ts": "0af091e85bd2cdd6a1fd6fdb1cf0351d4f532029b6a4e449cb5073226b0dbc3f",
-        "src/app/globals.css": "4f68c054ac78345bc1e2104e596ea85aba0f7c68b8cac13e48a402455912e838"
+        ".superdesign/website/grupomaia.me/design.md": "0a5b81137a34b8b73f5d07bcdef39b2e45f6801ef029e3e10a241f6b5d52e123",
+        ".superdesign/website/grupomaia.me/content-structure.md": "1df20247032e7bedb694d3690576ba3ed5d71ba2e9d768920ab335980cbdb434",
+        "src/components/UniverseCanvas.tsx": "1aee998471df89237460ad44c59864bcba87911ec6dea9a579b1ffaa74d24da6"
       },
       "drafts": {
-        "50643902-4bd1-4254-a2b1-652deb92cd5f": { "title": "Constelação Viva — Campo Orbital", "visualDirection": "living constellation with depth, orbital links and golden scan pulses", "currentVersion": 1 }
+        "fde590ed-1dad-436c-88b6-410d6ca64250": {
+          "title": "Grupo Maia — Sistema Editorial de Governança",
+          "visualDirection": "sistema editorial institucional fiel a grupomaia.me, com diagrama ortogonal de governança e ledger de 27 marcas",
+          "currentVersion": 3
+        }
       },
-      "updatedAt": "2026-08-22T02:34:00Z"
+      "updatedAt": "2026-08-29T17:58:30Z"
     }
   }
 }

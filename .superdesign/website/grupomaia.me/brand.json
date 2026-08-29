@@ -1,0 +1,417 @@
+{
+  "meta": {
+    "url": "https://grupomaia.me",
+    "title": "Grupo Maia — Empresas e iniciativas | Grupo Maia",
+    "description": "O Grupo Maia estrutura empresas, tecnologia, dados e governança para transformar operação em crescimento mensurável.",
+    "language": "pt-BR",
+    "viewport": "width=device-width, initial-scale=1.0, viewport-fit=cover",
+    "themeColor": "#101713",
+    "ogImage": "https://grupomaia.me/og-image.png",
+    "ogTitle": "Grupo Maia | Governança, tecnologia e operação para empresas",
+    "ogDescription": "Uma holding operacional que conecta marcas, dados, governança e execução em um ecossistema preparado para crescer."
+  },
+  "theme": {
+    "mode": "light",
+    "bodyBackground": "#f5f2eb",
+    "isDark": false,
+    "confidence": 0.9
+  },
+  "brand": {
+    "name": "Grupo Maia",
+    "favicon": {
+      "href": "https://grupomaia.me/favicon.ico",
+      "type": null
+    }
+  },
+  "colors": {
+    "dominant": [
+      {
+        "hex": "#c1cdc3",
+        "ratio": 0.63
+      },
+      {
+        "hex": "#000000",
+        "ratio": 0.158
+      },
+      {
+        "hex": "#172019",
+        "ratio": 0.068
+      },
+      {
+        "hex": "#57734b",
+        "ratio": 0.048
+      },
+      {
+        "hex": "#ffffff",
+        "ratio": 0.043
+      },
+      {
+        "hex": "#101713",
+        "ratio": 0.03
+      },
+      {
+        "hex": "#68716b",
+        "ratio": 0.006
+      },
+      {
+        "hex": "#fbfaf6",
+        "ratio": 0.005
+      },
+      {
+        "hex": "#f4f1e9",
+        "ratio": 0.004
+      },
+      {
+        "hex": "#111813",
+        "ratio": 0.003
+      },
+      {
+        "hex": "#b7c7a9",
+        "ratio": 0.003
+      },
+      {
+        "hex": "#dbe7cf",
+        "ratio": 0.001
+      },
+      {
+        "hex": "#f5f2eb",
+        "ratio": 0
+      },
+      {
+        "hex": "#f0eee7",
+        "ratio": 0
+      },
+      {
+        "hex": "#405d39",
+        "ratio": 0
+      }
+    ],
+    "palette": [
+      {
+        "hex": "#f5f2eb",
+        "role": "background",
+        "source": "computed"
+      },
+      {
+        "hex": "#111813",
+        "role": "foreground",
+        "source": "computed"
+      },
+      {
+        "hex": "#dbe7cf",
+        "role": "primary",
+        "source": "heuristic"
+      },
+      {
+        "hex": "#c1cdc3",
+        "role": "neutral",
+        "source": "heuristic"
+      }
+    ],
+    "cssVariables": {
+      "--tw-ring-color": "#8fa67e",
+      "--tw-ring-offset-color": "#dc2626",
+      "--console-paper": "#f8f7f2",
+      "--console-ink": "#172019",
+      "--console-line": "#172019",
+      "--normal-bg": "#000"
+    },
+    "gradients": []
+  },
+  "logo": {
+    "status": "confirmed",
+    "reason": null,
+    "best": {
+      "selector": "svg",
+      "href": null,
+      "type": "svg",
+      "width": 14,
+      "height": 14,
+      "svgContent": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"lucide lucide-arrow-up-right h-3.5 w-3.5 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5\"><path d=\"M7 7h10v10\"></path><path d=\"M7 17 17 7\"></path></svg>",
+      "colors": [
+        "#DADAD6"
+      ],
+      "isLight": true,
+      "isDark": false,
+      "headerScoped": true,
+      "ownership": "first-party",
+      "variant": "light",
+      "brandNameOnLogo": "GRUPO MAIA",
+      "standaloneSvg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"#DADAD6\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"lucide lucide-arrow-up-right h-3.5 w-3.5 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5\"><path d=\"M7 7h10v10\"></path><path d=\"M7 17 17 7\"></path></svg>",
+      "uploadedUrl": "https://vgbujcuwptvheqijyjbe.supabase.co/storage/v1/object/public/hmac-uploads/brand/9beed1ac-3c27-4e53-bec7-b3666102196e/logo/d680dbf9-9dcd-4944-8e4f-f9d2c524ad19.svg"
+    },
+    "candidates": [
+      {
+        "selector": "img.max-h-full",
+        "href": "https://lekmsauhcpkbrqmsvkrd.supabase.co/storage/v1/object/public/company_logos/public/abroo-1770579405895.jpg",
+        "type": "jpg",
+        "width": 500,
+        "height": 500,
+        "svgContent": null,
+        "colors": [],
+        "isLight": false,
+        "isDark": false,
+        "needsDarkBackground": false,
+        "needsLightBackground": false,
+        "ownership": "third-party"
+      },
+      {
+        "selector": "img.max-h-full",
+        "href": "https://lekmsauhcpkbrqmsvkrd.supabase.co/storage/v1/object/public/company_logos/public/avantyp-1770579092011.png",
+        "type": "png",
+        "width": 1024,
+        "height": 1024,
+        "svgContent": null,
+        "colors": [],
+        "isLight": false,
+        "isDark": false,
+        "needsDarkBackground": false,
+        "needsLightBackground": false,
+        "ownership": "third-party"
+      },
+      {
+        "selector": "img.max-h-full",
+        "href": "https://lekmsauhcpkbrqmsvkrd.supabase.co/storage/v1/object/public/company_logos/public/bilheking-1770579316410.jpg",
+        "type": "jpg",
+        "width": 1080,
+        "height": 1080,
+        "svgContent": null,
+        "colors": [],
+        "isLight": false,
+        "isDark": false,
+        "needsDarkBackground": false,
+        "needsLightBackground": false,
+        "ownership": "third-party"
+      },
+      {
+        "selector": "img.max-h-full",
+        "href": "https://lekmsauhcpkbrqmsvkrd.supabase.co/storage/v1/object/public/company_logos/public/jack-it-fit-1770579244537.png",
+        "type": "png",
+        "width": 457,
+        "height": 546,
+        "svgContent": null,
+        "colors": [],
+        "isLight": false,
+        "isDark": false,
+        "needsDarkBackground": false,
+        "needsLightBackground": false,
+        "ownership": "third-party"
+      },
+      {
+        "selector": "img.max-h-full",
+        "href": "https://lekmsauhcpkbrqmsvkrd.supabase.co/storage/v1/object/public/company_logos/public/kinkora-1770579377406.png",
+        "type": "png",
+        "width": 1024,
+        "height": 1536,
+        "svgContent": null,
+        "colors": [],
+        "isLight": false,
+        "isDark": false,
+        "needsDarkBackground": false,
+        "needsLightBackground": false,
+        "ownership": "third-party"
+      },
+      {
+        "selector": "img",
+        "href": "https://grupomaia.me/brand/grupo-maia/symbol-reverse.svg",
+        "type": "svg",
+        "width": 24,
+        "height": 24,
+        "svgContent": null,
+        "colors": [],
+        "isLight": false,
+        "isDark": false,
+        "headerScoped": true,
+        "ownership": "first-party"
+      },
+      {
+        "selector": "svg",
+        "href": null,
+        "type": "svg",
+        "width": 14,
+        "height": 14,
+        "svgContent": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"lucide lucide-arrow-up-right h-3.5 w-3.5 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5\"><path d=\"M7 7h10v10\"></path><path d=\"M7 17 17 7\"></path></svg>",
+        "colors": [
+          "#DADAD6"
+        ],
+        "isLight": true,
+        "isDark": false,
+        "headerScoped": true,
+        "ownership": "first-party"
+      }
+    ]
+  },
+  "fonts": {
+    "computed": [
+      {
+        "family": "\"Public Sans\", ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, \"Segoe UI\", sans-serif",
+        "weights": [
+          "400",
+          "700",
+          "600",
+          "900",
+          "500"
+        ],
+        "source": "system"
+      },
+      {
+        "family": "ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, \"Helvetica Neue\", Arial, \"Noto Sans\", sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+        "weights": [
+          "400",
+          "500"
+        ],
+        "source": "system"
+      },
+      {
+        "family": "ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, \"Liberation Mono\", \"Courier New\", monospace",
+        "weights": [
+          "600",
+          "400"
+        ],
+        "source": "web"
+      },
+      {
+        "family": "\"Crimson Pro\", Georgia, \"Times New Roman\", serif",
+        "weights": [
+          "400"
+        ],
+        "source": "web"
+      }
+    ],
+    "baseSizePx": 16
+  },
+  "confidence": {
+    "colorExtraction": 0.9,
+    "logoDetection": 0.95,
+    "fontDetection": 0.8
+  },
+  "screenshot": {
+    "url": "https://vgbujcuwptvheqijyjbe.supabase.co/storage/v1/object/public/hmac-uploads/brand/9beed1ac-3c27-4e53-bec7-b3666102196e/screenshot.png",
+    "width": 1920,
+    "height": 1080,
+    "sizeBytes": 103635,
+    "uploadedAt": "2026-08-29T17:49:36.150Z"
+  },
+  "assets": {
+    "9125dc58-dc8f-47e9-8bc4-0c1bf9492484": {
+      "url": "https://vgbujcuwptvheqijyjbe.supabase.co/storage/v1/object/public/hmac-uploads/brand/9beed1ac-3c27-4e53-bec7-b3666102196e/assets/9125dc58-dc8f-47e9-8bc4-0c1bf9492484.png",
+      "name": "kinkora-1770579377406.png",
+      "type": "image",
+      "description": "",
+      "metadata": {
+        "size": "1.80 MB",
+        "mimeType": "image/png",
+        "sizeBytes": 1891856,
+        "uploadedAt": "2026-08-29T17:49:36.853Z"
+      }
+    },
+    "3f58a918-be62-4eea-bf62-1e4255628d2b": {
+      "url": "https://vgbujcuwptvheqijyjbe.supabase.co/storage/v1/object/public/hmac-uploads/brand/9beed1ac-3c27-4e53-bec7-b3666102196e/assets/3f58a918-be62-4eea-bf62-1e4255628d2b.png",
+      "name": "venti-imoveis-1770579282479.png",
+      "type": "image",
+      "description": "",
+      "metadata": {
+        "size": "491.73 KB",
+        "mimeType": "image/png",
+        "sizeBytes": 503532,
+        "uploadedAt": "2026-08-29T17:49:36.535Z"
+      }
+    },
+    "a604cbae-06be-47d7-8aca-55b4e01c6dca": {
+      "url": "https://vgbujcuwptvheqijyjbe.supabase.co/storage/v1/object/public/hmac-uploads/brand/9beed1ac-3c27-4e53-bec7-b3666102196e/assets/a604cbae-06be-47d7-8aca-55b4e01c6dca.png",
+      "name": "jack-it-fit-1770579244537.png",
+      "type": "image",
+      "description": "",
+      "metadata": {
+        "size": "22.41 KB",
+        "mimeType": "image/png",
+        "sizeBytes": 22950,
+        "uploadedAt": "2026-08-29T17:49:36.338Z"
+      }
+    },
+    "5943910f-b4e9-4345-8512-fac3d2fbf398": {
+      "url": "https://vgbujcuwptvheqijyjbe.supabase.co/storage/v1/object/public/hmac-uploads/brand/9beed1ac-3c27-4e53-bec7-b3666102196e/assets/5943910f-b4e9-4345-8512-fac3d2fbf398.jpg",
+      "name": "abroo-1770579405895.jpg",
+      "type": "image",
+      "description": "",
+      "metadata": {
+        "size": "6.33 KB",
+        "mimeType": "image/jpeg",
+        "sizeBytes": 6479,
+        "uploadedAt": "2026-08-29T17:49:36.336Z"
+      }
+    },
+    "507a830a-e4a6-4ec8-ac15-9d26da6a3f75": {
+      "url": "https://vgbujcuwptvheqijyjbe.supabase.co/storage/v1/object/public/hmac-uploads/brand/9beed1ac-3c27-4e53-bec7-b3666102196e/assets/507a830a-e4a6-4ec8-ac15-9d26da6a3f75.png",
+      "name": "avantyp-1770579092011.png",
+      "type": "image",
+      "description": "",
+      "metadata": {
+        "size": "1.10 MB",
+        "mimeType": "image/png",
+        "sizeBytes": 1156950,
+        "uploadedAt": "2026-08-29T17:49:36.683Z"
+      }
+    },
+    "9f0bd7f5-a65a-4ba1-ae27-be2741c36001": {
+      "url": "https://vgbujcuwptvheqijyjbe.supabase.co/storage/v1/object/public/hmac-uploads/brand/9beed1ac-3c27-4e53-bec7-b3666102196e/assets/9f0bd7f5-a65a-4ba1-ae27-be2741c36001.jpg",
+      "name": "bilheking-1770579316410.jpg",
+      "type": "image",
+      "description": "",
+      "metadata": {
+        "size": "28.15 KB",
+        "mimeType": "image/jpeg",
+        "sizeBytes": 28827,
+        "uploadedAt": "2026-08-29T17:49:37.048Z"
+      }
+    },
+    "6f4cdef6-181a-404e-bac9-4301695e6e4b": {
+      "url": "https://vgbujcuwptvheqijyjbe.supabase.co/storage/v1/object/public/hmac-uploads/brand/9beed1ac-3c27-4e53-bec7-b3666102196e/assets/6f4cdef6-181a-404e-bac9-4301695e6e4b.png",
+      "name": "tosi-1762700839697.png",
+      "type": "image",
+      "description": "",
+      "metadata": {
+        "size": "181.40 KB",
+        "mimeType": "image/png",
+        "sizeBytes": 185752,
+        "uploadedAt": "2026-08-29T17:49:37.334Z"
+      }
+    },
+    "2ff7f5f8-377a-4139-b5e0-cc79e832936f": {
+      "url": "https://vgbujcuwptvheqijyjbe.supabase.co/storage/v1/object/public/hmac-uploads/brand/9beed1ac-3c27-4e53-bec7-b3666102196e/assets/2ff7f5f8-377a-4139-b5e0-cc79e832936f.webp",
+      "name": "volup-ai-1770579134638.webp",
+      "type": "image",
+      "description": "",
+      "metadata": {
+        "size": "11.03 KB",
+        "mimeType": "image/webp",
+        "sizeBytes": 11292,
+        "uploadedAt": "2026-08-29T17:49:37.014Z"
+      }
+    },
+    "30dbc980-c0cb-4bfc-b4a5-c0b2baeeecc3": {
+      "url": "https://vgbujcuwptvheqijyjbe.supabase.co/storage/v1/object/public/hmac-uploads/brand/9beed1ac-3c27-4e53-bec7-b3666102196e/assets/30dbc980-c0cb-4bfc-b4a5-c0b2baeeecc3.svg",
+      "name": "symbol-reverse.svg",
+      "type": "image",
+      "description": "",
+      "metadata": {
+        "size": "328 B",
+        "mimeType": "image/svg+xml",
+        "sizeBytes": 328,
+        "uploadedAt": "2026-08-29T17:49:37.083Z"
+      }
+    },
+    "2b3205bb-c756-4bbc-b305-1abab6412851": {
+      "url": "https://vgbujcuwptvheqijyjbe.supabase.co/storage/v1/object/public/hmac-uploads/brand/9beed1ac-3c27-4e53-bec7-b3666102196e/assets/2b3205bb-c756-4bbc-b305-1abab6412851.jpg",
+      "name": "spur-1774068348773.jpg",
+      "type": "image",
+      "description": "",
+      "metadata": {
+        "size": "7.17 KB",
+        "mimeType": "image/jpeg",
+        "sizeBytes": 7343,
+        "uploadedAt": "2026-08-29T17:49:37.013Z"
+      }
+    }
+  }
+}
