@@ -55,6 +55,9 @@ docs/
 
 *.mp4
 *.mov
+!public/video/
+!public/video/grupo-maia/
+!public/video/grupo-maia/*.mp4
 
 .vscode
 .security-db-push/

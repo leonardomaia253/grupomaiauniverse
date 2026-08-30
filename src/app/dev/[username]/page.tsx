@@ -7,6 +7,7 @@ import ClaimButton from "@/components/ClaimButton";
 import DeleteAccountButton from "@/components/DeleteAccountButton";
 import ProfileTracker from "@/components/ProfileTracker";
 import EditorialPageShell from "@/components/EditorialPageShell";
+import { permanentRedirect } from "next/navigation";
 import { getInstitutionalCompany } from "@/lib/company-catalog";
 
 export const dynamic = "force-dynamic";
@@ -62,6 +63,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export default async function CompanyProfilePage({ params }: Props) {
   const { username } = await params;
+  const institutionalCompany = getInstitutionalCompany(username);
+  if (institutionalCompany) permanentRedirect(`/empresas/${institutionalCompany.slug}`);
   const company = await getCompany(username);
   if (!company) return null;
 

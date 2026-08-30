@@ -12,7 +12,7 @@ export const INSTITUTIONAL_COMPANIES: InstitutionalCompany[] = [
   { slug: "agrovolup", name: "Agrovolup", sector: "Agro & IA", description: "Tecnologia e inteligência aplicadas ao agronegócio.", repository: "https://github.com/leonardomaia253/farmflow" },
   { slug: "avantyp", name: "Avantyp", sector: "Estratégia & Tech", description: "Estratégia e tecnologia aplicadas à evolução de negócios.", repository: "https://github.com/leonardomaia253/series-learn-pro-" },
   { slug: "bilheking", name: "Bilheking", sector: "Entretenimento", description: "Tecnologia comercial para eventos, vendas e relacionamento com públicos.", repository: "https://github.com/leonardomaia253/bilheking-5c310afa" },
-  { slug: "boase", name: "Boase", sector: "Operação & Serv.", description: "Serviços de apoio e execução para operações empresariais.", repository: "https://github.com/leonardomaia253/boase-" },
+  { slug: "boase", name: "Boase", sector: "Náutica", description: "Aluguel de embarcações para passeios e experiências náuticas.", repository: "https://github.com/leonardomaia253/boase-" },
   { slug: "gaslee", name: "Gaslee", sector: "Energia", description: "Serviços cotidianos de energia com eficiência comercial.", repository: "https://github.com/leonardomaia253/volup-flow-control-" },
   { slug: "grupo-maia", name: "Grupo Maia", sector: "Holding", description: "Holding responsável pelo planejamento, capital e serviços compartilhados das 29 empresas.", repository: "https://github.com/leonardomaia253/holding-insight-hub" },
   { slug: "habitat-x", name: "Habitat X", sector: "Imóveis", description: "Espaços, moradia e produto imobiliário com identidade própria.", repository: "https://github.com/leonardomaia253/habitat-x-module-dream-" },

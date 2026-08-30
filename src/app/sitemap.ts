@@ -1,6 +1,7 @@
 import type { MetadataRoute } from "next";
 import { getSupabaseAdmin } from "@/lib/supabase";
 import { getSiteUrl } from "@/lib/brand";
+import { INSTITUTIONAL_COMPANIES } from "@/lib/company-catalog";
 
 const BASE_URL = getSiteUrl();
 
@@ -41,6 +42,11 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         priority: path === "intro" ? 0.8 : 0.5,
       })
     ),
+    ...INSTITUTIONAL_COMPANIES.map((company) => ({
+      url: `${BASE_URL}/empresas/${company.slug}`,
+      changeFrequency: "monthly" as const,
+      priority: 0.8,
+    })),
     ...devEntries,
   ];
 }
