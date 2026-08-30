@@ -1,0 +1,23 @@
+- generic [active] [ref=e1]:
+  - main [ref=e2]:
+    - status [ref=e3]:
+      - generic [ref=e4]:
+        - img "Símbolo do Grupo Maia" [ref=e5]
+        - generic "Grupo Maia Universe" [ref=e6]:
+          - strong [ref=e7]: Grupo Maia
+          - generic [ref=e8]: Universe
+        - heading "Carregando o Grupo Maia Universe" [level=1] [ref=e9]
+        - paragraph [ref=e10]: Carregando empresas do grupo
+        - generic [ref=e14]:
+          - generic [ref=e15]: 29 empresas conectadas
+          - generic [ref=e16]: 18%
+  - generic [ref=e21] [cursor=pointer]:
+    - button "Open Next.js Dev Tools" [ref=e22]
+    - generic [ref=e26]:
+      - button "Open issues overlay" [ref=e27]:
+        - generic [ref=e28]:
+          - generic [ref=e29]: "0"
+          - generic [ref=e30]: "1"
+        - generic [ref=e31]: Issue
+      - button "Collapse issues badge" [ref=e32]
+  - alert [ref=e35]

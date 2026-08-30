@@ -1,5 +1,4 @@
 import { cache } from "react";
-import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
@@ -8,6 +7,7 @@ import ClaimButton from "@/components/ClaimButton";
 import DeleteAccountButton from "@/components/DeleteAccountButton";
 import ProfileTracker from "@/components/ProfileTracker";
 import EditorialPageShell from "@/components/EditorialPageShell";
+import { getInstitutionalCompany } from "@/lib/company-catalog";
 
 export const dynamic = "force-dynamic";
 export const revalidate = 3600;
@@ -17,31 +17,53 @@ interface Props { params: Promise<{ username: string }> }
 const PUBLIC_COMPANY_FIELDS = "id,username,name,avatar_url,bio,contributions,contributions_total,public_repos,total_stars,primary_language,rank,fetched_at,claimed";
 
 const getCompany = cache(async (username: string) => {
-  const supabase = await createServerSupabase();
-  const { data, error } = await supabase
-    .from("companies")
-    .select(PUBLIC_COMPANY_FIELDS)
-    .eq("username", username.toLowerCase())
-    .maybeSingle();
+  try {
+    const supabase = await createServerSupabase();
+    const { data } = await supabase
+      .from("companies")
+      .select(PUBLIC_COMPANY_FIELDS)
+      .eq("username", username.toLowerCase())
+      .maybeSingle();
+    if (data) return { ...data, institutional: false as const, repository: `https://github.com/${data.username}` };
+  } catch (error) {
+    console.warn("[Grupo Maia Universe] Métricas externas indisponíveis.", error);
+  }
 
-  if (error) throw error;
-  return data;
+  const institutional = getInstitutionalCompany(username);
+  if (!institutional) return null;
+  return {
+    id: 0,
+    username: institutional.slug,
+    name: institutional.name,
+    avatar_url: null,
+    bio: institutional.description,
+    contributions: 0,
+    contributions_total: 0,
+    public_repos: 0,
+    total_stars: 0,
+    primary_language: null,
+    rank: null,
+    fetched_at: null,
+    claimed: false,
+    institutional: true as const,
+    repository: institutional.repository,
+    sector: institutional.sector,
+  };
 });
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { username } = await params;
   const company = await getCompany(username);
   if (!company) return { title: "Empresa não encontrada — Grupo Maia" };
-  const contributions = company.contributions_total > 0 ? company.contributions_total : company.contributions;
-  const title = `${company.name || company.username} — Mapa Vivo`;
-  const description = `Perfil público de ${company.name || company.username}: ${contributions.toLocaleString("pt-BR")} contribuições, ${company.public_repos.toLocaleString("pt-BR")} repositórios e ${company.total_stars.toLocaleString("pt-BR")} estrelas.`;
-  return { title, description, openGraph: { title, description } };
+  const title = `${company.name || company.username} — Grupo Maia Universe`;
+  const description = company.bio || `Conheça ${company.name || company.username}, empresa do ecossistema Grupo Maia.`;
+  return { title, description, alternates: { canonical: `/dev/${company.username}` }, openGraph: { title, description } };
 }
 
 export default async function CompanyProfilePage({ params }: Props) {
   const { username } = await params;
   const company = await getCompany(username);
-  if (!company) notFound();
+  if (!company) return null;
 
   const supabase = await createServerSupabase();
   const { data: { user } } = await supabase.auth.getUser();
@@ -58,11 +80,15 @@ export default async function CompanyProfilePage({ params }: Props) {
       name: company.name ?? company.username,
       image: company.avatar_url,
       url: `${baseUrl}/dev/${company.username}`,
-      sameAs: `https://github.com/${company.username}`,
+      sameAs: company.repository,
     },
   };
 
-  const indicators = [
+  const indicators = company.institutional ? [
+    ["Setor", company.sector || "Não informado"],
+    ["Ecossistema", "Grupo Maia"],
+    ["Status", "Operação mapeada"],
+  ] : [
     ["Contribuições públicas", contributions.toLocaleString("pt-BR")],
     ["Repositórios", company.public_repos.toLocaleString("pt-BR")],
     ["Estrelas", company.total_stars.toLocaleString("pt-BR")],
@@ -93,7 +119,7 @@ export default async function CompanyProfilePage({ params }: Props) {
         </div>
 
         <div>
-          <p className="text-[10px] font-semibold uppercase tracking-[.16em] text-[#bda57e]">Indicadores públicos</p>
+          <p className="text-[10px] font-semibold uppercase tracking-[.16em] text-[#b7c7a9]">{company.institutional ? "Visão institucional" : "Indicadores públicos"}</p>
           <dl className="mt-4 grid border-l border-t border-white/13 sm:grid-cols-2 lg:grid-cols-3">
             {indicators.map(([label, value]) => (
               <div key={label} className="min-h-28 border-b border-r border-white/13 p-4">
@@ -102,13 +128,13 @@ export default async function CompanyProfilePage({ params }: Props) {
               </div>
             ))}
           </dl>
-          <p className="mt-4 text-xs leading-5 text-white/32">Fonte: informações públicas disponibilizadas pelos provedores integrados. Indicadores não constituem avaliação financeira.</p>
+          {!company.institutional && <p className="mt-4 text-xs leading-5 text-white/32">Fonte: informações públicas disponibilizadas pelos provedores integrados. Indicadores não constituem avaliação financeira.</p>}
         </div>
       </div>
 
       <div className="mt-8 flex flex-wrap gap-2">
         <Link href={`/?user=${company.username}`} className="rounded-full bg-[#eee9df] px-5 py-3 text-xs font-medium text-[#171512]">Localizar no mapa</Link>
-        <a href={`https://github.com/${company.username}`} target="_blank" rel="noopener noreferrer" className="rounded-full border border-white/18 px-5 py-3 text-xs text-white/65 transition hover:border-white/38 hover:text-white">Consultar fonte pública</a>
+        {company.repository && <a href={company.repository} target="_blank" rel="noopener noreferrer" className="rounded-full border border-white/18 px-5 py-3 text-xs text-white/65 transition hover:border-white/38 hover:text-white">Consultar projeto</a>}
         <Link href="/leaderboard" className="rounded-full border border-white/18 px-5 py-3 text-xs text-white/65 transition hover:border-white/38 hover:text-white">Ver indicadores gerais</Link>
       </div>
 
