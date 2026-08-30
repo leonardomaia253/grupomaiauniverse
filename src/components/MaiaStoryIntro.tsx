@@ -16,7 +16,8 @@ export default function MaiaStoryIntro({ onComplete }: { onComplete: () => void 
   const finishTimerRef = useRef<number | null>(null);
   const [state, setState] = useState<PlaybackState>("playing");
   const [time, setTime] = useState(0);
-  const [muted, setMuted] = useState(true);
+  const [muted, setMuted] = useState(false);
+  const [needsSoundGesture, setNeedsSoundGesture] = useState(false);
 
   const finish = useCallback((reason: "complete" | "skip") => {
     if (state === "ending") return;
@@ -36,6 +37,7 @@ export default function MaiaStoryIntro({ onComplete }: { onComplete: () => void 
     } catch {
       video.muted = true;
       setMuted(true);
+      setNeedsSoundGesture(true);
       await video.play().catch(() => undefined);
       setState("playing");
       track("maia_editorial_intro_started", { sound: false });
@@ -45,8 +47,17 @@ export default function MaiaStoryIntro({ onComplete }: { onComplete: () => void 
   useEffect(() => {
     const video = videoRef.current;
     if (!video) return;
-    video.muted = true;
-    void video.play().then(() => setState("playing")).catch(() => setState("paused"));
+    video.muted = false;
+    setMuted(false);
+    void video.play().then(() => {
+      setState("playing");
+      setNeedsSoundGesture(false);
+    }).catch(async () => {
+      video.muted = true;
+      setMuted(true);
+      setNeedsSoundGesture(true);
+      await video.play().catch(() => setState("paused"));
+    });
   }, []);
 
   const togglePlayback = useCallback(() => {
@@ -70,6 +81,8 @@ export default function MaiaStoryIntro({ onComplete }: { onComplete: () => void 
     if (!video) return;
     video.muted = !video.muted;
     setMuted(video.muted);
+    setNeedsSoundGesture(video.muted);
+    if (!video.muted) void video.play().then(() => setState("playing"));
   };
 
   useEffect(() => {
@@ -109,6 +122,13 @@ export default function MaiaStoryIntro({ onComplete }: { onComplete: () => void 
       <header className="maia-film__header">
         <button className="maia-text-action" type="button" onClick={() => finish("skip")}>Ir para o mapa <ArrowRight size={15} /></button>
       </header>
+
+      {needsSoundGesture && (
+        <button type="button" className="maia-film__sound-gate" onClick={toggleMute}>
+          <Volume2 size={19} />
+          <span><strong>Ativar som</strong><small>Toque para ouvir a trilha</small></span>
+        </button>
+      )}
 
       <footer className="maia-film__controls">
         <div className="maia-film__transport">
