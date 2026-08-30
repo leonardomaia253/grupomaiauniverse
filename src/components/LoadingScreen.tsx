@@ -15,7 +15,7 @@ interface LoadingScreenProps {
 }
 
 const STAGE_MESSAGES: Record<LoadingStage, string> = {
-  init: "Preparando o ecossistema",
+  init: "Preparando as empresas",
   fetching: "Carregando empresas do grupo",
   generating: "Organizando relações e setores",
   rendering: "Desenhando a teia de empresas",
@@ -47,8 +47,8 @@ export default function LoadingScreen({ stage, progress, error, accentColor, onR
     >
       <div className="relative w-full max-w-md">
         <Image className="maia-splash-symbol mx-auto" src="/brand/grupo-maia-symbol-reverse.svg" alt="Símbolo do Grupo Maia" width={112} height={112} priority />
-        <div className="maia-splash-wordmark mt-7" aria-label="Grupo Maia Universe"><strong>Grupo Maia</strong><span>Universe</span></div>
-        <h1 className="sr-only">{isError ? "Não foi possível abrir o mapa." : "Carregando o Grupo Maia Universe"}</h1>
+        <div className="maia-splash-wordmark mt-7" aria-label="Grupo Maia"><strong>Grupo Maia</strong><span>29 empresas</span></div>
+        <h1 className="sr-only">{isError ? "Não foi possível abrir o mapa." : "Carregando o Grupo Maia"}</h1>
         <p className="mt-8 text-[11px] uppercase tracking-[.16em] text-white/48">{isError ? error || STAGE_MESSAGES.error : STAGE_MESSAGES[stage]}</p>
         {!isError ? (
           <div className="mt-9">

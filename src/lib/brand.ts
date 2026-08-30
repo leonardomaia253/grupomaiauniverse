@@ -1,5 +1,5 @@
 export const BRAND = {
-  name: "Grupo Maia Universe",
+  name: "Grupo Maia",
   shortName: "Universe",
   groupName: "Grupo Maia",
   domain: "universe.grupomaia.me",

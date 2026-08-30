@@ -9,7 +9,6 @@ import MaiaStoryIntro from "@/components/MaiaStoryIntro";
 
 const UniverseCanvas = dynamic(() => import("@/components/UniverseCanvas"), { ssr: false });
 const INTRO_ENABLED = process.env.NEXT_PUBLIC_MAIA_STORY_INTRO !== "off";
-const INTRO_STORAGE_KEY = "maia_editorial_intro_seen_v3";
 
 type CityPayload = { companies?: CompanyRecord[] };
 
@@ -25,8 +24,7 @@ function HomeContent() {
   const shouldOpenIntro = useCallback(() => {
     if (!INTRO_ENABLED) return false;
     const deepLink = searchParams.has("user") || searchParams.has("compare");
-    const forced = searchParams.get("intro") === "1";
-    return !deepLink && (forced || localStorage.getItem(INTRO_STORAGE_KEY) !== "true");
+    return !deepLink;
   }, [searchParams]);
 
   const loadCompanies = useCallback(async () => {
@@ -64,7 +62,6 @@ function HomeContent() {
   };
 
   const closeIntro = () => {
-    localStorage.setItem(INTRO_STORAGE_KEY, "true");
     setIntroOpen(false);
   };
 

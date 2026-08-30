@@ -675,23 +675,22 @@ a, button { -webkit-tap-highlight-color: transparent; }
   width: 104%;
   height: 104%;
   object-fit: cover;
-  filter: saturate(.32) contrast(1.03);
-  opacity: .72;
+  filter: none;
+  opacity: 1;
   animation: maia-documentary-in 1400ms cubic-bezier(.2,.7,.2,1) both;
 }
 .maia-film__wash {
   position: absolute;
   inset: 0;
-  background:
-    linear-gradient(90deg, rgba(17,15,13,.92) 0%, rgba(17,15,13,.55) 53%, rgba(17,15,13,.22) 100%),
-    linear-gradient(0deg, rgba(17,15,13,.72), transparent 52%);
+  pointer-events: none;
+  background: linear-gradient(0deg, rgba(10,10,9,.62), transparent 22%);
 }
 .maia-film__header {
   position: relative;
   z-index: 3;
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: flex-end;
   padding: max(1.4rem, env(safe-area-inset-top)) var(--film-gutter);
   border-bottom: 1px solid rgba(244,240,232,.16);
 }
@@ -847,7 +846,7 @@ a, button { -webkit-tap-highlight-color: transparent; }
 
 @keyframes maia-documentary-in {
   from { opacity: 0; transform: scale(1.035); }
-  to { opacity: .72; transform: scale(1); }
+  to { opacity: 1; transform: scale(1); }
 }
 @keyframes maia-editorial-rise {
   from { opacity: 0; transform: translateY(1.4rem); }
@@ -855,7 +854,8 @@ a, button { -webkit-tap-highlight-color: transparent; }
 }
 
 @media (max-width: 640px) {
-  .maia-film__wash { background: linear-gradient(0deg, rgba(17,15,13,.94) 8%, rgba(17,15,13,.38) 74%, rgba(17,15,13,.5)); }
+  .maia-film__video { inset: 0; width: 100%; height: 100%; }
+  .maia-film__wash { background: linear-gradient(0deg, rgba(10,10,9,.68), transparent 25%); }
   .maia-film__cover, .maia-film__story { bottom: 6.2rem; }
   .maia-film h1 { font-size: clamp(2.75rem, 13.5vw, 4.5rem); line-height: .94; }
   .maia-film__lead { max-width: 31rem; font-size: .9rem; }

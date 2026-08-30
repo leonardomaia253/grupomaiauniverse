@@ -5,7 +5,7 @@ import { ArrowRight, Pause, Play, Volume2, VolumeX, X } from "lucide-react";
 import { track } from "@vercel/analytics";
 
 const FILM_DURATION = 75;
-type PlaybackState = "cover" | "playing" | "paused" | "ending";
+type PlaybackState = "playing" | "paused" | "ending";
 
 function formatTime(seconds: number) {
   return `${Math.floor(seconds / 60)}:${String(Math.floor(seconds % 60)).padStart(2, "0")}`;
@@ -14,7 +14,7 @@ function formatTime(seconds: number) {
 export default function MaiaStoryIntro({ onComplete }: { onComplete: () => void }) {
   const videoRef = useRef<HTMLVideoElement | null>(null);
   const finishTimerRef = useRef<number | null>(null);
-  const [state, setState] = useState<PlaybackState>("cover");
+  const [state, setState] = useState<PlaybackState>("playing");
   const [time, setTime] = useState(0);
   const [muted, setMuted] = useState(true);
 
@@ -29,13 +29,10 @@ export default function MaiaStoryIntro({ onComplete }: { onComplete: () => void 
   const startFilm = useCallback(async () => {
     const video = videoRef.current;
     if (!video) return;
-    if (state === "cover") video.currentTime = 0;
-    video.muted = false;
-    setMuted(false);
     try {
       await video.play();
       setState("playing");
-      track("maia_editorial_intro_started", { sound: true });
+      track("maia_editorial_intro_started", { sound: !video.muted });
     } catch {
       video.muted = true;
       setMuted(true);
@@ -44,6 +41,13 @@ export default function MaiaStoryIntro({ onComplete }: { onComplete: () => void 
       track("maia_editorial_intro_started", { sound: false });
     }
   }, [state]);
+
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video) return;
+    video.muted = true;
+    void video.play().then(() => setState("playing")).catch(() => setState("paused"));
+  }, []);
 
   const togglePlayback = useCallback(() => {
     const video = videoRef.current;
@@ -88,7 +92,8 @@ export default function MaiaStoryIntro({ onComplete }: { onComplete: () => void 
     <section className={`maia-film fixed inset-0 z-[90] overflow-hidden bg-[#12110f] text-[#f4f0e8] ${state === "ending" ? "maia-film--ending" : ""}`} aria-label="Apresentação do Grupo Maia">
       <video
         ref={videoRef}
-        preload="metadata"
+        preload="auto"
+        autoPlay
         muted={muted}
         playsInline
         className="maia-film__video"
@@ -102,34 +107,18 @@ export default function MaiaStoryIntro({ onComplete }: { onComplete: () => void 
       <div className="maia-film__wash" />
 
       <header className="maia-film__header">
-        <div className="maia-wordmark" aria-label="Grupo Maia"><span>MAIA</span><small>Grupo</small></div>
         <button className="maia-text-action" type="button" onClick={() => finish("skip")}>Ir para o mapa <ArrowRight size={15} /></button>
       </header>
 
-      {state === "cover" ? (
-        <div className="maia-film__cover">
-          <p className="maia-kicker">Filme institucional · Grupo Maia</p>
-          <h1>29 empresas.<br /><em>Operações próprias.</em></h1>
-          <p className="maia-film__lead">Conheça as empresas e os setores que compõem o Grupo Maia.</p>
-          <div className="maia-film__actions">
-            <button type="button" className="maia-primary-action" onClick={() => void startFilm()}><Play size={15} fill="currentColor" /> Assistir com som <span>1min15</span></button>
-            <button type="button" className="maia-secondary-action" onClick={() => finish("skip")}>Conhecer as empresas</button>
-          </div>
-          <div className="maia-film__proof" aria-label="29 empresas em diferentes setores">
-            <span><strong>29</strong> empresas</span><span>Produtos e serviços</span><span>Atuação multissetorial</span>
-          </div>
+      <footer className="maia-film__controls">
+        <div className="maia-film__transport">
+          <button type="button" onClick={togglePlayback} aria-label={state === "playing" ? "Pausar" : "Continuar"}>{state === "playing" ? <Pause size={16} /> : <Play size={16} />}</button>
+          <button type="button" onClick={toggleMute} aria-label={muted ? "Ativar som" : "Silenciar"}>{muted ? <VolumeX size={16} /> : <Volume2 size={16} />}</button>
         </div>
-      ) : (
-        <footer className="maia-film__controls">
-          <div className="maia-film__transport">
-            <button type="button" onClick={togglePlayback} aria-label={state === "playing" ? "Pausar" : "Continuar"}>{state === "playing" ? <Pause size={16} /> : <Play size={16} />}</button>
-            <button type="button" onClick={toggleMute} aria-label={muted ? "Ativar som" : "Silenciar"}>{muted ? <VolumeX size={16} /> : <Volume2 size={16} />}</button>
-          </div>
-          <button type="button" className="maia-film__timeline" aria-label="Posição do filme" onClick={(event) => seek((event.nativeEvent.offsetX / event.currentTarget.clientWidth) * FILM_DURATION)}><span style={{ width: `${Math.min(100, (time / FILM_DURATION) * 100)}%` }} /></button>
-          <span className="maia-film__time">{formatTime(time)} / {formatTime(FILM_DURATION)}</span>
-          <button type="button" className="maia-film__close" onClick={() => finish("skip")} aria-label="Fechar apresentação"><X size={17} /></button>
-        </footer>
-      )}
+        <button type="button" className="maia-film__timeline" aria-label="Posição do filme" onClick={(event) => seek((event.nativeEvent.offsetX / event.currentTarget.clientWidth) * FILM_DURATION)}><span style={{ width: `${Math.min(100, (time / FILM_DURATION) * 100)}%` }} /></button>
+        <span className="maia-film__time">{formatTime(time)} / {formatTime(FILM_DURATION)}</span>
+        <button type="button" className="maia-film__close" onClick={() => finish("skip")} aria-label="Fechar apresentação"><X size={17} /></button>
+      </footer>
     </section>
   );
 }

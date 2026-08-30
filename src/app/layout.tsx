@@ -12,13 +12,12 @@ const crimsonPro = Crimson_Pro({ subsets: ["latin"], variable: "--font-crimson-p
 export const metadata: Metadata = {
   metadataBase: new URL(getSiteUrl()),
   title: {
-    default: "Grupo Maia Universe — 29 empresas conectadas",
-    template: "%s | Grupo Maia Universe",
+    default: "Grupo Maia — 29 empresas",
+    template: "%s | Grupo Maia",
   },
   description: BRAND.appDescription,
   keywords: [
     "Grupo Maia",
-    "Grupo Maia Universe",
     "holding empresarial",
     "portfólio de empresas",
     "ecossistema empresarial",
@@ -29,7 +28,7 @@ export const metadata: Metadata = {
     languages: { "pt-BR": "/" },
   },
   openGraph: {
-    title: "Grupo Maia Universe — 29 empresas conectadas",
+    title: "Grupo Maia — 29 empresas",
     description: BRAND.appDescription,
     siteName: BRAND.name,
     type: "website",
@@ -45,7 +44,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Grupo Maia Universe — 29 empresas conectadas",
+    title: "Grupo Maia — 29 empresas",
     description: BRAND.appDescription,
     images: ["/opengraph-image"],
     creator: BRAND.xCreator,

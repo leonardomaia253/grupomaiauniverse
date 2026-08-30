@@ -1,0 +1,305 @@
+- generic [active] [ref=e1]:
+  - main [ref=e2]:
+    - generic [ref=e36]:
+      - link "Ir para o conteúdo" [ref=e37] [cursor=pointer]:
+        - /url: "#conteudo"
+      - generic [ref=e38]:
+        - link "Grupo Maia — início" [ref=e39] [cursor=pointer]:
+          - /url: /
+          - generic [ref=e40]:
+            - text: Grupo Maia
+            - generic [ref=e41]: 29 empresas
+        - navigation "Navegação principal" [ref=e42]:
+          - link "Contato" [ref=e45] [cursor=pointer]:
+            - /url: /support
+      - main [ref=e49]:
+        - generic [ref=e50]:
+          - generic [ref=e51]:
+            - paragraph [ref=e52]: Grupo empresarial · Brasil
+            - heading [level=1] [ref=e54]:
+              - text: 29 empresas.
+              - emphasis [ref=e55]: Operações próprias.
+            - paragraph [ref=e56]: Empresas de tecnologia, imóveis, saúde, energia, mobilidade, mídia, hospitalidade e investimentos reunidas sob o Grupo Maia.
+            - generic [ref=e57]:
+              - link "Ver as 29 empresas" [ref=e58] [cursor=pointer]:
+                - /url: "#empresas"
+              - link "Como o grupo funciona" [ref=e61] [cursor=pointer]:
+                - /url: /intro
+          - generic "Empresas em destaque do Grupo Maia" [ref=e64]:
+            - generic [ref=e69]: GrupoMaia
+            - button "08Grupo Maia" [pressed] [ref=e71]
+            - button "29Volup AI" [ref=e72]
+            - button "09Habitat X" [ref=e73]
+            - button "25Tikal Beach Club" [ref=e74]
+            - button "17Minvest" [ref=e75]
+            - generic [ref=e76]:
+              - text: Holding
+              - strong [ref=e77]: Grupo Maia
+              - paragraph [ref=e78]: Holding responsável pelo planejamento, capital e serviços compartilhados das 29 empresas.
+              - link "Ver empresa" [ref=e79] [cursor=pointer]:
+                - /url: /dev/grupo-maia
+          - generic [ref=e83]:
+            - generic [ref=e84]:
+              - strong [ref=e85]: "29"
+              - generic [ref=e86]: empresas
+            - generic [ref=e87]:
+              - strong [ref=e88]: "20"
+              - generic [ref=e89]: setores
+            - generic [ref=e90]:
+              - strong [ref=e91]: "01"
+              - generic [ref=e92]: grupo
+        - generic [ref=e93]:
+          - generic [ref=e94]:
+            - paragraph [ref=e95]: Índice de empresas
+            - heading "Encontre cada empresa e sua área de atuação." [level=2] [ref=e96]: Encontre cada empresae sua área de atuação.
+            - paragraph [ref=e97]: Consulte as 29 empresas por nome ou setor. Cada página apresenta a atividade e os projetos de sua operação.
+          - generic [ref=e98]:
+            - generic [ref=e99]:
+              - generic [ref=e103]: Buscar empresa
+              - searchbox "Buscar empresa" [ref=e104]
+            - generic "Filtrar por setor" [ref=e105]:
+              - button "Todos" [pressed] [ref=e106]
+              - button "Agro & IA" [ref=e107]
+              - button "Automação" [ref=e108]
+              - button "Comunidade" [ref=e109]
+              - button "Crescimento Social" [ref=e110]
+              - button "Energia" [ref=e111]
+              - button "Entretenimento" [ref=e112]
+              - button "Estratégia & Tech" [ref=e113]
+              - button "Holding" [ref=e114]
+              - button "Hospitalidade" [ref=e115]
+              - button "IA & Automação" [ref=e116]
+              - button "Imóveis" [ref=e117]
+              - button "Investimentos" [ref=e118]
+              - button "Mobilidade" [ref=e119]
+              - button "Mídia" [ref=e120]
+              - button "Operação & Serv." [ref=e121]
+              - button "Performance" [ref=e122]
+              - button "Plataforma Digital" [ref=e123]
+              - button "Produto Digital" [ref=e124]
+              - button "RH & People" [ref=e125]
+              - button "Saúde" [ref=e126]
+          - generic [ref=e128]:
+            - link "01 Imóveis 13 de Maio Ativo patrimonial imobiliário do Grupo Maia." [ref=e129] [cursor=pointer]:
+              - /url: /dev/13-de-maio
+              - generic [ref=e130]: "01"
+              - generic [ref=e135]:
+                - paragraph [ref=e136]: Imóveis
+                - heading "13 de Maio" [level=3] [ref=e137]
+                - generic [ref=e138]: Ativo patrimonial imobiliário do Grupo Maia.
+            - link "02 Plataforma Digital Abroo Plataforma digital para lançar e operar produtos e serviços." [ref=e139] [cursor=pointer]:
+              - /url: /dev/abroo
+              - generic [ref=e140]: "02"
+              - generic [ref=e145]:
+                - paragraph [ref=e146]: Plataforma Digital
+                - heading "Abroo" [level=3] [ref=e147]
+                - generic [ref=e148]: Plataforma digital para lançar e operar produtos e serviços.
+            - link "03 Agro & IA Agrovolup Tecnologia e inteligência aplicadas ao agronegócio." [ref=e149] [cursor=pointer]:
+              - /url: /dev/agrovolup
+              - generic [ref=e150]: "03"
+              - generic [ref=e155]:
+                - paragraph [ref=e156]: Agro & IA
+                - heading "Agrovolup" [level=3] [ref=e157]
+                - generic [ref=e158]: Tecnologia e inteligência aplicadas ao agronegócio.
+            - link "04 Estratégia & Tech Avantyp Estratégia e tecnologia aplicadas à evolução de negócios." [ref=e159] [cursor=pointer]:
+              - /url: /dev/avantyp
+              - generic [ref=e160]: "04"
+              - generic [ref=e165]:
+                - paragraph [ref=e166]: Estratégia & Tech
+                - heading "Avantyp" [level=3] [ref=e167]
+                - generic [ref=e168]: Estratégia e tecnologia aplicadas à evolução de negócios.
+            - link "05 Entretenimento Bilheking Tecnologia comercial para eventos, vendas e relacionamento com públicos." [ref=e169] [cursor=pointer]:
+              - /url: /dev/bilheking
+              - generic [ref=e170]: "05"
+              - generic [ref=e175]:
+                - paragraph [ref=e176]: Entretenimento
+                - heading "Bilheking" [level=3] [ref=e177]
+                - generic [ref=e178]: Tecnologia comercial para eventos, vendas e relacionamento com públicos.
+            - link "06 Operação & Serv. Boase Serviços de apoio e execução para operações empresariais." [ref=e179] [cursor=pointer]:
+              - /url: /dev/boase
+              - generic [ref=e180]: "06"
+              - generic [ref=e185]:
+                - paragraph [ref=e186]: Operação & Serv.
+                - heading "Boase" [level=3] [ref=e187]
+                - generic [ref=e188]: Serviços de apoio e execução para operações empresariais.
+            - link "07 Energia Gaslee Serviços cotidianos de energia com eficiência comercial." [ref=e189] [cursor=pointer]:
+              - /url: /dev/gaslee
+              - generic [ref=e190]: "07"
+              - generic [ref=e195]:
+                - paragraph [ref=e196]: Energia
+                - heading "Gaslee" [level=3] [ref=e197]
+                - generic [ref=e198]: Serviços cotidianos de energia com eficiência comercial.
+            - link "08 Holding Grupo Maia Holding responsável pelo planejamento, capital e serviços compartilhados das 29 empresas." [ref=e199] [cursor=pointer]:
+              - /url: /dev/grupo-maia
+              - generic [ref=e200]: "08"
+              - generic [ref=e205]:
+                - paragraph [ref=e206]: Holding
+                - heading "Grupo Maia" [level=3] [ref=e207]
+                - generic [ref=e208]: Holding responsável pelo planejamento, capital e serviços compartilhados das 29 empresas.
+            - link "09 Imóveis Habitat X Espaços, moradia e produto imobiliário com identidade própria." [ref=e209] [cursor=pointer]:
+              - /url: /dev/habitat-x
+              - generic [ref=e210]: "09"
+              - generic [ref=e215]:
+                - paragraph [ref=e216]: Imóveis
+                - heading "Habitat X" [level=3] [ref=e217]
+                - generic [ref=e218]: Espaços, moradia e produto imobiliário com identidade própria.
+            - link "10 Mídia Influarc Influência, conteúdo e distribuição digital." [ref=e219] [cursor=pointer]:
+              - /url: /dev/influarc
+              - generic [ref=e220]: "10"
+              - generic [ref=e225]:
+                - paragraph [ref=e226]: Mídia
+                - heading "Influarc" [level=3] [ref=e227]
+                - generic [ref=e228]: Influência, conteúdo e distribuição digital.
+            - link "11 Crescimento Social Instaboost Operação de alcance e crescimento em canais sociais." [ref=e229] [cursor=pointer]:
+              - /url: /dev/instaboost
+              - generic [ref=e230]: "11"
+              - generic [ref=e235]:
+                - paragraph [ref=e236]: Crescimento Social
+                - heading "Instaboost" [level=3] [ref=e237]
+                - generic [ref=e238]: Operação de alcance e crescimento em canais sociais.
+            - link "12 IA & Automação Iris Automação e análise de dados para rotinas operacionais." [ref=e239] [cursor=pointer]:
+              - /url: /dev/iris
+              - generic [ref=e240]: "12"
+              - generic [ref=e245]:
+                - paragraph [ref=e246]: IA & Automação
+                - heading "Iris" [level=3] [ref=e247]
+                - generic [ref=e248]: Automação e análise de dados para rotinas operacionais.
+            - link "13 Performance Jack it fit Operação dedicada à performance, ao cuidado e ao bem-estar." [ref=e249] [cursor=pointer]:
+              - /url: /dev/jack-it-fit
+              - generic [ref=e250]: "13"
+              - generic [ref=e255]:
+                - paragraph [ref=e256]: Performance
+                - heading "Jack it fit" [level=3] [ref=e257]
+                - generic [ref=e258]: Operação dedicada à performance, ao cuidado e ao bem-estar.
+            - link "14 Comunidade Kinkora Marca, relacionamento e construção de comunidade." [ref=e259] [cursor=pointer]:
+              - /url: /dev/kinkora
+              - generic [ref=e260]: "14"
+              - generic [ref=e265]:
+                - paragraph [ref=e266]: Comunidade
+                - heading "Kinkora" [level=3] [ref=e267]
+                - generic [ref=e268]: Marca, relacionamento e construção de comunidade.
+            - link "15 Holding LMAIA Estrutura de capital e governança patrimonial da família Maia." [ref=e269] [cursor=pointer]:
+              - /url: /dev/lmaia
+              - generic [ref=e270]: "15"
+              - generic [ref=e275]:
+                - paragraph [ref=e276]: Holding
+                - heading "LMAIA" [level=3] [ref=e277]
+                - generic [ref=e278]: Estrutura de capital e governança patrimonial da família Maia.
+            - link "16 Mobilidade Maia Go Serviços digitais para deslocamento e logística urbana." [ref=e279] [cursor=pointer]:
+              - /url: /dev/maia-go
+              - generic [ref=e280]: "16"
+              - generic [ref=e285]:
+                - paragraph [ref=e286]: Mobilidade
+                - heading "Maia Go" [level=3] [ref=e287]
+                - generic [ref=e288]: Serviços digitais para deslocamento e logística urbana.
+            - link "17 Investimentos Minvest Análise e gestão de investimentos e patrimônio." [ref=e289] [cursor=pointer]:
+              - /url: /dev/minvest
+              - generic [ref=e290]: "17"
+              - generic [ref=e295]:
+                - paragraph [ref=e296]: Investimentos
+                - heading "Minvest" [level=3] [ref=e297]
+                - generic [ref=e298]: Análise e gestão de investimentos e patrimônio.
+            - link "18 Automação Pipex Fluxos, integrações e cadência entre áreas de negócio." [ref=e299] [cursor=pointer]:
+              - /url: /dev/pipex
+              - generic [ref=e300]: "18"
+              - generic [ref=e305]:
+                - paragraph [ref=e306]: Automação
+                - heading "Pipex" [level=3] [ref=e307]
+                - generic [ref=e308]: Fluxos, integrações e cadência entre áreas de negócio.
+            - link "19 RH & People PROTO.RH Gente, processos e inteligência de contratação em uma plataforma." [ref=e309] [cursor=pointer]:
+              - /url: /dev/proto-rh
+              - generic [ref=e310]: "19"
+              - generic [ref=e315]:
+                - paragraph [ref=e316]: RH & People
+                - heading "PROTO.RH" [level=3] [ref=e317]
+                - generic [ref=e318]: Gente, processos e inteligência de contratação em uma plataforma.
+            - link "20 IA & Automação Scoreking Dados para leitura de performance, risco e tomada de decisão." [ref=e319] [cursor=pointer]:
+              - /url: /dev/scoreking
+              - generic [ref=e320]: "20"
+              - generic [ref=e325]:
+                - paragraph [ref=e326]: IA & Automação
+                - heading "Scoreking" [level=3] [ref=e327]
+                - generic [ref=e328]: Dados para leitura de performance, risco e tomada de decisão.
+            - link "21 Mídia Seu Jornaleiro Conteúdo, distribuição e presença local em uma operação integrada." [ref=e329] [cursor=pointer]:
+              - /url: /dev/seu-jornaleiro
+              - generic [ref=e330]: "21"
+              - generic [ref=e335]:
+                - paragraph [ref=e336]: Mídia
+                - heading "Seu Jornaleiro" [level=3] [ref=e337]
+                - generic [ref=e338]: Conteúdo, distribuição e presença local em uma operação integrada.
+            - link "22 Performance Spur Execução, produção e estratégia comercial para negócios em expansão." [ref=e339] [cursor=pointer]:
+              - /url: /dev/spur
+              - generic [ref=e340]: "22"
+              - generic [ref=e345]:
+                - paragraph [ref=e346]: Performance
+                - heading "Spur" [level=3] [ref=e347]
+                - generic [ref=e348]: Execução, produção e estratégia comercial para negócios em expansão.
+            - link "23 Saúde Sun & Tan Beleza e bem-estar conectando presença física e canais digitais." [ref=e349] [cursor=pointer]:
+              - /url: /dev/sun-and-tan
+              - generic [ref=e350]: "23"
+              - generic [ref=e355]:
+                - paragraph [ref=e356]: Saúde
+                - heading "Sun & Tan" [level=3] [ref=e357]
+                - generic [ref=e358]: Beleza e bem-estar conectando presença física e canais digitais.
+            - link "24 Holding The Maia Gestão da marca e da comunicação institucional do Grupo Maia." [ref=e359] [cursor=pointer]:
+              - /url: /dev/the-maia
+              - generic [ref=e360]: "24"
+              - generic [ref=e365]:
+                - paragraph [ref=e366]: Holding
+                - heading "The Maia" [level=3] [ref=e367]
+                - generic [ref=e368]: Gestão da marca e da comunicação institucional do Grupo Maia.
+            - link "25 Hospitalidade Tikal Beach Club Experiência, lazer e hospitalidade com posicionamento premium." [ref=e369] [cursor=pointer]:
+              - /url: /dev/tikal-beach-club
+              - generic [ref=e370]: "25"
+              - generic [ref=e375]:
+                - paragraph [ref=e376]: Hospitalidade
+                - heading "Tikal Beach Club" [level=3] [ref=e377]
+                - generic [ref=e378]: Experiência, lazer e hospitalidade com posicionamento premium.
+            - link "26 Produto Digital Tosi Produto e tecnologia orientados à eficiência e à construção de margem." [ref=e379] [cursor=pointer]:
+              - /url: /dev/tosi
+              - generic [ref=e380]: "26"
+              - generic [ref=e385]:
+                - paragraph [ref=e386]: Produto Digital
+                - heading "Tosi" [level=3] [ref=e387]
+                - generic [ref=e388]: Produto e tecnologia orientados à eficiência e à construção de margem.
+            - link "27 Imóveis Venti Atuação imobiliária com leitura patrimonial, territorial e comercial." [ref=e389] [cursor=pointer]:
+              - /url: /dev/venti
+              - generic [ref=e390]: "27"
+              - generic [ref=e395]:
+                - paragraph [ref=e396]: Imóveis
+                - heading "Venti" [level=3] [ref=e397]
+                - generic [ref=e398]: Atuação imobiliária com leitura patrimonial, territorial e comercial.
+            - link "28 Saúde Voluclinic Tecnologia aplicada a atendimento, agenda e operação clínica." [ref=e399] [cursor=pointer]:
+              - /url: /dev/voluclinic
+              - generic [ref=e400]: "28"
+              - generic [ref=e405]:
+                - paragraph [ref=e406]: Saúde
+                - heading "Voluclinic" [level=3] [ref=e407]
+                - generic [ref=e408]: Tecnologia aplicada a atendimento, agenda e operação clínica.
+            - link "29 IA & Automação Volup AI Desenvolvimento de agentes, automações e produtos com inteligência artificial." [ref=e409] [cursor=pointer]:
+              - /url: /dev/volup-ai
+              - generic [ref=e410]: "29"
+              - generic [ref=e415]:
+                - paragraph [ref=e416]: IA & Automação
+                - heading "Volup AI" [level=3] [ref=e417]
+                - generic [ref=e418]: Desenvolvimento de agentes, automações e produtos com inteligência artificial.
+      - generic [ref=e419]:
+        - generic [ref=e420]: Grupo Maia
+        - navigation [ref=e423]:
+          - link "Privacidade" [ref=e424] [cursor=pointer]:
+            - /url: /privacy
+          - link "Termos" [ref=e425] [cursor=pointer]:
+            - /url: /terms
+          - link "Contato" [ref=e426] [cursor=pointer]:
+            - /url: /support
+    - button "Apresentação do grupo" [ref=e451]
+  - generic [ref=e21] [cursor=pointer]:
+    - button "Open Next.js Dev Tools" [ref=e22]
+    - generic [ref=e26]:
+      - button "Open issues overlay" [ref=e27]:
+        - generic [ref=e28]:
+          - generic [ref=e29]: "0"
+          - generic [ref=e30]: "1"
+        - generic [ref=e31]: Issue
+      - button "Collapse issues badge" [ref=e32]
+  - alert [ref=e35]
