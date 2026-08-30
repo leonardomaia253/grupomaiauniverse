@@ -3,7 +3,7 @@ import RoadmapClient from "./RoadmapClient";
 
 export const metadata: Metadata = {
   title: "Evolução da plataforma — Grupo Maia",
-  description: "Entregas, desenvolvimento atual e próximos passos do Mapa Vivo.",
+  description: "Entregas e próximos passos da plataforma institucional do Grupo Maia.",
 };
 
 export default function RoadmapPage() {

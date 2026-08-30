@@ -36,7 +36,7 @@ export default function EditorialPageShell({
       </div>
       <footer className="relative z-10 border-t border-white/10 bg-[#12110f]/70">
         <div className="mx-auto flex max-w-7xl flex-col gap-3 px-5 py-8 text-xs text-white/35 sm:flex-row sm:items-center sm:justify-between sm:px-8 lg:px-12">
-          <span>Grupo Maia · Mapa Vivo</span>
+          <span>Grupo Maia · 29 empresas</span>
           <div className="flex gap-5"><Link href="/privacy">Privacidade</Link><Link href="/terms">Termos</Link></div>
         </div>
       </footer>

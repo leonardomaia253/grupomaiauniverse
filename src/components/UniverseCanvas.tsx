@@ -11,12 +11,11 @@ export type CompanyRecord = { id:number; username:string; name:string|null; avat
 const FEATURED_SLUGS = ["grupo-maia", "volup-ai", "habitat-x", "tikal-beach-club", "minvest"];
 const normalize = (value:string) => value.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
 
-export default function UniverseCanvas({ companies }: { companies: CompanyRecord[] }) {
+export default function UniverseCanvas() {
   const [query,setQuery]=useState(""); const [sector,setSector]=useState("Todos"); const [selectedSlug,setSelectedSlug]=useState("grupo-maia");
   const sectors=useMemo(()=>["Todos",...Array.from(new Set(INSTITUTIONAL_COMPANIES.map(c=>c.sector))).sort()],[]);
   const visible=useMemo(()=>{const needle=normalize(query.trim());return INSTITUTIONAL_COMPANIES.filter(c=>(sector==="Todos"||c.sector===sector)&&(!needle||normalize(`${c.name} ${c.sector} ${c.description}`).includes(needle)))},[query,sector]);
   const selected=INSTITUTIONAL_COMPANIES.find(c=>c.slug===selectedSlug)??INSTITUTIONAL_COMPANIES[7];
-  void companies;
   return <div className={styles.site}>
     <a href="#conteudo" className={styles.skip}>Ir para o conteúdo</a>
     <header className={styles.header}><Link href="/" className={styles.brand} aria-label="Grupo Maia — início"><Image src="/brand/grupo-maia-symbol-reverse.svg" alt="" width={32} height={32} priority/><span>Grupo Maia<small>29 empresas</small></span></Link><nav aria-label="Navegação principal"><a href="#empresas">Empresas</a><Link href="/intro">Apresentação</Link><Link href="/support" className={styles.contact}>Contato <ArrowUpRight size={14}/></Link></nav></header>

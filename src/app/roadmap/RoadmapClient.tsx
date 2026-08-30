@@ -8,7 +8,7 @@ export default function RoadmapClient() {
   const done = ROADMAP_PHASES.reduce((sum, phase) => sum + phase.items.filter((item) => item.status === "done").length, 0);
 
   return (
-    <EditorialPageShell eyebrow="Produto" title="Evolução da plataforma" intro="O que já foi entregue, o que está em desenvolvimento e quais frentes permanecem planejadas para o Mapa Vivo." wide>
+    <EditorialPageShell eyebrow="Produto" title="Evolução da plataforma" intro="Entregas e melhorias planejadas para a presença institucional digital do Grupo Maia." wide>
       <div className="mb-14 flex items-end justify-between border-y border-white/13 py-5">
         <p className="text-sm text-white/48">Progresso documentado</p>
         <p className="text-3xl tracking-[-.04em] text-white/82">{done}<span className="text-base text-white/30"> / {total}</span></p>

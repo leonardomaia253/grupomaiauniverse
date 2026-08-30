@@ -49,7 +49,7 @@ export default async function UnsubscribePage({
           </p>
         )}
         <Link href="/" className="mt-8 inline-flex min-h-11 items-center border border-white/15 px-5 text-xs text-white/65 transition hover:border-[#b79a6c] hover:text-white">
-          Voltar ao Mapa Vivo
+          Voltar ao Grupo Maia
         </Link>
       </section>
     </EditorialPageShell>

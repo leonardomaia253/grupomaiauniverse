@@ -3,14 +3,14 @@ import EditorialPageShell, { EditorialSection } from "@/components/EditorialPage
 
 export const metadata: Metadata = {
   title: "Termos de uso — Grupo Maia",
-  description: "Termos de uso do Mapa Vivo do Grupo Maia.",
+  description: "Termos de uso da plataforma institucional do Grupo Maia.",
 };
 
 /* Static content nodes are subsequently keyed by their section title. */
 /* eslint-disable react/jsx-key */
 const terms = [
-  ["A plataforma", <p>O Mapa Vivo é uma plataforma de apresentação e consulta que organiza empresas, áreas de atuação e informações públicas. Ao utilizar o serviço, você concorda com estes termos.</p>],
-  ["Conta e acesso", <><p>A autenticação pode ocorrer por meio do GitHub. Consultamos apenas os dados públicos e permissões informadas durante o acesso.</p><p>Você é responsável por proteger suas credenciais e por comunicar qualquer uso não autorizado.</p></>],
+  ["A plataforma", <p>Esta plataforma apresenta as empresas, áreas de atuação e canais institucionais do Grupo Maia. Ao utilizar o serviço, você concorda com estes termos.</p>],
+  ["Informações publicadas", <p>As informações possuem finalidade institucional e podem ser atualizadas conforme a evolução das operações do grupo.</p>],
   ["Uso responsável", <p>Não é permitido tentar interromper o serviço, explorar falhas, automatizar contas falsas, inflar indicadores, coletar dados sem autorização ou se passar por terceiros.</p>],
   ["Propriedade intelectual", <p>Marca, interface, textos e materiais institucionais pertencem aos seus respectivos titulares. Dados públicos de terceiros permanecem sujeitos às licenças e regras das fontes originais.</p>],
   ["Serviços e pagamentos", <p>Contratações opcionais são processadas por fornecedores especializados. Condições, valores, cancelamentos e reembolsos devem ser apresentados antes da confirmação de cada operação e observar a legislação aplicável.</p>],
@@ -24,7 +24,7 @@ const terms = [
 
 export default function TermsPage() {
   return (
-    <EditorialPageShell eyebrow="Governança" title="Termos de uso" intro="Condições para acesso e utilização responsável do Mapa Vivo. Última revisão: 15 de agosto de 2026.">
+    <EditorialPageShell eyebrow="Governança" title="Termos de uso" intro="Condições para utilização da plataforma institucional do Grupo Maia. Última revisão: 30 de agosto de 2026.">
       <div className="border-b border-white/13">
         {terms.map(([title, content], index) => <EditorialSection key={title} index={index + 1} title={title}>{content}</EditorialSection>)}
       </div>

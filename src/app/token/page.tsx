@@ -7,7 +7,7 @@ export default function TokenNoticePage() {
     <EditorialPageShell eyebrow="Aviso público" title="Ativo comunitário não oficial" intro="Informações de transparência sobre um token criado por terceiros e sem vínculo societário, financeiro ou operacional com o Grupo Maia.">
       <div className="border-b border-white/13">
         <EditorialSection index={1} title="Sem emissão pelo grupo">
-          <p>O Grupo Maia e o Mapa Vivo não criaram, solicitaram ou administram esse ativo. Não controlam oferta, preço, liquidez, listagens ou comunidades relacionadas.</p>
+          <p>O Grupo Maia e esta plataforma institucional não criaram, solicitaram ou administram esse ativo. Não controlam oferta, preço, liquidez, listagens ou comunidades relacionadas.</p>
         </EditorialSection>
         <EditorialSection index={2} title="Sem recomendação">
           <p>Esta página não constitui oferta, publicidade, promessa de retorno ou aconselhamento financeiro. Ativos digitais podem perder integralmente seu valor.</p>

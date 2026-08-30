@@ -14,7 +14,7 @@ const channels = [
   },
   {
     title: "Tecnologia e plataforma",
-    description: "Questões sobre o Mapa Vivo, dados públicos, integrações ou funcionamento da plataforma.",
+    description: "Questões sobre os sites, produtos digitais, integrações ou funcionamento das plataformas do grupo.",
     subject: "Tecnologia e plataforma",
   },
   {

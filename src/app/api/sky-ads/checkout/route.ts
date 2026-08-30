@@ -136,8 +136,8 @@ export async function POST(request: NextRequest) {
           price_data: {
             currency,
             product_data: {
-              name: `Anuncio no Mapa Vivo: ${plan.label}`,
-              description: `${plan.label} monthly ad subscription on Mapa Vivo`,
+              name: `Anúncio no Grupo Maia: ${plan.label}`,
+              description: `${plan.label} — assinatura mensal de publicidade no Grupo Maia`,
             },
             unit_amount: getPriceCents(plan_id, currency),
             recurring: { interval: "month" },

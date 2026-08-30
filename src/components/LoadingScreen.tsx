@@ -17,11 +17,11 @@ interface LoadingScreenProps {
 const STAGE_MESSAGES: Record<LoadingStage, string> = {
   init: "Preparando as empresas",
   fetching: "Carregando empresas do grupo",
-  generating: "Organizando relações e setores",
-  rendering: "Desenhando a teia de empresas",
-  ready: "Universo pronto",
-  done: "Universo pronto",
-  error: "Não foi possível carregar o mapa",
+  generating: "Organizando empresas e setores",
+  rendering: "Preparando a apresentação",
+  ready: "Apresentação pronta",
+  done: "Apresentação pronta",
+  error: "Não foi possível carregar a plataforma",
 };
 
 export default function LoadingScreen({ stage, progress, error, accentColor, onRetry, onFadeComplete }: LoadingScreenProps) {
@@ -48,12 +48,12 @@ export default function LoadingScreen({ stage, progress, error, accentColor, onR
       <div className="relative w-full max-w-md">
         <Image className="maia-splash-symbol mx-auto" src="/brand/grupo-maia-symbol-reverse.svg" alt="Símbolo do Grupo Maia" width={112} height={112} priority />
         <div className="maia-splash-wordmark mt-7" aria-label="Grupo Maia"><strong>Grupo Maia</strong><span>29 empresas</span></div>
-        <h1 className="sr-only">{isError ? "Não foi possível abrir o mapa." : "Carregando o Grupo Maia"}</h1>
+        <h1 className="sr-only">{isError ? "Não foi possível abrir a plataforma." : "Carregando o Grupo Maia"}</h1>
         <p className="mt-8 text-[11px] uppercase tracking-[.16em] text-white/48">{isError ? error || STAGE_MESSAGES.error : STAGE_MESSAGES[stage]}</p>
         {!isError ? (
           <div className="mt-9">
             <div className="h-px w-full bg-white/12"><div className="h-full bg-[#dbe7cf] transition-[width] duration-500" style={{ width: `${clampedProgress}%` }} /></div>
-            <div className="mt-3 flex justify-between text-[10px] uppercase tracking-[.12em] text-white/35"><span>29 empresas conectadas</span><span>{Math.round(clampedProgress)}%</span></div>
+            <div className="mt-3 flex justify-between text-[10px] uppercase tracking-[.12em] text-white/35"><span>29 empresas</span><span>{Math.round(clampedProgress)}%</span></div>
           </div>
         ) : (
           <button type="button" onClick={onRetry} className="mt-8 border border-[#dbe7cf] px-6 py-3 text-[10px] font-semibold uppercase tracking-[.18em] text-[#f4f1e9]" style={{ borderColor: accentColor }}>Tentar novamente</button>

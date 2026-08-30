@@ -43,6 +43,15 @@ const securityHeaders = [
 ];
 
 const nextConfig: NextConfig = {
+  async redirects() {
+    return [
+      { source: "/dev/:path*", destination: "/#empresas", permanent: true },
+      { source: "/leaderboard", destination: "/#empresas", permanent: true },
+      { source: "/compare/:path*", destination: "/#empresas", permanent: true },
+      { source: "/live", destination: "/#empresas", permanent: true },
+      { source: "/shop/:path*", destination: "/#empresas", permanent: true },
+    ];
+  },
   images: {
     unoptimized: true,
     remotePatterns: [
