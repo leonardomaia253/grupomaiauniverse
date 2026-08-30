@@ -101,8 +101,8 @@ export default function MaiaStoryIntro({ onComplete }: { onComplete: () => void 
         onEnded={() => finish("complete")}
         aria-label="Filme institucional do Grupo Maia"
       >
-        <source src="/video/grupo-maia/filme-9x16.mp4" media="(orientation: portrait)" type="video/mp4" />
-        <source src="/video/grupo-maia/filme-16x9.mp4" type="video/mp4" />
+        <source src="/video/grupo-maia/filme-9x16.mp4?v=audio-musical-2" media="(orientation: portrait)" type="video/mp4" />
+        <source src="/video/grupo-maia/filme-16x9.mp4?v=audio-musical-2" type="video/mp4" />
       </video>
       <div className="maia-film__wash" />
 

@@ -1,15 +1,19 @@
-# Rede em operação — locução
+# Grupo Maia — voz rítmica
 
-O Grupo Maia reúne vinte e nove empresas, com operações próprias e serviços compartilhados.
+Vinte e nove empresas. Um grupo em movimento.
 
-Tosi, Abroo, Pipex e Avantyp desenvolvem produtos digitais, integrações e processos para empresas.
+Bilheking: eventos. Abroo: gestão e delivery para restaurantes. Avantyp: cursos em séries. Pipex: vendas com inteligência artificial.
 
-Volup AI, Iris, Scoreking e Agrovolup aplicam inteligência artificial, automação e análise de dados em atividades reais.
+VoluClinic: gestão para clínicas. Boase: reservas náuticas. Seu Jornaleiro: jornais locais. Kinkora: plataforma de criadores.
 
-Na saúde estão Voluclinic, Sun and Tan e Jack it Fit. Maia Go atua em mobilidade. Influarc e Seu Jornaleiro trabalham com mídia. Tikal Beach Club atua em hospitalidade.
+Iris: evidência viária. InstaBoost: engajamento social. Spur Tour: viagens. ScoreKing: palpites esportivos.
 
-Habitat X, Venti e Treze de Maio operam no setor imobiliário. Gaslee atua em energia. Minvest trabalha com investimentos.
+Maia Go: mercado autônomo. Tosi: eletrônicos. MInvest: estratégia financeira. Habitat X: imóveis.
 
-Cada empresa mantém seu foco. Tecnologia, planejamento e suporte são compartilhados pelo grupo.
+Tikal Beach Club: hospitalidade. AgroVolup: software para o campo.
 
-Grupo Maia. Conheça as empresas.
+Grupo Maia.
+
+## Guia fonético usado no áudio
+
+Bilhe King · Abrô · Avantipe · Páipex · Vólu Clínic · Boáze · Kincóra · Íris · Instabúst · Maia Gô · Tôzi · Agro Vólup.
